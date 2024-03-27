@@ -1,0 +1,11 @@
+@import "fonts/geist/geist-mono";
+@import "reset";
+@import "variables/global";
+@import "themes/light";
+@import "themes/dark";
+
+.app, body {
+    font       : var(--font-l);
+    color      : var(--default-color);
+    background : var(--bg-color);
+}
