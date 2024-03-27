@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Counter.scss';
+import css from './Counter.module.scss';
 
 
 export type CounterProps = {};
@@ -15,10 +15,10 @@ const Counter: React.FC<CounterProps> = (props) => {
     };
 
     return (
-        <div>
+        <div className={ css.container }>
             <h1>{ value }</h1>
-            <button onClick={ inc }>inc</button>
-            <button onClick={ dec }>dec</button>
+            <button onClick={ inc } className={ css.button }>inc</button>
+            <button onClick={ dec } className={ css.button }>dec</button>
         </div>
     );
 };

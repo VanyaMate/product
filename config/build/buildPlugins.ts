@@ -2,6 +2,7 @@ import { WebpackPluginInstance, ProgressPlugin } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
 import { BuildOptions, BuildPaths } from './types/config';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 
 export const buildPlugins = function ({ paths }: BuildOptions): WebpackPluginInstance[] {
@@ -9,6 +10,10 @@ export const buildPlugins = function ({ paths }: BuildOptions): WebpackPluginIns
         new ProgressPlugin(),
         new HtmlWebpackPlugin({
             template: paths.html,
+        }),
+        new MiniCssExtractPlugin({
+            filename     : 'css/[name].[contenthash:8].css',
+            chunkFilename: 'css/[name].[contenthash:8].css',
         }),
     ];
 };
