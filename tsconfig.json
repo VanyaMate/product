@@ -7,8 +7,7 @@
         "allowJs": true,
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "baseUrl": "."
+        "esModuleInterop": true
     },
     "ts-node": {
         "compilerOptions": {
