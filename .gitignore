@@ -2,5 +2,5 @@
 .idea
 
 # Folders
-node_modules
-build
+/node_modules
+/build
