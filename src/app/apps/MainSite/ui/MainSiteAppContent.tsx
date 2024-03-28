@@ -1,13 +1,13 @@
 import React, { Suspense } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
-import AboutPageAsync from '../../pages/AboutPage/AboutPage.async';
-import MainPageAsync from '../../pages/MainPage/MainPage.async';
-import { useTheme } from '../../theme/useTheme';
+import { useTheme } from '@/shared/providers/theme';
+import { AboutPage } from '@/pages/AboutPage';
+import { MainPage } from '@/pages/MainPage';
 
 
-export type MainAppContentProps = {};
+export type MainSiteAppContentProps = {};
 
-const MainAppContent: React.FC<MainAppContentProps> = (props) => {
+const MainSiteAppContent: React.FC<MainSiteAppContentProps> = (props) => {
     const {}              = props;
     const { toggleTheme } = useTheme();
 
@@ -19,12 +19,12 @@ const MainAppContent: React.FC<MainAppContentProps> = (props) => {
             <Link to={ '/about' }>About</Link>
             <Suspense fallback={ <h1>loading..</h1> }>
                 <Routes>
-                    <Route path={ '/about' } element={ <AboutPageAsync/> }/>
-                    <Route path={ '/' } element={ <MainPageAsync/> }/>
+                    <Route path={ '/about' } element={ <AboutPage/> }/>
+                    <Route path={ '/' } element={ <MainPage/> }/>
                 </Routes>
             </Suspense>
         </div>
     );
 };
 
-export default React.memo(MainAppContent);
+export default React.memo(MainSiteAppContent);

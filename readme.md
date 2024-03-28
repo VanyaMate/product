@@ -2,5 +2,15 @@
 
 ## Technologies
 
-- TypeScript
-- Webpack
+### Architecture
+
+- **FSD**
+
+### Builder
+
+- **Webpack**
+
+### Tools
+
+- **TypeScript**
+- **React**

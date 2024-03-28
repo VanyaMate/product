@@ -12,8 +12,6 @@ export type ThemeContextProps = {
     toggleTheme: () => void;
 }
 
-export const LOCAL_STORAGE_THEME_KEY = 'theme';
-
 export const ThemeContext = createContext<ThemeContextProps>({
     theme      : Theme.DARK,
     setTheme   : (theme: Theme) => {

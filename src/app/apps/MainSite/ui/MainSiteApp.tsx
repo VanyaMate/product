@@ -1,13 +1,13 @@
 import React from 'react';
-import '../../styles/index.scss';
+import '@/app/styles/index.scss';
 import { BrowserRouter } from 'react-router-dom';
-import ThemeProvider from '../../theme/ThemeProvider';
-import MainAppContent from './MainAppContent';
+import MainAppContent from './MainSiteAppContent';
+import { ThemeProvider } from '@/shared/providers/theme';
 
 
-export type AppProps = {};
+export type MainSiteAppProps = {};
 
-const MainApp: React.FC<AppProps> = (props) => {
+const MainSiteApp: React.FC<MainSiteAppProps> = (props) => {
     const {} = props;
 
     return (
@@ -22,4 +22,4 @@ const MainApp: React.FC<AppProps> = (props) => {
     );
 };
 
-export default React.memo(MainApp);
+export default React.memo(MainSiteApp);

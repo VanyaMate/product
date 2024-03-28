@@ -12,7 +12,13 @@
             {
                 "name": "typescript-plugin-css-modules"
             }
-        ]
+        ],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ]
+        }
     },
     "ts-node": {
         "compilerOptions": {

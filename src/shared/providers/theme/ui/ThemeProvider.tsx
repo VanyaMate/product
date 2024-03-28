@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { LOCAL_STORAGE_THEME_KEY, Theme, ThemeContext } from './ThemeContext';
-import { classNames } from '../helpers/classNames/classNames';
+import { classNames } from '@/shared';
+import { LOCAL_STORAGE_THEME_KEY, Theme, ThemeContext } from '@/shared/context/theme';
 
 
 export type ThemeProviderProps = {
