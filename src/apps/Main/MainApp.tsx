@@ -12,10 +12,10 @@ const MainApp: React.FC<AppProps> = (props) => {
 
     return (
         <BrowserRouter>
-            <ThemeProvider withStorage={ true } storageId={ 'header' }>
+            <ThemeProvider withStorage={ true } storageId={ 'main-app-header' }>
                 <MainAppContent/>
             </ThemeProvider>
-            <ThemeProvider withStorage={ true } storageId={ 'footer' }>
+            <ThemeProvider withStorage={ true } storageId={ 'main-app-footer' }>
                 <MainAppContent/>
             </ThemeProvider>
         </BrowserRouter>

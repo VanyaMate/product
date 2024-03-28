@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { LOCAL_STORAGE_THEME_KEY, Theme, ThemeContext } from './ThemeContext';
+import { classNames } from '../helpers/classNames/classNames';
 
 
 export type ThemeProviderProps = {
@@ -40,7 +41,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = (props) => {
 
     return (
         <ThemeContext.Provider value={ themeProps }>
-            <div className={ `app ${ theme }` }>
+            <div className={ classNames('theme', {}, [ theme ]) }>
                 { children }
             </div>
         </ThemeContext.Provider>
