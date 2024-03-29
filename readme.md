@@ -4,13 +4,15 @@
 
 ### Architecture
 
-- **FSD**
+- **FSD** (своя версия)
 
 ### Builder
 
-- **Webpack**
+- **~~Webpack~~**
+- **Vite**
 
 ### Tools
 
 - **TypeScript**
 - **React**
+- **SCSS** + **CSS Modules**
