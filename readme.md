@@ -16,3 +16,8 @@
 - **TypeScript**
 - **React**
 - **SCSS** + **CSS Modules**
+- **I18N-Next**
+
+### DevTools
+- **ESLint**
+- **StyleLint**
