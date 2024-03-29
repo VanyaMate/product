@@ -1,0 +1,11 @@
+{
+    "logo": "Product",
+    "aria_logo": "Home",
+    "home_page": "Home",
+    "about_us_page": "About us",
+    "toggle_language_button": "ENG",
+    "toggle_language_aria_button": "Toggle language on russian",
+    "toggle_theme_button": "Theme",
+    "toggle_theme_aria_button": "Toggle theme",
+    "toggle_theme_image_alt_button": "Theme image"
+}

@@ -1,9 +1,20 @@
 @import "palette/palette";
 @import "themes/light";
 @import "themes/dark";
+@import "fonts/geist/geist-mono";
+@import "sizes/offsets/offsets";
+@import "transitions/transitions";
 
 * {
-    margin     : 0;
-    padding    : 0;
-    box-sizing : border-box;
+    margin      : 0;
+    padding     : 0;
+    box-sizing  : border-box;
+    font-family : GeistMono, Consolas, SansSerif, serif;
+}
+
+input,
+button,
+textarea,
+select {
+    font : inherit;
 }

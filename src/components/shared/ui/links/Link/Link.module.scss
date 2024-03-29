@@ -1,0 +1,39 @@
+.container {
+    text-decoration : none;
+    outline         : none;
+    border-radius   : var(--offset-small);
+    box-shadow      : 0 0 0 0 transparent;
+    transition      : var(--transition-medium);
+
+    &:hover {
+        cursor          : pointer;
+        text-decoration : underline;
+    }
+
+    &.primary {
+        color : var(--primary-color);
+
+        &:focus {
+            box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color);
+            background : var(--bg-main-color);
+        }
+    }
+
+    &.second {
+        color : var(--second-color);
+
+        &:focus {
+            box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--second-color);
+            background : var(--bg-main-color);
+        }
+    }
+
+    &.ghost {
+        color : var(--ghost-color);
+
+        &:focus {
+            box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--ghost-color);
+            background : var(--bg-main-color);
+        }
+    }
+}

@@ -1,13 +1,17 @@
 :root .dark {
-    --bg-main-color     : var(--black);
-    --bg-second-color   : var(--dark-gray);
-
-    --text-main-color   : var(--white);
-    --text-second-color : var(--light-gray);
-
-    --primary-color     : var(--blue);
-    --second-color      : var(--green);
-    --ghost-color       : var(--gray);
-
-    --border-main-color : var(--gray);
+    --bg-main-color                : var(--black);
+    --bg-main-foreground-color     : var(--white);
+    --bg-second-color              : var(--dark-gray);
+    --bg-second-foreground-color   : var(--light-gray);
+    --text-main-color              : var(--white);
+    --text-main-foreground-color   : var(--black);
+    --text-second-color            : var(--gray);
+    --text-second-foreground-color : var(--gray);
+    --primary-color                : var(--blue);
+    --on-primary-text-color        : var(--white);
+    --second-color                 : var(--green);
+    --on-second-text-color         : var(--white);
+    --ghost-color                  : var(--gray);
+    --on-ghost-text-color          : var(--white);
+    --border-main-color            : var(--gray);
 }

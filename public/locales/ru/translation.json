@@ -1,0 +1,11 @@
+{
+    "logo": "Продукт",
+    "aria_logo": "Домой",
+    "home_page": "Главная",
+    "about_us_page": "О нас",
+    "toggle_language_button": "РУС",
+    "toggle_language_aria_button": "Переключить язык на английский",
+    "toggle_theme_button": "Тема",
+    "toggle_theme_aria_button": "Переключить тему",
+    "toggle_theme_image_alt_button": "Картинка темы"
+}
