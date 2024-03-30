@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { MainSiteRouteConfig } from '@/apps/SiteApp/routes/config/routes.tsx';
+import PageLoader from '@/components/shared/ui/loaders/PageLoader/PageLoader.tsx';
 
 
 export type SiteRouterProps = {};
@@ -10,7 +11,7 @@ const SiteRouter: React.FC<SiteRouterProps> = (props) => {
 
     return (
         <main>
-            <Suspense fallback="TODO: Add loader">
+            <Suspense fallback={ <PageLoader/> }>
                 <Routes>
                     {
                         Object.values(MainSiteRouteConfig).map((route) => (

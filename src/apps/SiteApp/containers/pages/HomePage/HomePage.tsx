@@ -1,17 +1,22 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { Suspense } from 'react';
+import PageLoader from '@/components/shared/ui/loaders/PageLoader/PageLoader.tsx';
+import ErrorBoundary from '@/components/shared/ui/errors/ErrorBoundary/ErrorBoundary.tsx';
+
+
+const HomePageContent = React.lazy(() => import('./ui/HomePageContent.tsx'));
 
 
 export type HomePageProps = {};
 
 const HomePage: React.FC<HomePageProps> = (props) => {
-    const {}    = props;
-    const { t } = useTranslation('pages/home-page');
+    const {} = props;
 
     return (
-        <div>
-            { t('text') }
-        </div>
+        <Suspense fallback={ <PageLoader/> }>
+            <ErrorBoundary>
+                <HomePageContent/>
+            </ErrorBoundary>
+        </Suspense>
     );
 };
 

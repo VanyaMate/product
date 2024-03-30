@@ -31,11 +31,17 @@
     "include": [
         "src",
         "vite",
+        "node_modules",
         "declarations"
     ],
     "references": [
         {
             "path": "./tsconfig.node.json"
         }
-    ]
+    ],
+    "ts-node": {
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    }
 }

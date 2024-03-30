@@ -7,5 +7,8 @@
     "toggle_language_aria_button": "Toggle language on russian",
     "toggle_theme_button": "Theme",
     "toggle_theme_aria_button": "Toggle theme",
-    "toggle_theme_image_alt_button": "Theme image"
+    "toggle_theme_image_alt_button": "Theme image",
+    "not_found_title": "Not found",
+    "not_found_description": "The resource you requested has been deleted or moved to another location",
+    "error_boundary_title": "Something went wrong"
 }
