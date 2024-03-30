@@ -8,8 +8,8 @@ import FooterNavBar
 import ThemeProvider
     from '@/components/shared/ui/theme/ThemeContext/providers/ThemeProvider.tsx';
 import ScreenHeight from '@/components/shared/ui/screen/ScreenHeight/ScreenHeight.tsx';
-import './configs/i18n/i18n.ts';
 import ErrorBoundary from '@/components/shared/ui/errors/ErrorBoundary/ErrorBoundary.tsx';
+import './configs/i18n/i18n.ts';
 
 
 export type SiteAppProps = {};

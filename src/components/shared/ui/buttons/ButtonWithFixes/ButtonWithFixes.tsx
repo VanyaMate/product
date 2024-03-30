@@ -1,17 +1,17 @@
 import React from 'react';
 import Button, { ButtonProps } from '@/components/shared/ui/buttons/Button/Button.tsx';
 import classNames from 'classnames';
-import css from './ButtonWithIcon.module.scss';
+import css from './ButtonWithFixes.module.scss';
 
 
-export type ButtonWithIconProps =
+export type ButtonWithFixesProps =
     {
         pref?: React.ReactNode;
         post?: React.ReactNode;
     }
     & ButtonProps;
 
-const ButtonWithIcon: React.FC<ButtonWithIconProps> = (props) => {
+const ButtonWithFixes: React.FC<ButtonWithFixesProps> = (props) => {
     const { pref, post, children, className, ...other } = props;
 
     return (
@@ -29,4 +29,4 @@ const ButtonWithIcon: React.FC<ButtonWithIconProps> = (props) => {
     );
 };
 
-export default React.memo(ButtonWithIcon);
+export default React.memo(ButtonWithFixes);

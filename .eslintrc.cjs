@@ -56,4 +56,12 @@ module.exports = {
         "react/jsx-one-expression-per-line": "off",
         "react/prop-types": "off",
     },
+    overrides: [
+        {
+            files: ['**/src/**/*.{test,it}.{ts,tsx}'],
+            rules: {
+                'i18next/no-literal-string': 'off',
+            }
+        }
+    ]
 }

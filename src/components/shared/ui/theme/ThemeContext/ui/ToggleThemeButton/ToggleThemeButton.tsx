@@ -4,8 +4,8 @@ import {
 } from '@/components/shared/ui/theme/ThemeContext/hooks/useThemeSwitcher.ts';
 import { ButtonStyleType } from '@/components/shared/ui/buttons/Button/types/types.ts';
 import { Theme } from '@/components/shared/ui/theme/ThemeContext/types/themes.ts';
-import ButtonWithIcon
-    from '@/components/shared/ui/buttons/ButtonWithIcon/ButtonWithIcon.tsx';
+import ButtonWithFixes
+    from '@/components/shared/ui/buttons/ButtonWithFixes/ButtonWithFixes.tsx';
 import { useTranslation } from 'react-i18next';
 
 
@@ -20,7 +20,7 @@ const ToggleThemeButton: React.FC<ToggleThemeButtonProps> = (props) => {
                                                                    : 'sun.png' }`;
 
     return (
-        <ButtonWithIcon
+        <ButtonWithFixes
             aria-label={ t('toggle_theme_aria_button') }
             onClick={ toggleTheme }
             pref={
@@ -34,7 +34,7 @@ const ToggleThemeButton: React.FC<ToggleThemeButtonProps> = (props) => {
             styleType={ ButtonStyleType.PRIMARY }
         >
             { t('toggle_theme_button') }
-        </ButtonWithIcon>
+        </ButtonWithFixes>
     );
 };
 

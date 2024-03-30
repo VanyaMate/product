@@ -22,11 +22,20 @@ const config: Config.InitialOptions = {
     moduleDirectories         : [
         'node_modules',
     ],
+    modulePaths               : [
+        '<rootDir>src',
+    ],
+    moduleNameMapper          : {
+        '^@/(.*)$'                    : '<rootDir>/src/$1',
+        '\\.(css|less|scss|sss|styl)$': '<rootDir>/node_modules/jest-css-modules',
+
+    },
     testEnvironment           : 'jsdom',
     testMatch                 : [
         '**/__tests__/**/*.[jt]s?(x)',
         '**/?(*.)+(spec|test).[tj]s?(x)',
     ],
+    setupFilesAfterEnv        : [ '<rootDir>/jest/jest-setup.ts' ],
 };
 
 export default config;
