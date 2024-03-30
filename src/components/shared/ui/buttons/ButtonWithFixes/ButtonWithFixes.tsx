@@ -16,15 +16,9 @@ const ButtonWithFixes: React.FC<ButtonWithFixesProps> = (props) => {
 
     return (
         <Button { ...other } className={ classNames(css.container, {}, [ className ]) }>
-            {
-                pref
-            }
-            {
-                children
-            }
-            {
-                post
-            }
+            { pref ? <span>{ pref }</span> : null }
+            { children ? <span>{ children }</span> : null }
+            { post ? <span>{ post }</span> : null }
         </Button>
     );
 };

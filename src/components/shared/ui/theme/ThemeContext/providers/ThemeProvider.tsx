@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ThemeContext } from '../context/ThemeContext.ts';
 import classNames from 'classnames';
 import '../styles/index.scss';
@@ -8,15 +8,17 @@ import {
 } from '@/components/shared/ui/theme/ThemeContext/helpers/storage.ts';
 
 
-export type ThemeProviderProps = {
-    children: React.ReactNode;
-    withStorage?: boolean;
-    storageId?: string;
-};
+export type ThemeProviderProps =
+    {
+        withStorage?: boolean;
+        storageId?: string;
+        defaultTheme?: Theme;
+    }
+    & React.ComponentPropsWithoutRef<'div'>;
 
 const ThemeProvider: React.FC<ThemeProviderProps> = (props) => {
-    const { children, withStorage, storageId } = props;
-    const [ theme, setTheme ]                  = useState<Theme>(getThemeStorageValue(storageId));
+    const { withStorage, storageId, className, defaultTheme, ...other } = props;
+    const [ theme, setTheme ]                                           = useState<Theme>(defaultTheme ?? getThemeStorageValue(storageId));
 
     const toggleTheme = useCallback(() => {
         setTheme((prev) => {
@@ -32,11 +34,15 @@ const ThemeProvider: React.FC<ThemeProviderProps> = (props) => {
         theme, setTheme, toggleTheme,
     }), [ theme, toggleTheme ]);
 
+    useEffect(() => {
+        setTheme(defaultTheme ?? getThemeStorageValue(storageId));
+    }, [ defaultTheme, storageId ]);
+
     return (
         <ThemeContext.Provider value={ themeProps }>
-            <div className={ classNames('theme', {}, [ theme ]) }>
-                { children }
-            </div>
+            <div
+                className={ classNames('theme', {}, [ theme, className ]) } { ...other }
+            />
         </ThemeContext.Provider>
     );
 };
