@@ -21,8 +21,12 @@
 
 ### DevTools
 
-- **ESLint**
-- **StyleLint**
-- **Jest**
-- **React testing library**
-- **Storybook**
+- **Git**
+  - **GitHub**
+- **Lint**
+  - **ESLint**
+  - **StyleLint**
+- **Test**
+  - **Jest**
+  - **React testing library**
+  - **Storybook**

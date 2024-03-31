@@ -1,6 +1,7 @@
 import ThemeProvider
     from '../../src/components/shared/ui/theme/ThemeContext/providers/ThemeProvider';
 import { Decorator } from '@storybook/react';
+import '../../src/styles/index.scss';
 
 
 export const themeDecorator: Decorator = (StoryFn, context) => {

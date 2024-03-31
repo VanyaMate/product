@@ -7,10 +7,10 @@ import { ButtonStyleType } from '@/components/shared/ui/buttons/Button/types/typ
 Button.displayName = 'Button';
 
 const meta = {
-    title     : 'shared/Button',
-    component : Button,
-    tags      : [ 'autodocs' ],
-    argTypes  : {
+    title    : 'shared/buttons/Button',
+    component: Button,
+    tags     : [ 'autodocs' ],
+    argTypes : {
         styleType: {
             control: { type: 'select' },
             options: [
@@ -20,7 +20,7 @@ const meta = {
             ],
         },
     },
-    args      : { onClick: fn() },
+    args     : { onClick: fn() },
 } satisfies Meta<typeof Button>;
 
 export default meta;

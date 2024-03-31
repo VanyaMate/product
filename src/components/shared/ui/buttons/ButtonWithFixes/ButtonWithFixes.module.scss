@@ -2,4 +2,12 @@
     display     : inline-flex;
     gap         : var(--offset-small);
     align-items : center;
+
+    .item {
+        display         : flex;
+        flex-direction  : column;
+        justify-content : center;
+        height          : fit-content;
+        width           : fit-content;
+    }
 }

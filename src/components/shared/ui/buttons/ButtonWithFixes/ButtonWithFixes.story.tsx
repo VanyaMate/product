@@ -3,24 +3,18 @@ import ButtonWithFixes
 import type { StoryObj } from '@storybook/react';
 import { ButtonStyleType } from '@/components/shared/ui/buttons/Button/types/types.ts';
 import { fn } from '@storybook/test';
+import ButtonStory from '@/components/shared/ui/buttons/Button/Button.story.tsx';
 
 
 ButtonWithFixes.displayName = 'ButtonWithFixes';
 
 const meta = {
-    title    : 'shared/ButtonWithFixes',
+    title    : 'shared/buttons/ButtonWithFixes',
     component: ButtonWithFixes,
     argTypes : {
-        post     : { control: { type: 'text' } },
-        pref     : { control: { type: 'text' } },
-        styleType: {
-            control: { type: 'select' },
-            options: [
-                ButtonStyleType.PRIMARY,
-                ButtonStyleType.SECOND,
-                ButtonStyleType.GHOST,
-            ],
-        },
+        ...ButtonStory.argTypes,
+        post: { control: { type: 'text' } },
+        pref: { control: { type: 'text' } },
     },
     tags     : [ 'autodocs' ],
     args     : { onClick: fn() },

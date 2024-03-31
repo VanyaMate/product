@@ -13,6 +13,11 @@
     &.primary {
         color : var(--primary-color);
 
+        &::selection {
+            background : var(--primary-color);
+            color      : var(--on-primary-text-color);
+        }
+
         &:focus {
             box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color);
             background : var(--bg-main-color);
@@ -22,6 +27,11 @@
     &.second {
         color : var(--second-color);
 
+        &::selection {
+            background : var(--second-color);
+            color      : var(--on-second-text-color);
+        }
+
         &:focus {
             box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--second-color);
             background : var(--bg-main-color);
@@ -30,6 +40,11 @@
 
     &.ghost {
         color : var(--ghost-color);
+
+        &::selection {
+            background : var(--ghost-color);
+            color      : var(--on-ghost-text-color);
+        }
 
         &:focus {
             box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--ghost-color);
