@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm i
+      - run: npm inst
       - run: npm run lint
       - run: npm run slint
       - run: npm run test:jest
@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm i
+      - run: npm inst
       - run: npm run build
 
   loki_tests:
@@ -51,7 +51,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm i
+      - run: npm inst
       - run: npm run story:build
       - run: npm run test:loki:ci
 
@@ -70,7 +70,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm i
+      - run: npm inst
       - run: npm run story:build
       - run: npm run test:loki:ci
       - run: npm run test:loki:up
