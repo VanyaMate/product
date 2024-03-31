@@ -1,0 +1,97 @@
+name: check-pushes
+
+on:
+  push:
+    branches:
+      - '*'
+      - '*/*'
+      - '**'
+
+jobs:
+  simple_tests:
+    if: contains(github.event.head_commit.message, '%test%')
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm i
+      - run: npm run lint
+      - run: npm run slint
+      - run: npm run test:jest
+
+  build:
+    if: contains(github.event.head_commit.message, '%build%')
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm i
+      - run: npm run build
+
+  loki_tests:
+    if: contains(github.event.head_commit.message, '%loki_test%')
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm i
+      - run: npm run story:build
+      - run: npm run test:loki:ci
+
+  loki_update:
+    if: contains(github.event.head_commit.message, '%loki_update%')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm i
+      - run: npm run story:build
+      - run: npm run test:loki:ci
+      - run: npm run test:loki:up
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update Loki-snapshot"
+
+  notify:
+    if: ${{ always() && contains(github.event.head_commit.message, '%tg_notify%')}}
+    runs-on: ubuntu-latest
+    needs:
+      - simple_tests
+      - build
+      - loki_tests
+      - loki_update
+
+    steps:
+      - name: Telegram success notification
+        uses: VanyaMate/github-action-telegram-notification@v0.20
+        with:
+          success: ${{ job.status }}
+          tg_bot_token: ${{ secrets.TG_TOKEN_BOT }}
+          tg_chat_id: ${{ secrets.TG_CHAT_ID }}
