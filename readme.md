@@ -15,18 +15,20 @@
 
 - **TypeScript**
 - **React**
-  - **React-Router-Dom**
+    - **React-Router-Dom**
 - **SCSS** + **CSS Modules**
 - **I18N-Next**
 
 ### DevTools
 
 - **Git**
-  - **GitHub**
+    - **GitHub**
+        - **GitHub Actions**
 - **Lint**
-  - **ESLint**
-  - **StyleLint**
+    - **ESLint**
+    - **StyleLint**
 - **Test**
-  - **Jest**
-  - **React testing library**
-  - **Storybook**
+    - **Jest**
+    - **React testing library**
+    - **Storybook**
+    - **Loki**
