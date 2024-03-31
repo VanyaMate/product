@@ -12,6 +12,7 @@
         "slint:fix": "stylelint --fix \"**/*.scss\"",
         "preview": "vite preview",
         "test:jest": "jest --config jest.config.ts",
+        "test:loki": "loki test",
         "story": "storybook dev -p 6006",
         "story:build": "storybook build"
     },
@@ -61,6 +62,7 @@
         "jest": "^29.7.0",
         "jest-css-modules": "^2.1.0",
         "jest-environment-jsdom": "^29.7.0",
+        "loki": "^0.35.0",
         "react-test-renderer": "^18.2.0",
         "sass": "^1.72.0",
         "storybook": "^8.0.5",
@@ -69,5 +71,20 @@
         "ts-node": "^10.9.2",
         "typescript": "^5.2.2",
         "vite": "^5.2.0"
+    },
+    "loki": {
+        "configurations": {
+            "chrome.laptop": {
+                "target": "chrome.app",
+                "width": 1366,
+                "height": 768,
+                "deviceScaleFactor": 1,
+                "mobile": false
+            },
+            "chrome.iphone7": {
+                "target": "chrome.app",
+                "preset": "iPhone 7"
+            }
+        }
     }
 }
