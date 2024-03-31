@@ -9,7 +9,8 @@ import ThemeProvider
     from '@/components/shared/ui/theme/ThemeContext/providers/ThemeProvider.tsx';
 import ScreenHeight from '@/components/shared/ui/screen/ScreenHeight/ScreenHeight.tsx';
 import ErrorBoundary from '@/components/shared/ui/errors/ErrorBoundary/ErrorBoundary.tsx';
-import './configs/i18n/i18n.ts';
+import i18n from './configs/i18n/i18n.ts';
+import { I18nextProvider } from 'react-i18next';
 
 
 export type SiteAppProps = {};
@@ -19,18 +20,22 @@ const SiteApp: React.FC<SiteAppProps> = (props) => {
 
     return (
         <React.StrictMode>
-            <BrowserRouter>
-                <ThemeProvider storageId="site-app" withStorage={ true }>
-                    <ErrorBoundary>
-                        <ScreenHeight
-                            footer={ <FooterNavBar/> }
-                        >
-                            <HeaderNavBar/>
-                            <SiteRouter/>
-                        </ScreenHeight>
-                    </ErrorBoundary>
-                </ThemeProvider>
-            </BrowserRouter>
+            <I18nextProvider i18n={ i18n }>
+                <BrowserRouter>
+                    <ThemeProvider storageId="site-app" withStorage={ true }>
+                        <ErrorBoundary>
+                            <ScreenHeight
+                                footer={ <FooterNavBar/> }
+                            >
+                                {/* eslint-disable-next-line react/jsx-max-depth */}
+                                <HeaderNavBar/>
+                                {/* eslint-disable-next-line react/jsx-max-depth */}
+                                <SiteRouter/>
+                            </ScreenHeight>
+                        </ErrorBoundary>
+                    </ThemeProvider>
+                </BrowserRouter>
+            </I18nextProvider>
         </React.StrictMode>
     );
 };

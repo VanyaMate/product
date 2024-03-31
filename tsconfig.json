@@ -25,7 +25,11 @@
                 "./src/*"
             ]
         },
-        "types": ["node", "jest", "@testing-library/jest-dom"]
+        "types": [
+            "node",
+            "jest",
+            "@testing-library/jest-dom"
+        ]
     },
     "include": [
         "src",

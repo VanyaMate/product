@@ -7,8 +7,9 @@ const FooterNavBar: React.FC<FooterNavBarProps> = (props) => {
     const {} = props;
 
     return (
+        //eslint-disable-next-line i18next/no-literal-string
         <footer>
-            { 'FooterNavBarComponent' }
+            FooterNavBarComponent
         </footer>
     );
 };

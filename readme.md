@@ -8,7 +8,7 @@
 
 ### Builder
 
-- **~~Webpack~~**
+- **~~Webpack~~** - `слишком с ним много проблем`
 - **Vite**
 
 ### Tools
@@ -31,4 +31,4 @@
     - **Jest**
     - **React testing library**
     - **Storybook**
-    - **Loki**
+    - **~~Loki~~** - `слишком с ним много проблем`

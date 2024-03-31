@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm run inst
+      - run: npm i
       - run: npm run lint
       - run: npm run slint
       - run: npm run test:jest
@@ -35,11 +35,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm run inst
+      - run: npm i
       - run: npm run build
 
-  loki_tests:
-    if: contains(github.event.head_commit.message, '%loki_test%')
+  pw_tests:
+    if: contains(github.event.head_commit.message, '%pw_test%')
     runs-on: ubuntu-latest
 
     steps:
@@ -51,12 +51,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm run inst
-      - run: npm run story:build
-      - run: npm run test:loki:ci
+      - run: npm i
 
-  loki_update:
-    if: contains(github.event.head_commit.message, '%loki_update%')
+  pw_update:
+    if: contains(github.event.head_commit.message, '%pw_update%')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -70,10 +68,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm run inst
-      - run: npm run story:build
-      - run: npm run test:loki:ci
-      - run: npm run test:loki:up
+      - run: npm i
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
@@ -85,8 +80,8 @@ jobs:
     needs:
       - simple_tests
       - build
-      - loki_tests
-      - loki_update
+      - pw_tests
+      - pw_update
 
     steps:
       - name: Telegram success notification
