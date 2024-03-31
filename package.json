@@ -17,7 +17,7 @@
         "test:loki:up": "loki approve",
         "story": "storybook dev -p 6006",
         "story:build": "storybook build",
-        "inst": "npm i --force && exit 0"
+        "inst": "npm ci --force && exit 0"
     },
     "dependencies": {
         "classnames": "^2.5.1",
