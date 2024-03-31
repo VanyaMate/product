@@ -8,7 +8,7 @@ const AboutPageContent: React.FC<AboutPageContentProps> = (props) => {
 
     return (
         <div>
-            AboutPageContentComponent
+            { 'AboutPageContentComponent' }
         </div>
     );
 };

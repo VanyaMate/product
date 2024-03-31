@@ -8,7 +8,7 @@ const FooterNavBar: React.FC<FooterNavBarProps> = (props) => {
 
     return (
         <footer>
-            FooterNavBarComponent
+            { 'FooterNavBarComponent' }
         </footer>
     );
 };

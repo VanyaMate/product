@@ -8,9 +8,7 @@ const AdminApp: React.FC<AdminAppProps> = (props) => {
 
     return (
         <div>
-            // Routes for Admin
-            // Theme
-            // Content
+            { 'Admin app' }
         </div>
     );
 };

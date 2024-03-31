@@ -24,12 +24,12 @@
             "@/*": [
                 "./src/*"
             ]
-        }
+        },
+        "types": ["node", "jest", "@testing-library/jest-dom"]
     },
     "include": [
         "src",
         "vite",
-        "node_modules",
         "declarations",
         "jest/jest-setup.ts"
     ],

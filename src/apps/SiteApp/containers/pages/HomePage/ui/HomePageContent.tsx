@@ -8,7 +8,7 @@ const HomePageContent: React.FC<HomePageContentProps> = (props) => {
 
     return (
         <div>
-            HomePageContentComponent
+            { 'HomePageContentComponent' }
         </div>
     );
 };
