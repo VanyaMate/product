@@ -5,4 +5,5 @@ import { themeDecorator } from './decorators/theme-decorator';
 export const globalTypes = {
     ...themeSwitcher,
 };
-export const decorators  = [ themeDecorator ];
+
+export const decorators = [ themeDecorator ];
