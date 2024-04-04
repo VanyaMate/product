@@ -32,3 +32,4 @@
     - **React testing library**
     - **Storybook**
     - **~~Loki~~** - `слишком с ним много проблем`
+    - **_Playwright_** - `под вопросом. не работает React.Context`
