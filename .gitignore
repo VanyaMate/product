@@ -25,7 +25,11 @@ lerna-debug.log*
 *.sln
 *.sw?
 
+
+# Tests cache
 *storybook.log
 /playwright/.cache
 /playwright-report
 /test-results
+/reg.json
+/report.html

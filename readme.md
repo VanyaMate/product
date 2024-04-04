@@ -32,4 +32,5 @@
     - **React testing library**
     - **Storybook**
     - **~~Loki~~** - `слишком с ним много проблем`
+    - **~~reg-cli~~** - `не нужен для pw`
     - **_Playwright_** - `под вопросом. не работает React.Context`

@@ -21,6 +21,7 @@
         "test:pw-docker": "docker run --rm -v snapshots:/playwright/screenshots -e CI=true playwright-test:latest npm run test:pw-linux",
         "test:pw-docker:build": "docker build -t playwright-test:latest .",
         "test:pw-docker:update": "docker run -e CI=true playwright-test:latest npm run test:pw-update-linux",
+        "test:pw-report": "reg-cli /playwright/__snapshots__ /playwright/__snapshots__ /test-results -R ./report.html",
         "story": "storybook dev -p 6006",
         "story:build": "storybook build"
     },
@@ -72,6 +73,7 @@
         "jest-css-modules": "^2.1.0",
         "jest-environment-jsdom": "^29.7.0",
         "react-test-renderer": "^18.2.0",
+        "reg-cli": "^0.18.1",
         "sass": "^1.72.0",
         "storybook": "^8.0.5",
         "stylelint": "^16.3.1",

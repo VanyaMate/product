@@ -18,3 +18,12 @@ textarea,
 select {
     font : inherit;
 }
+
+.block-scroll {
+    overflow : hidden;
+}
+
+*[inert] {
+    transition : var(--transition-medium);
+    filter     : blur(5px);
+}

@@ -22,14 +22,17 @@ const SiteApp: React.FC<SiteAppProps> = (props) => {
         <React.StrictMode>
             <I18nextProvider i18n={ i18n }>
                 <BrowserRouter>
-                    <ThemeProvider storageId="site-app" withStorage={ true }>
+                    <ThemeProvider isPageTheme={ true }
+                                   storageId="site-app"
+                                   withStorage={ true }
+                    >
                         <ErrorBoundary>
                             <ScreenHeight
                                 footer={ <FooterNavBar/> }
                             >
-                                {/* eslint-disable-next-line react/jsx-max-depth */}
+                                {/* eslint-disable-next-line react/jsx-max-depth */ }
                                 <HeaderNavBar/>
-                                {/* eslint-disable-next-line react/jsx-max-depth */}
+                                {/* eslint-disable-next-line react/jsx-max-depth */ }
                                 <SiteRouter/>
                             </ScreenHeight>
                         </ErrorBoundary>

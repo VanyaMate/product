@@ -7,13 +7,19 @@ import { useTranslation } from 'react-i18next';
 import ToggleLanguageButton
     from '@/components/shared/ui/i18n/ToggleLanguageButton/ToggleLanguageButton.tsx';
 import classNames from 'classnames';
+import Button from '@/components/shared/ui/buttons/Button/Button.tsx';
+import {
+    useModalController,
+} from '@/components/shared/ui/modal/Modal/hooks/useModalController.ts';
+import Modal from '@/components/shared/ui/modal/Modal/Modal.tsx';
 
 
 export type HeaderNavBarProps = {};
 
 const HeaderNavBar: React.FC<HeaderNavBarProps> = (props) => {
-    const {}    = props;
-    const { t } = useTranslation();
+    const {}         = props;
+    const { t }      = useTranslation();
+    const controller = useModalController();
 
     return (
         <header className={ css.container }>
@@ -21,6 +27,10 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = (props) => {
                 <Link aria-label={ t('aria_logo') } to="/">{ t('logo') }</Link>
             </h1>
             <div className={ css.side }>
+                <Modal controller={ controller }>
+                    h1
+                </Modal>
+                <Button onClick={ () => controller.setOpened(true) }>Open modal</Button>
                 <nav>
                     <ul className={ classNames(css.links, {}, [ css.list ]) }>
                         <li>
