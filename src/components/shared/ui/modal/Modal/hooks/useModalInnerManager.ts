@@ -35,7 +35,7 @@ export const useModalInnerManager = function (opened: boolean) {
         }
 
         // Block body scroll
-        document.body.classList.add('block-scroll');
+        document.body.classList.add('blockScroll');
 
         // Save previous focus
         previousFocus.current = document.activeElement as HTMLElement;
@@ -52,7 +52,7 @@ export const useModalInnerManager = function (opened: boolean) {
         }
 
         // Unblock body scroll
-        document.body.classList.remove('block-scroll');
+        document.body.classList.remove('blockScroll');
 
         // Set focus on previousFocus
         previousFocus.current?.focus();

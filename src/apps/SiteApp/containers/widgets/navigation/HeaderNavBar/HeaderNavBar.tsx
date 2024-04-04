@@ -12,6 +12,7 @@ import {
     useModalController,
 } from '@/components/shared/ui/modal/Modal/hooks/useModalController.ts';
 import Modal from '@/components/shared/ui/modal/Modal/Modal.tsx';
+import Counter from '@/components/entities/Counter/Counter.tsx';
 
 
 export type HeaderNavBarProps = {};
@@ -28,9 +29,9 @@ const HeaderNavBar: React.FC<HeaderNavBarProps> = (props) => {
             </h1>
             <div className={ css.side }>
                 <Modal controller={ controller }>
-                    h1
+                    <Counter/>
                 </Modal>
-                <Button onClick={ () => controller.setOpened(true) }>Open modal</Button>
+                <Button onClick={ () => controller.setOpened(true) }>[-]</Button>
                 <nav>
                     <ul className={ classNames(css.links, {}, [ css.list ]) }>
                         <li>

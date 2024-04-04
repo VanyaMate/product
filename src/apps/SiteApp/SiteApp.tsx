@@ -11,6 +11,7 @@ import ScreenHeight from '@/components/shared/ui/screen/ScreenHeight/ScreenHeigh
 import ErrorBoundary from '@/components/shared/ui/errors/ErrorBoundary/ErrorBoundary.tsx';
 import i18n from './configs/i18n/i18n.ts';
 import { I18nextProvider } from 'react-i18next';
+import SiteAppReduxToolkitProvider from './providers/SiteAppReduxToolkitProvider.tsx';
 
 
 export type SiteAppProps = {};
@@ -20,25 +21,27 @@ const SiteApp: React.FC<SiteAppProps> = (props) => {
 
     return (
         <React.StrictMode>
-            <I18nextProvider i18n={ i18n }>
-                <BrowserRouter>
-                    <ThemeProvider isPageTheme={ true }
-                                   storageId="site-app"
-                                   withStorage={ true }
-                    >
-                        <ErrorBoundary>
-                            <ScreenHeight
-                                footer={ <FooterNavBar/> }
-                            >
-                                {/* eslint-disable-next-line react/jsx-max-depth */ }
-                                <HeaderNavBar/>
-                                {/* eslint-disable-next-line react/jsx-max-depth */ }
-                                <SiteRouter/>
-                            </ScreenHeight>
-                        </ErrorBoundary>
-                    </ThemeProvider>
-                </BrowserRouter>
-            </I18nextProvider>
+            <SiteAppReduxToolkitProvider>
+                <I18nextProvider i18n={ i18n }>
+                    <BrowserRouter>
+                        <ThemeProvider isPageTheme={ true }
+                                       storageId="site-app"
+                                       withStorage={ true }
+                        >
+                            <ErrorBoundary>
+                                <ScreenHeight
+                                    footer={ <FooterNavBar/> }
+                                >
+                                    {/* eslint-disable-next-line react/jsx-max-depth */ }
+                                    <HeaderNavBar/>
+                                    {/* eslint-disable-next-line react/jsx-max-depth */ }
+                                    <SiteRouter/>
+                                </ScreenHeight>
+                            </ErrorBoundary>
+                        </ThemeProvider>
+                    </BrowserRouter>
+                </I18nextProvider>
+            </SiteAppReduxToolkitProvider>
         </React.StrictMode>
     );
 };
