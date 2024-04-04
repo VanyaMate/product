@@ -52,7 +52,7 @@ export const useModalInnerManager = function (opened: boolean) {
         }
 
         // Unblock body scroll
-        document.body.classList.add('block-scroll');
+        document.body.classList.remove('block-scroll');
 
         // Set focus on previousFocus
         previousFocus.current?.focus();

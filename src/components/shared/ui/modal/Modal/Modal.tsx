@@ -9,6 +9,7 @@ import {
     useModalInnerManager,
 } from '@/components/shared/ui/modal/Modal/hooks/useModalInnerManager.ts';
 import Button from '@/components/shared/ui/buttons/Button/Button.tsx';
+import { useTranslation } from 'react-i18next';
 
 
 export type ModalProps =
@@ -19,6 +20,7 @@ export type ModalProps =
 
 const Modal: React.FC<ModalProps> = (props) => {
     const { className, controller, ...other } = props;
+    const { t }                               = useTranslation();
     const { placeRef, modalRef }              = useModalInnerManager(controller.opened);
 
     return (
@@ -30,7 +32,7 @@ const Modal: React.FC<ModalProps> = (props) => {
                         className={ classNames(css.container, { [css.hidden]: !controller.opened }, []) }
                         ref={ modalRef }
                     >
-                        <Button aria-label="Закрыть модальное окно"
+                        <Button aria-label={ t('close_modal_window_button') }
                                 className={ css.closeButton }
                                 onClick={ () => controller.setOpened(false) }
                         >X</Button>
