@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import Button from '@/components/shared/ui/buttons/Button/Button.tsx';
 import {
-    TestComponentContext,
-} from '@/components/entities/TestComponent/TestComponentContext.ts';
+    TestComponentContext
+} from '@/components/entities/_temp_/TestComponent/TestComponentContext.ts';
 
 
 export type UpdateTestComponentButtonProps = {};

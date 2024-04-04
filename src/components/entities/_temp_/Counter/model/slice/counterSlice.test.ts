@@ -1,10 +1,9 @@
+import { CounterSchema } from "../types/counterSchema";
 import {
     counterActions,
     counterReducer,
-} from '@/components/entities/Counter/model/slice/counterSlice.ts';
-import {
-    CounterSchema,
-} from '@/components/entities/Counter/model/types/counterSchema.ts';
+} from '@/components/entities/_temp_/Counter/model/slice/counterSlice.ts';
+
 
 
 describe('CounterSlice', () => {

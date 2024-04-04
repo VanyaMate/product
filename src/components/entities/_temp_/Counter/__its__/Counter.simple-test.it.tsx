@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import Counter from '@/components/entities/Counter/Counter.tsx';
-import CounterReduxTestProvider
-    from '@/components/entities/Counter/__its__/providers/CounterReduxTestProvider/CounterReduxTestProvider.tsx';
 import { userEvent } from '@testing-library/user-event';
 import { delay } from '@/components/shared/tests/helpers/delay.ts';
+import CounterReduxTestProvider
+    from '@/components/entities/_temp_/Counter/__its__/providers/CounterReduxTestProvider/CounterReduxTestProvider.tsx';
+import Counter from '@/components/entities/_temp_/Counter/Counter.tsx';
 
 
 export default async () => {

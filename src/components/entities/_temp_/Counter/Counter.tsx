@@ -1,14 +1,14 @@
 import React from 'react';
 import Button from '@/components/shared/ui/buttons/Button/Button.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    counterActions,
-} from '@/components/entities/Counter/model/slice/counterSlice.ts';
 import css from './Counter.module.scss';
-
 import {
-    getCounterValue,
-} from '@/components/entities/Counter/model/selectors/getCounterValue/getCounterValue.ts';
+    getCounterValue
+} from '@/components/entities/_temp_/Counter/model/selectors/getCounterValue/getCounterValue.ts';
+import {
+    counterActions
+} from '@/components/entities/_temp_/Counter/model/slice/counterSlice.ts';
+
 
 
 export type CounterProps = {};

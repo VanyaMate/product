@@ -1,9 +1,9 @@
 import { test } from '@playwright/experimental-ct-react';
-import TestComponentProvider
-    from '@/components/entities/TestComponent/TestComponentProvider.tsx';
-import UpdateTestComponentButton
-    from '@/components/entities/TestComponent/UpdateTestComponentButton.tsx';
 import { Theme } from '@/components/shared/ui/theme/ThemeContext/types/themes.ts';
+import TestComponentProvider
+    from '@/components/entities/_temp_/TestComponent/TestComponentProvider.tsx';
+import UpdateTestComponentButton
+    from '@/components/entities/_temp_/TestComponent/UpdateTestComponentButton.tsx';
 
 
 test('Test', async ({ mount, page }) => {

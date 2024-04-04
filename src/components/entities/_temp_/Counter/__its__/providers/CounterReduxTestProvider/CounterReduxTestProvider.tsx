@@ -2,11 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import {
-    CounterSchema,
-} from '@/components/entities/Counter/model/types/counterSchema.ts';
+    CounterSchema
+} from '@/components/entities/_temp_/Counter/model/types/counterSchema.ts';
 import {
-    counterReducer,
-} from '@/components/entities/Counter/model/slice/counterSlice.ts';
+    counterReducer
+} from '@/components/entities/_temp_/Counter/model/slice/counterSlice.ts';
 
 
 export type CounterReduxTestProviderProps = {

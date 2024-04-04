@@ -12,7 +12,7 @@ import {
     useModalController,
 } from '@/components/shared/ui/modal/Modal/hooks/useModalController.ts';
 import Modal from '@/components/shared/ui/modal/Modal/Modal.tsx';
-import Counter from '@/components/entities/Counter/Counter.tsx';
+import Counter from '@/components/entities/_temp_/Counter/Counter.tsx';
 
 
 export type HeaderNavBarProps = {};
