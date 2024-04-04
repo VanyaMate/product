@@ -20,6 +20,7 @@ const TestComponentProvider: React.FC<TestComponentProviderProps> = ({ children 
     return (
         <TestComponentContext.Provider value={ { val, setVal: setValueCallback } }>
             <div>
+                {/* eslint-disable-next-line i18next/no-literal-string */}
                 <h1>provider: { val }</h1>
                 { children }
             </div>

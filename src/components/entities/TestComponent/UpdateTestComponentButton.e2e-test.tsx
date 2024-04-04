@@ -1,16 +1,14 @@
-import { expect, test } from '@playwright/experimental-ct-react';
+import { test } from '@playwright/experimental-ct-react';
 import TestComponentProvider
     from '@/components/entities/TestComponent/TestComponentProvider.tsx';
 import UpdateTestComponentButton
     from '@/components/entities/TestComponent/UpdateTestComponentButton.tsx';
-import { delay } from '@/components/shared/tests/helpers/delay.ts';
 import { Theme } from '@/components/shared/ui/theme/ThemeContext/types/themes.ts';
 
 
 test('Test', async ({ mount, page }) => {
     await mount(
         <TestComponentProvider key="provider">
-            {/* eslint-disable-next-line react/jsx-max-depth */ }
             <UpdateTestComponentButton/>
         </TestComponentProvider>, {
             hooksConfig: {

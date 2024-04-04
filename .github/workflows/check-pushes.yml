@@ -48,6 +48,9 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
+      - name: npm i
+      - name: npm run pw:install
+      - name: npm run test:pw-linux
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
@@ -68,11 +71,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm i
+      - name: npm i
+      - name: npm run pw:install
+      - name: test:pw-update-linux
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update Loki-snapshot"
+          commit_message: "Update PW-snapshot"
 
   notify:
     if: ${{ always() && contains(github.event.head_commit.message, '%tg_notify%')}}
