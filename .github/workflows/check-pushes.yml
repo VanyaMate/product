@@ -73,7 +73,7 @@ jobs:
           cache: 'npm'
       - run: npm i
       - run: npm run pw:install
-      - run: test:pw-update-linux
+      - run: npm run test:pw-update-linux
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
