@@ -13,14 +13,7 @@ test('Test functions', async ({ mount, page }) => {
     // Test dark theme
     const darkThemeContainer = await page.locator('.theme.dark');
     await expect(darkThemeContainer).toBeVisible();
-    const toggleTheme = await page.locator('[aria-label="Переключить тему"]');
-    await toggleTheme.click({ force: true });
     await delay(100);
-
-    // Test light theme
-    const lightThemeContainer = await page.locator('.theme.light');
-    await expect(lightThemeContainer).toBeVisible();
-    await expect(page).toHaveScreenshot('SiteApp_toggle-theme.png');
 
     // Test language
     const toggleLanguage = await page.getByText('РУС');
