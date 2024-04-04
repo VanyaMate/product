@@ -15,7 +15,7 @@ const ToggleThemeButton: React.FC<ToggleThemeButtonProps> = (props) => {
     const {}                     = props;
     const { theme, toggleTheme } = useThemeSwitcher();
     const { t }                  = useTranslation();
-    const themeImageSrc          = `/public/assets/images/theme/${ theme === Theme.DARK
+    const themeImageSrc          = `./assets/images/theme/${ theme === Theme.DARK
                                                                    ? 'moon.png'
                                                                    : 'sun.png' }`;
 

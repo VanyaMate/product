@@ -2,7 +2,7 @@ import React from 'react';
 import css from './HeaderNavBar.module.scss';
 import ToggleThemeButton
     from '@/components/shared/ui/theme/ThemeContext/ui/ToggleThemeButton/ToggleThemeButton.tsx';
-import Link from '@/components/shared/ui/links/Link/Link';
+import Link from '@/components/shared/ui/links/Link/Link.tsx';
 import { useTranslation } from 'react-i18next';
 import ToggleLanguageButton
     from '@/components/shared/ui/i18n/ToggleLanguageButton/ToggleLanguageButton.tsx';
