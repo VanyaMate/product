@@ -48,12 +48,12 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
-      - run: npm i
-      - run: npm run pw:install
-      - run: npm run test:pw-linux
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      - run: npm i
+      - run: npm run pw:install
+      - run: npm run test:pw-linux
       - run: npm i
 
   pw_update:
