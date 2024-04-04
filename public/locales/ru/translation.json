@@ -11,5 +11,7 @@
     "not_found_title": "Не найдено",
     "not_found_description": "Запрашиваемый вами ресурс удален или перенесен в другое место",
     "error_boundary_title": "Что-то пошло не так",
-    "close_modal_window_button": "Закрыть модальное окно"
+    "close_modal_window_button": "Закрыть модальное окно",
+    "user_auth_form_enter_button": "Войти",
+    "user_registration_form_enter_button": "Зарегистрироваться"
 }
