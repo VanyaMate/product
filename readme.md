@@ -16,6 +16,7 @@
 - **TypeScript**
 - **React**
     - **React-Router-Dom**
+    - **Redux Toolkit**
 - **SCSS** + **CSS Modules**
 - **I18N-Next**
 
