@@ -7,7 +7,13 @@
     box-shadow    : 0 0 0 0 transparent;
     transition    : var(--transition-medium);
 
-    &.primary {
+    &:disabled {
+        background : var(--ghost-color);
+        color      : var(--on-ghost-text-color);
+        cursor     : default;
+    }
+
+    &.primary:not(:disabled) {
         background : var(--primary-color);
         color      : var(--on-primary-text-color);
 
@@ -17,7 +23,7 @@
         }
     }
 
-    &.second {
+    &.second:not(:disabled) {
         background : var(--second-color);
         color      : var(--on-second-text-color);
 
@@ -27,7 +33,7 @@
         }
     }
 
-    &.ghost {
+    &.ghost:not(:disabled) {
         background : var(--ghost-color);
         color      : var(--on-ghost-text-color);
 

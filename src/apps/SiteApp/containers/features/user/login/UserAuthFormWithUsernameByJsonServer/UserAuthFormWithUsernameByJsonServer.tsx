@@ -17,10 +17,14 @@ const UserAuthFormWithUsernameByJsonServer: React.FC<UserAuthFormByUsernameProps
             onError={ onError }
             onSend={ async (login) => {
                 try {
-                    return {
-                        id      : '',
-                        username: login,
-                    };
+                    return new Promise<User>((resolve) => {
+                        setTimeout(() => {
+                            resolve({
+                                id      : '',
+                                username: login,
+                            });
+                        }, 1000);
+                    });
                 } catch (e) {
                     throw 'Error';
                 }

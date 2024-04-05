@@ -4,6 +4,7 @@
 @import "fonts/geist/geist-mono";
 @import "sizes/offsets/offsets";
 @import "transitions/transitions";
+@import "animations/animations";
 
 * {
     margin      : 0;
@@ -21,6 +22,10 @@ select {
 
 .blockScroll {
     overflow : hidden;
+}
+
+.loading {
+    animation : loading ease-in-out .5s infinite;
 }
 
 *[inert] {

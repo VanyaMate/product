@@ -1,0 +1,36 @@
+.container {
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);
+
+    .label {
+        display         : flex;
+        justify-content : space-between;
+        align-items     : center;
+        gap             : var(--offset-small);
+        color           : var(--ghost-color);
+
+        &.error {
+            color : var(--danger-color);
+        }
+    }
+
+    .input {
+        padding       : var(--offset-small);
+        outline       : none;
+        transition    : var(--transition-medium);
+        border-radius : var(--offset-small);
+        background    : var(--bg-main-color);
+        color         : var(--text-main-color);
+        border        : 1px solid var(--border-main-color);
+
+        &:hover {
+            box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--ghost-color);
+        }
+
+        &:focus {
+            box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color);
+            border     : 1px solid var(--primary-color);
+        }
+    }
+}

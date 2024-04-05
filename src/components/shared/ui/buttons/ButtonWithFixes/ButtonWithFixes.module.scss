@@ -1,7 +1,8 @@
 .container {
-    display     : inline-flex;
-    gap         : var(--offset-small);
-    align-items : center;
+    display         : inline-flex;
+    gap             : var(--offset-small);
+    align-items     : center;
+    justify-content : center;
 
     .item {
         display         : flex;
