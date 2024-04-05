@@ -2,6 +2,8 @@ import React from 'react';
 import { User } from '@/components/entities/users/model/types/user.ts';
 import UserAuthFormByUsername
     from '@/components/entities/users/auth/forms/UserAuthFormByUsername/UserAuthFormByUsername.tsx';
+import UserAuthFormByUsernameWithError
+    from '@/components/entities/users/auth/forms/UserAuthFormByUsernameWithError/UserAuthFormByUsernameWithError.tsx';
 
 
 export type UserAuthFormByUsernameProps = {
@@ -13,24 +15,7 @@ const UserAuthFormWithUsernameByJsonServer: React.FC<UserAuthFormByUsernameProps
     const { onError, onSuccess } = props;
 
     return (
-        <UserAuthFormByUsername
-            onError={ onError }
-            onSend={ async (login) => {
-                try {
-                    return new Promise<User>((resolve) => {
-                        setTimeout(() => {
-                            resolve({
-                                id      : '',
-                                username: login,
-                            });
-                        }, 1000);
-                    });
-                } catch (e) {
-                    throw 'Error';
-                }
-            } }
-            onSuccess={ onSuccess }
-        />
+        <UserAuthFormByUsernameWithError/>
     );
 };
 

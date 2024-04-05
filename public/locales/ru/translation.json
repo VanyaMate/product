@@ -1,8 +1,4 @@
 {
-    "logo": "Продукт",
-    "aria_logo": "Домой",
-    "home_page": "Главная",
-    "about_us_page": "О нас",
     "toggle_language_button": "РУС",
     "toggle_language_aria_button": "Переключить язык на английский",
     "toggle_theme_button": "Тема",
@@ -15,6 +11,5 @@
     "user_auth_form_enter_button": "Войти",
     "user_registration_form_enter_button": "Зарегистрироваться",
     "user_auth_form_login_label": "Логин",
-    "user_auth_form_password_label": "Пароль",
-    "login_length_error_message": "Длина должна быть больше 5"
+    "user_auth_form_password_label": "Пароль"
 }

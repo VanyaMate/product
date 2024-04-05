@@ -24,11 +24,19 @@
         color         : var(--text-main-color);
         border        : 1px solid var(--border-main-color);
 
-        &:hover {
+        &.error {
+            border : 1px solid var(--danger-color);
+
+            &:focus {
+                box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--danger-color);
+            }
+        }
+
+        &:hover:not(.error) {
             box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--ghost-color);
         }
 
-        &:focus {
+        &:focus:not(.error) {
             box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color);
             border     : 1px solid var(--primary-color);
         }

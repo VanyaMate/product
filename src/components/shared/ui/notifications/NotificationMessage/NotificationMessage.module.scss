@@ -1,0 +1,21 @@
+.container {
+    padding       : var(--offset-medium);
+    border-radius : var(--offset-medium);
+    transition    : var(--transition-medium);
+
+    &.primary {
+        border : 2px solid var(--primary-color);
+    }
+
+    &.second {
+        border : 2px solid var(--second-color);
+    }
+
+    &.ghost {
+        border : 2px solid var(--ghost-color);
+    }
+
+    &.danger {
+        border : 2px solid var(--danger-color);
+    }
+}

@@ -15,7 +15,7 @@ export type HeaderNavBarProps = {};
 
 const HeaderNavBar: React.FC<HeaderNavBarProps> = (props) => {
     const {}    = props;
-    const { t } = useTranslation();
+    const { t } = useTranslation([ 'site-app' ]);
 
     return (
         <header className={ css.container }>

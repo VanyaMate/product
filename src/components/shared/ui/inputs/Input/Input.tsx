@@ -18,18 +18,19 @@ const Input: React.FC<InputProps> = (props) => {
 
     return (
         <div className={ css.container }>
-            { label || controller.errorMessage
+            { label || required
               ? <label
                   className={ classNames(css.label, { [css.error]: !controller.valid && !controller.empty }) }
                   htmlFor={ generatedUniqueId }
               >
-                  { controller.empty ? label : (controller.errorMessage || label) }
+                  { label }
                   { required ? <AiOutlineWarning/> : null }
               </label>
               : null }
             <input
+                key="input"
                 { ...other }
-                className={ classNames(css.input, {}, [ className ]) }
+                className={ classNames(css.input, { [css.error]: !controller.valid && !controller.empty }, [ className ]) }
                 defaultValue={ controller.getValue() }
                 id={ generatedUniqueId }
                 onChange={ controller.onChange }

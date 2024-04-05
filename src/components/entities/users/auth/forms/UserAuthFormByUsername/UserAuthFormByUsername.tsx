@@ -11,6 +11,13 @@ import {
 import {
     AiOutlineLoading, AiOutlineUser,
 } from 'react-icons/ai';
+import NotificationMessage
+    , {
+    NotificationMessageType,
+} from '@/components/shared/ui/notifications/NotificationMessage/NotificationMessage.tsx';
+import {
+    useInputCompose,
+} from '@/components/shared/ui/inputs/Input/hooks/useInputCompose.ts';
 
 
 export type UserAuthFormByUsernameProps = {
@@ -21,28 +28,40 @@ export type UserAuthFormByUsernameProps = {
 
 const UserAuthFormByUsername: React.FC<UserAuthFormByUsernameProps> = (props) => {
     const { onError, onSuccess, onSend } = props;
-    const { t }                          = useTranslation();
+    const { t }                          = useTranslation([ 'translation', 'validation-messages' ]);
     const [ loading, setLoading ]        = useState<boolean>(false);
-    const loginLengthErrorMessage        = t('login_length_error_message');
     const loginInput                     = useInput({
-        validationMethod: (login) => (login.length > 5) ? '' : loginLengthErrorMessage,
+        validationMethod: (login) =>
+            (login.length > 5)
+            ? '' : t('min_length_error', { ns: 'validation-messages' }),
+        debounce        : 500,
     });
     const passwordInput                  = useInput();
+    const form                           = useInputCompose(loginInput, passwordInput);
 
     const onSubmitHandler: FormEventHandler = function (event: FormEvent) {
-        if (onSend && loginInput.valid && passwordInput.valid) {
-            event.preventDefault();
+        event.preventDefault();
+        if (onSend && form.valid) {
             setLoading(true);
             onSend(loginInput.getValue(), passwordInput.getValue())
                 .then(onSuccess)
                 .catch(onError)
                 .finally(() => setLoading(false));
+        } else if (!form.valid) {
+            form.getNextError();
         }
     };
 
     return (
         <form className={ css.container } onSubmit={ onSubmitHandler }>
             <h3>{ t('user_auth_form_enter_button') }</h3>
+            {
+                form.nextError
+                ? <NotificationMessage styleType={ NotificationMessageType.DANGER }>
+                    { form.nextError }
+                </NotificationMessage>
+                : null
+            }
             <Input
                 controller={ loginInput }
                 label={ t('user_auth_form_login_label') }
@@ -56,7 +75,7 @@ const UserAuthFormByUsername: React.FC<UserAuthFormByUsernameProps> = (props) =>
                 type="password"
             />
             <ButtonWithFixes
-                disabled={ loading || !loginInput.valid || !passwordInput.valid }
+                disabled={ loading }
                 post={
                     loading
                     ? <AiOutlineLoading className="loading"/>
@@ -64,7 +83,11 @@ const UserAuthFormByUsername: React.FC<UserAuthFormByUsernameProps> = (props) =>
                 }
                 type="submit"
             >
-                { t('user_auth_form_enter_button') }
+                {
+                    form.valid
+                    ? t('user_auth_form_enter_button')
+                    : 'Перейти к полю c ошибкой'
+                }
             </ButtonWithFixes>
         </form>
     );

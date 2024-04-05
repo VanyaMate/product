@@ -1,8 +1,6 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 
-export type InputValid = [ boolean, string ];
-
 export type UseInputProps = {
     defaultValue?: string;
     debounce?: number;
@@ -22,9 +20,14 @@ export interface IUseInput {
 export const useInput = function (props?: UseInputProps): IUseInput {
     const value                             = useRef<string>(props?.defaultValue ?? '');
     const inputRef                          = useRef<HTMLInputElement | null>(null);
-    const [ valid, setValid ]               = useState<boolean>(true);
-    const [ errorMessage, setErrorMessage ] = useState<string>('');
-    const [ empty, setEmpty ]               = useState<boolean>(value.current.trim().length === 0);
+    const validationResult: string          = props?.validationMethod?.(value.current) ?? '';
+    const filled: boolean                   = value.current.trim().length === 0;
+    const debounceTimer                     = useRef<ReturnType<typeof setTimeout>>();
+    const [ valid, setValid ]               = useState<boolean>(!validationResult.trim().length);
+    const [ errorMessage, setErrorMessage ] = useState<string>(
+        filled ? validationResult : '',
+    );
+    const [ empty, setEmpty ]               = useState<boolean>(!filled);
 
     const getValue = function () {
         return value.current;
@@ -37,15 +40,16 @@ export const useInput = function (props?: UseInputProps): IUseInput {
         }
     };
 
-    const onChange = function () {
+    const updateState = function () {
         value.current = inputRef.current!.value;
 
         if (props?.validationMethod) {
-            const validationResult = props?.validationMethod(value.current);
-            if (validationResult !== errorMessage) {
-                setValid(!validationResult);
+            clearTimeout(debounceTimer.current);
+            debounceTimer.current = setTimeout(() => {
+                const validationResult = props.validationMethod!(value.current) ?? '';
                 setErrorMessage(validationResult);
-            }
+                setValid(!validationResult);
+            }, props.debounce ?? 0);
         } else if (inputRef.current?.required) {
             if (value.current.trim().length === 0) {
                 setValid(false);
@@ -59,8 +63,13 @@ export const useInput = function (props?: UseInputProps): IUseInput {
         setEmpty(value.current.trim().length === 0);
     };
 
+    const onChange = function () {
+        setErrorMessage('');
+        updateState();
+    };
+
     useEffect(() => {
-        onChange();
+        updateState();
     }, [ props ]);
 
     return {
