@@ -1,7 +1,5 @@
 import React from 'react';
 import { User } from '@/components/entities/users/model/types/user.ts';
-import UserAuthFormByUsername
-    from '@/components/entities/users/auth/forms/UserAuthFormByUsername/UserAuthFormByUsername.tsx';
 import UserAuthFormByUsernameWithError
     from '@/components/entities/users/auth/forms/UserAuthFormByUsernameWithError/UserAuthFormByUsernameWithError.tsx';
 
@@ -11,9 +9,7 @@ export type UserAuthFormByUsernameProps = {
     onError?: (reason: string) => void;
 };
 
-const UserAuthFormWithUsernameByJsonServer: React.FC<UserAuthFormByUsernameProps> = (props) => {
-    const { onError, onSuccess } = props;
-
+const UserAuthFormWithUsernameByJsonServer: React.FC<UserAuthFormByUsernameProps> = () => {
     return (
         <UserAuthFormByUsernameWithError/>
     );
