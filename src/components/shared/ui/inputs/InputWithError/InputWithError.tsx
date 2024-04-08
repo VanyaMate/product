@@ -1,23 +1,25 @@
 import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import css from './InputWithError.module.scss';
+import {
+    IUseInputWithError,
+} from '@/components/shared/ui/inputs/InputWithError/hooks/useInputWithError.ts';
 
 
 export type InputWithErrorProps =
     {
         label?: string;
+        controller: IUseInputWithError
     }
     & React.ComponentPropsWithoutRef<'input'>;
 
 const InputWithError: React.FC<InputWithErrorProps> = (props) => {
-    const { label, className, ...other } = props;
-    const generateUniqueId: string       = useMemo<string>(() => Math.random().toString(), []);
+    const { label, className, controller, ...other } = props;
+    const generateUniqueId: string                   = useMemo<string>(() => Math.random().toString(), []);
 
     return (
-        <div className={ css.container }>
-            <div className={ css.error } key="error-showcase">Длина должна быть больше 5 и
-                меньше 16
-            </div>
+        <div
+            className={ classNames(css.container, { [css.noValid]: !controller.isValid }) }>
             {
                 label
                 ? <label
@@ -30,7 +32,12 @@ const InputWithError: React.FC<InputWithErrorProps> = (props) => {
                 { ...other }
                 className={ classNames(css.input, {}, [ className ]) }
                 id={ generateUniqueId }
+                onChange={ controller.onChangeHandler }
+                ref={ controller.inputRef }
             />
+            <div className={ css.error } key="error-showcase">
+                { controller.errorMessage }
+            </div>
         </div>
     );
 };
