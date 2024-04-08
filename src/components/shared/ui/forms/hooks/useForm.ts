@@ -31,7 +31,7 @@ export const useForm = function <T extends FormReturnType> (props: UseFormProps<
             const input = props.inputs[i];
             if (!input.isValid) {
                 input.inputRef.current?.focus();
-                break;
+                return;
             }
             data[input.name] = input.value.current;
         }
