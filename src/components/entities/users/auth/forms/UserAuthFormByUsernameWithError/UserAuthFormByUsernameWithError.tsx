@@ -10,20 +10,34 @@ import {
 import Form from '@/components/shared/ui/forms/Form.tsx';
 import { useForm } from '@/components/shared/ui/forms/hooks/useForm.ts';
 import { AiOutlineLoading, AiOutlineUser } from 'react-icons/ai';
+import { useTranslation } from 'react-i18next';
 
 
 export type UserAuthFormByUsernameWithErrorProps = {};
 
 const UserAuthFormByUsernameWithError: React.FC<UserAuthFormByUsernameWithErrorProps> = (props) => {
     const {}                      = props;
+    const { t }                   = useTranslation([ 'translation', 'validation-messages' ]);
     const loginInputController    = useInputWithError({
         name            : 'login',
-        validationMethod: (value) => value.length < 5 ? 'Длина должна быть больше 5' : '',
+        validationMethod: (value) => {
+            if (value.length < 5) {
+                return t('min_length_error', { length: '5', ns: 'validation-messages' });
+            } else {
+                return '';
+            }
+        },
         debounce        : 500,
     });
     const passwordInputController = useInputWithError({
         name            : 'password',
-        validationMethod: (value) => value.length < 5 ? 'Длина должна быть больше 5' : '',
+        validationMethod: (value) => {
+            if (value.length < 10) {
+                return t('min_length_error', { length: '10', ns: 'validation-messages' });
+            } else {
+                return '';
+            }
+        },
         debounce        : 500,
     });
     const form                    = useForm<{ login: string, password: string }>({
@@ -47,23 +61,25 @@ const UserAuthFormByUsernameWithError: React.FC<UserAuthFormByUsernameWithErrorP
         >
             <InputWithError
                 controller={ loginInputController }
-                label="Логин"
+                label={ t('user_auth_form_login_label') }
                 required
             />
             <InputWithError
                 controller={ passwordInputController }
-                label="Пароль"
+                label={ t('user_auth_form_password_label') }
                 required
                 type="password"
             />
             <ButtonWithFixes
                 disabled={ form.pending }
                 post={
-                    form.pending ? <AiOutlineLoading className={ 'loading' }/> :
+                    form.pending ? <AiOutlineLoading className="loading"/> :
                     <AiOutlineUser/>
                 }
                 type="submit"
-            >Войти</ButtonWithFixes>
+            >
+                { t('user_auth_form_enter_button') }
+            </ButtonWithFixes>
         </Form>
     );
 };

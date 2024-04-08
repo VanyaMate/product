@@ -40,6 +40,7 @@ export const useInputWithError = function (props: UseInputWithErrorProps): IUseI
     // Ref который хранит debounce timer
     const debounceTimer = useRef<ReturnType<typeof setTimeout>>();
 
+    // Функция которая запускает валидацию
     const validateCurrentValue = useCallback(() => {
         if (props.validationMethod) {
             clearTimeout(debounceTimer.current);
