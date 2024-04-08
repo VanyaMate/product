@@ -13,19 +13,27 @@ import { AiOutlineLoading, AiOutlineUser } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 
 
-export type UserAuthFormByUsernameWithErrorProps = {};
+export type UserAuthFormByUserNameFormType = {
+    username: string;
+    password: string;
+    remember?: boolean;
+}
+
+export type UserAuthFormByUsernameWithErrorProps = {
+    onSubmit: (data: UserAuthFormByUserNameFormType) => Promise<any>;
+    onError?: (error: string) => void;
+};
 
 const UserAuthFormByUsernameWithError: React.FC<UserAuthFormByUsernameWithErrorProps> = (props) => {
-    const {}                      = props;
+    const { onSubmit, onError }   = props;
     const { t }                   = useTranslation([ 'translation', 'validation-messages' ]);
     const loginInputController    = useInputWithError({
-        name            : 'login',
+        name            : 'username',
         validationMethod: (value) => {
             if (value.length < 5) {
                 return t('min_length_error', { length: '5', ns: 'validation-messages' });
-            } else {
-                return '';
             }
+            return '';
         },
         debounce        : 500,
     });
@@ -34,25 +42,16 @@ const UserAuthFormByUsernameWithError: React.FC<UserAuthFormByUsernameWithErrorP
         validationMethod: (value) => {
             if (value.length < 10) {
                 return t('min_length_error', { length: '10', ns: 'validation-messages' });
-            } else {
-                return '';
             }
+            return '';
         },
         debounce        : 500,
     });
-    const form                    = useForm<{ login: string, password: string }>({
+    const form                    = useForm<UserAuthFormByUserNameFormType>({
         inputs  : [ loginInputController, passwordInputController ],
-        onSubmit: (data) => {
-            return new Promise<void>((resolve) => {
-                setTimeout(() => {
-                    console.log(data);
-                    resolve();
-                }, 1000);
-            });
-        },
+        onSubmit: onSubmit,
+        onError : onError,
     });
-
-    console.log('rerender form', loginInputController.errorMessage, loginInputController.isValid);
 
     return (
         <Form

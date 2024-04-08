@@ -8,6 +8,7 @@ import {
 export type UseFormProps<T> = {
     inputs: IUseInputWithError[];
     onSubmit: (data: T) => Promise<void>;
+    onError?: (error: string) => void;
 }
 
 export interface IUseForm {
@@ -21,8 +22,6 @@ export type FormReturnType = Record<string, string | number | boolean>;
 export const useForm = function <T extends FormReturnType> (props: UseFormProps<T>) {
     const [ pending, setPending ] = useState<boolean>(false);
     const [ error, setError ]     = useState<string>('');
-
-    console.log('use form rerender');
 
     const onSubmitHandler = useCallback<FormEventHandler<HTMLFormElement>>((event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -38,7 +37,10 @@ export const useForm = function <T extends FormReturnType> (props: UseFormProps<
         setPending(true);
         setError('');
         props.onSubmit(<T>data)
-            .catch(setError)
+            .catch((error: Error) => {
+                setError(error.message);
+                props.onError && props.onError(error.message);
+            })
             .finally(() => setPending(false));
     }, [ props ]);
 

@@ -20,7 +20,13 @@ const UserLoginButton: React.FC<UserLoginButtonProps> = (props) => {
         <>
             <Modal controller={ modalController }>
                 <UserAuthFormWithUsernameByJsonServer
-                    onSuccess={ () => modalController.setOpened(false) }
+                    onError={ (error) => {
+                        console.log('Show error notification: ', error);
+                    } }
+                    onSuccess={ (user) => {
+                        console.log('LogIn as', user);
+                        modalController.setOpened(false);
+                    } }
                 />
             </Modal>
             <Button
