@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import Button from '@/components/shared/ui/buttons/Button/Button.tsx';
-import { ButtonStyleType } from '@/components/shared/ui/buttons/Button/types/types.ts';
 import css from '../../ui/Button.module.scss';
+import { Button } from '../../ui/Button';
+import { ButtonStyleType } from '../../types/types';
 
 
 export default () => {

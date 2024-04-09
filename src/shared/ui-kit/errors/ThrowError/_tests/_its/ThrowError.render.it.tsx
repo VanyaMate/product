@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import ThrowError from '@/components/shared/ui/errors/ThrowError/ThrowError.tsx';
 import { useTranslation } from 'react-i18next';
 import { Mock } from 'jest-mock';
+import { ThrowError } from '../../ui/ThrowError';
 
 
 export default () => {

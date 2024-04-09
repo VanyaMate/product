@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Button from '@/components/shared/ui/buttons/Button/Button.tsx';
+import { Button } from '../../ui/Button';
 
 
 export default () => {

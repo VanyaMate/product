@@ -1,6 +1,4 @@
-import ButtonWithFixesRenderIt
-    from '@/components/shared/ui/buttons/ButtonWithFixes/__its__/ButtonWithFixes.render.it.tsx';
-
+import ButtonWithFixesRenderIt from "./_its/ButtonWithFixes.render.it";
 
 describe('ButtonWithFixes', () => {
     it('Render', ButtonWithFixesRenderIt);

@@ -1,7 +1,5 @@
-import ButtonClickIt
-    from '@/components/shared/ui/buttons/Button/__its__/Button.click.it.tsx';
-import ButtonStyleTypesIt
-    from '@/components/shared/ui/buttons/Button/__its__/Button.style-types.it.tsx';
+import ButtonClickIt from './_its/Button.click.it';
+import ButtonStyleTypesIt from './_its/Button.style-types.it';
 
 
 describe('Button', () => {

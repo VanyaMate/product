@@ -1,6 +1,4 @@
-import ThrowErrorRenderIt
-    from '@/components/shared/ui/errors/ThrowError/__its__/ThrowError.render.it.tsx';
-
+import ThrowErrorRenderIt from "./_its/ThrowError.render.it";
 
 describe('ThrowError', () => {
     it('Render', ThrowErrorRenderIt);

@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import ButtonWithFixes
-    from '@/components/shared/ui/buttons/ButtonWithFixes/ButtonWithFixes.tsx';
+import { ButtonWithFixes } from '../../ui/ButtonWithFixes';
 
 
 export default () => {
