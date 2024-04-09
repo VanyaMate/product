@@ -70,7 +70,7 @@ const UserAuthFormByUsernameWithError: React.FC<UserAuthFormByUsernameWithErrorP
                 type="password"
             />
             <ButtonWithFixes
-                disabled={ form.pending }
+                disabled={ !form.canBeSubmitted || form.pending }
                 post={
                     form.pending ? <AiOutlineLoading className="loading"/> :
                     <AiOutlineUser/>

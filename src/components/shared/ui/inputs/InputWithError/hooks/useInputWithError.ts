@@ -17,6 +17,7 @@ export type UseInputWithErrorProps = {
 
 export interface IUseInputWithError {
     isValid: boolean;
+    validationAwait: boolean;
     errorMessage: string;
     value: MutableRefObject<string>;
     name: string;
@@ -25,8 +26,13 @@ export interface IUseInputWithError {
 }
 
 export const useInputWithError = function (props: UseInputWithErrorProps): IUseInputWithError {
+    // Состояние необходимости провалидировать данные
+    const [ validationAwait, setValidationAwait ] = useState<boolean>(false);
+
     // Сообщение об ошибке
-    const [ errorMessage, setErrorMessage ] = useState<string>('');
+    const [ errorMessage, setErrorMessage ] = useState<string>(
+        props.validationMethod ? props.validationMethod('') : '',
+    );
 
     // Состояние валидности (сокращение для errorMessage.length === 0)
     const isValid = useMemo<boolean>(() => errorMessage.length === 0, [ errorMessage ]);
@@ -40,7 +46,7 @@ export const useInputWithError = function (props: UseInputWithErrorProps): IUseI
     // Ref который хранит debounce timer
     const debounceTimer = useRef<ReturnType<typeof setTimeout>>();
 
-    // Функция которая запускает валидацию
+    // Функция, которая запускает валидацию
     const validateCurrentValue = useCallback(() => {
         if (props.validationMethod) {
             clearTimeout(debounceTimer.current);
@@ -49,10 +55,12 @@ export const useInputWithError = function (props: UseInputWithErrorProps): IUseI
                 debounceTimer.current = setTimeout(() => {
                     const validationResult: string = props.validationMethod!(value.current);
                     setErrorMessage(validationResult);
+                    setValidationAwait(false);
                 }, props.debounce);
             } else {
                 const validationResult: string = props.validationMethod!(value.current);
                 setErrorMessage(validationResult);
+                setValidationAwait(false);
             }
         }
     }, [ props.debounce, props.validationMethod ]);
@@ -60,12 +68,14 @@ export const useInputWithError = function (props: UseInputWithErrorProps): IUseI
     // Функция, которая навешивается на onChange в input
     const onChangeHandler: ChangeEventHandler<HTMLInputElement> = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         value.current = event.target.value;
+        setValidationAwait(true);
         validateCurrentValue();
     }, [ validateCurrentValue ]);
 
     return {
         value,
         isValid,
+        validationAwait,
         errorMessage,
         onChangeHandler,
         inputRef,
