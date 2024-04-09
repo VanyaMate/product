@@ -15,7 +15,7 @@
 
 - **TypeScript**
 - **React**
-    - **React-MainSiteRouter-Dom**
+    - **React-Router-Dom**
     - **Redux Toolkit**
 - **SCSS** + **CSS Modules**
 - **I18N-Next**
@@ -35,6 +35,7 @@
     - **~~Loki~~** - `слишком с ним много проблем`
     - **~~reg-cli~~** - `не нужен для pw`
     - **_Playwright_** - `под вопросом. не работает React.Context`
+    - **Husky**
 - **MockServer**
     - **json-server**
 
