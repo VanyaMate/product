@@ -23,7 +23,8 @@
         "test:pw-report": "reg-cli /playwright/__snapshots__ /playwright/__snapshots__ /test-results -R ./report.html",
         "story": "storybook dev -p 6006",
         "story:build": "storybook build",
-        "server:json": "nodemon json-server/index.cjs"
+        "server:json": "nodemon json-server/index.cjs",
+        "prepare": "husky install"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^2.2.3",
@@ -87,6 +88,7 @@
         "stylelint-config-standard-scss": "^13.0.0",
         "ts-node": "^10.9.2",
         "typescript": "^5.2.2",
-        "vite": "^5.2.0"
+        "vite": "^5.2.0",
+        "husky": "^8.0.0"
     }
 }
