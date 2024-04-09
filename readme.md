@@ -4,7 +4,7 @@
 
 ### Architecture
 
-- **FSD** (своя версия)
+- **FSD**
 
 ### Builder
 
@@ -15,7 +15,7 @@
 
 - **TypeScript**
 - **React**
-    - **React-Router-Dom**
+    - **React-MainSiteRouter-Dom**
     - **Redux Toolkit**
 - **SCSS** + **CSS Modules**
 - **I18N-Next**

@@ -1,4 +1,4 @@
-import '../src/styles/index.scss';
+import '@/shared/styles/index.scss';
 import { afterMount, beforeMount } from '@playwright/experimental-ct-react/hooks';
 import { BrowserRouter } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
