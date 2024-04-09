@@ -20,7 +20,6 @@
         "test:pw-docker": "docker run --rm -v snapshots:/playwright/screenshots -e CI=true playwright-test:latest npm run test:pw-linux",
         "test:pw-docker:build": "docker build -t playwright-test:latest .",
         "test:pw-docker:update": "docker run -e CI=true playwright-test:latest npm run test:pw-update-linux",
-        "test:pw-report": "reg-cli /playwright/__snapshots__ /playwright/__snapshots__ /test-results -R ./report.html",
         "story": "storybook dev -p 6006",
         "story:build": "storybook build",
         "server:json": "nodemon json-server/index.cjs",
