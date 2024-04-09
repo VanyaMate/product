@@ -1,15 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
-import ToggleLanguageButton
-    from '@/components/shared/ui/i18n/ToggleLanguageButton/ToggleLanguageButton.tsx';
-import {
-    translationDecorator,
-} from '../../../../../../../.storybook/decorators/translation-decorator.tsx';
+import { translationDecorator } from '$/.storybook';
+import { ToggleLanguageButton } from '../ui/ToggleLanguageButton';
 
 
 ToggleLanguageButton.displayName = 'ToggleLanguageButton';
 
 const meta: Meta<typeof ToggleLanguageButton> = {
-    title     : 'shared/i18n/ToggleLanguageButton',
+    title     : 'app/i18n/ToggleLanguageButton',
     component : ToggleLanguageButton,
     tags      : [ 'autodocs' ],
     decorators: [ translationDecorator ],

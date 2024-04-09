@@ -1,12 +1,9 @@
-import ButtonWithFixes
-    from '@/components/shared/ui/buttons/ButtonWithFixes/ButtonWithFixes.tsx';
-import type { StoryObj } from '@storybook/react';
-import { ButtonStyleType } from '@/components/shared/ui/buttons/Button/types/types.ts';
+import ButtonStory from '@/shared/ui-kit/buttons/Button/_story/Button.story.tsx';
 import { fn } from '@storybook/test';
-import ButtonStory from '@/components/shared/ui/buttons/Button/Button.story.tsx';
+import { StoryObj } from '@storybook/react';
+import { ButtonWithFixes } from '../ui/ButtonWithFixes';
+import { ButtonStyleType } from '@/shared/ui-kit';
 
-
-ButtonWithFixes.displayName = 'ButtonWithFixes';
 
 const meta = {
     title    : 'shared/buttons/ButtonWithFixes',

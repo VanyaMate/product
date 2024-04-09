@@ -37,3 +37,7 @@
     - **_Playwright_** - `под вопросом. не работает React.Context`
 - **MockServer**
     - **json-server**
+
+## TODO
+
+- Пофиксить `export default meta`; у story у которых есть декораторы 

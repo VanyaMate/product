@@ -1,11 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
-import NotFoundError from '@/components/shared/ui/errors/NotFoundError/NotFoundError.tsx';
-import {
-    translationDecorator,
-} from '../../../../../../.storybook/decorators/translation-decorator.tsx';
+import { NotFoundError } from '../ui/NotFoundError';
+import { translationDecorator } from '$/.storybook';
 
-
-NotFoundError.displayName = 'NotFoundError';
 
 const meta: Meta<typeof NotFoundError> = {
     title     : 'shared/errors/NotFoundError',

@@ -1,18 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
-import ToggleThemeButton
-    from '@/components/shared/ui/theme/ThemeContext/ui/ToggleThemeButton/ToggleThemeButton.tsx';
-import {
-    themeDecorator,
-} from '../../../../../../../../.storybook/decorators/theme-decorator.tsx';
-import {
-    translationDecorator,
-} from '../../../../../../../../.storybook/decorators/translation-decorator.tsx';
+import { themeDecorator } from '$/.storybook';
+import { translationDecorator } from '$/.storybook';
+import { ToggleThemeButton } from '../ui/ToggleThemeButton';
 
 
 ToggleThemeButton.displayName = 'ToggleThemeButton';
 
 const meta: Meta<typeof ToggleThemeButton> = {
-    title     : 'shared/theme/ToggleLanguageButton',
+    title     : 'app/theme/ToggleLanguageButton',
     component : ToggleThemeButton,
     tags      : [ 'autodocs' ],
     decorators: [ themeDecorator, translationDecorator ],

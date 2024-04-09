@@ -1,11 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import NotFoundPage from '@/apps/SiteApp/containers/pages/NotFoundPage/NotFoundPage.tsx';
+import { NotFoundPage } from '../ui/NotFoundPage';
 
-
-NotFoundPage.displayName = 'NotFoundPage';
 
 const meta: Meta<typeof NotFoundPage> = {
-    title    : 'apps/SiteApp/pages/NotFoundPage',
+    title    : 'pages/NotFoundPage',
     component: NotFoundPage,
 };
 

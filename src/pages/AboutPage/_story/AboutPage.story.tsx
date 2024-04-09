@@ -1,11 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import AboutPage from '@/apps/SiteApp/containers/pages/AboutPage/AboutPage.tsx';
+import { AboutPage } from '../ui/AboutPage';
 
-
-AboutPage.displayName = 'AboutPage';
 
 const meta: Meta<typeof AboutPage> = {
-    title    : 'apps/SiteApp/pages/AboutPage',
+    title    : 'pages/AboutPage',
     component: AboutPage,
 };
 

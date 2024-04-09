@@ -1,11 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
-import ThrowError from '@/components/shared/ui/errors/ThrowError/ThrowError.tsx';
-import {
-    translationDecorator,
-} from '../../../../../../.storybook/decorators/translation-decorator.tsx';
+import { ThrowError } from '../ui/ThrowError';
+import { translationDecorator } from '$/.storybook';
 
-
-ThrowError.displayName = 'ThrowError';
 
 const meta: Meta<typeof ThrowError> = {
     title     : 'shared/errors/ThrowError',

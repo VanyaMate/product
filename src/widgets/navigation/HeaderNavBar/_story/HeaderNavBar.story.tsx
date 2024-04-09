@@ -1,18 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
-import HeaderNavBar
-    from '@/apps/SiteApp/containers/widgets/navigation/HeaderNavBar/HeaderNavBar.tsx';
-import {
-    routerDecorator,
-} from '../../../../../../../.storybook/decorators/router-decorator.tsx';
-import {
-    translationDecorator,
-} from '../../../../../../../.storybook/decorators/translation-decorator.tsx';
+import { HeaderNavBar } from '../ui/HeaderNavBar';
+import { translationDecorator } from '$/.storybook';
+import { routerDecorator } from '$/.storybook';
 
-
-HeaderNavBar.displayName = 'HeaderNavBar';
 
 const meta: Meta<typeof HeaderNavBar> = {
-    title     : 'apps/SiteApp/widgets/HeaderNavBar',
+    title     : 'widgets/HeaderNavBar',
     component : HeaderNavBar,
     decorators: [ routerDecorator, translationDecorator ],
 };

@@ -1,12 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import FooterNavBar
-    from '@/apps/SiteApp/containers/widgets/navigation/FooterNavBar/FooterNavBar.tsx';
+import { FooterNavBar } from '../ui/FooterNavBar';
 
-
-FooterNavBar.displayName = 'FooterNavBar';
 
 const meta: Meta<typeof FooterNavBar> = {
-    title    : 'apps/SiteApp/widgets/FooterNavBar',
+    title    : 'widgets/FooterNavBar',
     component: FooterNavBar,
 };
 

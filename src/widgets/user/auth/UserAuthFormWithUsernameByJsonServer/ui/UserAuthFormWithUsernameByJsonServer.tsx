@@ -1,9 +1,9 @@
-import { User } from '@/global/types';
 import { FC, memo } from 'react';
 import {
     UserAuthFormByUserNameFormType,
     UserAuthFormByUsernameWithError,
 } from '@/entities/users';
+import { User } from '@/app';
 
 
 export type UserAuthFormByUsernameProps = {
@@ -11,7 +11,7 @@ export type UserAuthFormByUsernameProps = {
     onError?: (reason: string) => void;
 };
 
-export const UserAuthFormWithUsernameByJsonServer: FC<UserAuthFormByUsernameProps> = memo((props) => {
+export const UserAuthFormWithUsernameByJsonServer: FC<UserAuthFormByUsernameProps> = memo(function UserAuthFormWithUsernameByJsonServer (props) {
     const { onSuccess, onError } = props;
 
     const loginHandler = function (userData: UserAuthFormByUserNameFormType) {

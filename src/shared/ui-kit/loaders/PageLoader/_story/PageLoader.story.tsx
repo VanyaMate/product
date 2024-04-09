@@ -1,8 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
-import PageLoader from '@/components/shared/ui/loaders/PageLoader/PageLoader.tsx';
+import { PageLoader } from '../ui/PageLoader';
 
-
-PageLoader.displayName = 'PageLoader';
 
 const meta: Meta<typeof PageLoader> = {
     title    : 'shared/loaders/PageLoader',

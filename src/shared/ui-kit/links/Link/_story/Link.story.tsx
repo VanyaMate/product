@@ -1,12 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
-import Link from '@/components/shared/ui/links/Link/Link.tsx';
-import { LinkStyleType } from '@/components/shared/ui/links/Link/types/types.ts';
-import {
-    routerDecorator,
-} from '../../../../../../.storybook/decorators/router-decorator.tsx';
+import { Link } from '../ui/Link';
+import { LinkStyleType } from '../types/types';
+import { routerDecorator } from '$/.storybook';
 
-
-Link.displayName = 'Link';
 
 const meta: Meta<typeof Link> = {
     title     : 'shared/links/Link',
@@ -39,6 +35,7 @@ const meta: Meta<typeof Link> = {
     decorators: [ routerDecorator ],
 };
 
+export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
@@ -63,5 +60,3 @@ export const Ghost: Story = {
         styleType: LinkStyleType.GHOST,
     },
 };
-
-export default meta;

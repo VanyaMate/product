@@ -1,4 +1,4 @@
-import { Theme } from '../../src/components/shared/ui/theme/ThemeContext/types/themes';
+import { Theme } from '../../src/app';
 
 
 export default {

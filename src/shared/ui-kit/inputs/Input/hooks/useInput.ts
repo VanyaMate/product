@@ -70,6 +70,8 @@ export const useInput = function (props?: UseInputProps): IUseInput {
 
     useEffect(() => {
         updateState();
+        // Не нужно указывать в зависимости updateState
+        /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [ props ]);
 
     return {

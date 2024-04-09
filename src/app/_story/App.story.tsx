@@ -1,12 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
-import RootApp from '@/apps/RootApp/ui/App.tsx';
+import { App } from '../ui';
 
 
-RootApp.displayName = 'RootApp';
-
-const meta: Meta<typeof RootApp> = {
+const meta: Meta<typeof App> = {
     title    : 'apps/App',
-    component: RootApp,
+    component: App,
 };
 
 type Story = StoryObj<typeof meta>;

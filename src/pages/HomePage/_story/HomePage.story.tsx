@@ -1,11 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import HomePage from '@/apps/SiteApp/containers/pages/HomePage/HomePage.tsx';
+import { HomePage } from '@/pages';
 
-
-HomePage.displayName = 'HomePage';
 
 const meta: Meta<typeof HomePage> = {
-    title    : 'apps/SiteApp/pages/HomePage',
+    title    : 'pages/HomePage',
     component: HomePage,
 };
 

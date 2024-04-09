@@ -1,10 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import Button from '@/components/shared/ui/buttons/Button/Button.tsx';
-import { ButtonStyleType } from '@/components/shared/ui/buttons/Button/types/types.ts';
+import { Button } from '../ui/Button';
+import { ButtonStyleType } from '../types/types';
 
-
-Button.displayName = 'Button';
 
 const meta = {
     title    : 'shared/buttons/Button',

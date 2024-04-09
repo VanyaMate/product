@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import Loader from '@/components/shared/ui/loaders/Loader/Loader.tsx';
+import { Loader } from '../ui/Loader';
 
 
 Loader.displayName = 'Loader';

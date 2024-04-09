@@ -1,14 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
-import ScreenHeight from '@/components/shared/ui/screen/ScreenHeight/ScreenHeight.tsx';
+import { ScreenHeight } from '../ui/ScreenHeight';
 
-
-ScreenHeight.displayName = 'ScreenHeight';
 
 const meta: Meta<typeof ScreenHeight> = {
-    title     : 'shared/screen/ScreenHeight',
-    component : ScreenHeight,
-    tags      : [ 'autodocs' ],
-    argTypes  : {
+    title    : 'shared/screen/ScreenHeight',
+    component: ScreenHeight,
+    tags     : [ 'autodocs' ],
+    argTypes : {
         children: {
             control: { type: 'text' },
         },

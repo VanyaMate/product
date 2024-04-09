@@ -7,7 +7,6 @@ import en from './locales/en/translation.json';
 i18n
     .use(initReactI18next)
     .init({
-        fallbackLng  : 'ru',
         lng          : 'ru',
         interpolation: {
             escapeValue: false,
