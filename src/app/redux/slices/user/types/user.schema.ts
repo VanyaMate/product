@@ -1,4 +1,4 @@
-import { User } from '@/global/types/user';
+import { User } from '@/app';
 
 
 export type UserSchema = {

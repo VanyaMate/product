@@ -1,5 +1,5 @@
-import { IUseInput } from '@/components/shared/ui/inputs/Input/hooks/useInput.ts';
 import { useCallback, useMemo } from 'react';
+import { IUseInput } from '@/shared/ui-kit';
 
 
 export interface IUseInputCompare {

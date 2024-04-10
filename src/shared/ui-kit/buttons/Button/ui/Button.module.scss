@@ -1,11 +1,14 @@
 .container {
-    padding       : var(--offset-small) var(--offset-medium);
-    border-radius : var(--offset-small);
-    border        : none;
-    outline       : none;
-    cursor        : pointer;
-    box-shadow    : 0 0 0 0 transparent;
-    transition    : var(--transition-medium);
+    padding         : var(--offset-small) var(--offset-medium);
+    border-radius   : var(--offset-small);
+    border          : none;
+    outline         : none;
+    cursor          : pointer;
+    box-shadow      : 0 0 0 0 transparent;
+    transition      : var(--transition-medium);
+    display         : inline-flex;
+    align-items     : center;
+    justify-content : center;
 
     &:disabled {
         background : var(--ghost-color);

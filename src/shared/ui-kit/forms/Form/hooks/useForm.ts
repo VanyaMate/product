@@ -1,8 +1,5 @@
 import { FormEvent, FormEventHandler, useCallback, useMemo, useState } from 'react';
-
-import {
-    IUseInputWithError,
-} from '@/components/shared/ui/inputs/InputWithError/hooks/useInputWithError.ts';
+import { IUseInputWithError } from '@/shared/ui-kit';
 
 
 export type UseFormProps<T> = {

@@ -1,0 +1,1 @@
+export type Validator<Type> = (value: Type) => string;

@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { UserSchema } from '..';
 
 
-const initialState: Current = {
+const initialState: UserSchema = {
     authData: null,
 };
 

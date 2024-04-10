@@ -27,6 +27,7 @@ server.post('/login', (req, res) => {
         );
 
         if (userFromBd) {
+            delete userFromBd.password;
             return res.json(userFromBd);
         }
 

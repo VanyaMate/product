@@ -16,9 +16,14 @@
 - **TypeScript**
 - **React**
     - **React-Router-Dom**
-    - **Redux Toolkit**
+    - **Redux**
+        - **Redux Toolkit**
+        - **Redux Thunk**
 - **SCSS** + **CSS Modules**
 - **I18N-Next**
+- **Shadcn UI** - `только sonner`
+    - **Tailwind**
+- **Axios** - `возможно уберу. 25кб слишком много.`
 
 ### DevTools
 
@@ -32,7 +37,7 @@
     - **Jest**
     - **React testing library**
     - **Storybook**
-    - **~~Loki~~** - `слишком с ним много проблем`
+    - **~~Loki~~** - `слишком с ним много проблем (возможно из-за storybook ^8..`
     - **~~reg-cli~~** - `не нужен для pw`
     - **_Playwright_** - `под вопросом. не работает React.Context`
     - **Husky**

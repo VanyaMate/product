@@ -3,9 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
     ButtonWithFixes,
     Form,
-    InputWithError,
-    useForm,
-    useInputWithError,
+    InputWithError, IUseForm, IUseInputWithError,
 } from '@/shared/ui-kit';
 import { AiOutlineLoading, AiOutlineUser } from 'react-icons/ai';
 import css from './UserAuthFormByUsernameWithError.module.scss';
@@ -14,63 +12,38 @@ import css from './UserAuthFormByUsernameWithError.module.scss';
 export type UserAuthFormByUserNameFormType = {
     username: string;
     password: string;
-    remember?: boolean;
 }
 
 export type UserAuthFormByUsernameWithErrorProps = {
-    onSubmit: (data: UserAuthFormByUserNameFormType) => Promise<any>;
-    onError?: (error: string) => void;
+    loginController: IUseInputWithError,
+    passwordController: IUseInputWithError,
+    formController: IUseForm
 };
 
 export const UserAuthFormByUsernameWithError: FC<UserAuthFormByUsernameWithErrorProps> = memo(function UserAuthFormByUsernameWithError (props) {
-    const { onSubmit, onError }   = props;
-    const { t }                   = useTranslation([ 'translation', 'validation-messages' ]);
-    const loginInputController    = useInputWithError({
-        name            : 'username',
-        validationMethod: (value) => {
-            if (value.length < 5) {
-                return t('min_length_error', { length: '5', ns: 'validation-messages' });
-            }
-            return '';
-        },
-        debounce        : 500,
-    });
-    const passwordInputController = useInputWithError({
-        name            : 'password',
-        validationMethod: (value) => {
-            if (value.length < 10) {
-                return t('min_length_error', { length: '10', ns: 'validation-messages' });
-            }
-            return '';
-        },
-        debounce        : 500,
-    });
-    const form                    = useForm<UserAuthFormByUserNameFormType>({
-        inputs  : [ loginInputController, passwordInputController ],
-        onSubmit: onSubmit,
-        onError : onError,
-    });
+    const { loginController, passwordController, formController } = props;
+    const { t }                                                   = useTranslation([ 'translation', 'validation-messages' ]);
 
     return (
         <Form
             className={ css.container }
-            controller={ form }
+            controller={ formController }
         >
             <InputWithError
-                controller={ loginInputController }
+                controller={ loginController }
                 label={ t('user_auth_form_login_label') }
                 required
             />
             <InputWithError
-                controller={ passwordInputController }
+                controller={ passwordController }
                 label={ t('user_auth_form_password_label') }
                 required
                 type="password"
             />
             <ButtonWithFixes
-                disabled={ !form.canBeSubmitted || form.pending }
+                disabled={ !formController.canBeSubmitted || formController.pending }
                 post={
-                    form.pending
+                    formController.pending
                     ? <AiOutlineLoading className="loading"/>
                     : <AiOutlineUser/>
                 }

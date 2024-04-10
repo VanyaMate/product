@@ -15,3 +15,5 @@ i18n
             escapeValue: false,
         },
     });
+
+export const i18nConfig = i18n;

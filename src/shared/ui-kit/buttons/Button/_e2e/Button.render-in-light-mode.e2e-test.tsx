@@ -1,10 +1,9 @@
 import { expect, test } from '@playwright/experimental-ct-react';
-import Button from '@/components/shared/ui/buttons/Button/Button.tsx';
-import { delay } from '@/components/shared/tests/helpers/delay.ts';
-import { ButtonStyleType } from '@/components/shared/ui/buttons/Button/types/types.ts';
 import { HooksConfig } from '$/playwright';
-import { Theme } from '@/components/shared/ui/theme/ThemeContext/types/themes.ts';
-import TestContainer from '@/components/shared/tests/ui/TestContainer.tsx';
+import { ButtonStyleType } from '../types/types';
+import { Button } from '../ui/Button';
+import { delay, TestContainer } from '@/shared/tests';
+import { Theme } from '@/app';
 
 
 test('Render buttons with LIGHT mode', async ({ mount, page }) => {

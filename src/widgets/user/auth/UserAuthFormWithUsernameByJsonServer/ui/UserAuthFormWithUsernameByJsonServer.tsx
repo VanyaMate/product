@@ -3,44 +3,40 @@ import {
     UserAuthFormByUserNameFormType,
     UserAuthFormByUsernameWithError,
 } from '@/entities/users';
-import { User } from '@/app';
+import { useForm, useInputWithError } from '@/shared/ui-kit';
+import { useDispatch } from 'react-redux';
+import {
+    authByUsername,
+    ThunkDispatchType,
+    userAuthLoginValidator,
+    userAuthPasswordValidator,
+} from '@/app';
 
 
-export type UserAuthFormByUsernameProps = {
-    onSuccess: (user: User) => void;
-    onError?: (reason: string) => void;
-};
-
-export const UserAuthFormWithUsernameByJsonServer: FC<UserAuthFormByUsernameProps> = memo(function UserAuthFormWithUsernameByJsonServer (props) {
-    const { onSuccess, onError } = props;
-
-    const loginHandler = function (userData: UserAuthFormByUserNameFormType) {
-        return fetch('http://localhost:8000/login', {
-            method : 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body   : JSON.stringify(userData),
-        })
-            .then(async (response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw (await response.json()).message;
-                }
-            })
-            .then(onSuccess)
-            .catch(onError);
-    };
-
-    const errorHandler = function (errorMessage: string) {
-        onError && onError(errorMessage);
-    };
+export const UserAuthFormWithUsernameByJsonServer: FC = memo(function UserAuthFormWithUsernameByJsonServer () {
+    const dispatch: ThunkDispatchType = useDispatch();
+    const loginInputController        = useInputWithError({
+        name            : 'username',
+        validationMethod: userAuthLoginValidator,
+        debounce        : 500,
+    });
+    const passwordInputController     = useInputWithError({
+        name            : 'password',
+        validationMethod: userAuthPasswordValidator,
+        debounce        : 500,
+    });
+    const form                        = useForm<UserAuthFormByUserNameFormType>({
+        inputs  : [ loginInputController, passwordInputController ],
+        onSubmit: async (authData) => {
+            return dispatch(authByUsername(authData)).unwrap().then();
+        },
+    });
 
     return (
         <UserAuthFormByUsernameWithError
-            onError={ errorHandler }
-            onSubmit={ loginHandler }
+            formController={ form }
+            loginController={ loginInputController }
+            passwordController={ passwordInputController }
         />
     );
 });

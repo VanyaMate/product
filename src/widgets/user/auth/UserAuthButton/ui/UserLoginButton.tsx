@@ -14,15 +14,7 @@ export const UserLoginButton: FC<UserLoginButtonProps> = memo(function UserLogin
     return (
         <>
             <Modal controller={ modalController }>
-                <UserAuthFormWithUsernameByJsonServer
-                    onError={ (error) => {
-                        console.log('Show error notification: ', error);
-                    } }
-                    onSuccess={ (user) => {
-                        console.log('LogIn as', user);
-                        modalController.setOpened(false);
-                    } }
-                />
+                <UserAuthFormWithUsernameByJsonServer/>
             </Modal>
             <Button
                 onClick={ () => modalController.setOpened(true) }

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC, memo } from 'react';
 
 
 export type TestContainerProps = {
     children: React.ReactNode;
 };
 
-const TestContainer: React.FC<TestContainerProps> = (props) => {
+export const TestContainer: FC<TestContainerProps> = memo(function TestContainer (props) {
     const { children } = props;
 
     return (
@@ -13,6 +13,4 @@ const TestContainer: React.FC<TestContainerProps> = (props) => {
             { children }
         </div>
     );
-};
-
-export default React.memo(TestContainer);
+});

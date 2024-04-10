@@ -1,10 +1,7 @@
 import { expect, test } from '@playwright/experimental-ct-react';
 import { HooksConfig } from '$/playwright';
-import TestContainer from '@/components/shared/tests/ui/TestContainer.tsx';
-import ToggleThemeButton
-    from '@/components/shared/ui/theme/ThemeContext/ui/ToggleThemeButton/ToggleThemeButton.tsx';
-import { Theme } from '@/components/shared/ui/theme/ThemeContext/types/themes.ts';
-import { delay } from '@/components/shared/tests/helpers/delay.ts';
+import { delay, TestContainer } from '@/shared/tests';
+import { Theme, ToggleThemeButton } from '@/app';
 
 
 test('ToggleThemeButton render and func', async ({ page, mount }) => {

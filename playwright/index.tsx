@@ -4,11 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n/config.ts';
 import React from 'react';
-import ThemeProvider
-    from '../src/components/shared/ui/theme/ThemeContext/providers/ThemeProvider';
-import ErrorBoundary
-    from '../src/components/shared/ui/errors/ErrorBoundary/ErrorBoundary';
-import { Theme } from '@/components/shared/ui/theme/ThemeContext/types/themes.ts';
+import { Theme, ThemeProvider } from '@/app';
+import { ErrorBoundary } from '@/shared/ui-kit';
 
 
 export type HooksConfig = {

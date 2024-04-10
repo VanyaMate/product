@@ -1,5 +1,4 @@
 import { FC, FormEvent, FormEventHandler, memo, useState } from 'react';
-import { User } from '@/global/types';
 import { useTranslation } from 'react-i18next';
 import {
     ButtonWithFixes,
@@ -11,6 +10,7 @@ import {
 } from '@/shared/ui-kit';
 import { AiOutlineLoading, AiOutlineUser } from 'react-icons/ai';
 import css from './UserAuthFormByUsername.module.scss';
+import { User } from '@/app';
 
 
 export type UserAuthFormByUsernameProps = {
