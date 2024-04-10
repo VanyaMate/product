@@ -4,9 +4,9 @@ import { Button, Modal, useModalController } from '@/shared/ui-kit';
 import { UserAuthFormWithUsernameByJsonServer } from '@/widgets/user';
 
 
-export type UserLoginButtonProps = {};
+export type UserAuthButtonProps = {};
 
-export const UserLoginButton: FC<UserLoginButtonProps> = memo(function UserLoginButton (props) {
+export const UserAuthButton: FC<UserAuthButtonProps> = memo(function UserAuthButton (props) {
     const {}              = props;
     const { t }           = useTranslation();
     const modalController = useModalController();
@@ -14,7 +14,12 @@ export const UserLoginButton: FC<UserLoginButtonProps> = memo(function UserLogin
     return (
         <>
             <Modal controller={ modalController }>
-                <UserAuthFormWithUsernameByJsonServer/>
+                <UserAuthFormWithUsernameByJsonServer
+                    onSuccess={ () => {
+                        console.log('Execute');
+                        modalController.setOpened(false);
+                    } }
+                />
             </Modal>
             <Button
                 onClick={ () => modalController.setOpened(true) }

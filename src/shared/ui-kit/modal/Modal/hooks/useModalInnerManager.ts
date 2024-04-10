@@ -62,6 +62,9 @@ export const useModalInnerManager = function (opened: boolean) {
         } else {
             onCloseHandler();
         }
+
+        // Если компонент удаляется -> это будет последнее что сработает
+        return onCloseHandler;
     }, [ onOpenHandler, opened, onCloseHandler ]);
 
     return useMemo(() => ({ modalRef, placeRef }), []);

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthErrorType, User } from '@/app';
+import { AuthErrorType, User, userActions } from '@/app';
 import axios, { AxiosError } from 'axios';
 
 
@@ -21,7 +21,12 @@ export const authByUsername = createAsyncThunk<User, AuthByUsernameProps, AuthTh
     'auth/byUsername',
     async (authData, thunkAPI) => {
         try {
-            return await axios.post('http://localhost:8000/login', authData);
+            const user = await axios
+                .post<User>('http://localhost:8000/login', authData)
+                .then((response) => response.data);
+
+            thunkAPI.dispatch(userActions.setAuthData(user));
+            return user;
         } catch (e: any) {
             const error: AxiosError<ServerErrorResponse, any> = e as AxiosError<ServerErrorResponse, any>;
             if (error?.response) {

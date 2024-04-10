@@ -1,12 +1,12 @@
-import { useTheme } from 'next-themes';
 import { Toaster as Sonner } from 'sonner';
 import { createPortal } from 'react-dom';
+import { useTheme } from '@/app/theme/hooks/useTheme.ts';
 
 
 type ToasterProps = React.ComponentProps<typeof Sonner>
 
 const Toaster = ({ ...props }: ToasterProps) => {
-    const { theme = 'system' } = useTheme();
+    const theme = useTheme();
 
     return createPortal(
         <Sonner

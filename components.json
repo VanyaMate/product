@@ -12,6 +12,6 @@
     },
     "aliases": {
         "components": "@/shared/ui-shad",
-        "utils": "@/shared/lib"
+        "utils": ""
     }
 }

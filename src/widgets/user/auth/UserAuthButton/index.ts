@@ -1,1 +1,1 @@
-export * from './ui/UserLoginButton.tsx';
+export * from './ui/UserAuthButton.tsx';
