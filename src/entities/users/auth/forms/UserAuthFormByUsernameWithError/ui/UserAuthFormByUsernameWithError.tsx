@@ -5,7 +5,7 @@ import {
     Form,
     InputWithError, IUseForm, IUseInputWithError,
 } from '@/shared/ui-kit';
-import { AiOutlineLoading, AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineLoading, AiOutlineLogin } from 'react-icons/ai';
 import css from './UserAuthFormByUsernameWithError.module.scss';
 
 
@@ -45,7 +45,7 @@ export const UserAuthFormByUsernameWithError: FC<UserAuthFormByUsernameWithError
                 post={
                     formController.pending
                     ? <AiOutlineLoading className="loading"/>
-                    : <AiOutlineUser/>
+                    : <AiOutlineLogin/>
                 }
                 type="submit"
             >
