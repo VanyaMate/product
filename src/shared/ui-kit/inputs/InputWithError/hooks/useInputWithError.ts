@@ -49,6 +49,7 @@ export const useInputWithError = function (props: UseInputWithErrorProps): IUseI
     // Функция, которая запускает валидацию
     const validateCurrentValue = useCallback(() => {
         if (props.validationMethod) {
+            setValidationAwait(true);
             clearTimeout(debounceTimer.current);
             if (props.debounce) {
                 setErrorMessage('');
@@ -68,7 +69,6 @@ export const useInputWithError = function (props: UseInputWithErrorProps): IUseI
     // Функция, которая навешивается на onChange в input
     const onChangeHandler: ChangeEventHandler<HTMLInputElement> = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         value.current = event.target.value;
-        setValidationAwait(true);
         validateCurrentValue();
     }, [ validateCurrentValue ]);
 
