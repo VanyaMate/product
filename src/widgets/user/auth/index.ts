@@ -1,2 +1,2 @@
-export * from './UserAuthButton';
+export * from './OpenUserAuthFormButton';
 export * from './UserAuthFormWithUsernameByJsonServer';

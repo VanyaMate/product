@@ -4,9 +4,9 @@ import { Button, Modal, useModalController } from '@/shared/ui-kit';
 import { UserAuthFormWithUsernameByJsonServer } from '@/widgets/user';
 
 
-export type UserAuthButtonProps = {};
+export type OpenUserAuthFormButtonProps = {};
 
-export const UserAuthButton: FC<UserAuthButtonProps> = memo(function UserAuthButton (props) {
+export const OpenUserAuthFormButton: FC<OpenUserAuthFormButtonProps> = memo(function OpenUserAuthFormButton (props) {
     const {}              = props;
     const { t }           = useTranslation();
     const modalController = useModalController();
@@ -15,10 +15,7 @@ export const UserAuthButton: FC<UserAuthButtonProps> = memo(function UserAuthBut
         <>
             <Modal controller={ modalController }>
                 <UserAuthFormWithUsernameByJsonServer
-                    onSuccess={ () => {
-                        console.log('Execute');
-                        modalController.setOpened(false);
-                    } }
+                    onSuccess={ () => modalController.setOpened(false) }
                 />
             </Modal>
             <Button
