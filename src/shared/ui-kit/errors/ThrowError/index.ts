@@ -1,1 +1,1 @@
-export * from './ui/ThrowError.tsx';
+export { ThrowError, type ThrowErrorProps } from './ui/ThrowError.tsx';

@@ -1,1 +1,1 @@
-export * from './ui/ErrorBoundary.tsx';
+export { ErrorBoundary } from './ui/ErrorBoundary.tsx';

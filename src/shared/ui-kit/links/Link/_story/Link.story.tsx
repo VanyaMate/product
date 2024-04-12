@@ -5,7 +5,7 @@ import { routerDecorator } from '$/.storybook';
 
 
 const meta: Meta<typeof Link> = {
-    title     : 'shared/links/Link',
+    title     : 'shared/ui-kit/links/Link',
     component : Link,
     tags      : [ 'autodocs' ],
     argTypes  : {

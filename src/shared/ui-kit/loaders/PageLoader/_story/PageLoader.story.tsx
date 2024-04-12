@@ -3,7 +3,7 @@ import { PageLoader } from '../ui/PageLoader';
 
 
 const meta: Meta<typeof PageLoader> = {
-    title    : 'shared/loaders/PageLoader',
+    title    : 'shared/ui-kit/loaders/PageLoader',
     component: PageLoader,
     tags     : [ 'autodocs' ],
 };

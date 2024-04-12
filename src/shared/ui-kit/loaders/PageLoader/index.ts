@@ -1,1 +1,1 @@
-export * from './ui/PageLoader.tsx';
+export { PageLoader, type PageLoaderProps } from './ui/PageLoader.tsx';

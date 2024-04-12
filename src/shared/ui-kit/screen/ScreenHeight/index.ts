@@ -1,1 +1,1 @@
-export * from './ui/ScreenHeight.tsx';
+export { ScreenHeight, type ScreenHeightProps } from './ui/ScreenHeight.tsx';

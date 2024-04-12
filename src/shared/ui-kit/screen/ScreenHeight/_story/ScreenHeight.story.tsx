@@ -3,7 +3,7 @@ import { ScreenHeight } from '../ui/ScreenHeight';
 
 
 const meta: Meta<typeof ScreenHeight> = {
-    title    : 'shared/screen/ScreenHeight',
+    title    : 'shared/ui-kit/screen/ScreenHeight',
     component: ScreenHeight,
     tags     : [ 'autodocs' ],
     argTypes : {

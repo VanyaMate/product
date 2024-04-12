@@ -1,2 +1,2 @@
-export * from './ui/Link.tsx';
-export * from './types/types.ts';
+export { Link, type LinkProps } from './ui/Link.tsx';
+export { LinkStyleType } from './types/types.ts';

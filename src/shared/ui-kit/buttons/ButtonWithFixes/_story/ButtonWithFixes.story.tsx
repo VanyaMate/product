@@ -6,7 +6,7 @@ import { ButtonStyleType } from '@/shared/ui-kit';
 
 
 const meta = {
-    title    : 'shared/buttons/ButtonWithFixes',
+    title    : 'shared/ui-kit/buttons/ButtonWithFixes',
     component: ButtonWithFixes,
     argTypes : {
         ...ButtonStory.argTypes,

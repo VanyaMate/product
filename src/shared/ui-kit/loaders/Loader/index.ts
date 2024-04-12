@@ -1,1 +1,1 @@
-export * from './ui/Loader.tsx';
+export { Loader, type LoaderProps } from './ui/Loader.tsx';

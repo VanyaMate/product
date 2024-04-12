@@ -1,1 +1,1 @@
-export * from './ui/ButtonWithFixes.tsx';
+export { ButtonWithFixes, type ButtonWithFixesProps } from './ui/ButtonWithFixes.tsx';

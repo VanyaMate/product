@@ -17,7 +17,7 @@ export interface IUseForm {
 
 export type FormReturnType = Record<string, string | number | boolean>;
 
-export const useForm = function <T extends FormReturnType> (props: UseFormProps<T>) {
+export const useForm = function <T extends FormReturnType> (props: UseFormProps<T>): IUseForm {
     const [ pending, setPending ] = useState<boolean>(false);
     const [ error, setError ]     = useState<string>('');
     const canBeSubmitted          = useMemo<boolean>(() => {

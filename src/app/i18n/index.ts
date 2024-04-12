@@ -1,5 +1,1 @@
-import './config/i18n.ts';
-
-
-export * from './config/i18n.ts';
-export * from './ui';
+export { i18nConfig } from './config/i18n.ts';

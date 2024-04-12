@@ -4,7 +4,7 @@ import { translationDecorator } from '$/.storybook';
 
 
 const meta: Meta<typeof ThrowError> = {
-    title     : 'shared/errors/ThrowError',
+    title     : 'shared/ui-kit/errors/ThrowError',
     component : ThrowError,
     tags      : [ 'autodocs' ],
     decorators: [ translationDecorator ],

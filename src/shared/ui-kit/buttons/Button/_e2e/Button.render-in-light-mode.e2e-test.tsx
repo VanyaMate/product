@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/experimental-ct-react';
 import { HooksConfig } from '$/playwright';
 import { ButtonStyleType } from '../types/types';
 import { Button } from '../ui/Button';
-import { delay, TestContainer } from '@/shared/tests';
+import { delay, TestContainer } from '../../../../../../helpers/forTests';
 import { Theme } from '@/app';
 
 

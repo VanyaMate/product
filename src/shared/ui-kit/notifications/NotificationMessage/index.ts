@@ -1,2 +1,4 @@
-export * from './ui/NotificationMessage.tsx';
-export * from './types';
+export {
+    NotificationMessage, type NotificationMessageProps,
+} from './ui/NotificationMessage.tsx';
+export { NotificationMessageType } from './types';

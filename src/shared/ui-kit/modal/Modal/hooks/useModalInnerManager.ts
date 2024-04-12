@@ -1,5 +1,5 @@
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react';
-import { findBodyParentElement } from '../helpers/findBodyParentElement';
+import { findBodyParentElement } from '@/shared/ui-kit/modal/Modal/lib/findBodyParentElement';
 
 
 export interface IModalInnerManager {

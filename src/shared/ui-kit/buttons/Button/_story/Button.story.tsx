@@ -5,7 +5,7 @@ import { ButtonStyleType } from '../types/types';
 
 
 const meta = {
-    title    : 'shared/buttons/Button',
+    title    : 'shared/ui-kit/buttons/Button',
     component: Button,
     tags     : [ 'autodocs' ],
     argTypes : {

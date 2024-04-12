@@ -1,4 +1,4 @@
-export * from './config';
+export { createGlobalStore, type GlobalStoreSchema } from './config';
 export * from './providers';
 export * from './slices';
-export * from './types/thunkDispatch.type.ts';
+export { type GlobalStoreThunk } from './types/globalStoreThunk.ts';

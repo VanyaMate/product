@@ -5,7 +5,7 @@ import { Loader } from '../ui/Loader';
 Loader.displayName = 'Loader';
 
 const meta: Meta<typeof Loader> = {
-    title    : 'shared/loaders/Loader',
+    title    : 'shared/ui-kit/loaders/Loader',
     component: Loader,
     tags     : [ 'autodocs' ],
 };

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/experimental-ct-react';
 import { HooksConfig } from '$/playwright';
-import { delay, TestContainer } from '@/shared/tests';
+import { delay, TestContainer } from '../../../../../../helpers/forTests';
 import { Button, ButtonStyleType } from '@/shared/ui-kit';
 import { Theme } from '@/app';
 
@@ -13,7 +13,7 @@ test('Render buttons with DARK mode', async ({ mount, page }) => {
             <Button styleType={ ButtonStyleType.GHOST }>Ghost</Button>
         </TestContainer>, {
             hooksConfig: {
-                theme        : Theme.DARK,
+                theme: Theme.DARK,
             },
         },
     );

@@ -4,7 +4,7 @@ import { translationDecorator } from '$/.storybook';
 
 
 const meta: Meta<typeof NotFoundError> = {
-    title     : 'shared/errors/NotFoundError',
+    title     : 'shared/ui-kit/errors/NotFoundError',
     component : NotFoundError,
     tags      : [ 'autodocs' ],
     decorators: [ translationDecorator ],

@@ -1,2 +1,2 @@
-export * from './ui/Modal.tsx';
-export * from './hooks/useModalController.ts';
+export { Modal, type ModalProps } from './ui/Modal.tsx';
+export { useModalController } from './hooks/useModalController.ts';

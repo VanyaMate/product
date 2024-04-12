@@ -1,5 +1,4 @@
-export * from './ui';
-export * from './types/themes.ts';
-export * from './hooks/useThemeSwitcher.ts';
-export * from './providers/ThemeProvider.tsx';
-export * from './context/ThemeContext.ts';
+export { Theme, type ThemeType } from './types/themes.ts';
+export { useThemeSwitcher } from './hooks/useThemeSwitcher.ts';
+export { ThemeProvider, type ThemeProviderProps } from './providers/ThemeProvider.tsx';
+export { ThemeContext, type IThemeContext } from './context/ThemeContext.ts';
