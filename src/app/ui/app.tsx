@@ -9,8 +9,8 @@ import {
 import { BrowserRouter } from 'react-router-dom';
 import { ErrorBoundary, ScreenHeight } from '@/shared/ui-kit';
 import { FooterNavBar, HeaderNavBar } from '@/widgets/navigation';
-import '@/shared/styles/index.scss';
 import { Toaster } from '@/shared/ui-shad';
+import '../styles';
 
 
 export type AppProps = {};

@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { App } from '../ui';
+import { App } from '../ui/app.tsx';
 
 
 const meta: Meta<typeof App> = {

@@ -5,7 +5,7 @@ import { OpenUserAuthFormButton } from '@/widgets/user';
 import { UserHeaderProfileButton } from '@/entities/users/profile';
 
 
-export const UserHeaderProfileMenuControl: FC = memo(function UserHeaderProfileMenuControl () {
+export const UserProfileOrAuthButton: FC = memo(function UserProfileOrAuthButton () {
     const userData = useSelector(getUserData);
     const user     = useDeferredValue<User | null>(userData);
     // TEMP

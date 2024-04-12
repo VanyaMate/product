@@ -1,4 +1,4 @@
-export * from './ui';
+export * from './ui/app.tsx';
 export * from './types';
 export * from './i18n';
 export * from './redux';

@@ -3,7 +3,7 @@ import css from './HeaderNavBar.module.scss';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@/shared/ui-kit';
 import classNames from 'classnames';
-import { UserHeaderProfileMenuControl } from '@/widgets/user';
+import { UserProfileOrAuthButton } from '@/widgets/user';
 import { ToggleLanguageButton, ToggleThemeButton } from '@/app';
 
 
@@ -37,7 +37,7 @@ export const HeaderNavBar: FC<HeaderNavBarProps> = memo(function HeaderNavBar (p
                         <ToggleThemeButton/>
                     </li>
                     <li>
-                        <UserHeaderProfileMenuControl/>
+                        <UserProfileOrAuthButton/>
                     </li>
                 </ul>
             </div>

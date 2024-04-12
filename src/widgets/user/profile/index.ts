@@ -1,1 +1,1 @@
-export * from './UserHeaderProfileMenuControl';
+export * from './UserProfileOrAuthButton';
