@@ -1,4 +1,4 @@
-import { FC, memo, useEffect } from 'react';
+import { FC, memo } from 'react';
 import { useForm, useInputWithError } from '@/shared/ui-kit';
 import { useDispatch } from 'react-redux';
 import {
@@ -10,9 +10,9 @@ import {
     type AuthFormByUserNameFormType,
     AuthFormByUsernameWithError,
 } from '@/entities/auth';
-import { useStoreWithManager } from '@/app/redux/hooks/useStoreWithManager.ts';
 import { authByUsername } from '@/app/redux/slices/auth/thunks/authByUsername.ts';
 import { authReducer } from '@/app/redux/slices/auth/slice/auth.slice.ts';
+import { useReducerConnector } from '@/app/redux/hooks/useReducerConnector.ts';
 
 
 export type UserAuthFormWithUsernameByJsonServer = {
@@ -42,13 +42,8 @@ export const UserAuthFormWithUsernameByJsonServer: FC<UserAuthFormWithUsernameBy
                 .catch(onError);
         },
     });
-    const store                      = useStoreWithManager();
 
-    useEffect(() => {
-        store.reducerManager.add('auth', authReducer);
-        return () => store.reducerManager.remove('auth');
-        // eslint-disable-next-line
-    }, []);
+    useReducerConnector('auth', authReducer);
 
     return (
         <AuthFormByUsernameWithError

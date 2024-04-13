@@ -17,8 +17,6 @@ export type HooksConfig = {
 }
 
 beforeMount<HooksConfig>(async ({ hooksConfig, App }) => {
-    console.log('Before Mount', <App/>);
-
     let appComponent = <App/>;
 
     if (hooksConfig?.strict) {
@@ -46,5 +44,4 @@ beforeMount<HooksConfig>(async ({ hooksConfig, App }) => {
 });
 
 afterMount(async () => {
-    console.log('After moount');
 });
