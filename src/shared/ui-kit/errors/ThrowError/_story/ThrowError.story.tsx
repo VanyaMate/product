@@ -35,7 +35,7 @@ export const Default: Story = {
 export const WithTrance: Story = {
     args: {
         message: 'Сообщение об ошибке',
-        trace  : 'Мето где произошла ошибка',
+        trace  : 'Место где произошла ошибка',
     },
 };
 

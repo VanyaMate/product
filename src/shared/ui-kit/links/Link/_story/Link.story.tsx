@@ -1,14 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Link } from '../ui/Link';
 import { LinkStyleType } from '../types/types';
-import { routerDecorator } from '$/.storybook';
 
 
 const meta: Meta<typeof Link> = {
-    title     : 'shared/ui-kit/links/Link',
-    component : Link,
-    tags      : [ 'autodocs' ],
-    argTypes  : {
+    title    : 'shared/ui-kit/links/Link',
+    component: Link,
+    tags     : [ 'autodocs' ],
+    argTypes : {
         styleType: {
             control: {
                 type: 'select',
@@ -32,7 +31,6 @@ const meta: Meta<typeof Link> = {
             },
         },
     },
-    decorators: [ routerDecorator ],
 };
 
 export default meta;

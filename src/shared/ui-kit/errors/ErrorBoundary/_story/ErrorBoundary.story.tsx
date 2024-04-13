@@ -1,8 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ErrorBoundary } from '@/shared/ui-kit';
-import {
-    translationDecorator,
-} from '$/.storybook';
 
 
 const meta = {
@@ -30,5 +27,3 @@ export const WithError: Story = {
         children: <ComponentWithError/>,
     },
 };
-
-WithError.decorators = [ translationDecorator ];
