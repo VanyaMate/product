@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+import * as path from 'path';
 
 
 const config: StorybookConfig = {
@@ -11,12 +12,38 @@ const config: StorybookConfig = {
         '@storybook/addon-interactions',
         '@storybook/addon-controls',
     ],
+    core     : {
+        builder: {
+            name   : '@storybook/builder-vite',
+            options: {
+                viteConfigPath: './vite.config.ts',
+            },
+        },
+    },
     framework: {
         name   : '@storybook/react-vite',
         options: {},
     },
     docs     : {
         autodocs: 'tag',
+    },
+    async viteFinal (config) {
+        // Merge custom configuration into the default config
+        const { mergeConfig } = await import('vite');
+        return mergeConfig(config, {
+            resolve: {
+                alias: [
+                    {
+                        find       : '@',
+                        replacement: path.resolve(__dirname, '..', 'src'),
+                    },
+                    {
+                        find       : '$',
+                        replacement: path.resolve(__dirname, '..'),
+                    },
+                ],
+            },
+        });
     },
 };
 export default config;

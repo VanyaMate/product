@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { NotFoundError } from '../ui/NotFoundError';
+import { NotFoundError } from '..';
 import { translationDecorator } from '$/.storybook';
 
 

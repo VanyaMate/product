@@ -1,4 +1,4 @@
-import { Theme } from '../../src/app';
+import { Theme } from '@/app';
 
 
 export default {

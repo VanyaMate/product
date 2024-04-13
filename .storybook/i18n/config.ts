@@ -21,5 +21,4 @@ i18n
         },
     });
 
-
-export default i18n;
+export const i18nStoryConfig = i18n;
