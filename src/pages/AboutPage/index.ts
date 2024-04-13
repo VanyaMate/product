@@ -1,2 +1,1 @@
-export * from './ui/AboutPage.tsx';
-export * from './ui/AboutPageContent.tsx';
+export * from './ui/AboutPage.async.tsx';

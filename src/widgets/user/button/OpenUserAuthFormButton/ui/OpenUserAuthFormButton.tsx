@@ -1,7 +1,9 @@
-import { FC, memo } from 'react';
+import { FC, memo, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Modal, useModalController } from '@/shared/ui-kit';
-import { UserAuthFormWithUsernameByJsonServer } from '@/widgets/user';
+import { Button, Loader, Modal, useModalController } from '@/shared/ui-kit';
+import {
+    UserAuthFormWithUsernameByJsonServerAsync,
+} from '@/widgets/user';
 
 
 export type OpenUserAuthFormButtonProps = {};
@@ -14,9 +16,15 @@ export const OpenUserAuthFormButton: FC<OpenUserAuthFormButtonProps> = memo(func
     return (
         <>
             <Modal controller={ modalController }>
-                <UserAuthFormWithUsernameByJsonServer
-                    onSuccess={ () => modalController.setOpened(false) }
-                />
+                <Suspense fallback={ <Loader/> }>
+                    {
+                        modalController.opened
+                        ? <UserAuthFormWithUsernameByJsonServerAsync
+                            onSuccess={ () => modalController.setOpened(false) }
+                        />
+                        : null
+                    }
+                </Suspense>
             </Modal>
             <Button
                 onClick={ () => modalController.setOpened(true) }

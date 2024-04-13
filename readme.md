@@ -37,7 +37,7 @@
     - **Jest**
     - **React testing library**
     - **Storybook**
-    - **~~Loki~~** - `слишком с ним много проблем (возможно из-за storybook ^8..`
+    - **~~Loki~~** - `пока не поддерживает Storybook 8 ( wip )`
     - **~~reg-cli~~** - `не нужен для pw`
     - **_Playwright_** - `под вопросом. не работает React.Context`
     - **Husky**

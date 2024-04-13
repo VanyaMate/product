@@ -1,20 +1,20 @@
-import { FC, memo, Suspense, lazy } from 'react';
-import { ErrorBoundary, PageLoader } from '@/shared/ui-kit';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { getAuthPending } from '@/app/redux/slices/auth/selectors/getAuthPending.ts';
 
 
-const HomePageContent = lazy(() => import('./HomePageContent.tsx'));
+export type HomePageContentProps = {};
 
-
-export type HomePageProps = {};
-
-export const HomePage: FC<HomePageProps> = memo(function HomePage (props) {
-    const {} = props;
+const HomePage: React.FC<HomePageContentProps> = (props) => {
+    const {}    = props;
+    const state = useSelector(getAuthPending);
 
     return (
-        <Suspense fallback={ <PageLoader/> }>
-            <ErrorBoundary>
-                <HomePageContent/>
-            </ErrorBoundary>
-        </Suspense>
+        //eslint-disable-next-line i18next/no-literal-string
+        <div>
+            HomePageComponent { state.toString() }
+        </div>
     );
-});
+};
+
+export default React.memo(HomePage);

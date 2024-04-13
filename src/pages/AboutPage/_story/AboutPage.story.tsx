@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { AboutPage } from '../ui/AboutPage';
+import { AboutPageAsync } from '../ui/AboutPage.async.tsx';
 
 
-const meta: Meta<typeof AboutPage> = {
+const meta: Meta<typeof AboutPageAsync> = {
     title    : 'pages/AboutPage',
-    component: AboutPage,
+    component: AboutPageAsync,
 };
 
 type Story = StoryObj<typeof meta>;

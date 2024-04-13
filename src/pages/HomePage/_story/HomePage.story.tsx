@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { HomePage } from '@/pages';
+import { HomePageAsync } from '@/pages';
 
 
-const meta: Meta<typeof HomePage> = {
+const meta: Meta<typeof HomePageAsync> = {
     title    : 'pages/HomePage',
-    component: HomePage,
+    component: HomePageAsync,
 };
 
 type Story = StoryObj<typeof meta>;

@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { NotFoundPage } from '../ui/NotFoundPage';
+import { NotFoundPage } from '../ui/NotFoundPage.tsx';
 
 
 const meta: Meta<typeof NotFoundPage> = {

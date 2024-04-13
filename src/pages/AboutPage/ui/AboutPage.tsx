@@ -1,19 +1,17 @@
-import { Suspense, lazy, FC, memo } from 'react';
-import { ErrorBoundary, PageLoader } from '@/shared/ui-kit';
+import React from 'react';
 
 
-const AboutPageContent = lazy(() => import('./AboutPageContent.tsx'));
+export type AboutPageContentProps = {};
 
-export type AboutPageProps = {};
-
-export const AboutPage: FC<AboutPageProps> = memo(function AboutPage (props) {
+const AboutPage: React.FC<AboutPageContentProps> = (props) => {
     const {} = props;
 
     return (
-        <Suspense fallback={ <PageLoader/> }>
-            <ErrorBoundary>
-                <AboutPageContent/>
-            </ErrorBoundary>
-        </Suspense>
+        //eslint-disable-next-line i18next/no-literal-string
+        <div>
+            AboutPageComponent
+        </div>
     );
-});
+};
+
+export default React.memo(AboutPage);

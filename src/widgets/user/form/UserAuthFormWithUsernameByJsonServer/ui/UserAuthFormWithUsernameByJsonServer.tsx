@@ -1,8 +1,7 @@
-import { FC, memo } from 'react';
+import { FC, memo, useEffect } from 'react';
 import { useForm, useInputWithError } from '@/shared/ui-kit';
 import { useDispatch } from 'react-redux';
 import {
-    authByUsername,
     GlobalStoreThunk, User,
     userAuthLoginValidator,
     userAuthPasswordValidator,
@@ -11,6 +10,9 @@ import {
     type AuthFormByUserNameFormType,
     AuthFormByUsernameWithError,
 } from '@/entities/auth';
+import { useStoreWithManager } from '@/app/redux/hooks/useStoreWithManager.ts';
+import { authByUsername } from '@/app/redux/slices/auth/thunks/authByUsername.ts';
+import { authReducer } from '@/app/redux/slices/auth/slice/auth.slice.ts';
 
 
 export type UserAuthFormWithUsernameByJsonServer = {
@@ -26,23 +28,27 @@ export const UserAuthFormWithUsernameByJsonServer: FC<UserAuthFormWithUsernameBy
         validationMethod: userAuthLoginValidator,
         debounce        : 500,
     });
-    const passwordInputController     = useInputWithError({
+    const passwordInputController    = useInputWithError({
         name            : 'password',
         validationMethod: userAuthPasswordValidator,
         debounce        : 500,
     });
-    const form                        = useForm<AuthFormByUserNameFormType>({
+    const form                       = useForm<AuthFormByUserNameFormType>({
         inputs  : [ loginInputController, passwordInputController ],
         onSubmit: async (authData) => {
             return dispatch(authByUsername(authData))
                 .unwrap()
-                .then((user) => {
-                    console.log('after dispatch');
-                    onSuccess?.(user);
-                })
+                .then(onSuccess)
                 .catch(onError);
         },
     });
+    const store                      = useStoreWithManager();
+
+    useEffect(() => {
+        store.reducerManager.add('auth', authReducer);
+        return () => store.reducerManager.remove('auth');
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <AuthFormByUsernameWithError

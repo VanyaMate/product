@@ -1,1 +1,3 @@
-export * from './ui/UserAuthFormWithUsernameByJsonServer.tsx';
+export {
+    UserAuthFormWithUsernameByJsonServerAsync,
+} from './ui/UserAuthFormWithUsernameByJsonServer.async.tsx';

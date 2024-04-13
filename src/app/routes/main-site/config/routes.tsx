@@ -1,5 +1,5 @@
 import { RouteProps } from 'react-router-dom';
-import { AboutPage, HomePage, NotFoundPage } from '@/pages';
+import { AboutPageAsync, HomePageAsync, NotFoundPage } from '@/pages';
 
 
 export enum SiteAppRoute {
@@ -17,11 +17,11 @@ export const SiteAppRoutePath: Record<SiteAppRoute, string> = {
 export const MainSiteRouteConfig: Record<SiteAppRoute, RouteProps> = {
     [SiteAppRoute.HOME]     : {
         path   : SiteAppRoutePath[SiteAppRoute.HOME],
-        element: <HomePage/>,
+        element: <HomePageAsync/>,
     },
     [SiteAppRoute.ABOUT]    : {
         path   : SiteAppRoutePath[SiteAppRoute.ABOUT],
-        element: <AboutPage/>,
+        element: <AboutPageAsync/>,
     },
     [SiteAppRoute.NOT_FOUND]: {
         path   : SiteAppRoutePath[SiteAppRoute.NOT_FOUND],

@@ -1,19 +1,22 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authReducer, AuthSchema, userReducer, UserSchema } from '@/app';
+import { userReducer } from '@/app';
+import { createReducerManager } from '../config/createReducerManager.ts';
+import { GlobalStoreSchema } from '../types/global-store-types.ts';
 
-
-export interface GlobalStoreSchema {
-    user: UserSchema;
-    auth: AuthSchema;
-}
 
 export const createGlobalStore = function (initialState?: GlobalStoreSchema) {
-    return configureStore<GlobalStoreSchema>({
-        reducer       : {
-            user: userReducer,
-            auth: authReducer,
-        },
-        devTools      : __IS_DEV__,
-        preloadedState: initialState,
+    const reducerManager = createReducerManager({
+        user: userReducer,
     });
+
+    const store = Object.assign(
+        configureStore<GlobalStoreSchema>({
+            reducer       : reducerManager.reduce,
+            devTools      : __IS_DEV__,
+            preloadedState: initialState,
+        }),
+        { reducerManager },
+    );
+
+    return store;
 };
