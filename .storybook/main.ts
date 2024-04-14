@@ -28,7 +28,6 @@ const config: StorybookConfig = {
         autodocs: 'tag',
     },
     async viteFinal (config) {
-        // Merge custom configuration into the default config
         const { mergeConfig } = await import('vite');
         return mergeConfig(config, {
             resolve: {

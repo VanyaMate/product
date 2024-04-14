@@ -27,6 +27,7 @@ const config: Config.InitialOptions = {
     ],
     moduleNameMapper          : {
         '^@/(.*)$'                    : '<rootDir>/src/$1',
+        '^$/(.*)$'                    : '<rootDir>/$1',
         '\\.(css|less|scss|sss|styl)$': '<rootDir>/node_modules/jest-css-modules',
 
     },
@@ -35,7 +36,7 @@ const config: Config.InitialOptions = {
         '**/__tests__/**/*.[jt]s?(x)',
         '**/?(*.)+(spec|test).[tj]s?(x)',
     ],
-    setupFilesAfterEnv        : [ '<rootDir>/jest/jest-setup.ts' ],
+    setupFilesAfterEnv        : [ '<rootDir>/.jest/jest-setup.ts' ],
 };
 
 export default config;

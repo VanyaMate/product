@@ -28,7 +28,7 @@ lerna-debug.log*
 
 # Tests cache
 *storybook.log
-/playwright/.cache
+/.playwright/.cache
 /playwright-report
 /test-results
 /reg.json
