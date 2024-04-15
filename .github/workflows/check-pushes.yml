@@ -54,7 +54,6 @@ jobs:
       - run: npm i
       - run: npm run pw:install
       - run: npm run test:pw-linux
-      - run: npm i
 
   pw_update:
     if: contains(github.event.head_commit.message, '%pw_update%')
@@ -78,6 +77,44 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update PW-snapshot"
+
+  cy_tests:
+    if: contains(github.event.head_commit.message, '%cy_test%')
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm i
+      - run: npm run test:cy
+
+  cy_update:
+    if: contains(github.event.head_commit.message, '%cy_update%')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm i
+      - run: npm run test:cy:update
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update CY-snapshot"
 
   notify:
     if: ${{ always() && contains(github.event.head_commit.message, '%tg_notify%')}}
