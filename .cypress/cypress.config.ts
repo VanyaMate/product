@@ -1,23 +1,26 @@
-import { resolve } from 'path';
 import { defineConfig } from 'cypress';
-import vitePreprocessor from 'cypress-vite';
+//@ts-ignore
+import getCompareSnapshotsPlugin from 'cypress-image-diff-js/plugin';
 
 
 export default defineConfig({
-    e2e: {
-        baseUrl               : 'http://localhost:5173/',
-        viewportWidth         : 1280,
-        viewportHeight        : 768,
-        specPattern           : '**/*.e2e.ts',
-        video                 : false,
-        screenshotOnRunFailure: false,
-        supportFile           : false,
-
-        setupNodeEvents (on) {
-            on(
-                'file:preprocessor',
-                vitePreprocessor(resolve(__dirname, '..', '.vite', 'vite.config.ts')),
-            );
+    video                 : true,
+    videoCompression      : true,
+    screenshotOnRunFailure: false,
+    videosFolder          : './.cypress/videos',
+    supportFolder         : './.cypress/support',
+    e2e                   : {
+        baseUrl          : 'http://localhost:4173/',
+        viewportWidth    : 1920,
+        viewportHeight   : 1080,
+        specPattern      : './.cypress/tests/**/*.e2e-cy.ts',
+        supportFile      : './.cypress/support/e2e.ts',
+        screenshotsFolder: './.cypress/screenshots',
+        env              : {
+            "preserveOriginalScreenshot": true
+        },
+        setupNodeEvents (on, config) {
+            return getCompareSnapshotsPlugin(on, config);
         },
     },
 });

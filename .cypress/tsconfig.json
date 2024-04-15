@@ -7,9 +7,11 @@
         ],
         "types": [
             "cypress",
+            "cypress-image-diff-js",
             "node"
         ],
-        "baseUrl": "."
+        "baseUrl": ".",
+        "esModuleInterop": true
     },
     "include": [
         "**/*.ts"

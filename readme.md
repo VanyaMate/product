@@ -40,6 +40,7 @@
     - **~~Loki~~** - `пока не поддерживает Storybook 8 ( wip )`
     - **~~reg-cli~~** - `не нужен для pw`
     - **_Playwright_** - `под вопросом. не работает React.Context`
+    - **Cypress** - `пока что гораздо менее удобный чем pw, но зато работает`
     - **Husky**
 - **MockServer**
     - **json-server**
@@ -151,7 +152,6 @@
 - `services` - сервисы с чем-то внешним или бизнес-логика
 - `_story` - storybook
 - `_tests` - тесты
-- `_e2e` - e2e тесты
 - `its` - элементарные тесты
 - `[accessory]` - принадлежность к чему `user`
 - `[purpose]` - цель (задача) `getUserName`
@@ -191,15 +191,6 @@
     - `? decorators`
         - `? [accessory].ts`
     - `[Component].test.ts`
-- `_e2e`
-    - `its`
-        - `[Component].e2e-it.tsx`
-    - `? config`
-        - `? [accessory].ts`
-        - `? [accessory].json`
-    - `? decorators`
-        - `? [accessory].ts`
-    - `[Component].e2e-test.ts`
 - `index.ts` - _публичный API компонента_
 
 ## TODO
