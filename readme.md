@@ -38,9 +38,10 @@
     - **React testing library**
     - **Storybook**
     - **~~Loki~~** - `пока не поддерживает Storybook 8 ( wip )`
-    - **~~reg-cli~~** - `не нужен для pw`
     - **_Playwright_** - `под вопросом. не работает React.Context`
     - **Cypress** - `пока что гораздо менее удобный чем pw, но зато работает`
+        - **cypress-image-diff-js** - `делает другой viewport. плохо работает с cypress open`
+    - **reg-cli**
     - **Husky**
 - **MockServer**
     - **json-server**
