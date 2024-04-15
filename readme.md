@@ -27,6 +27,8 @@
 
 ### DevTools
 
+- **Vite**
+    - **vite-bundle-visualizer**
 - **Git**
     - **GitHub**
         - **GitHub Actions**
