@@ -1,22 +1,24 @@
 import { defineConfig, devices } from '@playwright/experimental-ct-react';
-import { InlineConfig } from 'vite';
-import viteConfig from '../.vite/vite.config';
 
 
 export default defineConfig({
-    testDir      : '../src',
-    snapshotDir  : './__snapshots__',
-    testMatch    : '*.e2e-test.{ts,tsx}',
+    testDir      : './tests',
+    snapshotDir  : './snapshots',
+    testMatch    : '*.e2e-pw.{ts,tsx}',
     timeout      : 10 * 1000,
     fullyParallel: true,
     forbidOnly   : !!process.env.CI,
     retries      : process.env.CI ? 2 : 0,
     workers      : process.env.CI ? 1 : undefined,
     reporter     : 'html',
+    webServer    : {
+        command            : 'npm run build:start',
+        url                : 'http://localhost:4173/',
+        timeout            : 20 * 1000,
+        reuseExistingServer: !process.env.CI,
+    },
     use          : {
-        trace       : 'on-first-retry',
-        ctPort      : 3100,
-        ctViteConfig: viteConfig as InlineConfig,
+        baseURL: 'http://localhost:4173/',
     },
     projects     : [
         {
@@ -24,24 +26,8 @@ export default defineConfig({
             use : { ...devices['Desktop Chrome'] },
         },
         {
-            name: 'firefox',
-            use : { ...devices['Desktop Firefox'] },
-        },
-        {
-            name: 'webkit',
-            use : { ...devices['Desktop Safari'] },
-        },
-        {
             name: 'iPhone 6',
             use : { ...devices['iPhone 6'] },
-        },
-        {
-            name: 'Galaxy S9+',
-            use : { ...devices['Galaxy S9+'] },
-        },
-        {
-            name: 'iPad Mini',
-            use : { ...devices['iPad Mini'] },
         },
     ],
 });

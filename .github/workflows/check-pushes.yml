@@ -39,7 +39,7 @@ jobs:
       - run: npm run build
 
   pw_tests:
-    if: contains(github.event.head_commit.message, '%pw_test%')
+    if: contains(github.event.head_commit.message, '%pw_tests%')
     runs-on: ubuntu-latest
 
     steps:
@@ -79,7 +79,7 @@ jobs:
           commit_message: "Update PW-snapshot"
 
   cy_tests:
-    if: contains(github.event.head_commit.message, '%cy_test%')
+    if: contains(github.event.head_commit.message, '%cy_tests%')
     runs-on: ubuntu-latest
 
     steps:
@@ -124,6 +124,8 @@ jobs:
       - build
       - pw_tests
       - pw_update
+      - cy_tests
+      - cy_update
 
     steps:
       - name: Telegram success notification

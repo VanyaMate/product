@@ -40,8 +40,8 @@
     - **React testing library**
     - **Storybook**
     - **~~Loki~~** - `пока не поддерживает Storybook 8 ( wip )`
-    - **_Playwright_** - `под вопросом. не работает React.Context`
-    - **Cypress** - `пока что гораздо менее удобный чем pw, но зато работает`
+    - **Playwright**
+    - **Cypress** - `пока что гораздо менее удобный чем pw`
         - **cypress-image-diff-js**
             - `плохо работает с cypress open`
             - `делает другой viewport`

@@ -12,7 +12,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
     return (
         //eslint-disable-next-line i18next/no-literal-string
         <div>
-            HomePageComponent { state.toString() }
+            HomePageCo2mponent { state.toString() }
         </div>
     );
 };
