@@ -9,8 +9,6 @@ export const ToggleLanguageButton: FC<ToggleLanguageButtonProps> = memo(function
     const {}          = props;
     const { t, i18n } = useTranslation();
 
-    console.log('i18n.language', i18n, i18n.language);
-
     const toggleLanguage = function () {
         i18n.changeLanguage(i18n.resolvedLanguage === 'ru' ? 'en' : 'ru');
     };
