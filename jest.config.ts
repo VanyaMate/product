@@ -4,7 +4,6 @@ import type { Config } from '@jest/types';
 const config: Config.InitialOptions = {
     verbose                   : true,
     clearMocks                : true,
-    collectCoverage           : true,
     coverageDirectory         : 'coverage',
     coveragePathIgnorePatterns: [
         'node_modules',

@@ -1,6 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthErrorType, User, userActions } from '@/app';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
+import { isAxiosError } from '@/app/type-guards/axios/isAxiosError.ts';
+import { isApiResponseError } from '@/app/type-guards/api/isApiResponseError.ts';
 
 
 export type AuthByUsernameProps = {
@@ -13,10 +15,6 @@ export type AuthThunkApiConfig = {
     rejectValue: AuthErrorType | null;
 }
 
-export type ServerErrorResponse = {
-    message: string;
-}
-
 export const authByUsername = createAsyncThunk<User, AuthByUsernameProps, AuthThunkApiConfig>(
     'auth/byUsername',
     async (authData, thunkAPI) => {
@@ -27,19 +25,24 @@ export const authByUsername = createAsyncThunk<User, AuthByUsernameProps, AuthTh
 
             thunkAPI.dispatch(userActions.setAuthData(user));
             return user;
-        } catch (e: any) {
-            const error: AxiosError<ServerErrorResponse, any> = e as AxiosError<ServerErrorResponse, any>;
-            if (error?.response) {
+        } catch (e: unknown) {
+            if (isAxiosError(e)) {
+                const errorData = e.response.data;
+                if (isApiResponseError(errorData)) {
+                    return thunkAPI.rejectWithValue({
+                        code   : e.status,
+                        message: errorData.message,
+                    });
+                }
                 return thunkAPI.rejectWithValue({
-                    code   : error.response.status,
-                    message: error.response.data.message,
-                });
-            } else {
-                return thunkAPI.rejectWithValue({
-                    code   : 500,
-                    message: e?.message ?? 'Unknown error',
+                    code   : e.status,
+                    message: e.message,
                 });
             }
+            return thunkAPI.rejectWithValue({
+                code   : 500,
+                message: 'Unknown error',
+            });
         }
     },
 );
