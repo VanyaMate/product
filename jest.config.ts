@@ -37,6 +37,9 @@ const config: Config.InitialOptions = {
         '**/?(*.)+(spec|test).[tj]s?(x)',
     ],
     setupFilesAfterEnv        : [ '<rootDir>/.jest/jest-setup.ts' ],
+    globals                   : {
+        __IS_DEV__: false,
+    },
 };
 
 export default config;

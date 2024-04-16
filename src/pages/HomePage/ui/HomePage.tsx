@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getAuthPending } from '@/app/redux/slices/auth/selectors/getAuthPending.ts';
+import { getAuthPending } from '@/app/redux/slices/auth/selectors/getAuthPending/getAuthPending.ts';
 
 
 export type HomePageContentProps = {};
@@ -12,7 +12,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
     return (
         //eslint-disable-next-line i18next/no-literal-string
         <div>
-            HomePageCo2mponent { state.toString() }
+            HomePageComponent { state.toString() }
         </div>
     );
 };
