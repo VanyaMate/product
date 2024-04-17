@@ -3,28 +3,20 @@
     justify-content : space-between;
     align-items     : center;
     gap             : var(--offset-medium);
-    padding         : var(--offset-medium);
-    background      : var(--bg-second-color);
 
-    .side {
+    .list {
+        list-style-type : none;
+    }
+
+    .utils {
+        display     : flex;
+        align-items : center;
+        gap         : var(--offset-medium);
+    }
+
+    .links {
         display     : flex;
         align-items : center;
         gap         : var(--offset-large);
-
-        .list {
-            list-style-type : none;
-        }
-
-        .utils {
-            display     : flex;
-            align-items : center;
-            gap         : var(--offset-medium);
-        }
-
-        .links {
-            display     : flex;
-            align-items : center;
-            gap         : var(--offset-large);
-        }
     }
 }

@@ -10,20 +10,18 @@ export const MainSiteRouter: FC<SiteRouterProps> = memo(function MainSiteRouter 
     const {} = props;
 
     return (
-        <main>
-            <Suspense fallback={ <PageLoader/> }>
-                <Routes>
-                    {
-                        Object.values(MainSiteRouteConfig).map((route) => (
-                            <Route
-                                element={ route.element }
-                                key={ route.path }
-                                path={ route.path }
-                            />
-                        ))
-                    }
-                </Routes>
-            </Suspense>
-        </main>
+        <Suspense fallback={ <PageLoader/> }>
+            <Routes>
+                {
+                    Object.values(MainSiteRouteConfig).map((route) => (
+                        <Route
+                            element={ route.element }
+                            key={ route.path }
+                            path={ route.path }
+                        />
+                    ))
+                }
+            </Routes>
+        </Suspense>
     );
 });

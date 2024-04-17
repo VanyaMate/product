@@ -46,6 +46,16 @@
         }
     }
 
+    &.danger:not(:disabled) {
+        background : var(--danger-color);
+        color      : var(--on-danger-color);
+
+        &:focus,
+        &:hover {
+            box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--danger-color);
+        }
+    }
+
     &.small {
         height        : 20px;
         padding       : 0 var(--offset-small);
@@ -53,8 +63,9 @@
         font-size     : .75em;
 
         &.quad {
-            width   : 20px;
-            padding : 0;
+            width     : 20px;
+            min-width : 20px;
+            padding   : 0;
         }
     }
 
@@ -64,8 +75,9 @@
         border-radius : var(--offset-small);
 
         &.quad {
-            width   : 30px;
-            padding : 0;
+            width     : 30px;
+            min-width : 30px;
+            padding   : 0;
         }
     }
 
@@ -76,8 +88,9 @@
         font-size     : 1.25em;
 
         &.quad {
-            width   : 40px;
-            padding : 0;
+            width     : 40px;
+            min-width : 40px;
+            padding   : 0;
         }
     }
 }

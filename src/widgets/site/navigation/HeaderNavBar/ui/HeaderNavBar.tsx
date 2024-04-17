@@ -15,33 +15,21 @@ export const HeaderNavBar: FC<HeaderNavBarProps> = memo(function HeaderNavBar (p
     const { t } = useTranslation([ 'site-app' ]);
 
     return (
-        <header className={ css.container }>
+        <div className={ css.container }>
             <h1>
                 <Link aria-label={ t('aria_logo') } to="/">{ t('logo') }</Link>
             </h1>
-            <div className={ css.side }>
-                <nav>
-                    <ul className={ classNames(css.links, {}, [ css.list ]) }>
-                        <li>
-                            <Link to="/">{ t('home_page') }</Link>
-                        </li>
-                        <li>
-                            <Link to="/about">{ t('about_us_page') }</Link>
-                        </li>
-                    </ul>
-                </nav>
-                <ul className={ classNames(css.utils, {}, [ css.list ]) }>
-                    <li>
-                        <ToggleLanguageButton/>
-                    </li>
-                    <li>
-                        <ToggleThemeButton/>
-                    </li>
-                    <li>
-                        <UserProfileOrAuthButton/>
-                    </li>
-                </ul>
-            </div>
-        </header>
+            <ul className={ classNames(css.utils, {}, [ css.list ]) }>
+                <li>
+                    <ToggleLanguageButton/>
+                </li>
+                <li>
+                    <ToggleThemeButton/>
+                </li>
+                <li>
+                    <UserProfileOrAuthButton/>
+                </li>
+            </ul>
+        </div>
     );
 });

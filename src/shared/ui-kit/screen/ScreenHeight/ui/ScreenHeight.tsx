@@ -14,11 +14,16 @@ export const ScreenHeight: FC<ScreenHeightProps> = memo(function ScreenHeight (p
 
     return (
         <div { ...other } className={ classNames(css.container, {}, [ className ]) }>
-            <div>
-                { children }
-            </div>
             {
-                footer
+                footer ?
+                <>
+                    <div>
+                        { children }
+                    </div>
+                    {
+                        footer
+                    }
+                </> : children
             }
         </div>
     );

@@ -1,0 +1,74 @@
+$header-height   : 50px;
+$side-width      : 40px;
+$side-width-open : 400px;
+
+.container {
+    position : relative;
+    overflow : hidden;
+    padding  : $header-height 0 0 $side-width;
+
+    .header {
+        position    : fixed;
+        z-index     : 2;
+        top         : 0;
+        left        : 0;
+        width       : 100%;
+        height      : $header-height;
+        padding     : var(--offset-small);
+        background  : var(--bg-second-color);
+        display     : flex;
+        gap         : var(--offset-medium);
+        align-items : center;
+
+        .content {
+            width : 100%;
+        }
+    }
+
+    .sideMenu {
+        position   : fixed;
+        top        : $header-height;
+        overflow   : hidden;
+        z-index    : 2;
+        left       : 0;
+        height     : calc(100% - $header-height);
+        padding    : var(--offset-small);
+        background : var(--bg-main-color);
+        width      : $side-width;
+        transition : var(--transition-medium);
+
+        &_open {
+            width      : $side-width-open;
+            background : var(--bg-second-color);
+            max-width  : 100%;
+        }
+    }
+
+    .main {
+        transition : var(--transition-medium);
+        transform  : translateX(0);
+        padding    : var(--offset-small);
+
+        &_open {
+            transform : translateX(20px);
+        }
+    }
+
+    .closeOverlay {
+        position   : fixed;
+        width      : 100%;
+        height     : 100%;
+        top        : 0;
+        left       : 0;
+        z-index    : 1;
+        transition : var(--transition-medium);
+        opacity    : .8;
+        background : var(--bg-main-color);
+        cursor     : pointer;
+
+        &_hidden {
+            opacity    : 0;
+            visibility : hidden;
+        }
+    }
+}

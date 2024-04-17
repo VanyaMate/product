@@ -13,7 +13,7 @@ export const ToggleLanguageButton: FC<ToggleLanguageButtonProps> = memo(function
 
     const toggleLanguage = useCallback(() => {
         i18n.changeLanguage(isRuEng ? 'en' : 'ru');
-    }, [ isRuEng ]);
+    }, [ isRuEng, i18n ]);
 
     return (
         <Button

@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { UserHeaderProfileButton } from '../ui/UserHeaderProfileButton.tsx';
+import { UserHeaderControlMenu } from '../ui/UserHeaderControlMenu.tsx';
 
 
 const meta = {
-    title    : 'entities/user/button/UserHeaderProfileButton',
-    component: UserHeaderProfileButton,
+    title    : 'entities/user/button/UserHeaderControlMenu',
+    component: UserHeaderControlMenu,
     tags     : [ 'autodocs' ],
     argTypes : {
         user: {
@@ -16,7 +16,7 @@ const meta = {
     args     : {
         onClick: fn(),
     },
-} satisfies Meta<typeof UserHeaderProfileButton>;
+} satisfies Meta<typeof UserHeaderControlMenu>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

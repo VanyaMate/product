@@ -1,0 +1,1 @@
+export { type UserProfileLinkProps, UserProfileLink } from './ui/UserProfileLink.tsx';
