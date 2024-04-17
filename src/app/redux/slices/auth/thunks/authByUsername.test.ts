@@ -11,7 +11,7 @@ const userData: User = {
     username: 'root_test', id: '1',
 };
 
-describe('AuthByUsernameSkipTest', () => {
+describe('AuthByUsernameTest', () => {
     let dispatch: Dispatch;
     let getState: () => GlobalStoreSchema;
 
@@ -39,10 +39,10 @@ describe('AuthByUsernameSkipTest', () => {
 
     test('No valid auth', async () => {
         mockedAxios.post.mockRejectedValueOnce({
-            status  : 401,
             message : 'string',
             response: {
-                data: {
+                status: 401,
+                data  : {
                     message: 'No valid data',
                 },
             },

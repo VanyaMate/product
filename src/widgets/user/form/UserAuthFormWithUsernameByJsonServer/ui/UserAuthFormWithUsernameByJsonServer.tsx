@@ -11,7 +11,7 @@ import {
     AuthFormByUsernameWithError,
 } from '@/entities/auth';
 import { authByUsername } from '@/app/redux/slices/auth/thunks/authByUsername.ts';
-import { authReducer } from '@/app/redux/slices/auth/slice/auth.slice.ts';
+import { authReducer } from '@/app/redux/slices/auth/slice/authSlice.ts';
 import { useReducerConnector } from '@/app/redux/hooks/useReducerConnector.ts';
 
 

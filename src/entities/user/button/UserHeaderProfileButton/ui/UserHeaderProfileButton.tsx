@@ -1,9 +1,10 @@
 import { FC, memo } from 'react';
-import { User } from '@/app';
-import { ButtonStyleType, ButtonWithFixes } from '@/shared/ui-kit';
+import { SiteAppRoute, SiteAppRoutePath, User } from '@/app';
+import { ButtonStyleType, ButtonWithFixes, Link } from '@/shared/ui-kit';
 import { AiOutlineLogout, AiOutlineUser } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 import css from './UserHeaderProfileButton.module.scss';
+import { getUrl } from '@/app/routes/lib/getUrl.ts';
 
 
 export type UserHeaderProfileButtonProps = {
@@ -18,7 +19,10 @@ export const UserHeaderProfileButton: FC<UserHeaderProfileButtonProps> = memo(fu
     return (
         <div className={ css.container }>
             <AiOutlineUser/>
-            <span>{ user.username }</span>
+            <Link
+                to={ getUrl(SiteAppRoutePath[SiteAppRoute.PROFILE], { username: user.username }) }>
+                { user.username }
+            </Link>
             <ButtonWithFixes
                 onClick={ () => onClick(user) }
                 post={

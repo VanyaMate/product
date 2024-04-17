@@ -10,7 +10,7 @@ export const ToggleThemeButton: FC<ToggleThemeButtonProps> = memo(function Toggl
     const {}                     = props;
     const { theme, toggleTheme } = useThemeSwitcher();
     const { t }                  = useTranslation();
-    const themeImageSrc          = `./images/theme/${ theme === Theme.DARK
+    const themeImageSrc          = `/images/theme/${ theme === Theme.DARK
                                                       ? 'moon.png'
                                                       : 'sun.png' }`;
 

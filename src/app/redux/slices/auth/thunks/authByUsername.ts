@@ -27,15 +27,16 @@ export const authByUsername = createAsyncThunk<User, AuthByUsernameProps, AuthTh
             return user;
         } catch (e: unknown) {
             if (isAxiosError(e)) {
-                const errorData = e.response.data;
+                const response  = e.response;
+                const errorData = response.data;
                 if (isApiResponseError(errorData)) {
                     return thunkAPI.rejectWithValue({
-                        code   : e.status,
+                        code   : response.status,
                         message: errorData.message,
                     });
                 }
                 return thunkAPI.rejectWithValue({
-                    code   : e.status,
+                    code   : response.status,
                     message: e.message,
                 });
             }
