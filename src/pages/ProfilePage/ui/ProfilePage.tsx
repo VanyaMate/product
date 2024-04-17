@@ -7,6 +7,7 @@ export const ProfilePage: FC<ProfilePageProps> = memo(function ProfilePage (prop
     const {} = props;
 
     return (
+        //eslint-disable-next-line i18next/no-literal-string
         <div>
             ProfilePageComponent
         </div>

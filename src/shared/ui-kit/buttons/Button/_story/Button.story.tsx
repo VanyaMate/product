@@ -1,23 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Button } from '../ui/Button';
-import { ButtonStyleType } from '../types/types';
+import { ButtonSizeType, ButtonStyleType } from '../types/types';
 
 
 const meta = {
     title    : 'shared/ui-kit/buttons/Button',
     component: Button,
     tags     : [ 'autodocs' ],
-    argTypes : {
-        styleType: {
-            control: { type: 'select' },
-            options: [
-                ButtonStyleType.PRIMARY,
-                ButtonStyleType.SECOND,
-                ButtonStyleType.GHOST,
-            ],
-        },
-    },
     args     : { onClick: fn() },
 } satisfies Meta<typeof Button>;
 
@@ -42,5 +32,37 @@ export const Ghost: Story = {
     args: {
         styleType: ButtonStyleType.GHOST,
         children : 'Button',
+    },
+};
+
+export const Small: Story = {
+    args: {
+        styleType: ButtonStyleType.GHOST,
+        children : 'Button',
+        size     : ButtonSizeType.SMALL,
+    },
+};
+
+export const Medium: Story = {
+    args: {
+        styleType: ButtonStyleType.GHOST,
+        children : 'Button',
+        size     : ButtonSizeType.MEDIUM,
+    },
+};
+
+export const Large: Story = {
+    args: {
+        styleType: ButtonStyleType.GHOST,
+        children : 'Button',
+        size     : ButtonSizeType.LARGE,
+    },
+};
+
+export const Quad: Story = {
+    args: {
+        styleType: ButtonStyleType.GHOST,
+        children : 'B',
+        quad     : true,
     },
 };

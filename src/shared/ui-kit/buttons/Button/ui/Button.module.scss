@@ -1,6 +1,4 @@
 .container {
-    padding         : var(--offset-small) var(--offset-medium);
-    border-radius   : var(--offset-small);
     border          : none;
     outline         : none;
     cursor          : pointer;
@@ -9,6 +7,8 @@
     display         : inline-flex;
     align-items     : center;
     justify-content : center;
+    line-height     : 0;
+    overflow        : hidden;
 
     &:disabled {
         background : var(--ghost-color);
@@ -43,6 +43,41 @@
         &:focus,
         &:hover {
             box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--ghost-color);
+        }
+    }
+
+    &.small {
+        height        : 20px;
+        padding       : 0 var(--offset-small);
+        border-radius : var(--offset-small);
+        font-size     : .75em;
+
+        &.quad {
+            width   : 20px;
+            padding : 0;
+        }
+    }
+
+    &.medium {
+        height        : 30px;
+        padding       : 0 var(--offset-medium);
+        border-radius : var(--offset-small);
+
+        &.quad {
+            width   : 30px;
+            padding : 0;
+        }
+    }
+
+    &.large {
+        height        : 40px;
+        padding       : 0 var(--offset-large);
+        border-radius : var(--offset-medium);
+        font-size     : 1.25em;
+
+        &.quad {
+            width   : 40px;
+            padding : 0;
         }
     }
 }

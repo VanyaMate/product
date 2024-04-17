@@ -1,10 +1,9 @@
 import { FC, memo } from 'react';
-import { SiteAppRoute, SiteAppRoutePath, User } from '@/app';
-import { ButtonStyleType, ButtonWithFixes, Link } from '@/shared/ui-kit';
+import { SiteAppRoute, SiteAppRoutePath, User, getRouteUrl } from '@/app';
+import { Button, ButtonStyleType, Link } from '@/shared/ui-kit';
 import { AiOutlineLogout, AiOutlineUser } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 import css from './UserHeaderProfileButton.module.scss';
-import { getUrl } from '@/app/routes/lib/getUrl.ts';
 
 
 export type UserHeaderProfileButtonProps = {
@@ -20,18 +19,17 @@ export const UserHeaderProfileButton: FC<UserHeaderProfileButtonProps> = memo(fu
         <div className={ css.container }>
             <AiOutlineUser/>
             <Link
-                to={ getUrl(SiteAppRoutePath[SiteAppRoute.PROFILE], { username: user.username }) }>
+                to={ getRouteUrl(SiteAppRoutePath[SiteAppRoute.PROFILE], { username: user.username }) }>
                 { user.username }
             </Link>
-            <ButtonWithFixes
+            <Button
                 onClick={ () => onClick(user) }
-                post={
-                    <AiOutlineLogout/>
-                }
                 styleType={ ButtonStyleType.GHOST }
+                aria-label={ t('logout_button') }
+                quad
             >
-                { t('logout_button') }
-            </ButtonWithFixes>
+                <AiOutlineLogout/>
+            </Button>
         </div>
     );
 });
