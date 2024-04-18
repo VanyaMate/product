@@ -5,25 +5,23 @@ import {
     SiteNavigationLink,
 } from '@/widgets/site/navigation/SiteNavigationMenu/ui/SiteNavigationLink/SiteNavigationLink.tsx';
 import { LinkStyleType } from '@/shared/ui-kit';
-import {
-    IoDesktop,
-    IoHome,
-    IoLogoVk,
-} from 'react-icons/io5';
+import { IoDesktop, IoHome, IoLogoVk } from 'react-icons/io5';
 import { IoLogoGithub } from 'react-icons/io';
 import { SiteAppRoute, SiteAppRoutePath } from '@/app';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+import { useSiteMainLayoutSideMenu } from '@/shared/layout';
 
 
 export type SiteNavigationMenuProps =
-    {
-        onCompleteAction?: () => void;
-    }
+    {}
     & ComponentPropsWithoutRef<'div'>;
 
 export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function SiteNavigationMenu (props) {
     const { className, ...other } = props;
     const { t }                   = useTranslation([ 'site-app', 'contacts' ]);
+    const { pathname }            = useLocation();
+    const { onCompleteAction }    = useSiteMainLayoutSideMenu();
 
     return (
         <div { ...other } className={ classNames(css.container, {}, [ className ]) }>
@@ -31,14 +29,24 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                 <ul className={ css.list }>
                     <SiteNavigationLink
                         icon={ <IoHome/> }
-                        styleType={ LinkStyleType.PRIMARY }
+                        onClick={ onCompleteAction }
+                        styleType={
+                            pathname === SiteAppRoutePath[SiteAppRoute.HOME]
+                            ? LinkStyleType.PRIMARY
+                            : LinkStyleType.GHOST
+                        }
                         to={ SiteAppRoutePath[SiteAppRoute.HOME] }
                     >
                         { t('home_page') }
                     </SiteNavigationLink>
                     <SiteNavigationLink
                         icon={ <IoDesktop/> }
-                        styleType={ LinkStyleType.PRIMARY }
+                        onClick={ onCompleteAction }
+                        styleType={
+                            pathname === SiteAppRoutePath[SiteAppRoute.ABOUT]
+                            ? LinkStyleType.PRIMARY
+                            : LinkStyleType.GHOST
+                        }
                         to={ SiteAppRoutePath[SiteAppRoute.ABOUT] }
                     >
                         { t('about_us_page') }

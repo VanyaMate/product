@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserSchema } from '..';
 import { User } from '@/app';
-import { LOCAL_STORAGE_USER_DATA } from '../consts/storage.const.ts';
+import {
+    LOCAL_STORAGE_USER_AUTH_KEY,
+    LOCAL_STORAGE_USER_DATA,
+} from '../consts/storage.const.ts';
 
 
 const initialState: UserSchema = {
@@ -15,10 +18,14 @@ export const userSlice = createSlice({
         setAuthData (state, action: PayloadAction<User>) {
             state.data = action.payload;
             localStorage.setItem(LOCAL_STORAGE_USER_DATA, JSON.stringify(action.payload));
+            // TODO: Временное решение для временного сервера
+            localStorage.setItem(LOCAL_STORAGE_USER_AUTH_KEY, JSON.stringify(action.payload.username));
         },
         removeAuthData (state) {
             state.data = null;
             localStorage.removeItem(LOCAL_STORAGE_USER_DATA);
+            // TODO: Временное решение для временного сервера
+            localStorage.removeItem(LOCAL_STORAGE_USER_AUTH_KEY);
         },
     },
 });
