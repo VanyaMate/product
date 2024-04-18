@@ -16,7 +16,12 @@ export default defineConfig(({ mode }) => ({
         },
     },
     define   : {
-        __IS_DEV__: mode === 'development',
+        __IS_DEV__ : JSON.stringify(mode === 'development'),
+        __API__: JSON.stringify(
+            mode === 'development'
+            ? 'http://localhost:8000'
+            : 'https://no-local-host:123',
+        ),
     },
     publicDir: 'public',
     build    : {

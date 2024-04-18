@@ -29,7 +29,9 @@ describe('AuthByUsernameTest', () => {
             password: '123123123',
         });
 
-        const result = await action(dispatch, getState, undefined);
+        const result = await action(dispatch, getState, {
+            api: mockedAxios,
+        });
         expect(mockedAxios.post).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenCalledTimes(3);
         expect(dispatch).toHaveBeenCalledWith(userActions.setAuthData({ ...userData }));
@@ -51,7 +53,9 @@ describe('AuthByUsernameTest', () => {
             username: 'admin',
             password: '123123123',
         });
-        const result = await action(dispatch, getState, undefined);
+        const result = await action(dispatch, getState, {
+            api: mockedAxios,
+        });
         expect(mockedAxios.post).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(result.meta.requestStatus).toBe('rejected');
@@ -65,7 +69,9 @@ describe('AuthByUsernameTest', () => {
             username: 'admin',
             password: '123123123',
         });
-        const result = await action(dispatch, getState, undefined);
+        const result = await action(dispatch, getState, {
+            api: mockedAxios,
+        });
         expect(mockedAxios.post).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(result.meta.requestStatus).toBe('rejected');

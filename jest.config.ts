@@ -38,6 +38,7 @@ const config: Config.InitialOptions = {
     setupFilesAfterEnv        : [ '<rootDir>/.jest/jest-setup.ts' ],
     globals                   : {
         __IS_DEV__: false,
+        __API__   : '',
     },
 };
 

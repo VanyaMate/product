@@ -16,6 +16,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
         //eslint-disable-next-line i18next/no-literal-string
         <div>
             HomePageComponent { state.toString() }
+            { /* eslint-disable-next-line i18next/no-literal-string */ }
             <Button>Any button</Button>
         </div>
     );
