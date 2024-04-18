@@ -3,10 +3,10 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "dev": "vite -c .vite/vite.config.ts",
-        "build": "tsc && vite build -c .vite/vite.config.ts",
+        "dev": "vite -c .vite/vite.config.ts --mode development",
+        "build": "tsc && vite build -c .vite/vite.config.ts --mode production",
         "build:start": "npm run build & npm run preview",
-        "build:view": "npx vite-bundle-visualizer",
+        "build:view": "npx vite-bundle-visualizer -c .vite/vite.config.ts --mode production",
         "preview": "vite preview -c .vite/vite.config.ts",
         "preview:host": "vite preview --host -c .vite/vite.config.ts",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 -c .eslintrc.cjs",

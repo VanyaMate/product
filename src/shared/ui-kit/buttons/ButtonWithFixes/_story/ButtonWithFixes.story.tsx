@@ -1,4 +1,3 @@
-import ButtonStory from '@/shared/ui-kit/buttons/Button/_story/Button.story.tsx';
 import { fn } from '@storybook/test';
 import { StoryObj } from '@storybook/react';
 import { ButtonWithFixes } from '../ui/ButtonWithFixes';
@@ -8,11 +7,6 @@ import { ButtonStyleType } from '@/shared/ui-kit';
 const meta = {
     title    : 'shared/ui-kit/buttons/ButtonWithFixes',
     component: ButtonWithFixes,
-    argTypes : {
-        ...ButtonStory.argTypes,
-        post: { control: { type: 'text' } },
-        pref: { control: { type: 'text' } },
-    },
     tags     : [ 'autodocs' ],
     args     : { onClick: fn() },
 };

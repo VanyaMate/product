@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 import { Button } from '@/shared/ui-kit';
 import css from './Modal.module.scss';
-import { AiOutlineClose } from 'react-icons/ai';
+import { IoClose } from 'react-icons/io5';
 
 
 export type ModalProps =
@@ -29,11 +29,13 @@ export const Modal: FC<ModalProps> = memo(function Modal (props) {
                         className={ classNames(css.container, { [css.hidden]: !controller.opened }, []) }
                         ref={ modalRef }
                     >
-                        <Button aria-label={ t('close_modal_window_button') }
-                                className={ css.closeButton }
-                                onClick={ () => controller.setOpened(false) }
+                        <Button
+                            aria-label={ t('close_modal_window_button') }
+                            className={ css.closeButton }
+                            onClick={ () => controller.setOpened(false) }
+                            quad
                         >
-                            <AiOutlineClose/>
+                            <IoClose/>
                         </Button>
                         <div className={ css.overlay }
                              onClick={ () => controller.setOpened(false) }/>

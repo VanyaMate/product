@@ -1,0 +1,1 @@
+export { SiteMainLayout, type SiteMainLayoutProps } from './ui/SiteMainLayout.tsx';

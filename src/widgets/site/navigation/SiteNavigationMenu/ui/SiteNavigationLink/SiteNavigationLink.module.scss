@@ -1,0 +1,48 @@
+.container {
+    width       : 100%;
+    white-space : nowrap;
+    display     : flex;
+    align-items : center;
+    gap         : var(--offset-medium);
+    height      : 30px;
+
+    .icon {
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        width           : 30px;
+        height          : 30px;
+        min-width       : 30px;
+        border-radius   : var(--offset-small);
+        transition      : var(--transition-medium);
+
+        &.primary {
+            background : var(--primary-color);
+            color      : var(--on-primary-text-color);
+
+            &:focus,
+            &:hover {
+                box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color), 0 0 25px -10px var(--primary-color);
+            }
+        }
+
+        &.second {
+            background : var(--second-color);
+            color      : var(--on-second-text-color);
+
+            &:focus,
+            &:hover {
+                box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--second-color);
+            }
+        }
+
+        &.ghost {
+            background : var(--bg-second-color);
+
+            &:focus,
+            &:hover {
+                box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--ghost-color);
+            }
+        }
+    }
+}

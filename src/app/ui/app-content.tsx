@@ -5,10 +5,8 @@ import {
 import { ScreenHeight } from '@/shared/ui-kit';
 import { Toaster } from '@/shared/ui-shad';
 import '../styles';
-import { HeaderNavBar } from '@/widgets/site';
-import {
-    NavigationMenu,
-} from '@/widgets/site';
+import { HeaderNavBar, SiteNavigationMenu } from '@/widgets/site';
+import { SiteMainLayout } from '@/shared/layout';
 
 
 export type AppProps = {};
@@ -18,12 +16,12 @@ export const AppContent: FC<AppProps> = memo(function App (props) {
 
     return (
         <ScreenHeight>
-            <NavigationMenu
+            <SiteMainLayout
                 header={ <HeaderNavBar/> }
-                sideMenu="side menu"
+                sideMenu={ <SiteNavigationMenu/> }
             >
                 <MainSiteRouter/>
-            </NavigationMenu>
+            </SiteMainLayout>
             <Toaster/>
         </ScreenHeight>
     );

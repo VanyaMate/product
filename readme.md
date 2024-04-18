@@ -21,9 +21,9 @@
         - **Redux Thunk**
 - **SCSS** + **CSS Modules**
 - **I18N-Next**
-- **Shadcn UI** - `только sonner`
+- **Shadcn UI** - `только sonner. ~45kb (15kb gzip)`
     - **Tailwind**
-- **Axios** - `возможно уберу. 25кб слишком много.`
+- **Axios** - `~24kb (7kb gzip)`
 
 ### DevTools
 

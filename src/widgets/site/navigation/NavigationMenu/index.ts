@@ -1,1 +1,0 @@
-export { NavigationMenu, type NavigationMenuProps } from './ui/NavigationMenu.tsx';
