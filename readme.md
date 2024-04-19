@@ -18,7 +18,7 @@
     - **React-Router-Dom**
     - **Redux**
         - **Redux Toolkit**
-        - **Redux Thunk**
+        - **Redux ThunkError**
 - **SCSS** + **CSS Modules**
 - **I18N-Next**
 - **Shadcn UI** - `только sonner. ~45kb (15kb gzip)`

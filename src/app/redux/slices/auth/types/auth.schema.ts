@@ -1,9 +1,4 @@
-export type AuthErrorType = {
-    code: number;
-    message: string;
-}
+import { ThunkState } from '@/app/redux/types/thunkError.ts';
 
-export type AuthSchema = {
-    isPending: boolean;
-    error: AuthErrorType | null;
-}
+
+export type AuthSchema = ThunkState;
