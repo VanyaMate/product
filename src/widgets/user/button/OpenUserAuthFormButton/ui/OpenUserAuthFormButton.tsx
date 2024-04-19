@@ -1,9 +1,14 @@
 import { FC, memo, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Loader, Modal, useModalController } from '@/shared/ui-kit';
 import {
-    UserAuthFormWithUsernameByJsonServerAsync,
-} from '@/widgets/user';
+    useModalController
+} from '@/shared/ui-kit/modal/Modal/hooks/useModalController.ts';
+import { Modal } from '@/shared/ui-kit/modal/Modal/ui/Modal.tsx';
+import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
+import {
+    UserAuthFormWithUsernameByJsonServerAsync
+} from '@/widgets/user/form/UserAuthFormWithUsernameByJsonServer/ui/UserAuthFormWithUsernameByJsonServer.async.tsx';
+import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 
 
 export type OpenUserAuthFormButtonProps = {};

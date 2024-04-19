@@ -1,5 +1,8 @@
 import { RouteProps } from 'react-router-dom';
-import { AboutPageAsync, HomePageAsync, NotFoundPage, ProfilePageAsync } from '@/pages';
+import { HomePageAsync } from '@/pages/HomePage/ui/HomePage.async.tsx';
+import { AboutPageAsync } from '@/pages/AboutPage/ui/AboutPage.async.tsx';
+import { ProfilePageAsync } from '@/pages/ProfilePage/ui/ProfilePage.async.tsx';
+import { NotFoundPage } from '@/pages/NotFoundPage/ui/NotFoundPage.tsx';
 
 
 export enum SiteAppRoute {

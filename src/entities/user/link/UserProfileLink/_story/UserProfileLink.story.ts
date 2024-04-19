@@ -1,5 +1,7 @@
 import { Meta } from '@storybook/react';
-import { UserProfileLink } from '@/entities/user/link';
+import {
+    UserProfileLink
+} from '@/entities/user/link/UserProfileLink/ui/UserProfileLink.tsx';
 
 
 const meta = {

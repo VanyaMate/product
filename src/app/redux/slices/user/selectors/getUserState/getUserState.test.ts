@@ -1,5 +1,7 @@
-import { getUserState, GlobalStoreSchema } from '@/app';
-
+import { GlobalStoreSchema } from "@/app/redux/types/global-store-types";
+import {
+    getUserState
+} from '@/app/redux/slices/user/selectors/getUserState/getUserState.ts';
 
 describe('GetUserState', () => {
     test('should return user state', () => {

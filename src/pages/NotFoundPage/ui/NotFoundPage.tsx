@@ -1,5 +1,5 @@
 import { FC, memo } from 'react';
-import { NotFoundError } from '@/shared/ui-kit';
+import { NotFoundError } from '@/shared/ui-kit/errors/NotFoundError/ui/NotFoundError.tsx';
 
 
 export type NotFoundPageProps = {};

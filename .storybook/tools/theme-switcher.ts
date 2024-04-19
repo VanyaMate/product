@@ -1,4 +1,4 @@
-import { Theme } from '@/app';
+import { Theme } from '@/app/theme/types/themes.ts';
 
 
 export default {

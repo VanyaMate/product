@@ -1,7 +1,7 @@
 import { fn } from '@storybook/test';
 import { StoryObj } from '@storybook/react';
 import { ButtonWithFixes } from '../ui/ButtonWithFixes';
-import { ButtonStyleType } from '@/shared/ui-kit';
+import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 
 
 const meta = {

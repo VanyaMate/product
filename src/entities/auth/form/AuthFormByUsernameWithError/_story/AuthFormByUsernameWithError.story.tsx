@@ -1,13 +1,11 @@
 import {
-    IUseForm,
-    IUseInputWithError,
-    useForm,
-    useInputWithError,
-} from '@/shared/ui-kit';
-import {
     AuthFormByUsernameWithError,
 } from '../ui/AuthFormByUsernameWithError.tsx';
 import { Meta, StoryObj } from '@storybook/react';
+import {
+    IUseInputWithError, useInputWithError,
+} from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
+import { IUseForm, useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
 
 
 const meta = {

@@ -3,7 +3,7 @@ import {
     GlobalStoreKeys,
     GlobalStoreSchema,
 } from '../types/global-store-types.ts';
-import { IReducerManager } from '@/app';
+import { IReducerManager } from '@/app/redux/types/reducer-manager.ts';
 
 
 export function createReducerManager (initialReducers: ReducersMapObject<GlobalStoreSchema>): IReducerManager<GlobalStoreSchema> {

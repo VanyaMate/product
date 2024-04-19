@@ -2,8 +2,8 @@ import React from 'react';
 import {
     getAuthPending,
 } from '@/app/redux/slices/auth/selectors/getAuthPending/getAuthPending.ts';
-import { useAppSelector } from '@/app';
-import { Button } from '@/shared/ui-kit';
+import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
+import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 
 
 export type HomePageContentProps = {};

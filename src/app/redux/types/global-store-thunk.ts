@@ -1,6 +1,6 @@
 import { ThunkDispatch } from '@reduxjs/toolkit';
-import { GlobalStoreSchema } from '@/app';
 import { AxiosInstance } from 'axios';
+import { GlobalStoreSchema } from '@/app/redux/types/global-store-types.ts';
 
 
 export type GlobalStoreThunk = ThunkDispatch<GlobalStoreSchema, ThunkExtraArgs, any>;

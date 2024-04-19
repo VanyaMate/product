@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import css from './PageLoader.module.scss';
-import { Loader } from '@/shared/ui-kit';
+import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
 
 
 export type PageLoaderProps = {};

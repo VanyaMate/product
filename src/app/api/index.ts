@@ -1,1 +1,0 @@
-export { type ApiServerError } from './types/server-error.types.ts';

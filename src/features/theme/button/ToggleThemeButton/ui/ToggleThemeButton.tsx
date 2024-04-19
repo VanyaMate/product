@@ -1,8 +1,10 @@
 import { FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyleType } from '@/shared/ui-kit';
-import { Theme, useThemeSwitcher } from '@/app';
 import { IoMdMoon, IoMdSunny } from 'react-icons/io';
+import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import { useThemeSwitcher } from '@/app/theme/hooks/useThemeSwitcher.ts';
+import { Theme } from '@/app/theme/types/themes.ts';
 
 
 export type ToggleThemeButtonProps = {};

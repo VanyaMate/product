@@ -1,6 +1,14 @@
 import { FC, memo, useDeferredValue } from 'react';
-import { getUserData, useAppSelector } from '@/app';
-import { OpenUserAuthFormButton, UserHeaderControlMenu } from '@/widgets/user';
+import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
+import {
+    getUserData
+} from '@/app/redux/slices/user/selectors/getUserData/getUserData.ts';
+import {
+    UserHeaderControlMenu
+} from '@/widgets/user/menu/UserHeaderControlMenu/ui/UserHeaderControlMenu.tsx';
+import {
+    OpenUserAuthFormButton
+} from '@/widgets/user/button/OpenUserAuthFormButton/ui/OpenUserAuthFormButton.tsx';
 
 
 export const UserProfileOrAuthButton: FC = memo(function UserProfileOrAuthButton () {

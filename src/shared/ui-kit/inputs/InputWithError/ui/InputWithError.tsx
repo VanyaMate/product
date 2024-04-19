@@ -1,7 +1,9 @@
 import { ComponentPropsWithoutRef, FC, memo, useMemo } from 'react';
 import classNames from 'classnames';
 import css from './InputWithError.module.scss';
-import { IUseInputWithError } from '@/shared/ui-kit';
+import {
+    IUseInputWithError
+} from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
 
 
 export type InputWithErrorProps =

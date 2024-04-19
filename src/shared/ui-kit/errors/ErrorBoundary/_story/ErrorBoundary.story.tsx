@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { ErrorBoundary } from '@/shared/ui-kit';
+import { ErrorBoundary } from '@/shared/ui-kit/errors/ErrorBoundary/ui/ErrorBoundary.tsx';
 
 
 const meta = {

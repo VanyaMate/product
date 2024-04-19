@@ -1,1 +1,0 @@
-export { i18nConfig } from './config/i18n.ts';

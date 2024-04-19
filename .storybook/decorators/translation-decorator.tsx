@@ -1,7 +1,7 @@
 import { Decorator } from '@storybook/react';
 import { I18nextProvider } from 'react-i18next';
 import { Suspense } from 'react';
-import { i18nConfig } from '@/app';
+import { i18nConfig } from '@/app/i18n/config/i18n.ts';
 
 
 export const translationDecorator: Decorator = (StoryFn, context) => {

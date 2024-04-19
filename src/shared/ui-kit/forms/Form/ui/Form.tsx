@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { IUseForm } from '@/shared/ui-kit';
+import { IUseForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
 
 
 export type FormProps =

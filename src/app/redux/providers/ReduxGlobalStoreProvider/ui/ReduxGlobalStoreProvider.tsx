@@ -1,6 +1,6 @@
 import { FC, memo, ReactNode } from 'react';
 import { Provider } from 'react-redux';
-import { createGlobalStore } from '@/app';
+import { createGlobalStore } from '@/app/redux/config';
 
 
 export type ReduxGlobalStoreProviderProps = {

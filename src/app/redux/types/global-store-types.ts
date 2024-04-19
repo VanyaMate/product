@@ -1,4 +1,5 @@
-import { AuthSchema, UserSchema } from '@/app';
+import { UserSchema } from '@/app/redux/slices/user/types/user.schema.ts';
+import { AuthSchema } from '@/app/redux/slices/auth/types/auth.schema.ts';
 
 
 export type GlobalStoreSchema =

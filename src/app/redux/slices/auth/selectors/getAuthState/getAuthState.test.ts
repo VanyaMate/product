@@ -1,7 +1,7 @@
-import { GlobalStoreSchema } from '@/app';
 import {
     getAuthState,
 } from '@/app/redux/slices/auth/selectors/getAuthState/getAuthState.ts';
+import { GlobalStoreSchema } from '@/app/redux/types/global-store-types.ts';
 
 
 describe('GetAuthStateTest', () => {

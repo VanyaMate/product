@@ -1,8 +1,8 @@
 import { FC, memo } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
-import { Link } from '@/shared/ui-kit';
 import css from './UserProfileLink.module.scss';
 import { useTranslation } from 'react-i18next';
+import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 
 
 export type UserProfileLinkProps =

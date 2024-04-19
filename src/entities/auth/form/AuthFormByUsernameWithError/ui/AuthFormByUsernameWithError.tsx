@@ -1,12 +1,18 @@
 import { FC, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-    ButtonWithFixes,
-    Form,
-    InputWithError, IUseForm, IUseInputWithError,
-} from '@/shared/ui-kit';
 import { AiOutlineLoading, AiOutlineLogin } from 'react-icons/ai';
 import css from './AuthFormByUsernameWithError.module.scss';
+import {
+    IUseInputWithError
+} from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
+import { IUseForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
+import { Form } from '@/shared/ui-kit/forms/Form/ui/Form.tsx';
+import {
+    InputWithError
+} from '@/shared/ui-kit/inputs/InputWithError/ui/InputWithError.tsx';
+import {
+    ButtonWithFixes
+} from '@/shared/ui-kit/buttons/ButtonWithFixes/ui/ButtonWithFixes.tsx';
 
 
 export type AuthFormByUsernameWithErrorProps = {

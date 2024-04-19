@@ -1,6 +1,6 @@
-import { AuthSchema } from '@/app';
 import { authSlice } from '@/app/redux/slices/auth/slice/authSlice.ts';
 import { authByUsername } from '@/app/redux/slices/auth/thunks/authByUsername.ts';
+import { AuthSchema } from '@/app/redux/slices/auth/types/auth.schema.ts';
 
 
 describe('AuthSliceTest', () => {

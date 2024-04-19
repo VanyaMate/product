@@ -1,1 +1,0 @@
-export { NotFoundError, type NotFoundErrorProps } from './ui/NotFoundError.tsx';

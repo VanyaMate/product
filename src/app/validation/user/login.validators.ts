@@ -1,4 +1,5 @@
-import { i18nConfig, Validator } from '@/app';
+import { i18nConfig } from "@/app/i18n/config/i18n";
+import { Validator } from '@/app/validation/types/validator.ts';
 
 
 export const userAuthLoginValidator: Validator<string> = function (login: string): string {

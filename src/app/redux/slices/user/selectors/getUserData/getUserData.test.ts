@@ -1,5 +1,7 @@
-import { getUserData, GlobalStoreSchema } from '@/app';
-
+import { GlobalStoreSchema } from "@/app/redux/types/global-store-types";
+import {
+    getUserData
+} from '@/app/redux/slices/user/selectors/getUserData/getUserData.ts';
 
 describe('GetUserData', () => {
     test('should return user.data', () => {

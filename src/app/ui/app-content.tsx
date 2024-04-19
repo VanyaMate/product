@@ -1,12 +1,15 @@
 import { FC, memo } from 'react';
-import {
-    MainSiteRouter,
-} from '@/app';
-import { ScreenHeight } from '@/shared/ui-kit';
-import { Toaster } from '@/shared/ui-shad';
 import '../styles';
-import { HeaderNavBar, SiteNavigationMenu } from '@/widgets/site';
-import { SiteMainLayout } from '@/shared/layout';
+import { ScreenHeight } from '@/shared/ui-kit/screen/ScreenHeight/ui/ScreenHeight';
+import {
+    SiteMainLayout
+} from '@/shared/layout/site/SiteMainLayout/ui/SiteMainLayout.tsx';
+import { HeaderNavBar } from '@/widgets/site/navigation/HeaderNavBar/ui/HeaderNavBar.tsx';
+import {
+    SiteNavigationMenu
+} from '@/widgets/site/navigation/SiteNavigationMenu/ui/SiteNavigationMenu/SiteNavigationMenu.tsx';
+import { Toaster } from '@/shared/ui-shad/ui/sonner.tsx';
+import { MainSiteRouter } from '@/app/routes/main-site/ui/MainSiteRouter.tsx';
 
 
 export type AppProps = {};

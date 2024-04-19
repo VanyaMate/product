@@ -4,9 +4,9 @@ import { useModalInnerManager } from '../hooks/useModalInnerManager.ts';
 import { useTranslation } from 'react-i18next';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
-import { Button } from '@/shared/ui-kit';
 import css from './Modal.module.scss';
 import { IoClose } from 'react-icons/io5';
+import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 
 
 export type ModalProps =

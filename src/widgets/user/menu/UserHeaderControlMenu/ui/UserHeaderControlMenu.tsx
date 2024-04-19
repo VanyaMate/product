@@ -1,16 +1,20 @@
 import { FC, memo, useDeferredValue } from 'react';
-import {
-    SiteAppRoute,
-    SiteAppRoutePath,
-    getRouteUrl,
-    useAppSelector,
-    getUserData, useAppDispatch, userActions,
-} from '@/app';
-import { Button, ButtonStyleType } from '@/shared/ui-kit';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 import css from './UserHeaderControlMenu.module.scss';
-import { UserProfileLink } from '@/entities/user';
+import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
+import {
+    getUserData
+} from '@/app/redux/slices/user/selectors/getUserData/getUserData.ts';
+import { useAppDispatch } from '@/app/redux/hooks/useAppDispatch.ts';
+import {
+    UserProfileLink
+} from '@/entities/user/link/UserProfileLink/ui/UserProfileLink.tsx';
+import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import { userActions } from '@/app/redux/slices/user/slice/userSlice.ts';
+import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import { getRouteUrl } from '@/app/routes/lib/getRouteUrl.ts';
+import { SiteAppRoute, SiteAppRoutePath } from '@/app/routes/main-site/config/routes.tsx';
 
 
 export type UserHeaderProfileButtonProps = {};

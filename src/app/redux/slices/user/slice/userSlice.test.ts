@@ -1,4 +1,5 @@
-import { UserSchema, userSlice } from '@/app';
+import { UserSchema } from '@/app/redux/slices/user/types/user.schema.ts';
+import { userSlice } from '@/app/redux/slices/user/slice/userSlice.ts';
 
 
 describe('UserSliceTest', () => {

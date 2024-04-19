@@ -1,7 +1,7 @@
 import { FC, memo, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { PageLoader } from '@/shared/ui-kit';
 import { MainSiteRouteConfig } from '../config/routes';
+import { PageLoader } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
 
 
 export type SiteRouterProps = {};

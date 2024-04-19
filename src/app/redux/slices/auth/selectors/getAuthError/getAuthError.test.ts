@@ -1,7 +1,7 @@
-import { GlobalStoreSchema } from '@/app';
 import {
     getAuthError,
 } from '@/app/redux/slices/auth/selectors/getAuthError/getAuthError.ts';
+import { GlobalStoreSchema } from '@/app/redux/types/global-store-types.ts';
 
 
 describe('GetAuthErrorTest', () => {

@@ -1,5 +1,5 @@
 import { LOCAL_STORAGE_THEME_KEY } from '../config/storage.ts';
-import { Theme } from '@/app';
+import { Theme } from '@/app/theme/types/themes.ts';
 
 
 export const getThemeName = function (storageId: string = 'main'): string {

@@ -1,7 +1,7 @@
 import { memo, FC, ReactNode } from 'react';
 import classNames from 'classnames';
 import css from './ButtonWithFixes.module.scss';
-import { Button, ButtonProps } from '@/shared/ui-kit';
+import { Button, ButtonProps } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 
 
 export type ButtonWithFixesProps =

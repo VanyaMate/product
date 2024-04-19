@@ -1,5 +1,5 @@
 import { ErrorInfo, ReactNode, Component } from 'react';
-import { ThrowError } from '@/shared/ui-kit';
+import { ThrowError } from '@/shared/ui-kit/errors/ThrowError/ui/ThrowError.tsx';
 
 
 export type ErrorBoundaryProps = {

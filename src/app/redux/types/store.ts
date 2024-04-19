@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { GlobalStoreSchema } from '@/app/redux/types/global-store-types.ts';
 import { IReducerManager } from '@/app/redux/types/reducer-manager.ts';
-import { createGlobalStore } from '@/app';
+import { createGlobalStore } from '@/app/redux/config';
 
 
 export type StoreWithManager =

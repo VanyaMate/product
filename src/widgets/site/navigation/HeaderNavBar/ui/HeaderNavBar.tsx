@@ -1,11 +1,17 @@
 import { FC, memo } from 'react';
 import css from './HeaderNavBar.module.scss';
 import { useTranslation } from 'react-i18next';
-import { Link } from '@/shared/ui-kit';
 import classNames from 'classnames';
-import { UserProfileOrAuthButton } from '@/widgets/user';
-import { ToggleLanguageButton } from '@/features/i18n';
-import { ToggleThemeButton } from '@/features/theme';
+import {
+    ToggleLanguageButton
+} from '@/features/i18n/button/ToggleLanguageButton/ui/ToggleLanguageButton.tsx';
+import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
+import {
+    ToggleThemeButton
+} from '@/features/theme/button/ToggleThemeButton/ui/ToggleThemeButton.tsx';
+import {
+    UserProfileOrAuthButton
+} from '@/widgets/user/button/UserProfileOrAuthButton/ui/UserProfileOrAuthButton.tsx';
 
 
 export type HeaderNavBarProps = {};

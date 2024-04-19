@@ -1,18 +1,22 @@
 import { FC, memo } from 'react';
-import { useForm, useInputWithError } from '@/shared/ui-kit';
 import { useDispatch } from 'react-redux';
-import {
-    GlobalStoreThunk, User,
-    userAuthLoginValidator,
-    userAuthPasswordValidator,
-} from '@/app';
-import {
-    type AuthFormByUserNameFormType,
-    AuthFormByUsernameWithError,
-} from '@/entities/auth';
 import { authByUsername } from '@/app/redux/slices/auth/thunks/authByUsername.ts';
 import { authReducer } from '@/app/redux/slices/auth/slice/authSlice.ts';
 import { useReducerConnector } from '@/app/redux/hooks/useReducerConnector.ts';
+import { GlobalStoreThunk } from '@/app/redux/types/global-store-thunk.ts';
+import {
+    useInputWithError
+} from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
+import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
+import {
+    AuthFormByUserNameFormType
+} from '@/entities/auth/form/AuthFormByUsernameWithError/types/types.ts';
+import { User } from '@/app/types/user';
+import { userAuthLoginValidator } from '@/app/validation/user/login.validators.ts';
+import {
+    AuthFormByUsernameWithError
+} from '@/entities/auth/form/AuthFormByUsernameWithError/ui/AuthFormByUsernameWithError.tsx';
+import { userAuthPasswordValidator } from '@/app/validation/user/password.validators.ts';
 
 
 export type UserAuthFormWithUsernameByJsonServer = {

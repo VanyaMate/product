@@ -1,1 +1,0 @@
-export { Loader, type LoaderProps } from './ui/Loader.tsx';

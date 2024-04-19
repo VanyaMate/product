@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { HomePageAsync } from '@/pages';
+import { HomePageAsync } from '@/pages/HomePage/ui/HomePage.async.tsx';
 
 
 const meta: Meta<typeof HomePageAsync> = {

@@ -1,7 +1,7 @@
 import { FC, memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/shared/ui-kit';
 import { IoLanguage } from 'react-icons/io5';
+import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 
 
 export type ToggleLanguageButtonProps = {};

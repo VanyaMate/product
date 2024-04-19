@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AuthSchema } from '..';
 import { authByUsername } from '@/app/redux/slices/auth/thunks/authByUsername.ts';
 import { toast } from 'sonner';
-import { i18nConfig } from '@/app';
+import { AuthSchema } from '@/app/redux/slices/auth/types/auth.schema.ts';
+import { i18nConfig } from '@/app/i18n/config/i18n.ts';
 
 
 const initialState: AuthSchema = {

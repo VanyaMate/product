@@ -1,7 +1,7 @@
 import { FC, memo, ReactNode } from 'react';
 import classNames from 'classnames';
 import css from './SiteNavigationLink.module.scss';
-import { Link, LinkProps } from '@/shared/ui-kit';
+import { Link, LinkProps } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 
 
 export type SiteNavigationLinkProps =

@@ -1,1 +1,0 @@
-export { ScreenHeight, type ScreenHeightProps } from './ui/ScreenHeight.tsx';

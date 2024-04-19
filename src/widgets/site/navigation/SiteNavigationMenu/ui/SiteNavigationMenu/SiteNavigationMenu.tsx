@@ -4,13 +4,15 @@ import css from './SiteNavigationMenu.module.scss';
 import {
     SiteNavigationLink,
 } from '@/widgets/site/navigation/SiteNavigationMenu/ui/SiteNavigationLink/SiteNavigationLink.tsx';
-import { LinkStyleType } from '@/shared/ui-kit';
 import { IoDesktop, IoHome, IoLogoVk } from 'react-icons/io5';
 import { IoLogoGithub } from 'react-icons/io';
-import { SiteAppRoute, SiteAppRoutePath } from '@/app';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { useSiteMainLayoutSideMenu } from '@/shared/layout';
+import {
+    useSiteMainLayoutSideMenu
+} from '@/shared/layout/site/SiteMainLayout/hooks/useSiteMainLayoutSideMenu.tsx';
+import { LinkStyleType } from '@/shared/ui-kit/links/Link/types/types.ts';
+import { SiteAppRoute, SiteAppRoutePath } from '@/app/routes/main-site/config/routes.tsx';
 
 
 export type SiteNavigationMenuProps =

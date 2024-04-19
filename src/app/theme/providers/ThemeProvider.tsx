@@ -7,10 +7,10 @@ import {
     useState,
 } from 'react';
 import { getThemeStorageValue, setThemeStorageValue } from '../helpers/storage';
-import { ThemeContext } from '../context/ThemeContext.ts';
 import classNames from 'classnames';
-import { Theme, ThemeType } from '@/app';
 import '../styles/index.scss';
+import { Theme, ThemeType } from '@/app/theme/types/themes.ts';
+import { ThemeContext } from '../context/ThemeContext';
 
 
 export type ThemeProviderProps =

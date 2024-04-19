@@ -1,7 +1,7 @@
-import { GlobalStoreSchema } from '@/app';
 import {
     getAuthPending,
 } from '@/app/redux/slices/auth/selectors/getAuthPending/getAuthPending.ts';
+import { GlobalStoreSchema } from '@/app/redux/types/global-store-types';
 
 
 describe('GetAuthPendingTest', () => {

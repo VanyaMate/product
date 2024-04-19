@@ -8,12 +8,14 @@ import {
 } from 'react';
 import classNames from 'classnames';
 import css from './SiteMainLayout.module.scss';
-import { Button } from '@/shared/ui-kit';
 import { IoClose, IoMenu } from 'react-icons/io5';
 import { inert } from '@/shared/lib/react/inert.ts';
-import { SiteMainLayoutSideMenuProvider } from '@/shared/layout';
 import { keyboardClose } from '@/shared/lib/react/keyboardClose.ts';
 import { noEvent } from '@/shared/lib/react/noEvent.ts';
+import {
+    SiteMainLayoutSideMenuProvider
+} from '@/shared/layout/site/SiteMainLayout/provider/SiteMainLayoutSideMenuProvider.tsx';
+import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 
 
 export type SiteMainLayoutProps =

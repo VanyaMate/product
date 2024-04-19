@@ -1,1 +1,0 @@
-export { HeaderNavBar, type HeaderNavBarProps } from './ui/HeaderNavBar.tsx';

@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { userReducer, api } from '@/app';
 import { createReducerManager } from '../config/createReducerManager.ts';
 import { GlobalStoreSchema } from '../types/global-store-types.ts';
+import { userReducer } from '@/app/redux/slices/user/slice/userSlice.ts';
+import { api } from '@/app/axios/lib/api.ts';
 
 
 export const createGlobalStore = function (initialState?: GlobalStoreSchema) {
