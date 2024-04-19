@@ -9,7 +9,7 @@ import { IoLogoGithub } from 'react-icons/io';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import {
-    useSiteMainLayoutSideMenu
+    useSiteMainLayoutSideMenu,
 } from '@/shared/layout/site/SiteMainLayout/hooks/useSiteMainLayoutSideMenu.tsx';
 import { LinkStyleType } from '@/shared/ui-kit/links/Link/types/types.ts';
 import { SiteAppRoute, SiteAppRoutePath } from '@/app/routes/main-site/config/routes.tsx';
@@ -67,7 +67,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                         { t('github', { ns: 'contacts' }) }
                     </SiteNavigationLink>
                     <SiteNavigationLink
-                        aria-label={ t('vk') }
+                        aria-label={ t('vk', { ns: 'contacts' }) }
                         icon={ <IoLogoVk/> }
                         styleType={ LinkStyleType.GHOST }
                         target="_blank"

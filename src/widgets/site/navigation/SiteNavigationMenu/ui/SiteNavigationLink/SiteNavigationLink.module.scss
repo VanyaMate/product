@@ -38,6 +38,7 @@
 
         &.ghost {
             background : var(--bg-second-color);
+            color      : var(--text-second-color);
 
             &:focus,
             &:hover {

@@ -8,15 +8,31 @@ describe('UserSliceTest', () => {
             data: null,
         };
         const result                    = userSlice.reducer(previousState, userSlice.actions.setAuthData({
-            id: '1', username: 'admin_root',
+            username : 'root_test',
+            id       : '1',
+            firstName: 'First',
+            lastName : 'Last',
+            avatar   : '',
         }));
-        expect(result).toEqual({ data: { id: '1', username: 'admin_root' } });
+        expect(result).toEqual({
+            data: {
+                username : 'root_test',
+                id       : '1',
+                firstName: 'First',
+                lastName : 'Last',
+                avatar   : '',
+            },
+        });
     });
 
     test('removeAuthData', () => {
         const previousState: UserSchema = {
             data: {
-                id: '1', username: 'admin_root',
+                username : 'root_test',
+                id       : '1',
+                firstName: 'First',
+                lastName : 'Last',
+                avatar   : '',
             },
         };
         const result                    = userSlice.reducer(previousState, userSlice.actions.removeAuthData());

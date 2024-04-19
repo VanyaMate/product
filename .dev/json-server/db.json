@@ -25,9 +25,20 @@
     ],
     "users": [
         {
-            "id": "1",
+            "id": "admin",
             "username": "admin",
-            "password": "123123123123"
+            "password": "123123123123",
+            "avatar": "https://ih1.redbubble.net/image.2955130987.9629/raf,360x360,075,t,fafafa:ca443f4786.jpg",
+            "firstName": "Vanya",
+            "lastName": "Mate"
+        },
+        {
+            "id": "user",
+            "username": "user",
+            "password": "321321321321",
+            "avatar": "https://avatars.mds.yandex.net/get-kino-vod-films-gallery/28788/47e2fd514411e18b76af786d7417062d/380x240",
+            "firstName": "Mike",
+            "lastName": "Starcraft"
         }
     ]
 }

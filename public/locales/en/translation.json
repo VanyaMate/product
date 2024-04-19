@@ -15,5 +15,6 @@
     "auth_error_title": "Authorisation Error",
     "auth_success_title": "Welcome back",
     "logout_button": "LogOut",
-    "go_to_user_page_of": "Go to the {{username}} user page"
+    "go_to_user_page_of": "Go to the {{username}} user page",
+    "request_error": "Request error"
 }

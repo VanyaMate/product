@@ -10,7 +10,11 @@ jest.mock('axios');
 
 const mockedAxios    = jest.mocked(axios);
 const userData: User = {
-    username: 'root_test', id: '1',
+    username : 'root_test',
+    id       : '1',
+    firstName: 'First',
+    lastName : 'Last',
+    avatar   : '',
 };
 
 describe('AuthByUsernameTest', () => {
