@@ -2,24 +2,19 @@ import {
     getAuthState,
 } from '@/app/redux/slices/auth/selectors/getAuthState/getAuthState.ts';
 import { GlobalStoreSchema } from '@/app/redux/types/global-store-types.ts';
+import { serviceErrorResponse } from 'product-types';
 
 
 describe('GetAuthStateTest', () => {
     test('should return auth', () => {
         const state: Partial<GlobalStoreSchema> = {
             auth: {
-                error    : {
-                    message: 'Error',
-                    code   : 500,
-                },
+                error    : serviceErrorResponse(undefined),
                 isPending: false,
             },
         };
         expect(getAuthState(state as GlobalStoreSchema)).toEqual({
-            error    : {
-                message: 'Error',
-                code   : 500,
-            },
+            error    : serviceErrorResponse(undefined),
             isPending: false,
         });
     });

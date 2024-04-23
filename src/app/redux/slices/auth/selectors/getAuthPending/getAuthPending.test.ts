@@ -2,16 +2,14 @@ import {
     getAuthPending,
 } from '@/app/redux/slices/auth/selectors/getAuthPending/getAuthPending.ts';
 import { GlobalStoreSchema } from '@/app/redux/types/global-store-types';
+import { serviceErrorResponse } from 'product-types';
 
 
 describe('GetAuthPendingTest', () => {
     test('should return auth.pending false when false', () => {
         const state: Partial<GlobalStoreSchema> = {
             auth: {
-                error    : {
-                    message: 'Error',
-                    code   : 500,
-                },
+                error    : serviceErrorResponse(undefined),
                 isPending: false,
             },
         };
