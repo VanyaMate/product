@@ -8,21 +8,17 @@ describe('GetUserState', () => {
         const state: Partial<GlobalStoreSchema> = {
             user: {
                 data: {
-                    username : 'root_test',
-                    id       : '1',
-                    firstName: 'First',
-                    lastName : 'Last',
-                    avatar   : '',
+                    id    : '1',
+                    login : 'root_test',
+                    avatar: '',
                 },
             },
         };
         expect(getUserState(state as GlobalStoreSchema)).toEqual({
             data: {
-                username : 'root_test',
-                id       : '1',
-                firstName: 'First',
-                lastName : 'Last',
-                avatar   : '',
+                id    : '1',
+                login : 'root_test',
+                avatar: '',
             },
         });
     });

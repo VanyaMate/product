@@ -1,24 +1,29 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { User } from '@/app/types/user';
 import { ThunkApiConfig } from '@/app/redux/types/global-store-thunk.ts';
-import { ThunkError } from '@/app/redux/types/thunkError.ts';
 import { thunkCatch } from '@/app/redux/catch/thunk-catch.ts';
+import { DomainServiceResponseError, DomainUserFull } from 'product-types';
+import { isDomainResponse } from 'product-types/dist/response/DomainResponse';
 
 
 export type FetchUserDataProps = {
-    username: string;
+    login: string;
 }
 
-export const fetchUserData = createAsyncThunk<User, FetchUserDataProps, ThunkApiConfig<ThunkError>>(
+export const fetchUserData = createAsyncThunk<DomainUserFull, FetchUserDataProps, ThunkApiConfig<DomainServiceResponseError>>(
     'profile/fetchUserData',
     async (userData, thunkAPI) => {
         const { rejectWithValue, extra: { api } } = thunkAPI;
         try {
             return api
-                .get(`/users?username=${ userData.username }`)
+                .get(`/v1/user/full/${ userData.login }`)
                 .then((response) => response.data)
-                .then(([ user ]) => user);
-            
+                .then((data) => {
+                    if (isDomainResponse(data)) {
+                        return data.data;
+                    }
+                    return data;
+                });
+
         } catch (e) {
             return thunkCatch(e, rejectWithValue);
         }

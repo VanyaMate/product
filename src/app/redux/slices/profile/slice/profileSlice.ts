@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '@/app/types/user';
 import { ProfileSchema } from '@/app/redux/slices/profile/types/profileSchema.ts';
 import { fetchUserData } from '@/app/redux/slices/user/thunks/fetchUserData.ts';
 import { toast } from 'sonner';
-import { i18nConfig } from '@/app/i18n/config/i18n.ts';
+import { DomainUserFull } from 'product-types';
 
 
 const initialState: ProfileSchema = {
@@ -16,7 +15,7 @@ export const profileSlice = createSlice({
     name         : 'profile',
     initialState : initialState,
     reducers     : {
-        setProfile (state, action: PayloadAction<User>) {
+        setProfile (state, action: PayloadAction<DomainUserFull>) {
             state.profile = action.payload;
         },
         removeProfile (state) {
@@ -35,13 +34,11 @@ export const profileSlice = createSlice({
         });
         builder.addCase(fetchUserData.rejected, (state, action) => {
             state.isPending = false;
-            state.error     = action.payload ?? {
-                code   : 500,
-                message: 'Unknown error',
-            };
+            state.error     = action.payload;
             state.profile   = null;
-            toast(i18nConfig.t('request_error'), {
-                duration: 5000, description: state.error.message,
+            toast(state.error.errors[0].title, {
+                duration   : 5000,
+                description: state.error.errors[0].messages[0],
             });
         });
     },

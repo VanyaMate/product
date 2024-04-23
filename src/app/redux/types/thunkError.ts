@@ -1,9 +1,7 @@
-export type ThunkError = {
-    code: number;
-    message: string;
-}
+import { DomainServiceResponseError } from 'product-types';
+
 
 export type ThunkState = {
     isPending: boolean;
-    error: ThunkError | null;
+    error: DomainServiceResponseError | null;
 }

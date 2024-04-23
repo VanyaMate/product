@@ -15,7 +15,7 @@ export enum SiteAppRoute {
 export const SiteAppRoutePath: Record<SiteAppRoute, string> = {
     [SiteAppRoute.HOME]     : '/',
     [SiteAppRoute.ABOUT]    : '/about',
-    [SiteAppRoute.PROFILE]  : '/profile/:username',
+    [SiteAppRoute.PROFILE]  : '/profile/:login',
     [SiteAppRoute.NOT_FOUND]: '*',
 };
 

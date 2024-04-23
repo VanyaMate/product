@@ -26,8 +26,8 @@ export default defineConfig(({ mode }) => ({
         __IS_DEV__: JSON.stringify(mode === 'development'),
         __API__   : JSON.stringify(
             mode === 'development'
-            ? 'http://localhost:8000'
-            : 'http://localhost:8000',
+            ? 'http://localhost:3000/api'
+            : 'http://localhost:3000/api',
         ),
     },
     publicDir: 'public',

@@ -1,4 +1,4 @@
 export type AuthFormByUserNameFormType = {
-    username: string;
+    login: string;
     password: string;
 }

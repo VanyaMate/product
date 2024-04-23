@@ -11,16 +11,16 @@ import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
 import {
     AuthFormByUserNameFormType
 } from '@/entities/auth/form/AuthFormByUsernameWithError/types/types.ts';
-import { User } from '@/app/types/user';
 import { userAuthLoginValidator } from '@/app/validation/user/login.validators.ts';
 import {
     AuthFormByUsernameWithError
 } from '@/entities/auth/form/AuthFormByUsernameWithError/ui/AuthFormByUsernameWithError.tsx';
 import { userAuthPasswordValidator } from '@/app/validation/user/password.validators.ts';
+import { DomainUser } from 'product-types';
 
 
 export type UserAuthFormWithUsernameByJsonServer = {
-    onSuccess?: (user: User) => void;
+    onSuccess?: (user: DomainUser) => void;
     onError?: (error: Error) => void;
 }
 
@@ -28,7 +28,7 @@ export const UserAuthFormWithUsernameByJsonServer: FC<UserAuthFormWithUsernameBy
     const { onError, onSuccess }     = props;
     const dispatch: GlobalStoreThunk = useDispatch();
     const loginInputController       = useInputWithError({
-        name            : 'username',
+        name            : 'login',
         validationMethod: userAuthLoginValidator,
         debounce        : 500,
     });

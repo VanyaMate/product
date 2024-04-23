@@ -8,8 +8,16 @@ describe('AuthSliceTest', () => {
         const initState: AuthSchema = {
             isPending: false,
             error    : {
-                message: 'Any text',
-                code   : 500,
+                errors: [
+                    {
+                        code    : 500,
+                        title   : 'Client error',
+                        target  : '',
+                        messages: [
+                            'Unknown error',
+                        ],
+                    },
+                ],
             },
         };
 
@@ -21,8 +29,16 @@ describe('AuthSliceTest', () => {
         const initState: AuthSchema = {
             isPending: true,
             error    : {
-                message: 'Any text',
-                code   : 500,
+                errors: [
+                    {
+                        code    : 500,
+                        title   : 'Client error',
+                        target  : '',
+                        messages: [
+                            'Unknown error',
+                        ],
+                    },
+                ],
             },
         };
 
@@ -39,15 +55,31 @@ describe('AuthSliceTest', () => {
         const result = authSlice.reducer(initState, {
             type   : authByUsername.rejected.type,
             payload: {
-                message: 'Error',
-                code   : 403,
+                errors: [
+                    {
+                        code    : 500,
+                        title   : 'Server error',
+                        target  : 'App',
+                        messages: [
+                            'Unknown error',
+                        ],
+                    },
+                ],
             },
         });
         expect(result).toEqual({
             isPending: false,
             error    : {
-                message: 'Error',
-                code   : 403,
+                errors: [
+                    {
+                        code    : 500,
+                        title   : 'Server error',
+                        target  : 'App',
+                        messages: [
+                            'Unknown error',
+                        ],
+                    },
+                ],
             },
         });
     });

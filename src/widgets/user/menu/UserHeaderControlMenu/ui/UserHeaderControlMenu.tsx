@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import css from './UserHeaderControlMenu.module.scss';
 import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
 import {
-    getUserData
+    getUserData,
 } from '@/app/redux/slices/user/selectors/getUserData/getUserData.ts';
 import { useAppDispatch } from '@/app/redux/hooks/useAppDispatch.ts';
 import {
-    UserProfileLink
+    UserProfileLink,
 } from '@/entities/user/link/UserProfileLink/ui/UserProfileLink.tsx';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { userActions } from '@/app/redux/slices/user/slice/userSlice.ts';
@@ -29,10 +29,10 @@ export const UserHeaderControlMenu: FC<UserHeaderProfileButtonProps> = memo(func
             <UserProfileLink
                 to={
                     getRouteUrl(SiteAppRoutePath[SiteAppRoute.PROFILE], {
-                        username: userData.username,
+                        login: userData.login,
                     })
                 }
-                username={ userData.username }
+                username={ userData.login }
             />
             <Button
                 aria-label={ t('logout_button') }

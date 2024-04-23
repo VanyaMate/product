@@ -26,12 +26,10 @@ export const authSlice = createSlice({
         });
         builder.addCase(authByUsername.rejected, (state, action) => {
             state.isPending = false;
-            state.error     = action.payload ?? {
-                code   : 500,
-                message: 'Unknown error',
-            };
-            toast(i18nConfig.t('auth_error_title'), {
-                duration: 5000, description: state.error.message,
+            state.error     = action.payload;
+            toast(state.error.errors[0].title, {
+                duration   : 5000,
+                description: state.error.errors[0].messages[0],
             });
         });
     },

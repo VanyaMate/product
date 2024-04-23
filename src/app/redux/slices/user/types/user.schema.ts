@@ -1,6 +1,6 @@
-import { User } from '@/app/types/user';
+import { DomainUser } from 'product-types';
 
 
 export type UserSchema = {
-    data: User | null;
+    data: DomainUser | null;
 }

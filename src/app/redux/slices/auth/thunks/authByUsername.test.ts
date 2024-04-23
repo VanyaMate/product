@@ -1,20 +1,18 @@
 import axios from 'axios';
 import { authByUsername } from '@/app/redux/slices/auth/thunks/authByUsername.ts';
 import { Dispatch } from '@reduxjs/toolkit';
-import { User } from '@/app/types/user';
 import { GlobalStoreSchema } from '@/app/redux/types/global-store-types.ts';
 import { userActions } from '@/app/redux/slices/user/slice/userSlice.ts';
+import { DomainUser } from 'product-types';
 
 
 jest.mock('axios');
 
-const mockedAxios    = jest.mocked(axios);
-const userData: User = {
-    username : 'root_test',
-    id       : '1',
-    firstName: 'First',
-    lastName : 'Last',
-    avatar   : '',
+const mockedAxios          = jest.mocked(axios);
+const userData: DomainUser = {
+    id    : '1',
+    login : 'root_test',
+    avatar: '',
 };
 
 describe('AuthByUsernameTest', () => {
@@ -28,10 +26,10 @@ describe('AuthByUsernameTest', () => {
 
     test('Valid auth', async () => {
         mockedAxios.post.mockReturnValueOnce(Promise.resolve({
-            data: { ...userData },
+            data: { data: { user: { ...userData }, tokens: [ '', '' ] } },
         }));
         const action = authByUsername({
-            username: 'admin',
+            login   : 'admin',
             password: '123123123',
         });
 
@@ -47,16 +45,19 @@ describe('AuthByUsernameTest', () => {
 
     test('No valid auth', async () => {
         mockedAxios.post.mockRejectedValueOnce({
-            message : 'string',
-            response: {
-                status: 401,
-                data  : {
-                    message: 'No valid data',
+            errors: [
+                {
+                    code    : 500,
+                    title   : 'Server error',
+                    target  : 'App',
+                    messages: [
+                        'Unknown error',
+                    ],
                 },
-            },
+            ],
         });
         const action = authByUsername({
-            username: 'admin',
+            login   : 'admin',
             password: '123123123',
         });
         const result = await action(dispatch, getState, {
@@ -66,13 +67,23 @@ describe('AuthByUsernameTest', () => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(result.meta.requestStatus).toBe('rejected');
         expect(result.payload).toEqual({
-            code: 401, message: 'No valid data',
+            errors: [
+                {
+                    code    : 500,
+                    title   : 'Server error',
+                    target  : 'App',
+                    messages: [
+                        'Unknown error',
+                    ],
+                },
+            ],
         });
     });
 
     test('Unknown error', async () => {
+        mockedAxios.post.mockReturnValueOnce(Promise.resolve({ data: undefined }));
         const action = authByUsername({
-            username: 'admin',
+            login   : 'admin',
             password: '123123123',
         });
         const result = await action(dispatch, getState, {
@@ -82,7 +93,16 @@ describe('AuthByUsernameTest', () => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(result.meta.requestStatus).toBe('rejected');
         expect(result.payload).toEqual({
-            code: 500, message: 'Unknown error',
+            errors: [
+                {
+                    code    : 500,
+                    title   : 'Client error',
+                    target  : 'Axios',
+                    messages: [
+                        'Variable responseData does not correspond to type DomainResponse',
+                    ],
+                },
+            ],
         });
     });
 });
