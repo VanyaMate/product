@@ -1,4 +1,6 @@
-import { DomainServiceResponseError } from 'product-types';
+import {
+    DomainServiceResponseError
+} from 'product-types/dist/error/DomainServiceResponseError';
 
 
 export type ThunkState = {

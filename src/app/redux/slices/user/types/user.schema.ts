@@ -1,4 +1,4 @@
-import { DomainUser } from 'product-types';
+import { DomainUser } from 'product-types/dist/user/DomainUser';
 
 
 export type UserSchema = {

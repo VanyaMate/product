@@ -2,7 +2,9 @@ import {
     getAuthState,
 } from '@/app/redux/slices/auth/selectors/getAuthState/getAuthState.ts';
 import { GlobalStoreSchema } from '@/app/redux/types/global-store-types.ts';
-import { serviceErrorResponse } from 'product-types';
+import {
+    serviceErrorResponse
+} from 'product-types/dist/_helpers/lib/serviceErrorResponse';
 
 
 describe('GetAuthStateTest', () => {

@@ -16,7 +16,7 @@ import {
     AuthFormByUsernameWithError
 } from '@/entities/auth/form/AuthFormByUsernameWithError/ui/AuthFormByUsernameWithError.tsx';
 import { userAuthPasswordValidator } from '@/app/validation/user/password.validators.ts';
-import { DomainUser } from 'product-types';
+import { DomainUser } from 'product-types/dist/user/DomainUser';
 
 
 export type UserAuthFormWithUsernameByJsonServer = {

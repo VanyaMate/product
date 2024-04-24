@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ProfileSchema } from '@/app/redux/slices/profile/types/profileSchema.ts';
 import { fetchUserData } from '@/app/redux/slices/user/thunks/fetchUserData.ts';
 import { toast } from 'sonner';
-import { DomainUserFull } from 'product-types';
+import { DomainUserFull } from 'product-types/dist/user/DomainUserFull';
 
 
 const initialState: ProfileSchema = {

@@ -3,7 +3,7 @@ import {
     LOCAL_STORAGE_USER_ACCESS_TOKEN, LOCAL_STORAGE_USER_REFRESH_TOKEN,
 } from '@/app/redux/slices/user/consts/storage.const.ts';
 import { isDomainResponse } from 'product-types/dist/response/DomainResponse';
-import { isDomainTokens } from 'product-types';
+import { isDomainTokens } from 'product-types/dist/token/DomainTokens';
 
 
 export const api = axios

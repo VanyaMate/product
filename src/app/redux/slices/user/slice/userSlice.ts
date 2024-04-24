@@ -3,7 +3,7 @@ import {
     LOCAL_STORAGE_USER_DATA,
 } from '../consts/storage.const.ts';
 import { UserSchema } from '@/app/redux/slices/user/types/user.schema.ts';
-import { DomainUser } from 'product-types';
+import { DomainUser } from 'product-types/dist/user/DomainUser';
 
 
 const initialState: UserSchema = {

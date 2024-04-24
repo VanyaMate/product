@@ -3,17 +3,17 @@ import { ThunkApiConfig } from '@/app/redux/types/global-store-thunk.ts';
 import { thunkCatch } from '@/app/redux/catch/thunk-catch.ts';
 import { userActions } from '@/app/redux/slices/user/slice/userSlice.ts';
 import {
-    assertDomainAuthResponse,
-    DomainServiceResponseError,
-    DomainUser,
-} from 'product-types';
-import {
     LOCAL_STORAGE_USER_ACCESS_TOKEN, LOCAL_STORAGE_USER_REFRESH_TOKEN,
 } from '@/app/redux/slices/user/consts/storage.const.ts';
 import {
     assertDomainResponse,
     DomainResponse,
 } from 'product-types/dist/response/DomainResponse';
+import { DomainServiceResponseError } from 'product-types/dist/error/DomainServiceResponseError';
+import { DomainUser } from 'product-types/dist/user/DomainUser';
+import {
+    assertDomainAuthResponse
+} from 'product-types/dist/authorization/DomainAuthResponse';
 
 
 export type AuthByUsernameProps = {

@@ -3,7 +3,7 @@ import { authByUsername } from '@/app/redux/slices/auth/thunks/authByUsername.ts
 import { Dispatch } from '@reduxjs/toolkit';
 import { GlobalStoreSchema } from '@/app/redux/types/global-store-types.ts';
 import { userActions } from '@/app/redux/slices/user/slice/userSlice.ts';
-import { DomainUser } from 'product-types';
+import { DomainUser } from 'product-types/dist/user/DomainUser';
 
 
 jest.mock('axios');
