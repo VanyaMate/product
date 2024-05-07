@@ -4,7 +4,7 @@ import { isAxiosError } from '@/app/type-guards/axios/isAxiosError.ts';
 //@ts-ignore
 import type { GetThunkAPI } from '@reduxjs/toolkit/src/createAsyncThunk.ts';
 import {
-    serviceErrorResponse
+    serviceErrorResponse,
 } from 'product-types/dist/_helpers/lib/serviceErrorResponse';
 
 

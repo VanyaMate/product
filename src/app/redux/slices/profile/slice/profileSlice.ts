@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ProfileSchema } from '@/app/redux/slices/profile/types/profileSchema.ts';
+import {
+    ProfileSchema,
+} from '@/app/redux/slices/profile/types/profileSchema.ts';
 import { fetchUserData } from '@/app/redux/slices/user/thunks/fetchUserData.ts';
 import { toast } from 'sonner';
 import { DomainUserFull } from 'product-types/dist/user/DomainUserFull';
@@ -44,4 +46,7 @@ export const profileSlice = createSlice({
     },
 });
 
-export const { actions: profileActions, reducer: profileReducer } = profileSlice;
+export const {
+                 actions: profileActions,
+                 reducer: profileReducer,
+             } = profileSlice;

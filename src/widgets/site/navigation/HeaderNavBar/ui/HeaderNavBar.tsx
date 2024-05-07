@@ -1,30 +1,26 @@
 import { FC, memo } from 'react';
 import css from './HeaderNavBar.module.scss';
-import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import {
-    ToggleLanguageButton
+    ToggleLanguageButton,
 } from '@/features/i18n/button/ToggleLanguageButton/ui/ToggleLanguageButton.tsx';
-import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import {
-    ToggleThemeButton
+    ToggleThemeButton,
 } from '@/features/theme/button/ToggleThemeButton/ui/ToggleThemeButton.tsx';
 import {
-    UserProfileOrAuthButton
+    UserProfileOrAuthButton,
 } from '@/widgets/user/button/UserProfileOrAuthButton/ui/UserProfileOrAuthButton.tsx';
+import { SiteLogoLinkTitle } from '@/entities/site/logo/SiteLogoLinkTitle.tsx';
 
 
 export type HeaderNavBarProps = {};
 
 export const HeaderNavBar: FC<HeaderNavBarProps> = memo(function HeaderNavBar (props) {
-    const {}    = props;
-    const { t } = useTranslation([ 'site-app' ]);
+    const {} = props;
 
     return (
         <div className={ css.container }>
-            <h1>
-                <Link aria-label={ t('aria_logo') } to="/">{ t('logo') }</Link>
-            </h1>
+            <SiteLogoLinkTitle className={ css.logo }/>
             <ul className={ classNames(css.utils, {}, [ css.list ]) }>
                 <li>
                     <ToggleLanguageButton/>

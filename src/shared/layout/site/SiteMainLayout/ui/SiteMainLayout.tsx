@@ -13,7 +13,7 @@ import { inert } from '@/shared/lib/react/inert.ts';
 import { keyboardClose } from '@/shared/lib/react/keyboardClose.ts';
 import { noEvent } from '@/shared/lib/react/noEvent.ts';
 import {
-    SiteMainLayoutSideMenuProvider
+    SiteMainLayoutSideMenuProvider,
 } from '@/shared/layout/site/SiteMainLayout/provider/SiteMainLayoutSideMenuProvider.tsx';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 
@@ -44,7 +44,8 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
             opened={ open }
             setOpened={ setOpen }
         >
-            <div { ...other } className={ classNames(css.container, {}, [ className ]) }>
+            <div { ...other }
+                 className={ classNames(css.container, {}, [ className ]) }>
                 <header className={ css.header }>
                     <Button
                         onClick={ () => setOpen((prev) => !prev) }
@@ -67,7 +68,8 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
                     className={ classNames(css.main, { [css.main_open]: open }) }
                     { ...inert(open) }
                 >
-                    <a href="#" onClick={ noEvent } ref={ main } tabIndex={ -1 }/>
+                    <a href="#" onClick={ noEvent } ref={ main }
+                       tabIndex={ -1 }/>
                     { children }
                 </main>
                 <div

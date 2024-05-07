@@ -1,8 +1,19 @@
 .container {
+    container-name  : container;
+    container-type  : inline-size;
     display         : flex;
     justify-content : space-between;
     align-items     : center;
     gap             : var(--offset-medium);
+
+    .logo {
+        @container container (max-width: 500px) {
+            visibility     : hidden;
+            pointer-events : none;
+            width          : 0;
+            opacity        : 0;
+        }
+    }
 
     .list {
         list-style-type : none;

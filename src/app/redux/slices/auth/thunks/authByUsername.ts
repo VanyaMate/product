@@ -9,10 +9,12 @@ import {
     assertDomainResponse,
     DomainResponse,
 } from 'product-types/dist/response/DomainResponse';
-import { DomainServiceResponseError } from 'product-types/dist/error/DomainServiceResponseError';
+import {
+    DomainServiceResponseError,
+} from 'product-types/dist/error/DomainServiceResponseError';
 import { DomainUser } from 'product-types/dist/user/DomainUser';
 import {
-    assertDomainAuthResponse
+    assertDomainAuthResponse,
 } from 'product-types/dist/authorization/DomainAuthResponse';
 
 
@@ -45,7 +47,7 @@ export const authByUsername = createAsyncThunk<DomainUser, AuthByUsernameProps, 
                 });
             return user;
         } catch (e: unknown) {
-            return thunkCatch(e, rejectWithValue);
+            throw thunkCatch(e, rejectWithValue);
         }
     },
 );

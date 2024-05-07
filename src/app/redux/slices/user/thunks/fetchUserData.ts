@@ -4,7 +4,7 @@ import { thunkCatch } from '@/app/redux/catch/thunk-catch.ts';
 import { isDomainResponse } from 'product-types/dist/response/DomainResponse';
 import { DomainUserFull } from 'product-types/dist/user/DomainUserFull';
 import {
-    DomainServiceResponseError
+    DomainServiceResponseError,
 } from 'product-types/dist/error/DomainServiceResponseError';
 
 
@@ -26,9 +26,8 @@ export const fetchUserData = createAsyncThunk<DomainUserFull, FetchUserDataProps
                     }
                     return data;
                 });
-
         } catch (e) {
-            return thunkCatch(e, rejectWithValue);
+            throw thunkCatch(e, rejectWithValue);
         }
     },
 );

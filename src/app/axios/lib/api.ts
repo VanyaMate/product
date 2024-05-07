@@ -1,30 +1,38 @@
 import axios from 'axios';
 import {
-    LOCAL_STORAGE_USER_ACCESS_TOKEN, LOCAL_STORAGE_USER_REFRESH_TOKEN,
-} from '@/app/redux/slices/user/consts/storage.const.ts';
-import { isDomainResponse } from 'product-types/dist/response/DomainResponse';
-import { isDomainTokens } from 'product-types/dist/token/DomainTokens';
+    responseTokenRefreshedInterceptor,
+} from '@/app/axios/interceptors/response/response-token-refreshed.interceptor.ts';
+import {
+    responseQueueControllerInterceptor,
+} from '@/app/axios/interceptors/response/response-queue-controller.interceptor.ts';
+import {
+    errorQueueControllerInterceptor,
+} from '@/app/axios/interceptors/error/error-queue-controller.interceptor.ts';
+import {
+    requestQueueControllerInterceptor,
+} from '@/app/axios/interceptors/request/request-queue-controller.interceptor.ts';
+import {
+    IAxiosQueue,
+} from '@/app/axios/services/axios-queue/axios-queue.interface.ts';
+import { AxiosQueue } from '@/app/axios/services/axios-queue/AxiosQueue.ts';
+import {
+    requestAuthorizationTokensInterceptor,
+} from '@/app/axios/interceptors/request/request-authorization-tokens.interceptor.ts';
 
 
-export const api = axios
-    .create({
-        baseURL: __API__,
-        headers: {
-            authorization  : localStorage.getItem(LOCAL_STORAGE_USER_ACCESS_TOKEN),
-            'refresh-token': localStorage.getItem(LOCAL_STORAGE_USER_REFRESH_TOKEN),
-        },
-    });
+export const api = axios.create({ baseURL: __API__ });
+
+const axiosQueue: IAxiosQueue = new AxiosQueue();
+
+api.interceptors.response.use(responseTokenRefreshedInterceptor);
 
 api.interceptors.response.use(
-    (response) => {
-        if (isDomainResponse(response.data)) {
-            if (isDomainTokens(response.data.tokens)) {
-                localStorage.setItem(LOCAL_STORAGE_USER_ACCESS_TOKEN, response.data.tokens[0]);
-                localStorage.setItem(LOCAL_STORAGE_USER_REFRESH_TOKEN, response.data.tokens[1]);
-            }
-        }
+    responseQueueControllerInterceptor(axiosQueue),
+    errorQueueControllerInterceptor(axiosQueue),
+);
 
-        return response;
-    },
-    (error) => Promise.reject(error),
+api.interceptors.request.use(requestAuthorizationTokensInterceptor);
+api.interceptors.request.use(
+    requestQueueControllerInterceptor(axiosQueue),
+    errorQueueControllerInterceptor(axiosQueue),
 );
