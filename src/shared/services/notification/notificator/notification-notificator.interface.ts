@@ -1,13 +1,13 @@
 import {
     DomainNotification,
-    NotificationType,
+    DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
 
 
 export type NotificationNotificatorCallback = (notifications: DomainNotification[]) => void;
 
 export interface INotificationNotificator {
-    subscribe (on: NotificationType, callback: NotificationNotificatorCallback): void;
+    subscribe (on: DomainNotificationType, callback: NotificationNotificatorCallback): void;
 
-    unsubscribe (on: NotificationType, callback: NotificationNotificatorCallback): void;
+    unsubscribe (on: DomainNotificationType, callback: NotificationNotificatorCallback): void;
 }

@@ -1,8 +1,8 @@
 export enum NotificationConnectorEvents {
-    CONNECTED  = 'connected',
-    CONNECTING = 'connecting',
-    DISCONNECT = 'disconnect',
-    MESSAGE    = 'message',
+    CONNECTED    = 'connected',
+    CONNECTING   = 'connecting',
+    DISCONNECTED = 'disconnected',
+    MESSAGE      = 'message',
 }
 
 export type NotificationConnectorCallback = (response: string) => void;
@@ -13,9 +13,12 @@ export type NotificationConnectorConnectOptions = {
 }
 
 export interface INotificationConnector {
+    aborted: boolean;
     status: NotificationConnectorEvents;
 
-    connect (url: string, options: NotificationConnectorConnectOptions): void;
+    connect (url: string, getOptions: () => NotificationConnectorConnectOptions): void;
+
+    disconnect (): void;
 
     subscribe (on: NotificationConnectorEvents, callback: NotificationConnectorCallback): void;
 

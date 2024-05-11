@@ -38,7 +38,7 @@ describe('AuthByUsernameTest', () => {
         });
         expect(mockedAxios.post).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenCalledTimes(3);
-        expect(dispatch).toHaveBeenCalledWith(userActions.setAuthData({ ...userData }));
+        expect(dispatch).toHaveBeenCalledWith(userActions.setAuthData({ user: userData, tokens: ['', ''] }));
         expect(result.meta.requestStatus).toBe('fulfilled');
         expect(result.payload).toEqual({ ...userData });
     });

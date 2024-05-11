@@ -8,9 +8,12 @@ describe('UserSliceTest', () => {
             data: null,
         };
         const result                    = userSlice.reducer(previousState, userSlice.actions.setAuthData({
-            id    : '1',
-            login : 'root_test',
-            avatar: '',
+            user  : {
+                id    : '1',
+                login : 'root_test',
+                avatar: '',
+            },
+            tokens: [ '', '' ],
         }));
         expect(result).toEqual({
             data: {
