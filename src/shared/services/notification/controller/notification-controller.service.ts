@@ -3,7 +3,7 @@ import {
 } from '@/shared/services/notification/controller/notification-controller.interface.ts';
 import {
     DomainNotification,
-    DomainNotificationType,
+    DomainNotificationType, isDomainNotification,
 } from 'product-types/dist/notification/DomainNotification';
 import {
     NotificationNotificatorCallback,
@@ -13,10 +13,19 @@ import {
     NotificationConnectorConnectOptions,
     NotificationConnectorEvents,
 } from '@/shared/services/notification/connector/notification-connector.interface.ts';
+import {
+    INotificationParser,
+} from '@/shared/services/notification/parser/notification-parser.interface.ts';
+import {
+    isDomainServiceResponseError,
+} from 'product-types/dist/error/DomainServiceResponseError';
+import { jsonParse } from '@/shared/lib/json/json-parse.ts';
 
 
-export class NotificationControllerService implements INotificationController {
+export class NotificationController implements INotificationController {
     private readonly _handlers: Record<DomainNotificationType, NotificationNotificatorCallback[]> = {
+        [DomainNotificationType.ERROR]                  : [],
+        [DomainNotificationType.UNKNOWN]                : [],
         [DomainNotificationType.CONNECTED]              : [],
         [DomainNotificationType.CONNECTING]             : [],
         [DomainNotificationType.DISCONNECTED]           : [],
@@ -38,6 +47,7 @@ export class NotificationControllerService implements INotificationController {
 
     constructor (
         private readonly _notificationConnector: INotificationConnector,
+        private readonly _notificationParser: INotificationParser,
     ) {
         this._notificationConnector.subscribe(NotificationConnectorEvents.CONNECTING, this._connectorConnectingHandler.bind(this));
         this._notificationConnector.subscribe(NotificationConnectorEvents.CONNECTED, this._connectorConnectedHandler.bind(this));
@@ -68,28 +78,41 @@ export class NotificationControllerService implements INotificationController {
     }
 
     private _connectorConnectingHandler () {
-        console.log('Connecting');
+        if (__IS_DEV__) {
+            console.log('NOTIFICATION: Connecting');
+        }
+
         this._setInternalProperties();
         this._emitEvent(DomainNotificationType.CONNECTING, []);
     }
 
     private _connectorConnectedHandler (response: string) {
-        // parse response
-        console.log('Connected', response);
-        if (response === 'connected') {
-            // all ok
+        if (__IS_DEV__) {
+            console.log('NOTIFICATION: Connected', response);
         }
-        this._reconnectAttempt = 0;
-        this._emitEvent(DomainNotificationType.CONNECTED, []);
+
+        const potentialError: unknown = jsonParse<unknown>(response);
+
+        if (!isDomainServiceResponseError(potentialError)) {
+            const [ potentialSuccessConnectMessage ]: string[] = this._notificationParser.getMessages(response);
+            const connectNotification: DomainNotification      = this._notificationParser.getNotification(potentialSuccessConnectMessage);
+
+            if (isDomainNotification(connectNotification)) {
+                this._reconnectAttempt = 0;
+                this._emitEvent(DomainNotificationType.CONNECTED, []);
+            }
+        }
     }
 
     private _connectorDisconnectHandler (response: string) {
-        console.log('Disconnected', response);
+        if (__IS_DEV__) {
+            console.log('NOTIFICATION: Disconnected', response);
+        }
+
         if (this._notificationConnector.aborted) {
             this._emitEvent(DomainNotificationType.DISCONNECTED, []);
         } else {
             if (this._reconnectAttempt > 1) {
-                // parse response
                 this._emitEvent(DomainNotificationType.DISCONNECTED, []);
                 setTimeout(() => {
                     this.connect(this._url, this._getOptions);
@@ -101,9 +124,22 @@ export class NotificationControllerService implements INotificationController {
     }
 
     private _connectorMessageHandler (response: string) {
-        console.log('Message', response);
-        // parse response
-        // switch by response notification type
+        const messages: string[] = this._notificationParser.getMessages(response);
+
+        if (messages.length) {
+            const notifications: DomainNotification[] = this._notificationParser.getNotifications(messages.slice(this._currentNotificationIndex, messages.length));
+            this._currentNotificationIndex            = messages.length;
+
+            if (__IS_DEV__) {
+                console.log('NOTIFICATION: Message', notifications);
+            }
+
+            notifications.map(this._notificationHandler.bind(this));
+        }
+    }
+
+    private _notificationHandler (notification: DomainNotification) {
+        this._emitEvent(notification.type, [ notification ]);
     }
 
     private _setInternalProperties () {

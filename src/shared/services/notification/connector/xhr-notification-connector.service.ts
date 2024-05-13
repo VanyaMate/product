@@ -6,7 +6,7 @@ import {
 } from '@/shared/services/notification/connector/notification-connector.interface.ts';
 
 
-export class XhrNotificationConnectorService implements INotificationConnector {
+export class XhrNotificationConnector implements INotificationConnector {
     private readonly _handlers: Record<NotificationConnectorEvents, NotificationConnectorCallback[]> = {
         [NotificationConnectorEvents.CONNECTED]   : [],
         [NotificationConnectorEvents.CONNECTING]  : [],
@@ -22,7 +22,7 @@ export class XhrNotificationConnectorService implements INotificationConnector {
     connect (url: string, getOptions: () => NotificationConnectorConnectOptions): void {
         this._xhr?.abort();
         this._xhr = new XMLHttpRequest();
-        this._xhr.open('POST', url);
+        this._xhr.open('POST', url, true);
 
         const options = getOptions();
         this._xhr.setRequestHeader('Cache-Control', 'no-cache');
@@ -41,6 +41,7 @@ export class XhrNotificationConnectorService implements INotificationConnector {
     }
 
     disconnect (): void {
+        this.aborted = true;
         this._xhr?.abort();
     }
 
@@ -87,7 +88,6 @@ export class XhrNotificationConnectorService implements INotificationConnector {
     private _abortHandler (): void {
         if (this.status !== NotificationConnectorEvents.DISCONNECTED) {
             this.status  = NotificationConnectorEvents.DISCONNECTED;
-            this.aborted = true;
             this._emitEvent(NotificationConnectorEvents.DISCONNECTED);
         }
     }

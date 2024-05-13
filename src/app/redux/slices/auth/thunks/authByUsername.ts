@@ -13,6 +13,8 @@ import { DomainUser } from 'product-types/dist/user/DomainUser';
 import {
     assertDomainAuthResponse,
 } from 'product-types/dist/authorization/DomainAuthResponse';
+import { toast } from 'sonner';
+import { i18nConfig } from '@/app/i18n/config/i18n.ts';
 
 
 export type AuthByUsernameProps = {
@@ -38,6 +40,7 @@ export const authByUsername = createAsyncThunk<DomainUser, AuthByUsernameProps, 
                 .then((data: unknown) => {
                     assertDomainAuthResponse(data, 'data', 'DomainAuthResponse');
                     dispatch(userActions.setAuthData(data));
+                    toast(i18nConfig.t('auth_success_title'), { duration: 3000 });
                     return data.user;
                 });
             return user;
