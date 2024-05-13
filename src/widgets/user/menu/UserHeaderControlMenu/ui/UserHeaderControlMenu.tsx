@@ -14,13 +14,16 @@ import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { userActions } from '@/app/redux/slices/user/slice/userSlice.ts';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { getRouteUrl } from '@/app/routes/lib/getRouteUrl.ts';
-import { SiteAppRoute, SiteAppRoutePath } from '@/app/routes/main-site/config/routes.tsx';
+import {
+    SiteAppRoute,
+    SiteAppRoutePath,
+} from '@/app/routes/main-site/config/routes.tsx';
 
 
 export type UserHeaderProfileButtonProps = {};
 
 export const UserHeaderControlMenu: FC<UserHeaderProfileButtonProps> = memo(function UserHeaderControlMenu () {
-    const { t }    = useTranslation();
+    const { t } = useTranslation();
     const userData = useDeferredValue(useAppSelector(getUserData));
     const dispatch = useAppDispatch();
 

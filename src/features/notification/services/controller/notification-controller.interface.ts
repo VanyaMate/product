@@ -3,10 +3,10 @@ import {
 } from 'product-types/dist/notification/DomainNotification';
 import {
     NotificationNotificatorCallback,
-} from '@/shared/services/notification/notificator/notification-notificator.interface.ts';
+} from '@/features/notification/services/notificator/notification-notificator.interface.ts';
 import {
     NotificationConnectorConnectOptions,
-} from '@/shared/services/notification/connector/notification-connector.interface.ts';
+} from '@/features/notification/services/connector/notification-connector.interface.ts';
 
 
 export interface INotificationController {

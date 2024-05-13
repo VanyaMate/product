@@ -1,25 +1,24 @@
 import {
-    INotificationController,
-} from '@/shared/services/notification/controller/notification-controller.interface.ts';
-import {
     DomainNotification,
     DomainNotificationType, isDomainNotification,
 } from 'product-types/dist/notification/DomainNotification';
 import {
     NotificationNotificatorCallback,
-} from '../notificator/notification-notificator.interface';
-import {
-    INotificationConnector,
-    NotificationConnectorConnectOptions,
-    NotificationConnectorEvents,
-} from '@/shared/services/notification/connector/notification-connector.interface.ts';
-import {
-    INotificationParser,
-} from '@/shared/services/notification/parser/notification-parser.interface.ts';
+} from '../notificator/notification-notificator.interface.ts';
 import {
     isDomainServiceResponseError,
 } from 'product-types/dist/error/DomainServiceResponseError';
 import { jsonParse } from '@/shared/lib/json/json-parse.ts';
+import {
+    INotificationController,
+} from '@/features/notification/services/controller/notification-controller.interface.ts';
+import {
+    INotificationConnector,
+    NotificationConnectorConnectOptions, NotificationConnectorEvents,
+} from '@/features/notification/services/connector/notification-connector.interface.ts';
+import {
+    INotificationParser,
+} from '@/features/notification/services/parser/notification-parser.interface.ts';
 
 
 export class NotificationController implements INotificationController {
@@ -63,6 +62,7 @@ export class NotificationController implements INotificationController {
 
     disconnect (): void {
         this._notificationConnector.disconnect();
+        this._setDisconnectProps();
     }
 
     subscribe (on: DomainNotificationType, callback: NotificationNotificatorCallback): void {
@@ -82,7 +82,7 @@ export class NotificationController implements INotificationController {
             console.log('NOTIFICATION: Connecting');
         }
 
-        this._setInternalProperties();
+        this._setBeforeConnectingProps();
         this._emitEvent(DomainNotificationType.CONNECTING, []);
     }
 
@@ -142,9 +142,15 @@ export class NotificationController implements INotificationController {
         this._emitEvent(notification.type, [ notification ]);
     }
 
-    private _setInternalProperties () {
+    private _setBeforeConnectingProps () {
         this._currentNotificationIndex = 0;
         this._reconnectAttempt += 1;
+        clearTimeout(this._reconnectTimer);
+    }
+
+    private _setDisconnectProps () {
+        this._currentNotificationIndex = 0;
+        this._reconnectAttempt         = 0;
         clearTimeout(this._reconnectTimer);
     }
 }

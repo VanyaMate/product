@@ -1,11 +1,11 @@
 import {
-    INotificationParser,
-} from '@/shared/services/notification/parser/notification-parser.interface.ts';
-import {
     DomainNotification,
     DomainNotificationType,
     isDomainNotification,
 } from 'product-types/dist/notification/DomainNotification';
+import {
+    INotificationParser
+} from '@/features/notification/services/parser/notification-parser.interface.ts';
 
 
 export class SseNotificationParser implements INotificationParser {

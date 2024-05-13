@@ -3,7 +3,7 @@ import {
     NotificationConnectorCallback,
     NotificationConnectorConnectOptions,
     NotificationConnectorEvents,
-} from '@/shared/services/notification/connector/notification-connector.interface.ts';
+} from './notification-connector.interface';
 
 
 export class XhrNotificationConnector implements INotificationConnector {
@@ -20,6 +20,7 @@ export class XhrNotificationConnector implements INotificationConnector {
     public aborted: boolean                    = false;
 
     connect (url: string, getOptions: () => NotificationConnectorConnectOptions): void {
+        this.aborted = true;
         this._xhr?.abort();
         this._xhr = new XMLHttpRequest();
         this._xhr.open('POST', url, true);
@@ -37,6 +38,7 @@ export class XhrNotificationConnector implements INotificationConnector {
         this._xhr.addEventListener('abort', this._abortHandler.bind(this));
         this._xhr.addEventListener('progress', this._progressHandler.bind(this));
 
+        this.aborted = false;
         this._xhr.send();
     }
 
@@ -87,7 +89,7 @@ export class XhrNotificationConnector implements INotificationConnector {
 
     private _abortHandler (): void {
         if (this.status !== NotificationConnectorEvents.DISCONNECTED) {
-            this.status  = NotificationConnectorEvents.DISCONNECTED;
+            this.status = NotificationConnectorEvents.DISCONNECTED;
             this._emitEvent(NotificationConnectorEvents.DISCONNECTED);
         }
     }
