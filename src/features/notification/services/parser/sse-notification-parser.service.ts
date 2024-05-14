@@ -4,8 +4,9 @@ import {
     isDomainNotification,
 } from 'product-types/dist/notification/DomainNotification';
 import {
-    INotificationParser
+    INotificationParser,
 } from '@/features/notification/services/parser/notification-parser.interface.ts';
+import { jsonParse } from '@/shared/lib/json/json-parse.ts';
 
 
 export class SseNotificationParser implements INotificationParser {
@@ -14,7 +15,7 @@ export class SseNotificationParser implements INotificationParser {
     }
 
     getNotification (message: string): DomainNotification {
-        const notificationCandidate: unknown = JSON.parse(message);
+        const notificationCandidate: unknown = jsonParse<unknown>(message);
         if (isDomainNotification(notificationCandidate)) {
             return notificationCandidate;
         } else {

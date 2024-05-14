@@ -134,7 +134,7 @@ export class NotificationController implements INotificationController {
                 console.log('NOTIFICATION: Message', notifications);
             }
 
-            notifications.map(this._notificationHandler.bind(this));
+            notifications.forEach(this._notificationHandler.bind(this));
         }
     }
 
