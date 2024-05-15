@@ -46,8 +46,8 @@ export const HeaderNavBar: FC<HeaderNavBarProps> = memo(function HeaderNavBar (p
                         dropdown={ <UserAuthFormWithUsernameByJsonServer/> }
                     >
                         <Button
-                            quad
-                            onClick={ () => modalController.setOpened((prev) => !prev) }><IoNotifications/></Button>
+                            onClick={ () => modalController.setOpened((prev) => !prev) }
+                            quad><IoNotifications/></Button>
                     </DropdownModal>
                 </li>
                 <li>
