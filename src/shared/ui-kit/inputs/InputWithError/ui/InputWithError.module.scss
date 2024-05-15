@@ -18,7 +18,7 @@
         box-shadow    : 0 3px 5px -3px var(--danger-color);
         visibility    : hidden;
         opacity       : 0;
-        transition    : var(--transition-slow);
+        transition    : var(--transition-medium);
 
         &::after {
             content    : '';
@@ -43,13 +43,15 @@
         padding       : var(--offset-small);
         border-radius : var(--offset-small);
         background    : var(--bg-main-color);
-        border        : none;
+        border        : 1px solid var(--border-main-color);
         outline       : none;
-        transition    : var(--transition-slow);
+        transition    : var(--transition-medium);
         color         : var(--bg-main-foreground-color);
+        box-shadow    : 0 0 0 0 transparent;
 
         &:focus {
-            box-shadow : 0 0 0 2px var(--primary-color), 0 5px 25px -5px var(--primary-color);
+            box-shadow : 0 0 0 1px var(--primary-color), 0 5px 25px -5px var(--primary-color);
+            border     : 1px solid var(--primary-color);
         }
     }
 
