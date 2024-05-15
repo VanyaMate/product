@@ -43,12 +43,14 @@ export const TestingNotificationList: FC<TestingNotificationListProps> = memo(fu
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            {
-                notifications.map((notification) =>
-                    <TestingNotificationItem key={ notification.dateMs }
-                                             notification={ notification }/>,
-                )
-            }
+            <div className={ css.content }>
+                {
+                    notifications.map((notification) =>
+                        <TestingNotificationItem key={ notification.dateMs }
+                                                 notification={ notification }/>,
+                    )
+                }
+            </div>
         </div>
     );
 });
