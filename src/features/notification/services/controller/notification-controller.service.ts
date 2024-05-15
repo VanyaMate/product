@@ -114,7 +114,7 @@ export class NotificationController implements INotificationController {
         } else {
             if (this._reconnectAttempt > 1) {
                 this._emitEvent(DomainNotificationType.DISCONNECTED, []);
-                setTimeout(() => {
+                this._reconnectTimer = setTimeout(() => {
                     this.connect(this._url, this._getOptions);
                 }, 5000);
             } else {
