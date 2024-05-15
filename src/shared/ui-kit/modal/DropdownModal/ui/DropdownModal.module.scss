@@ -1,0 +1,13 @@
+.container {
+    position : relative;
+}
+
+.dropdown {
+    position      : absolute;
+    z-index       : 10;
+    overflow      : hidden;
+    border        : 1px solid var(--border-main-color);
+    background    : var(--bg-main-color);
+    border-radius : var(--offset-medium);
+    padding       : var(--offset-medium);
+}
