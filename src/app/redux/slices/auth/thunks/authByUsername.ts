@@ -3,9 +3,6 @@ import { ThunkApiConfig } from '@/app/redux/types/global-store-thunk.ts';
 import { thunkCatch } from '@/app/redux/catch/thunk-catch.ts';
 import { userActions } from '@/app/redux/slices/user/slice/userSlice.ts';
 import {
-    LOCAL_STORAGE_USER_ACCESS_TOKEN, LOCAL_STORAGE_USER_REFRESH_TOKEN,
-} from '@/app/redux/slices/user/consts/storage.const.ts';
-import {
     assertDomainResponse,
     DomainResponse,
 } from 'product-types/dist/response/DomainResponse';
@@ -16,6 +13,8 @@ import { DomainUser } from 'product-types/dist/user/DomainUser';
 import {
     assertDomainAuthResponse,
 } from 'product-types/dist/authorization/DomainAuthResponse';
+import { toast } from 'sonner';
+import { i18nConfig } from '@/app/i18n/config/i18n.ts';
 
 
 export type AuthByUsernameProps = {
@@ -40,9 +39,8 @@ export const authByUsername = createAsyncThunk<DomainUser, AuthByUsernameProps, 
                 })
                 .then((data: unknown) => {
                     assertDomainAuthResponse(data, 'data', 'DomainAuthResponse');
-                    dispatch(userActions.setAuthData(data.user));
-                    localStorage.setItem(LOCAL_STORAGE_USER_ACCESS_TOKEN, data.tokens[0]);
-                    localStorage.setItem(LOCAL_STORAGE_USER_REFRESH_TOKEN, data.tokens[1]);
+                    dispatch(userActions.setAuthData(data));
+                    toast(i18nConfig.t('auth_success_title'), { duration: 3000 });
                     return data.user;
                 });
             return user;

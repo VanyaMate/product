@@ -18,14 +18,17 @@ import { AxiosQueue } from '@/app/axios/services/axios-queue/AxiosQueue.ts';
 import {
     requestAuthorizationTokensInterceptor,
 } from '@/app/axios/interceptors/request/request-authorization-tokens.interceptor.ts';
+import {
+    errorNotificatorInterceptor,
+} from '@/app/axios/interceptors/error/error-notificator.interceptor.ts';
 
 
 export const api = axios.create({ baseURL: __API__ });
 
 const axiosQueue: IAxiosQueue = new AxiosQueue();
 
+api.interceptors.response.use((next) => next, errorNotificatorInterceptor);
 api.interceptors.response.use(responseTokenRefreshedInterceptor);
-
 api.interceptors.response.use(
     responseQueueControllerInterceptor(axiosQueue),
     errorQueueControllerInterceptor(axiosQueue),

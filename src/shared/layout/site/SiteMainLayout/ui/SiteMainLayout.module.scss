@@ -48,6 +48,8 @@ $side-width-open : 400px;
         transition : var(--transition-medium);
         transform  : translateX(0);
         padding    : var(--offset-small);
+        height     : calc(100dvh - $header-height);
+        overflow   : auto;
 
         &_open {
             transform : translateX(20px);

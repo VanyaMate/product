@@ -3,7 +3,6 @@ import {
     ProfileSchema,
 } from '@/app/redux/slices/profile/types/profileSchema.ts';
 import { fetchUserData } from '@/app/redux/slices/user/thunks/fetchUserData.ts';
-import { toast } from 'sonner';
 import { DomainUserFull } from 'product-types/dist/user/DomainUserFull';
 
 
@@ -38,10 +37,6 @@ export const profileSlice = createSlice({
             state.isPending = false;
             state.error     = action.payload;
             state.profile   = null;
-            toast(state.error.errors[0].title, {
-                duration   : 5000,
-                description: state.error.errors[0].messages[0],
-            });
         });
     },
 });
