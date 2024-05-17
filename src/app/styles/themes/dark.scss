@@ -2,7 +2,7 @@
     --bg-main-color                : var(--black);
     --bg-main-foreground-color     : var(--white);
     --bg-second-color              : var(--dark-gray);
-    --bg-second-foreground-color   : var(--light-gray);
+    --bg-second-foreground-color   : var(--obscure-light-gray);
     --text-main-color              : var(--white);
     --text-main-foreground-color   : var(--black);
     --text-second-color            : var(--gray);
@@ -15,5 +15,5 @@
     --on-ghost-text-color          : var(--white);
     --danger-color                 : var(--red);
     --on-danger-color              : var(--white);
-    --border-main-color            : var(--gray);
+    --border-main-color            : var(--obscure-dark-gray);
 }
