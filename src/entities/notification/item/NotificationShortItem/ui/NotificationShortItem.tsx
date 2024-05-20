@@ -7,6 +7,15 @@ import {
 import {
     NotificationShortItemIcon,
 } from '@/entities/notification/icon/NotificationShortItemIcon/ui/NotificationShortItemIcon.tsx';
+import {
+    NotificationTitle,
+} from '@/entities/notification/title/NotificationTitle/ui/NotificationTitle.tsx';
+import {
+    getDeltaByDates,
+} from '@vanyamate/helpers/date/getDeltaByDates/getDeltaByDates';
+import {
+    getStringDeltaByDates,
+} from '@vanyamate/helpers/date/getStringDeltaByDates/getStringDeltaByDates';
 
 
 export type NotificationShortItemProps =
@@ -28,13 +37,15 @@ export const NotificationShortItem: FC<NotificationShortItemProps> = memo(functi
                     className={ css.icon }
                     type={ notification.type }
                 />
-                <h3 className={ css.title }>{ notification.type }</h3>
+                <h3 className={ css.title }>
+                    <NotificationTitle type={ notification.type }/>
+                </h3>
             </header>
             <div className={ css.body }>
                 { notification.data }
             </div>
             <footer className={ css.footer }>
-                <p className={ css.time }>{ notification.dateMs }</p>
+                <p className={ css.time }>{ getStringDeltaByDates(getDeltaByDates(notification.dateMs, Date.now())) }</p>
             </footer>
         </article>
     );
