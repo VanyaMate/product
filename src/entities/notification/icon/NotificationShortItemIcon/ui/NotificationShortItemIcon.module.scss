@@ -1,0 +1,21 @@
+.container {
+    padding       : 5px;
+    background    : var(--bg-second-color);
+    border-radius : var(--offset-small);
+
+    &.notification {
+        color : var(--primary-color);
+    }
+
+    &.positive {
+        color : var(--second-color);
+    }
+
+    &.negative {
+        color : var(--danger-color);
+    }
+
+    &.neutral {
+        color : var(--ghost-color);
+    }
+}

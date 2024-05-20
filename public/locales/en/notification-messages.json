@@ -1,0 +1,15 @@
+{
+    "con": "Notification service is enabled",
+    "cong": "Connecting to the notification service",
+    "dis": "Notification service disabled",
+    "err": "Error",
+    "fr_r": "Friend request",
+    "fr_ra": "Friend request accepted",
+    "fr_rc": "Friend request rejected",
+    "msg": "New message",
+    "msg_d": "Message deleted",
+    "msg_r": "Message edited",
+    "msg_read": "Message read",
+    "tkn": "Access tokens updated",
+    "unk": "Unknown notification"
+}

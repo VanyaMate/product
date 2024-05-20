@@ -1,0 +1,38 @@
+.container {
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);
+    padding        : var(--offset-medium);
+    border-radius  : var(--offset-medium);
+    border         : 1px solid var(--border-main-color);
+    background    : var(--bg-main-color);
+
+    .header {
+        display     : flex;
+        align-items : center;
+        gap         : var(--offset-small);
+
+        .icon {
+            width  : 30px;
+            height : 30px;
+        }
+
+        .title {
+            font-size : var(--font-size-m);
+            color     : var(--text-second-color);
+        }
+    }
+
+    .body {
+        background    : var(--bg-main-color);
+        padding       : var(--offset-small) 0;
+        border-radius : var(--offset-small);
+    }
+
+    .footer {
+        .time {
+            font-size : var(--font-size-s);
+            color     : var(--text-second-color);
+        }
+    }
+}
