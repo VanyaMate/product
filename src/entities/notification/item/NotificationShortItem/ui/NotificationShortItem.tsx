@@ -42,10 +42,10 @@ export const NotificationShortItem: FC<NotificationShortItemProps> = memo(functi
                 </h3>
             </header>
             <div className={ css.body }>
-                { notification.data }
+                { notification.data as string }
             </div>
             <footer className={ css.footer }>
-                <p className={ css.time }>{ getStringDeltaByDates(getDeltaByDates(notification.dateMs, Date.now())) }</p>
+                <p className={ css.time }>{ getStringDeltaByDates(getDeltaByDates(notification.creationDate, Date.now())) }</p>
             </footer>
         </article>
     );
