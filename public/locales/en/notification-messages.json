@@ -4,12 +4,13 @@
     "dis": "Notification service disabled",
     "err": "Error",
     "fr_r": "Friend request",
+    "fr_d": "Friend deleted",
     "fr_ra": "Friend request accepted",
     "fr_rc": "Friend request rejected",
-    "msg": "New message",
-    "msg_d": "Message deleted",
-    "msg_r": "Message edited",
-    "msg_read": "Message read",
+    "u_msg": "New message",
+    "u_msg_d": "Message deleted",
+    "u_msg_r": "Message edited",
+    "u_msg_read": "Message read",
     "tkn": "Access tokens updated",
     "unk": "Unknown notification"
 }

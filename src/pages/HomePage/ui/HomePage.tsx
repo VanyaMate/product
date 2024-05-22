@@ -10,7 +10,7 @@ import {
 } from 'product-types/dist/notification/DomainNotification';
 import {
     NotificationShortItem,
-} from '@/entities/notification/item/NotificationShortItem/ui/NotificationShortItem.tsx';
+} from '@/widgets/notification/item/NotificationShortItem/ui/NotificationShortItem.tsx';
 import {
     useNotification,
 } from '@/features/notification/hooks/useNotification.ts';
@@ -28,9 +28,14 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
     const [ notifications, setNotifications ] = useState<DomainNotification[]>([]);
 
     useEffect(() => {
-        const onMessage: NotificationNotificatorCallback = (message) => setNotifications((prev) => [ ...prev, ...message ]);
-        notification.subscribe(DomainNotificationType.MESSAGE, onMessage);
-        return () => notification.unsubscribe(DomainNotificationType.MESSAGE, onMessage);
+        const onMessage: NotificationNotificatorCallback       = (message) => setNotifications((prev) => [ ...prev, ...message ]);
+        const onFriendRequest: NotificationNotificatorCallback = (message) => setNotifications((prev) => [ ...prev, ...message ]);
+        notification.subscribe(DomainNotificationType.USER_MESSAGE, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_REQUEST, onFriendRequest);
+        return () => {
+            notification.unsubscribe(DomainNotificationType.USER_MESSAGE, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST, onFriendRequest);
+        };
     }, [ notification ]);
 
     return (
@@ -51,7 +56,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 id          : '',
                 data        : 'Привет, как дела?',
                 creationDate: new Date(Date.now() - 130000).toUTCString(),
-                type        : DomainNotificationType.MESSAGE,
+                type        : DomainNotificationType.USER_MESSAGE,
             } }/>
             <br/>
             <NotificationShortItem notification={ {
@@ -65,7 +70,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 id          : '',
                 data        : 'У меня норм',
                 creationDate: new Date(Date.now() - 650000).toUTCString(),
-                type        : DomainNotificationType.MESSAGE,
+                type        : DomainNotificationType.USER_MESSAGE,
             } }/>
             <br/>
             <NotificationShortItem notification={ {

@@ -43,25 +43,29 @@ export const NotificationIconByType: Record<DomainNotificationType, Notification
         component: IoSync,
         className: css.neutral,
     },
-    [DomainNotificationType.MESSAGE]                : {
+    [DomainNotificationType.USER_MESSAGE]           : {
         component: IoMailUnread,
         className: css.positive,
     },
-    [DomainNotificationType.MESSAGE_DELETED]        : {
+    [DomainNotificationType.USER_MESSAGE_DELETED]   : {
         component: IoTrash,
         className: css.neutral,
     },
-    [DomainNotificationType.MESSAGE_REDACTED]       : {
+    [DomainNotificationType.USER_MESSAGE_REDACTED]  : {
         component: IoMail,
         className: css.neutral,
     },
-    [DomainNotificationType.MESSAGE_READ]           : {
+    [DomainNotificationType.USER_MESSAGE_READ]      : {
         component: IoMailOpen,
         className: css.neutral,
     },
     [DomainNotificationType.FRIEND_REQUEST]         : {
         component: IoPersonAdd,
         className: css.positive,
+    },
+    [DomainNotificationType.FRIEND_DELETED]         : {
+        component: IoPersonRemove,
+        className: css.negative,
     },
     [DomainNotificationType.FRIEND_REQUEST_ACCEPTED]: {
         component: IoPersonAdd,

@@ -11,7 +11,10 @@ import { jsonParse } from '@/shared/lib/json/json-parse.ts';
 
 export class SseNotificationParser implements INotificationParser {
     getMessages (response: string): string[] {
-        return response.match(/{[^{}]*}$/gm) ?? [];
+        return response
+            .split('\n\n')
+            .map((message) => message.split(/^data\s/)[1])
+            .filter(Boolean) ?? [];
     }
 
     getNotification (message: string): DomainNotification {
@@ -29,9 +32,10 @@ export class SseNotificationParser implements INotificationParser {
 
     private _getUnknownNotification (message: string): DomainNotification {
         return {
-            type  : DomainNotificationType.UNKNOWN,
-            data  : message,
-            dateMs: Date.now(),
+            id          : '',
+            type        : DomainNotificationType.UNKNOWN,
+            data        : message,
+            creationDate: new Date().toUTCString(),
         };
     }
 }

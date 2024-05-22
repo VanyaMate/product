@@ -16,6 +16,9 @@ import {
 import {
     getStringDeltaByDates,
 } from '@vanyamate/helpers/date/getStringDeltaByDates/getStringDeltaByDates';
+import {
+    NotificationShortBody
+} from '@/widgets/notification/body/NotificationShortBody/ui/NotificationShortBody.tsx';
 
 
 export type NotificationShortItemProps =
@@ -41,9 +44,10 @@ export const NotificationShortItem: FC<NotificationShortItemProps> = memo(functi
                     <NotificationTitle type={ notification.type }/>
                 </h3>
             </header>
-            <div className={ css.body }>
-                { notification.data as string }
-            </div>
+            <NotificationShortBody
+                className={ css.body }
+                notification={ notification }
+            />
             <footer className={ css.footer }>
                 <p className={ css.time }>{ getStringDeltaByDates(getDeltaByDates(notification.creationDate, Date.now())) }</p>
             </footer>
