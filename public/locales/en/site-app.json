@@ -2,5 +2,7 @@
     "logo": "Product",
     "aria_logo": "Home",
     "home_page": "Home",
-    "about_us_page": "About us"
+    "about_us_page": "About us",
+    "dialogue_page": "Dialogue {{dialogue_name}}",
+    "profile_page": "Profile {{login}}"
 }

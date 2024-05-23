@@ -1,0 +1,29 @@
+.container {
+    &.disabled {
+        border-radius : 0;
+    }
+
+    &.small {
+        border-radius : var(--offset-small);
+    }
+
+    &.medium {
+        border-radius : var(--offset-medium);
+    }
+
+    &.large {
+        border-radius : var(--offset-large);
+    }
+
+    &.none {
+        border : none;
+    }
+
+    &.solid {
+        border : 1px solid var(--ghost-color);
+    }
+
+    &.dotted {
+        border : 1px dotted var(--ghost-color);
+    }
+}

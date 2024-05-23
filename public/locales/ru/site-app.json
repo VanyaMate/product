@@ -2,5 +2,7 @@
     "logo": "Продукт",
     "aria_logo": "Домой",
     "home_page": "Главная",
-    "about_us_page": "О нас"
+    "about_us_page": "О нас",
+    "dialogue_page": "Диалог {{dialogue_name}}",
+    "profile_page": "Профиль {{login}}"
 }

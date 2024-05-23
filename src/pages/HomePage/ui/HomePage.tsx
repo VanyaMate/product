@@ -9,14 +9,17 @@ import {
     DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
 import {
-    NotificationShortItem,
-} from '@/widgets/notification/item/NotificationShortItem/ui/NotificationShortItem.tsx';
-import {
     useNotification,
 } from '@/features/notification/hooks/useNotification.ts';
 import {
     NotificationNotificatorCallback,
 } from '@/features/notification/services/notificator/notification-notificator.interface.ts';
+import {
+    DomainMessageType,
+} from 'product-types/message/DomainMessage.ts';
+import {
+    NotificationShortItem,
+} from '@/widgets/notification/item/NotificationShortItem/ui/NotificationShortItem.tsx';
 
 
 export type HomePageContentProps = {};
@@ -47,16 +50,66 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
             <br/>
             <NotificationShortItem notification={ {
                 id          : '',
-                data        : 'Токены обновлены',
-                creationDate: new Date(Date.now() - 50000).toUTCString(),
-                type        : DomainNotificationType.TOKENS_UPDATE,
+                data        : {
+                    reason: 'Вышло время',
+                    timeMs: 123123,
+                },
+                creationDate: new Date(Date.now() - 12000).toUTCString(),
+                type        : DomainNotificationType.DISCONNECTED,
+                viewed      : true,
             } }/>
             <br/>
             <NotificationShortItem notification={ {
                 id          : '',
-                data        : 'Привет, как дела?',
-                creationDate: new Date(Date.now() - 130000).toUTCString(),
+                data        : 'Токены обновлены',
+                creationDate: new Date(Date.now() - 42000).toUTCString(),
+                type        : DomainNotificationType.TOKENS_UPDATE,
+                viewed      : true,
+            } }/>
+            <br/>
+            <NotificationShortItem notification={ {
+                id          : '',
+                data        : '',
+                creationDate: new Date(Date.now() - 45000).toUTCString(),
+                type        : DomainNotificationType.CONNECTED,
+                viewed      : true,
+            } }/>
+            <br/>
+            <NotificationShortItem notification={ {
+                id          : '',
+                data        : '',
+                creationDate: new Date(Date.now() - 50000).toUTCString(),
+                type        : DomainNotificationType.CONNECTING,
+                viewed      : true,
+            } }/>
+            <br/>
+            <NotificationShortItem notification={ {
+                id          : '',
+                data        : {
+                    dialogue: {
+                        id      : '',
+                        title   : 'Dialogue name',
+                        avatar  : '',
+                        users   : [],
+                        messages: [],
+                    },
+                    message : {
+                        id          : '',
+                        dialogId    : '',
+                        message     : 'Привет',
+                        redacted    : false,
+                        creationDate: new Date().toUTCString(),
+                        type        : DomainMessageType.TEXT,
+                        author      : {
+                            id    : '',
+                            avatar: '',
+                            login : 'admin',
+                        },
+                    },
+                },
+                creationDate: new Date(Date.now() - 350000).toUTCString(),
                 type        : DomainNotificationType.USER_MESSAGE,
+                viewed      : true,
             } }/>
             <br/>
             <NotificationShortItem notification={ {
@@ -64,13 +117,36 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 data        : 'Mike Domer',
                 creationDate: new Date(Date.now() - 350000).toUTCString(),
                 type        : DomainNotificationType.FRIEND_REQUEST,
+                viewed      : false,
             } }/>
             <br/>
             <NotificationShortItem notification={ {
                 id          : '',
-                data        : 'У меня норм',
+                data        : {
+                    dialogue: {
+                        id      : '',
+                        title   : 'Dialogue name',
+                        avatar  : '',
+                        users   : [],
+                        messages: [],
+                    },
+                    message : {
+                        id          : '',
+                        dialogId    : '',
+                        message     : 'Как дела?',
+                        redacted    : false,
+                        creationDate: new Date().toUTCString(),
+                        type        : DomainMessageType.TEXT,
+                        author      : {
+                            id    : '',
+                            avatar: '',
+                            login : 'admin',
+                        },
+                    },
+                },
                 creationDate: new Date(Date.now() - 650000).toUTCString(),
                 type        : DomainNotificationType.USER_MESSAGE,
+                viewed      : false,
             } }/>
             <br/>
             <NotificationShortItem notification={ {
@@ -78,6 +154,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 data        : 'Ошибка авторизации',
                 creationDate: new Date(Date.now() - 700000).toUTCString(),
                 type        : DomainNotificationType.ERROR,
+                viewed      : true,
             } }/>
             {
                 notifications.map((notification) =>

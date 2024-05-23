@@ -1,0 +1,16 @@
+.container {
+    display         : flex;
+    align-items     : center;
+    justify-content : space-between;
+    gap             : var(--offset-small);;
+
+    .time {
+        color     : var(--text-second-color);
+        font-size : var(--font-size-s);
+    }
+
+    .viewed {
+        color     : var(--text-second-color);
+        font-size : var(--font-size-s);
+    }
+}

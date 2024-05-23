@@ -1,0 +1,28 @@
+.container {
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);
+
+    .links {
+        display     : flex;
+        align-items : center;
+        gap         : var(--offset-small);
+    }
+
+    .label {
+        color     : var(--text-second-color);
+        font-size : var(--font-size-s);
+    }
+
+    .row {
+        display     : inline-flex;
+        gap         : var(--offset-small);
+        align-items : center;
+        font-size   : var(--font-size-m);
+    }
+
+    .message {
+        color     : var(--text-main-color);
+        font-size : var(--font-size-m);
+    }
+}

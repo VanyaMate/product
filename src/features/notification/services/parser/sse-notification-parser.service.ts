@@ -36,6 +36,7 @@ export class SseNotificationParser implements INotificationParser {
             type        : DomainNotificationType.UNKNOWN,
             data        : message,
             creationDate: new Date().toUTCString(),
+            viewed      : false,
         };
     }
 }

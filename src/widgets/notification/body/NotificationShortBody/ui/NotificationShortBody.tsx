@@ -3,29 +3,29 @@ import {
 } from 'product-types/dist/notification/DomainNotification';
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import {
-    isDomainNotificationErrorData
+    isDomainNotificationErrorData,
 } from 'product-types/dist/notification/notification-data-types/DomainNotificationErrorData';
 import {
-    NotificationShortBodyError
-} from '@/widgets/notification/body/NotificationShortBodyError/ui/NotificationShortBodyError.tsx';
+    NotificationErrorBody,
+} from '@/widgets/notification/body/NotificationErrorBody/ui/NotificationErrorBody.tsx';
 import {
-    isDomainNotificationTokensUpdateData
+    isDomainNotificationTokensUpdateData,
 } from 'product-types/dist/notification/notification-data-types/DomainNotificationTokensUpdateData';
 import {
-    NotificationShortBodyTokensUpdate
-} from '@/widgets/notification/body/NotificationShortBodyTokensUpdate/ui/NotificationShortBodyTokensUpdate.tsx';
+    NotificationTokensUpdateBody,
+} from '@/widgets/notification/body/NotificationTokensUpdateBody/ui/NotificationTokensUpdateBody.tsx';
 import {
-    isDomainNotificationUserMessageData
+    isDomainNotificationUserMessageData,
 } from 'product-types/dist/notification/notification-data-types/DomainNotificationUserMessageData';
 import {
-    NotificationShortBodyUserMessage
-} from '@/widgets/notification/body/NotificationShortBodyUserMessage/ui/NotificationShortBodyUserMessage.tsx';
+    NotificationUserMessageBody,
+} from '@/widgets/notification/body/NotificationUserMessageBody/ui/NotificationUserMessageBody.tsx';
 import {
-    isDomainNotificationFriendRequestData
+    isDomainNotificationFriendRequestData,
 } from 'product-types/dist/notification/notification-data-types/DomainNotificationFriendRequestData';
 import {
-    NotificationShortBodyFriendRequest
-} from '@/widgets/notification/body/NotificationShortBodyFriendRequest/ui/NotificationShortBodyFriendRequest.tsx';
+    NotificationFriendRequestBody,
+} from '@/widgets/notification/body/NotificationFriendRequestBody/ui/NotificationFriendRequestBody.tsx';
 
 
 export type NotificationShortBodyProps =
@@ -40,7 +40,7 @@ export const NotificationShortBody: FC<NotificationShortBodyProps> = memo(functi
     switch (notification.type) {
         case DomainNotificationType.ERROR:
             return isDomainNotificationErrorData(notification.data)
-                   ? <NotificationShortBodyError
+                   ? <NotificationErrorBody
                        data={ notification.data } { ...other }/>
                    : null;
         case DomainNotificationType.UNKNOWN:
@@ -53,12 +53,12 @@ export const NotificationShortBody: FC<NotificationShortBodyProps> = memo(functi
             break;
         case DomainNotificationType.TOKENS_UPDATE:
             return isDomainNotificationTokensUpdateData(notification.data)
-                   ? <NotificationShortBodyTokensUpdate
+                   ? <NotificationTokensUpdateBody
                        data={ notification.data } { ...other }/>
                    : null;
         case DomainNotificationType.USER_MESSAGE:
             return isDomainNotificationUserMessageData(notification.data)
-                   ? <NotificationShortBodyUserMessage
+                   ? <NotificationUserMessageBody
                        data={ notification.data } { ...other }/>
                    : null;
         case DomainNotificationType.USER_MESSAGE_DELETED:
@@ -69,7 +69,7 @@ export const NotificationShortBody: FC<NotificationShortBodyProps> = memo(functi
             break;
         case DomainNotificationType.FRIEND_REQUEST:
             return isDomainNotificationFriendRequestData(notification.data)
-                   ? <NotificationShortBodyFriendRequest
+                   ? <NotificationFriendRequestBody
                        data={ notification.data } { ...other }/>
                    : null;
         case DomainNotificationType.FRIEND_DELETED:

@@ -18,7 +18,7 @@ export const fetchUserData = createAsyncThunk<DomainUserFull, FetchUserDataProps
         const { rejectWithValue, extra: { api } } = thunkAPI;
         try {
             return api
-                .get(`/v1/user/full/${ userData.login }`)
+                .get(`/v1/users/full/${ userData.login }`)
                 .then((response) => response.data)
                 .then((data) => {
                     if (isDomainResponse(data)) {

@@ -1,0 +1,36 @@
+.container {
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);
+    outline        : none;
+    transition     : var(--transition-medium);
+    border-radius  : var(--offset-medium);
+
+    &:focus {
+        box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color);
+        background : var(--bg-main-color);
+    }
+
+    .header {
+        display     : flex;
+        gap         : var(--offset-small);
+        align-items : center;
+
+        .icon {
+            width  : 30px;
+            height : 30px;
+        }
+
+        .title {
+            font-size : var(--font-size-m);
+            color     : var(--text-second-color);
+        }
+    }
+
+    .footer {
+        .time {
+            font-size : var(--font-size-s);
+            color     : var(--text-second-color);
+        }
+    }
+}
