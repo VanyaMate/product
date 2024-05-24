@@ -61,7 +61,6 @@ export const NotificationFriendDeletedItem: FC<NotificationFriendDeletedItemProp
                 </header>
                 <NotificationItemFooter
                     creationTime={ notification.creationDate }
-                    viewed={ true }
                 />
             </article>
         );

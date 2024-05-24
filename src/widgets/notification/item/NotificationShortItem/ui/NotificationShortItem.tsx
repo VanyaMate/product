@@ -30,16 +30,20 @@ export const NotificationShortItem: FC<NotificationShortItemProps> = memo(functi
     return (
         <article
             { ...other }
-            className={ classNames(css.container, {}, [ className ]) }
+            aria-label="#"
+            className={ classNames(css.container, { [css.new]: !notification.viewed }, [ className ]) }
+            tabIndex={ 0 }
         >
             <header className={ css.header }>
-                <NotificationShortItemIcon
-                    className={ css.icon }
-                    type={ notification.type }
-                />
-                <h3 className={ css.title }>
-                    <NotificationTitle type={ notification.type }/>
-                </h3>
+                <div className={ css.info }>
+                    <NotificationShortItemIcon
+                        className={ css.icon }
+                        type={ notification.type }
+                    />
+                    <h3 className={ css.title }>
+                        <NotificationTitle type={ notification.type }/>
+                    </h3>
+                </div>
             </header>
             <NotificationShortBody
                 className={ css.body }
@@ -47,7 +51,6 @@ export const NotificationShortItem: FC<NotificationShortItemProps> = memo(functi
             />
             <NotificationItemFooter
                 creationTime={ notification.creationDate }
-                viewed={ notification.viewed }
             />
         </article>
     );

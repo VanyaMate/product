@@ -46,7 +46,7 @@
         }
     }
 
-    &.negative:not(:disabled) {
+    &.danger:not(:disabled) {
         background : var(--danger-color);
         color      : var(--on-danger-color);
 

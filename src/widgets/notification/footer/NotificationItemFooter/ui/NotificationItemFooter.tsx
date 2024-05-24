@@ -11,13 +11,12 @@ import {
 
 export type NotificationItemFooterProps =
     {
-        viewed: boolean;
         creationTime: string;
     }
     & ComponentPropsWithoutRef<'footer'>;
 
 export const NotificationItemFooter: FC<NotificationItemFooterProps> = memo(function NotificationItemFooter (props) {
-    const { className, viewed, creationTime, ...other } = props;
+    const { className, creationTime, ...other } = props;
 
     return (
         <footer
@@ -25,7 +24,6 @@ export const NotificationItemFooter: FC<NotificationItemFooterProps> = memo(func
             { ...other }
         >
             <p className={ css.time }>{ getStringDeltaByDates(getDeltaByDates(creationTime, Date.now())) }</p>
-            <p className={ css.viewed }>{ viewed.toString() }</p>
         </footer>
     );
 });

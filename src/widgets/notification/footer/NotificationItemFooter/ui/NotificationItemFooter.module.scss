@@ -1,8 +1,7 @@
 .container {
-    display         : flex;
-    align-items     : center;
-    justify-content : space-between;
-    gap             : var(--offset-small);;
+    display     : flex;
+    align-items : center;
+    gap         : var(--offset-small);;
 
     .time {
         color     : var(--text-second-color);
@@ -10,7 +9,12 @@
     }
 
     .viewed {
-        color     : var(--text-second-color);
-        font-size : var(--font-size-s);
+        height    : var(--font-size-l);
+        color     : var(--text-main-color);
+        font-size : var(--font-size-l);
+
+        &.checked {
+            color : var(--text-second-color);
+        }
     }
 }

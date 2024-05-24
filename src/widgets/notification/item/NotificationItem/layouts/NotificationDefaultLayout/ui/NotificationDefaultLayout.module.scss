@@ -24,6 +24,10 @@
         .title {
             font-size : var(--font-size-m);
             color     : var(--text-second-color);
+
+            .new {
+                color : var(--text-main-color);
+            }
         }
     }
 

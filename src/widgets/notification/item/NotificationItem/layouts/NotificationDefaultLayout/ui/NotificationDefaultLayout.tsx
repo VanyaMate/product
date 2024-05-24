@@ -37,14 +37,13 @@ export const NotificationDefaultLayout: FC<NotificationDefaultLayoutProps> = mem
                     className={ css.icon }
                     type={ type }
                 />
-                <h3 className={ css.title }>
+                <h3 className={ classNames(css.title, { [css.new]: !viewed }) }>
                     <NotificationTitle type={ type }/>
                 </h3>
             </header>
             { children }
             <NotificationItemFooter
                 creationTime={ creationDate }
-                viewed={ viewed }
             />
         </article>
     );
