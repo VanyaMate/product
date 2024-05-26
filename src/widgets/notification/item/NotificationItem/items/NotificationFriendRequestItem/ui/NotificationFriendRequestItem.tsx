@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './NotificationFriendRequestItem.module.scss';
 import {
-    DomainNotification
+    DomainNotification,
 } from 'product-types/dist/notification/DomainNotification';
 
 
@@ -20,7 +20,7 @@ export const NotificationFriendRequestItem: FC<NotificationFriendRequestItemProp
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            // friend request
+            //
         </div>
     );
 });

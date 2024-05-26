@@ -20,7 +20,7 @@ export const NotificationUnknownItem: FC<NotificationUnknownItemProps> = memo(fu
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            // 123
+            //
         </div>
     );
 });
