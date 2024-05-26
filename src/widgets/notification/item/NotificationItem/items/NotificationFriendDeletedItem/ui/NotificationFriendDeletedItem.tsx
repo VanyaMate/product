@@ -1,6 +1,4 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
-import classNames from 'classnames';
-import css from './NotificationFriendDeletedItem.module.scss';
 import {
     DomainNotification,
 } from 'product-types/dist/notification/DomainNotification';
@@ -13,14 +11,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import {
-    NotificationShortItemIcon,
-} from '@/entities/notification/icon/NotificationShortItemIcon/ui/NotificationShortItemIcon.tsx';
-import {
-    NotificationTitle,
-} from '@/entities/notification/title/NotificationTitle/ui/NotificationTitle.tsx';
-import {
-    NotificationItemFooter,
-} from '@/widgets/notification/footer/NotificationItemFooter/ui/NotificationItemFooter.tsx';
+    NotificationLinkLayout,
+} from '@/widgets/notification/item/NotificationItem/layouts/NotificationLinkLayout/ui/NotificationLinkLayout.tsx';
 
 
 export type NotificationFriendDeletedItemProps =
@@ -31,39 +23,26 @@ export type NotificationFriendDeletedItemProps =
 
 export const NotificationFriendDeletedItem: FC<NotificationFriendDeletedItemProps> = memo(function NotificationFriendDeletedItem (props) {
     const { className, notification, ...other } = props;
-    const { t }                                 = useTranslation();
+    const { t }                                 = useTranslation('site-app');
 
     if (isDomainNotificationFriendDeletedData(notification.data)) {
-        return (
-            <article
-                className={ classNames(css.container, {}, [ className ]) }
-                tabIndex={ 0 }
-            >
+        return <NotificationLinkLayout
+            { ...other }
+            className={ className }
+            linkAria={ t('profile_page', {
+                ns   : 'site-app',
+                login: notification.data.user.login,
+            }) }
+            linkTo={ `/profile/${ notification.data.user.login }` }
+            notification={ notification }
+            outside={
                 <Link
-                    aria-label={ t('profile', {
-                        ns   : 'site-app',
-                        login: notification.data.user.login,
-                    }) }
                     to={ `/profile/${ notification.data.user.login }` }
-                />
-                <header>
-                    <NotificationShortItemIcon type={ notification.type }/>
-                    <h3><NotificationTitle type={ notification.type }/></h3>
-                    <Link
-                        aria-label={ t('profile', {
-                            ns   : 'site-app',
-                            login: notification.data.user.login,
-                        }) }
-                        to={ `/profile/${ notification.data.user.login }` }
-                    >
-                        { notification.data.user.login }
-                    </Link>
-                </header>
-                <NotificationItemFooter
-                    creationTime={ notification.creationDate }
-                />
-            </article>
-        );
+                >
+                    { notification.data.user.login }
+                </Link>
+            }
+        />;
     } else {
         return (
             <NotificationDefaultLayout

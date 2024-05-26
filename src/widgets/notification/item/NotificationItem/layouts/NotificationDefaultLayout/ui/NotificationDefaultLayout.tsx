@@ -27,9 +27,8 @@ export const NotificationDefaultLayout: FC<NotificationDefaultLayoutProps> = mem
         <article
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
-            tabIndex={ 0 }
         >
-            <NotificationHeader type={ type } viewed={ viewed }/>
+            <NotificationHeader tabIndex={ 0 } type={ type } viewed={ viewed }/>
             { children }
             <NotificationItemFooter
                 creationTime={ creationDate }

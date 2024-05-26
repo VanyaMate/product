@@ -24,10 +24,9 @@ export const NotificationHeader: FC<NotificationHeaderProps> = memo(function Not
 
     return (
         <header
-            { ...other }
             className={ classNames(css.container, { [css.new]: !viewed }, [ className ]) }
         >
-            <div className={ css.header }>
+            <div className={ css.header } { ...other }>
                 <NotificationShortItemIcon
                     className={ css.icon }
                     type={ type }

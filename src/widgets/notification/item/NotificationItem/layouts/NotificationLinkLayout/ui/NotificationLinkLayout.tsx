@@ -18,7 +18,7 @@ export type NotificationLinkLayoutProps =
         notification: DomainNotification;
         linkTo: string;
         linkAria: string;
-        message: ReactNode;
+        message?: ReactNode;
         outside?: ReactNode;
         extra?: ReactNode;
     }
@@ -53,7 +53,11 @@ export const NotificationLinkLayout: FC<NotificationLinkLayoutProps> = memo(func
                     >
                         { extra }
                     </NotificationHeader>
-                    <p className={ css.message }>{ message }</p>
+                    {
+                        message
+                        ? <p className={ css.message }>{ message }</p>
+                        : null
+                    }
                 </Link>
                 <NotificationItemFooter
                     creationTime={ notification.creationDate }

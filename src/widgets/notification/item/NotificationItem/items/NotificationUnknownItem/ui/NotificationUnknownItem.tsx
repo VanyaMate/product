@@ -1,9 +1,10 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
-import classNames from 'classnames';
-import css from './NotificationUnknownItem.module.scss';
 import {
     DomainNotification,
 } from 'product-types/dist/notification/DomainNotification';
+import {
+    NotificationDefaultLayout,
+} from '@/widgets/notification/item/NotificationItem/layouts/NotificationDefaultLayout/ui/NotificationDefaultLayout.tsx';
 
 
 export type NotificationUnknownItemProps =
@@ -13,14 +14,17 @@ export type NotificationUnknownItemProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const NotificationUnknownItem: FC<NotificationUnknownItemProps> = memo(function NotificationUnknownItem (props) {
-    const { className, ...other } = props;
+    const { className, notification, ...other } = props;
 
     return (
-        <div
+        <NotificationDefaultLayout
+            className={ className }
+            creationDate={ notification.creationDate }
+            type={ notification.type }
+            viewed={ notification.viewed ?? true }
             { ...other }
-            className={ classNames(css.container, {}, [ className ]) }
         >
-            //
-        </div>
+            <p>{ JSON.stringify(notification.data) }</p>
+        </NotificationDefaultLayout>
     );
 });

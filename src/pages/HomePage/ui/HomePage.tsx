@@ -9,9 +9,7 @@ import {
 import {
     NotificationNotificatorCallback,
 } from '@/features/notification/services/notificator/notification-notificator.interface.ts';
-import {
-    DomainMessageType,
-} from 'product-types/message/DomainMessage.ts';
+import { DomainMessageType } from 'product-types/message/DomainMessage.ts';
 import {
     NotificationItem,
 } from '@/widgets/notification/item/NotificationItem/ui/NotificationItem.tsx';
@@ -68,6 +66,72 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                     />
                 ))
             }
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <NotificationItem notification={ {
+                id          : '',
+                type        : DomainNotificationType.FRIEND_DELETED,
+                viewed      : true,
+                creationDate: new Date().toUTCString(),
+                data        : {
+                    user: {
+                        id    : '',
+                        login : 'admin',
+                        avatar: '',
+                    },
+                },
+            } }/>
+            <br/>
+            <NotificationItem notification={ {
+                id          : '',
+                type        : DomainNotificationType.FRIEND_REQUEST_CANCELED,
+                viewed      : true,
+                creationDate: new Date().toUTCString(),
+                data        : {
+                    user     : {
+                        id    : '',
+                        login : 'admin',
+                        avatar: '',
+                    },
+                    requestId: '',
+                    message  : 'Привет. Мы учились вместе',
+                },
+            } }/>
+            <br/>
+            <NotificationItem notification={ {
+                id          : '',
+                type        : DomainNotificationType.FRIEND_REQUEST_ACCEPTED,
+                viewed      : true,
+                creationDate: new Date().toUTCString(),
+                data        : {
+                    user     : {
+                        id    : '',
+                        login : 'admin',
+                        avatar: '',
+                    },
+                    requestId: '',
+                    message  : 'Привет. Мы учились вместе',
+                },
+            } }/>
+            <br/>
+            <NotificationItem notification={ {
+                id          : '',
+                type        : DomainNotificationType.FRIEND_REQUEST,
+                viewed      : true,
+                creationDate: new Date().toUTCString(),
+                data        : {
+                    user     : {
+                        id    : '',
+                        login : 'admin',
+                        avatar: '',
+                    },
+                    requestId: '',
+                    message  : 'Привет. Мы учились вместе',
+                },
+            } }/>
             <br/>
             <NotificationItem notification={ {
                 id          : '',

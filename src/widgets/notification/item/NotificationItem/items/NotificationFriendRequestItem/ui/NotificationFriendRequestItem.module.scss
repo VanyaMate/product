@@ -1,3 +1,34 @@
 .container {
-    color : var(--text-second-color); // TODO: TEMP
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);
+    color          : var(--text-second-color);
+
+    &:hover {
+        color : var(--text-main-color);
+    }
+
+    .content {
+        display        : flex;
+        flex-direction : column;
+        gap            : var(--offset-small);
+
+        .message {
+            color      : var(--text-main-color);
+            transition : var(--transition-medium);
+        }
+
+        .buttons {
+            display : flex;
+            gap     : var(--offset-small);
+        }
+    }
+
+    &.viewed:not(:hover) {
+        .content {
+            .message {
+                color : var(--text-second-color);
+            }
+        }
+    }
 }
