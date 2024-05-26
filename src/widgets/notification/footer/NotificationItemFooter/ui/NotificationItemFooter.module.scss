@@ -1,7 +1,7 @@
 .container {
-    display     : flex;
-    align-items : center;
-    gap         : var(--offset-small);;
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);;
 
     .time {
         color     : var(--text-second-color);

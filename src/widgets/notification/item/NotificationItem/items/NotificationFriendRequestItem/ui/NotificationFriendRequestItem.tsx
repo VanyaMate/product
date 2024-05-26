@@ -20,7 +20,7 @@ export const NotificationFriendRequestItem: FC<NotificationFriendRequestItemProp
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            //
+            // friend request
         </div>
     );
 });

@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-    getAuthPending,
-} from '@/app/redux/slices/auth/selectors/getAuthPending/getAuthPending.ts';
-import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
-import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
-import {
     DomainNotification,
     DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
@@ -18,37 +13,63 @@ import {
     DomainMessageType,
 } from 'product-types/message/DomainMessage.ts';
 import {
-    NotificationShortItem,
-} from '@/widgets/notification/item/NotificationShortItem/ui/NotificationShortItem.tsx';
+    NotificationItem,
+} from '@/widgets/notification/item/NotificationItem/ui/NotificationItem.tsx';
 
 
 export type HomePageContentProps = {};
 
 const HomePage: React.FC<HomePageContentProps> = (props) => {
     const {}                                  = props;
-    const state                               = useAppSelector(getAuthPending);
     const notification                        = useNotification('home-page');
     const [ notifications, setNotifications ] = useState<DomainNotification[]>([]);
 
     useEffect(() => {
-        const onMessage: NotificationNotificatorCallback       = (message) => setNotifications((prev) => [ ...prev, ...message ]);
-        const onFriendRequest: NotificationNotificatorCallback = (message) => setNotifications((prev) => [ ...prev, ...message ]);
+        const onMessage: NotificationNotificatorCallback = (message) => {
+            setNotifications((prev) => [ ...message.reverse(), ...prev ]);
+        };
+        notification.subscribe(DomainNotificationType.ERROR, onMessage);
+        notification.subscribe(DomainNotificationType.UNKNOWN, onMessage);
+        notification.subscribe(DomainNotificationType.CONNECTED, onMessage);
+        notification.subscribe(DomainNotificationType.CONNECTING, onMessage);
+        notification.subscribe(DomainNotificationType.DISCONNECTED, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_REQUEST, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_DELETED, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED, onMessage);
         notification.subscribe(DomainNotificationType.USER_MESSAGE, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_REQUEST, onFriendRequest);
+        notification.subscribe(DomainNotificationType.USER_MESSAGE_READ, onMessage);
+        notification.subscribe(DomainNotificationType.USER_MESSAGE_DELETED, onMessage);
+        notification.subscribe(DomainNotificationType.USER_MESSAGE_REDACTED, onMessage);
         return () => {
+            notification.unsubscribe(DomainNotificationType.ERROR, onMessage);
+            notification.unsubscribe(DomainNotificationType.UNKNOWN, onMessage);
+            notification.unsubscribe(DomainNotificationType.CONNECTED, onMessage);
+            notification.unsubscribe(DomainNotificationType.CONNECTING, onMessage);
+            notification.unsubscribe(DomainNotificationType.DISCONNECTED, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_DELETED, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED, onMessage);
             notification.unsubscribe(DomainNotificationType.USER_MESSAGE, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST, onFriendRequest);
+            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_READ, onMessage);
+            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_DELETED, onMessage);
+            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_REDACTED, onMessage);
         };
     }, [ notification ]);
 
     return (
-        //eslint-disable-next-line i18next/no-literal-string
         <div>
-            HomePageComponent { state.toString() }
-            { /* eslint-disable-next-line i18next/no-literal-string */ }
-            <Button>Any button2</Button>
+            {
+                notifications.map((notification) => (
+                    <NotificationItem
+                        key={ notification.type + notification.creationDate }
+                        notification={ notification }
+                    />
+                ))
+            }
             <br/>
-            <NotificationShortItem notification={ {
+            <NotificationItem notification={ {
                 id          : '',
                 data        : {
                     reason: 'Вышло время',
@@ -59,7 +80,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 viewed      : true,
             } }/>
             <br/>
-            <NotificationShortItem notification={ {
+            <NotificationItem notification={ {
                 id          : '',
                 data        : 'Токены обновлены',
                 creationDate: new Date(Date.now() - 42000).toUTCString(),
@@ -67,7 +88,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 viewed      : true,
             } }/>
             <br/>
-            <NotificationShortItem notification={ {
+            <NotificationItem notification={ {
                 id          : '',
                 data        : '',
                 creationDate: new Date(Date.now() - 45000).toUTCString(),
@@ -75,7 +96,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 viewed      : true,
             } }/>
             <br/>
-            <NotificationShortItem notification={ {
+            <NotificationItem notification={ {
                 id          : '',
                 data        : '',
                 creationDate: new Date(Date.now() - 50000).toUTCString(),
@@ -83,18 +104,18 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 viewed      : true,
             } }/>
             <br/>
-            <NotificationShortItem notification={ {
+            <NotificationItem notification={ {
                 id          : '',
                 data        : {
                     dialogue: {
-                        id      : '',
+                        id      : 'dg123123',
                         title   : 'Dialogue name',
                         avatar  : '',
                         users   : [],
                         messages: [],
                     },
                     message : {
-                        id          : '',
+                        id          : 'mes13232',
                         dialogId    : '',
                         message     : 'Привет',
                         redacted    : false,
@@ -112,7 +133,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 viewed      : true,
             } }/>
             <br/>
-            <NotificationShortItem notification={ {
+            <NotificationItem notification={ {
                 id          : '',
                 data        : 'Mike Domer',
                 creationDate: new Date(Date.now() - 350000).toUTCString(),
@@ -120,7 +141,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 viewed      : false,
             } }/>
             <br/>
-            <NotificationShortItem notification={ {
+            <NotificationItem notification={ {
                 id          : '',
                 data        : {
                     dialogue: {
@@ -149,19 +170,13 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 viewed      : false,
             } }/>
             <br/>
-            <NotificationShortItem notification={ {
+            <NotificationItem notification={ {
                 id          : '',
                 data        : 'Ошибка авторизации',
                 creationDate: new Date(Date.now() - 700000).toUTCString(),
                 type        : DomainNotificationType.ERROR,
                 viewed      : true,
             } }/>
-            {
-                notifications.map((notification) =>
-                    <NotificationShortItem key={ notification.id }
-                                           notification={ notification }/>,
-                )
-            }
         </div>
     );
 };

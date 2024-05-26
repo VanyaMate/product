@@ -1,0 +1,3 @@
+{
+    "u_msg": "Go to new message from \"{{user_login}}\" in \"{{dialogue_name}}\". Message: \"{{message}}\""
+}

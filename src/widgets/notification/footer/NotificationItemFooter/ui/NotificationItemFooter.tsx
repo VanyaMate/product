@@ -16,13 +16,14 @@ export type NotificationItemFooterProps =
     & ComponentPropsWithoutRef<'footer'>;
 
 export const NotificationItemFooter: FC<NotificationItemFooterProps> = memo(function NotificationItemFooter (props) {
-    const { className, creationTime, ...other } = props;
+    const { className, creationTime, children, ...other } = props;
 
     return (
         <footer
             className={ classNames(css.container, {}, [ className ]) }
             { ...other }
         >
+            { children }
             <p className={ css.time }>{ getStringDeltaByDates(getDeltaByDates(creationTime, Date.now())) }</p>
         </footer>
     );

@@ -1,58 +1,60 @@
-import { ComponentPropsWithoutRef, FC, memo } from 'react';
-import classNames from 'classnames';
-import css from './NotificationUserMessageItem.module.scss';
+import { ComponentPropsWithoutRef, FC, memo, useMemo } from 'react';
 import {
     DomainNotification,
 } from 'product-types/dist/notification/DomainNotification';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import {
-    NotificationShortItemIcon,
-} from '@/entities/notification/icon/NotificationShortItemIcon/ui/NotificationShortItemIcon.tsx';
-import {
-    NotificationTitle,
-} from '@/entities/notification/title/NotificationTitle/ui/NotificationTitle.tsx';
-import {
-    NotificationItemFooter,
-} from '@/widgets/notification/footer/NotificationItemFooter/ui/NotificationItemFooter.tsx';
-import {
     NotificationDefaultLayout,
 } from '@/widgets/notification/item/NotificationItem/layouts/NotificationDefaultLayout/ui/NotificationDefaultLayout.tsx';
 import {
     isDomainNotificationUserMessageData,
 } from 'product-types/dist/notification/notification-data-types/DomainNotificationUserMessageData';
+import { IoArrowForward } from 'react-icons/io5';
+import {
+    NotificationLinkLayout,
+} from '@/widgets/notification/item/NotificationItem/layouts/NotificationLinkLayout/ui/NotificationLinkLayout.tsx';
+import css from './NotificationUserMessageItem.module.scss';
 
 
 export type NotificationUserMessageItemProps =
     {
         notification: DomainNotification;
     }
-    & ComponentPropsWithoutRef<'div'>;
+    & ComponentPropsWithoutRef<'article'>;
 
 export const NotificationUserMessageItem: FC<NotificationUserMessageItemProps> = memo(function NotificationUserMessageItem (props) {
     const { className, notification, ...other } = props;
-    const { t }                                 = useTranslation();
+    const { t }                                 = useTranslation([ 'site-app', 'notification-links' ]);
+    const linkOnMessageAriaLabel                = useMemo(() => {
+        if (isDomainNotificationUserMessageData(notification.data)) {
+            return t(notification.type, {
+                ns           : 'notification-links',
+                user_login   : notification.data.message.author.login,
+                dialogue_name: notification.data.dialogue.title,
+                message      : notification.data.message.message,
+            });
+        }
+        return '';
+    }, [ notification.data, notification.type, t ]);
+    const linkToMessage                         = useMemo(() => {
+        if (isDomainNotificationUserMessageData(notification.data)) {
+            return `/dialogue/${ notification.data.dialogue.id }#${ notification.data.message.id }`;
+        }
+        return '#';
+    }, [ notification.data ]);
+
 
     if (isDomainNotificationUserMessageData(notification.data)) {
         return (
-            <article
-                className={ classNames(css.container, {}, [ className ]) }
-            >
-                <Link
-                    aria-label={ t('dialogue_page', {
-                        ns           : 'site-app',
-                        dialogue_name: notification.data.dialogue.title,
-                    }) }
-                    className={ css.backgroundLink }
-                    to={ `/dialogue/${ notification.data.dialogue.id }` }
-                />
-                <div className={ css.content }>
-                    <header className={ css.header }>
-                        <NotificationShortItemIcon className={ css.icon }
-                                                   type={ notification.type }/>
-                        <h3 className={ css.title }>
-                            <NotificationTitle type={ notification.type }/>
-                        </h3>
+            <NotificationLinkLayout
+                className={ className }
+                linkAria={ linkOnMessageAriaLabel }
+                linkTo={ linkToMessage }
+                message={ notification.data.message.message }
+                notification={ notification }
+                outside={
+                    <div className={ css.container }>
                         <Link
                             aria-label={ t('profile_page', {
                                 ns   : 'site-app',
@@ -62,14 +64,19 @@ export const NotificationUserMessageItem: FC<NotificationUserMessageItemProps> =
                         >
                             { notification.data.message.author.login }
                         </Link>
-                    </header>
-                    <p>{ notification.data.message.message }</p>
-                    <NotificationItemFooter
-                        creationTime={ notification.creationDate }
-                        viewed={ true }
-                    />
-                </div>
-            </article>
+                        <IoArrowForward/>
+                        <Link
+                            aria-label={ t('dialogue_page', {
+                                ns   : 'site-app',
+                                login: notification.data.dialogue.title,
+                            }) }
+                            to={ `/dialogue/${ notification.data.dialogue.id }` }
+                        >
+                            { notification.data.dialogue.title }
+                        </Link>
+                    </div>
+                }
+            />
         );
     } else {
         return (
@@ -84,3 +91,4 @@ export const NotificationUserMessageItem: FC<NotificationUserMessageItemProps> =
         );
     }
 });
+

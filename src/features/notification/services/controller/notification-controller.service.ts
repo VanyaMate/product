@@ -1,6 +1,6 @@
 import {
     DomainNotification,
-    DomainNotificationType, isDomainNotification,
+    DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
 import {
     NotificationNotificatorCallback,
@@ -84,7 +84,7 @@ export class NotificationController implements INotificationController {
         }
 
         this._setBeforeConnectingProps();
-        this._emitEvent(DomainNotificationType.CONNECTING, []);
+        this._notificationHandler(this._notificationParser.getClearNotification(DomainNotificationType.CONNECTING));
     }
 
     private _connectorConnectedHandler (response: string) {
@@ -95,13 +95,14 @@ export class NotificationController implements INotificationController {
         const potentialError: unknown = jsonParse<unknown>(response);
 
         if (!isDomainServiceResponseError(potentialError)) {
-            const [ potentialSuccessConnectMessage ]: string[] = this._notificationParser.getMessages(response);
-            const connectNotification: DomainNotification      = this._notificationParser.getNotification(potentialSuccessConnectMessage);
+            const messages: string[]                  = this._notificationParser.getMessages(response);
+            const notifications: DomainNotification[] = this._notificationParser.getNotifications(messages);
 
-            if (isDomainNotification(connectNotification)) {
-                this._reconnectAttempt = 0;
-                this._emitEvent(DomainNotificationType.CONNECTED, []);
-            }
+            this._reconnectAttempt         = 0;
+            this._currentNotificationIndex = notifications.length;
+            notifications.forEach(this._notificationHandler.bind(this));
+        } else {
+            this._notificationHandler(this._notificationParser.getClearNotification(DomainNotificationType.ERROR));
         }
     }
 
@@ -111,10 +112,10 @@ export class NotificationController implements INotificationController {
         }
 
         if (this._notificationConnector.aborted) {
-            this._emitEvent(DomainNotificationType.DISCONNECTED, []);
+            this._notificationHandler(this._notificationParser.getClearNotification(DomainNotificationType.DISCONNECTED));
         } else {
             if (this._reconnectAttempt > 1) {
-                this._emitEvent(DomainNotificationType.DISCONNECTED, []);
+                this._notificationHandler(this._notificationParser.getClearNotification(DomainNotificationType.DISCONNECTED));
                 this._reconnectTimer = setTimeout(() => {
                     this.connect(this._url, this._getOptions);
                 }, 5000);
@@ -126,6 +127,10 @@ export class NotificationController implements INotificationController {
 
     private _connectorMessageHandler (response: string) {
         const messages: string[] = this._notificationParser.getMessages(response);
+
+        if (__IS_DEV__) {
+            console.log('NOTIFICATION: Messages', messages);
+        }
 
         if (messages.length) {
             const notifications: DomainNotification[] = this._notificationParser.getNotifications(messages.slice(this._currentNotificationIndex, messages.length));

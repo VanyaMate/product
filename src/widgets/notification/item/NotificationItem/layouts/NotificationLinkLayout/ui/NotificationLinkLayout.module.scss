@@ -1,0 +1,44 @@
+.container {
+    position : relative;
+
+    .backgroundLink {
+        width           : 100%;
+        color           : inherit;
+        text-decoration : none;
+    }
+
+    .content {
+        display        : flex;
+        flex-direction : column;
+        gap            : var(--offset-small);
+
+        .header {
+            display     : flex;
+            gap         : var(--offset-small);
+            align-items : center;
+
+            .icon {
+                width  : 30px;
+                height : 30px;
+            }
+
+            .title {
+                font-size : var(--font-size-m);
+            }
+        }
+    }
+
+    &.viewed {
+        color : var(--text-second-color);
+    }
+
+    &:hover {
+        color : var(--text-main-color);
+    }
+
+    &:not(.viewed) {
+        .message {
+            color : var(--text-main-color);
+        }
+    }
+}

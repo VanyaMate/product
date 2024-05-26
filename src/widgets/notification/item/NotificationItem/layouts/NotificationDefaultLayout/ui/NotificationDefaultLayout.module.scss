@@ -5,6 +5,12 @@
     outline        : none;
     transition     : var(--transition-medium);
     border-radius  : var(--offset-medium);
+    color          : var(--text-second-color);
+
+    &:hover,
+    &:focus {
+        color : var(--text-main-color);
+    }
 
     &:focus {
         box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color);

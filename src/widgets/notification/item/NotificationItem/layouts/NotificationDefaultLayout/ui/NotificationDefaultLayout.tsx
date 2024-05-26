@@ -2,17 +2,14 @@ import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './NotificationDefaultLayout.module.scss';
 import {
-    NotificationShortItemIcon,
-} from '@/entities/notification/icon/NotificationShortItemIcon/ui/NotificationShortItemIcon.tsx';
-import {
-    NotificationTitle,
-} from '@/entities/notification/title/NotificationTitle/ui/NotificationTitle.tsx';
-import {
     DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
 import {
     NotificationItemFooter,
 } from '@/widgets/notification/footer/NotificationItemFooter/ui/NotificationItemFooter.tsx';
+import {
+    NotificationHeader,
+} from '@/entities/notification/header/NotificationHeader/ui/NotificationHeader.tsx';
 
 
 export type NotificationDefaultLayoutProps =
@@ -32,15 +29,7 @@ export const NotificationDefaultLayout: FC<NotificationDefaultLayoutProps> = mem
             className={ classNames(css.container, {}, [ className ]) }
             tabIndex={ 0 }
         >
-            <header className={ css.header }>
-                <NotificationShortItemIcon
-                    className={ css.icon }
-                    type={ type }
-                />
-                <h3 className={ classNames(css.title, { [css.new]: !viewed }) }>
-                    <NotificationTitle type={ type }/>
-                </h3>
-            </header>
+            <NotificationHeader type={ type } viewed={ viewed }/>
             { children }
             <NotificationItemFooter
                 creationTime={ creationDate }

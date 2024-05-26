@@ -1,5 +1,5 @@
 import {
-    DomainNotification,
+    DomainNotification, DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
 
 
@@ -9,4 +9,6 @@ export interface INotificationParser {
     getNotification (message: string): DomainNotification;
 
     getNotifications (messages: string[]): DomainNotification[];
+
+    getClearNotification (type: DomainNotificationType): DomainNotification;
 }

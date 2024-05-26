@@ -1,0 +1,33 @@
+.container {
+    display         : flex;
+    gap             : var(--offset-small);
+    align-items     : center;
+    justify-content : space-between;
+
+    .header {
+        display       : flex;
+        gap           : var(--offset-small);
+        align-items   : center;
+        width         : 100%;
+        border-radius : var(--offset-small);
+
+        .icon {
+            width  : 30px;
+            height : 30px;
+        }
+
+        .title {
+            font-size : var(--font-size-m);
+        }
+    }
+
+    &.new {
+        .header {
+            background : var(--bg-second-color);
+
+            .title {
+                color : var(--text-main-color);
+            }
+        }
+    }
+}

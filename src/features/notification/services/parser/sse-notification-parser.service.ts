@@ -30,6 +30,16 @@ export class SseNotificationParser implements INotificationParser {
         return messages.map(this.getNotification.bind(this));
     }
 
+    getClearNotification (type: DomainNotificationType): DomainNotification {
+        return {
+            id          : '',
+            type        : type,
+            data        : '',
+            creationDate: new Date().toUTCString(),
+            viewed      : false,
+        };
+    }
+
     private _getUnknownNotification (message: string): DomainNotification {
         return {
             id          : '',
