@@ -4,5 +4,8 @@
     "home_page": "Главная",
     "about_us_page": "О нас",
     "dialogue_page": "Диалог {{dialogue_name}}",
-    "profile_page": "Профиль {{login}}"
+    "profile_page": "Профиль {{login}}",
+    "search_page": "Поиск",
+    "friends_page": "Друзья",
+    "dialogues_page": "Диалоги"
 }

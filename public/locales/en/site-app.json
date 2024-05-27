@@ -4,5 +4,8 @@
     "home_page": "Home",
     "about_us_page": "About us",
     "dialogue_page": "Dialogue {{dialogue_name}}",
-    "profile_page": "Profile {{login}}"
+    "profile_page": "Profile {{login}}",
+    "search_page": "Search",
+    "friends_page": "Friends",
+    "dialogues_page": "Dialogues"
 }
