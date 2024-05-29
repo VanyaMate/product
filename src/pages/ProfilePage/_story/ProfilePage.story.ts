@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { ProfilePageAsync } from '@/pages/ProfilePage/ui/ProfilePage.async.tsx';
+import { UserPageAsync } from '@/pages/ProfilePage/ui/UserPageAsync.tsx';
 
 
-const meta: Meta<typeof ProfilePageAsync> = {
+const meta: Meta<typeof UserPageAsync> = {
     title    : 'pages/ProfilePage',
-    component: ProfilePageAsync,
+    component: UserPageAsync,
 };
 
 type Story = StoryObj<typeof meta>;

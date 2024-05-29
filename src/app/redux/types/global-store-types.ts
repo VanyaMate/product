@@ -1,6 +1,11 @@
 import { UserSchema } from '@/app/redux/slices/user/types/user.schema.ts';
 import { AuthSchema } from '@/app/redux/slices/auth/types/auth.schema.ts';
-import { ProfileSchema } from '@/app/redux/slices/profile/types/profileSchema.ts';
+import {
+    UserPageSchema,
+} from '@/app/redux/slices/userPage/types/userPageSchema.ts';
+import {
+    SearchUsersSchema,
+} from '@/app/redux/slices/searchUsers/types/types.ts';
 
 
 export type GlobalStoreSchema =
@@ -9,7 +14,8 @@ export type GlobalStoreSchema =
 
         // Асинхронные редюсеры
         auth?: AuthSchema;
-        profile?: ProfileSchema;
+        userPage?: UserPageSchema;
+        searchUsers?: SearchUsersSchema;
     };
 
 export type GlobalStoreKeys = keyof GlobalStoreSchema;

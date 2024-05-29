@@ -13,6 +13,7 @@ export type UseInputWithErrorProps = {
     name: string;
     validationMethod?: (inputValue: string) => string;
     debounce?: number;
+    onChangeHandler?: (value: string) => void;
 }
 
 export interface IUseInputWithError {
@@ -47,30 +48,54 @@ export const useInputWithError = function (props: UseInputWithErrorProps): IUseI
     const debounceTimer = useRef<ReturnType<typeof setTimeout>>();
 
     // Функция, которая запускает валидацию
-    const validateCurrentValue = useCallback(() => {
-        if (props.validationMethod) {
-            setValidationAwait(true);
+    const validateCurrentValue = useCallback(async () => {
+        return new Promise((resolve, reject) => {
             clearTimeout(debounceTimer.current);
-            if (props.debounce) {
-                setErrorMessage('');
-                debounceTimer.current = setTimeout(() => {
+
+            if (props.validationMethod) {
+                setValidationAwait(true);
+                if (props.debounce) {
+                    setErrorMessage('');
+                    debounceTimer.current = setTimeout(() => {
+                        const validationResult: string = props.validationMethod!(value.current);
+                        setErrorMessage(validationResult);
+                        setValidationAwait(false);
+
+                        if (validationResult === '') {
+                            resolve(value.current);
+                        } else {
+                            reject(validationResult);
+                        }
+                    }, props.debounce);
+                } else {
                     const validationResult: string = props.validationMethod!(value.current);
                     setErrorMessage(validationResult);
                     setValidationAwait(false);
+
+                    if (validationResult === '') {
+                        resolve(value.current);
+                    } else {
+                        reject(validationResult);
+                    }
+                }
+            } else if (props.debounce) {
+                setValidationAwait(true);
+                clearTimeout(debounceTimer.current);
+                debounceTimer.current = setTimeout(() => {
+                    setValidationAwait(false);
+                    resolve(value.current);
                 }, props.debounce);
             } else {
-                const validationResult: string = props.validationMethod!(value.current);
-                setErrorMessage(validationResult);
-                setValidationAwait(false);
+                resolve(value.current);
             }
-        }
+        });
     }, [ props.debounce, props.validationMethod ]);
 
     // Функция, которая навешивается на onChange в input
     const onChangeHandler: ChangeEventHandler<HTMLInputElement> = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         value.current = event.target.value;
-        validateCurrentValue();
-    }, [ validateCurrentValue ]);
+        validateCurrentValue().then(props.onChangeHandler);
+    }, [ props.onChangeHandler, validateCurrentValue ]);
 
     return {
         value,

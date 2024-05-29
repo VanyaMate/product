@@ -1,7 +1,7 @@
 import { RouteProps } from 'react-router-dom';
 import { HomePageAsync } from '@/pages/HomePage/ui/HomePage.async.tsx';
 import { AboutPageAsync } from '@/pages/AboutPage/ui/AboutPage.async.tsx';
-import { ProfilePageAsync } from '@/pages/ProfilePage/ui/ProfilePage.async.tsx';
+import { UserPageAsync } from '@/pages/ProfilePage/ui/UserPageAsync.tsx';
 import { NotFoundPage } from '@/pages/NotFoundPage/ui/NotFoundPage.tsx';
 import {
     DialoguesPageAsync,
@@ -13,7 +13,7 @@ import { SearchPageAsync } from '@/pages/SearchPage/ui/SearchPage.async.tsx';
 export enum SiteAppRoute {
     HOME      = 'home',
     ABOUT     = 'about',
-    PROFILE   = 'profile',
+    USER      = 'user',
     SEARCH    = 'search',
     FRIENDS   = 'friends',
     DIALOGUE  = 'dialogue',
@@ -28,7 +28,7 @@ export const SiteAppRoutePath: Record<SiteAppRoute, string> = {
     [SiteAppRoute.DIALOGUE] : '/dialogue/:dialogueId',
     [SiteAppRoute.DIALOGUES]: '/dialogues',
     [SiteAppRoute.ABOUT]    : '/about',
-    [SiteAppRoute.PROFILE]  : '/profile/:login',
+    [SiteAppRoute.USER]     : '/user/:login',
     [SiteAppRoute.NOT_FOUND]: '*',
 };
 
@@ -41,9 +41,9 @@ export const MainSiteRouteConfig: Record<SiteAppRoute, RouteProps> = {
         path   : SiteAppRoutePath[SiteAppRoute.ABOUT],
         element: <AboutPageAsync/>,
     },
-    [SiteAppRoute.PROFILE]  : {
-        path   : SiteAppRoutePath[SiteAppRoute.PROFILE],
-        element: <ProfilePageAsync/>,
+    [SiteAppRoute.USER]: {
+        path   : SiteAppRoutePath[SiteAppRoute.USER],
+        element: <UserPageAsync/>,
     },
     [SiteAppRoute.DIALOGUES]: {
         path   : SiteAppRoutePath[SiteAppRoute.DIALOGUES],

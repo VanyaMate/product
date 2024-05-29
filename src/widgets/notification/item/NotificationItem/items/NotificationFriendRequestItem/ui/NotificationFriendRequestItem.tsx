@@ -30,7 +30,7 @@ export type NotificationFriendRequestItemProps =
 
 export const NotificationFriendRequestItem: FC<NotificationFriendRequestItemProps> = memo(function NotificationFriendRequestItem (props) {
     const { className, notification, ...other } = props;
-    const { t }                                 = useTranslation('site-app');
+    const { t }                                 = useTranslation();
 
 
     if (isDomainNotificationFriendRequestData(notification.data)) {
@@ -52,12 +52,11 @@ export const NotificationFriendRequestItem: FC<NotificationFriendRequestItemProp
                         : null
                     }
                     <Link
-                        aria-label={ t('profile_page', {
-                            ns   : 'site-app',
+                        aria-label={ t('go_to_user_page_of', {
                             login: notification.data.user.login,
                         }) }
                         key="link"
-                        to={ `/profile/${ notification.data.user.login }` }
+                        to={ `/user/${ notification.data.user.login }` }
                     >
                         { notification.data.user.login }
                     </Link>

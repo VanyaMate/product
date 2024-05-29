@@ -23,19 +23,19 @@ import {
 export type UserHeaderProfileButtonProps = {};
 
 export const UserHeaderControlMenu: FC<UserHeaderProfileButtonProps> = memo(function UserHeaderControlMenu () {
-    const { t } = useTranslation();
+    const { t }    = useTranslation();
     const userData = useDeferredValue(useAppSelector(getUserData));
     const dispatch = useAppDispatch();
 
     return (
         <div className={ css.container }>
             <UserProfileLink
+                login={ userData.login }
                 to={
-                    getRouteUrl(SiteAppRoutePath[SiteAppRoute.PROFILE], {
+                    getRouteUrl(SiteAppRoutePath[SiteAppRoute.USER], {
                         login: userData.login,
                     })
                 }
-                username={ userData.login }
             />
             <Button
                 aria-label={ t('logout_button') }

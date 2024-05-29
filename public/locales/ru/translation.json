@@ -15,6 +15,6 @@
     "auth_error_title": "Ошибка авторизации",
     "auth_success_title": "Добро пожаловать",
     "logout_button": "Выйти",
-    "go_to_user_page_of": "Перейти на страницу пользователя {{username}}",
+    "go_to_user_page_of": "Перейти на страницу пользователя {{login}}",
     "request_error": "Ошибка запроса"
 }

@@ -2,8 +2,8 @@ import { ThunkState } from '@/app/redux/types/thunkError.ts';
 import { DomainUserFull } from 'product-types/dist/user/DomainUserFull';
 
 
-export type ProfileSchema =
+export type UserPageSchema =
     ThunkState
     & {
-        profile: DomainUserFull | null;
+        user: DomainUserFull | null;
     }

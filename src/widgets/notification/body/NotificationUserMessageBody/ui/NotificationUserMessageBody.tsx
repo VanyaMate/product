@@ -27,12 +27,11 @@ export const NotificationUserMessageBody: FC<NotificationShortBodyUserMessagePro
             <div className={ css.links }>
                 <header>
                     <Link
-                        aria-label={ t('profile_page', {
-                            ns   : 'site-app',
+                        aria-label={ t('go_to_user_page_of', {
                             login: data.message.author.login,
                         }) }
                         className={ css.row }
-                        to={ `/profile/${ data.message.author.login }` }
+                        to={ `/user/${ data.message.author.login }` }
                     >
                         <IoPerson/>
                         <span>{ data.message.author.login }</span>

@@ -56,11 +56,10 @@ export const NotificationUserMessageItem: FC<NotificationUserMessageItemProps> =
                 outside={
                     <div className={ css.container }>
                         <Link
-                            aria-label={ t('profile_page', {
-                                ns   : 'site-app',
+                            aria-label={ t('go_to_user_page_of', {
                                 login: notification.data.message.author.login,
                             }) }
-                            to={ `/profile/${ notification.data.message.author.login }` }
+                            to={ `/user/${ notification.data.message.author.login }` }
                         >
                             { notification.data.message.author.login }
                         </Link>

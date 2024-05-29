@@ -26,8 +26,7 @@ export const NotificationFriendRequestAcceptedItem: FC<NotificationFriendRequest
     const { t }                                 = useTranslation([ 'site-app', 'notification-messages' ]);
     const ariaLabel: string                     = useMemo(() =>
         isDomainNotificationFriendRequestAcceptedData(notification.data)
-        ? t(notification.type, { ns: 'notification-messages' }) + '.' + t('profile_page', {
-            ns   : 'site-app',
+        ? t(notification.type, { ns: 'notification-messages' }) + '.' + t('go_to_user_page_of', {
             login: notification.data.user.login,
         })
         : '', [ notification.data, notification.type, t ]);

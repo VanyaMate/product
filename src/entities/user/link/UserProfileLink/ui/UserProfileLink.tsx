@@ -5,21 +5,21 @@ import { useTranslation } from 'react-i18next';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 
 
-export type UserProfileLinkProps =
+export type ToUserPageLinkProps =
     {
-        username: string;
+        login: string;
         to: string;
     };
 
-export const UserProfileLink: FC<UserProfileLinkProps> = memo(function UserProfileLink (props) {
-    const { username, to, ...other } = props;
-    const { t }                      = useTranslation();
+export const UserProfileLink: FC<ToUserPageLinkProps> = memo(function UserProfileLink (props) {
+    const { login, to, ...other } = props;
+    const { t }                   = useTranslation();
 
     return (
         <div { ...other } className={ css.container }>
             <AiOutlineUser/>
-            <Link aria-label={ t('go_to_user_page_of', { username: username }) } to={ to }>
-                { username }
+            <Link aria-label={ t('go_to_user_page_of', { login }) } to={ to }>
+                { login }
             </Link>
         </div>
     );

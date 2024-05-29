@@ -3,19 +3,19 @@ import { PageLoader } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx
 import { ErrorBoundary } from '@/shared/ui-kit/errors/ErrorBoundary/ui/ErrorBoundary.tsx';
 
 
-const ProfilePage = lazy(() => import('./ProfilePage.tsx').then((data) => ({
-    default: data.ProfilePage,
+const UserPage = lazy(() => import('./UserPage.tsx').then((data) => ({
+    default: data.UserPage,
 })));
 
-export type ProfilePageAsyncProps = {};
+export type UserPageAsyncProps = {};
 
-export const ProfilePageAsync: FC<ProfilePageAsyncProps> = memo(function ProfilePageAsync (props) {
+export const UserPageAsync: FC<UserPageAsyncProps> = memo(function UserPageAsync (props) {
     const {} = props;
 
     return (
         <Suspense fallback={ <PageLoader/> }>
             <ErrorBoundary>
-                <ProfilePage/>
+                <UserPage/>
             </ErrorBoundary>
         </Suspense>
     );

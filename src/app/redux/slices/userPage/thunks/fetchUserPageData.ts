@@ -12,8 +12,8 @@ export type FetchUserDataProps = {
     login: string;
 }
 
-export const fetchUserData = createAsyncThunk<DomainUserFull, FetchUserDataProps, ThunkApiConfig<DomainServiceResponseError>>(
-    'profile/fetchUserData',
+export const fetchUserPageData = createAsyncThunk<DomainUserFull, FetchUserDataProps, ThunkApiConfig<DomainServiceResponseError>>(
+    'userPage/fetchUserPageData',
     async (userData, thunkAPI) => {
         const { rejectWithValue, extra: { api } } = thunkAPI;
         try {
