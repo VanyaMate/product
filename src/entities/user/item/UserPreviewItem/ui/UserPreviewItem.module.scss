@@ -1,4 +1,9 @@
 .container {
+    display         : flex;
+    gap             : var(--offset-small);
+    align-items     : center;
+    justify-content : space-between;
+
     .link {
         display     : flex;
         gap         : var(--offset-small);

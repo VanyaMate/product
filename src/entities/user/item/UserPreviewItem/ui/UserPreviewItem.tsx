@@ -14,8 +14,8 @@ export type UserPreviewItemProps =
     & ComponentPropsWithoutRef<'article'>;
 
 export const UserPreviewItem: FC<UserPreviewItemProps> = memo(function ProfilePreviewItem (props) {
-    const { className, user, ...other } = props;
-    const { t }                         = useTranslation();
+    const { className, user, children, ...other } = props;
+    const { t }                                   = useTranslation();
 
     return (
         <article
@@ -32,6 +32,9 @@ export const UserPreviewItem: FC<UserPreviewItemProps> = memo(function ProfilePr
                 <Image alt="" className={ css.avatar } src={ user.avatar }/>
                 <p>{ user.login }</p>
             </Link>
+            {
+                children
+            }
         </article>
     );
 });

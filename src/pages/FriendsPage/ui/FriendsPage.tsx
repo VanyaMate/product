@@ -33,6 +33,15 @@ import {
 import {
     isDomainNotificationFriendDeletedData,
 } from 'product-types/dist/notification/notification-data-types/DomainNotificationFriendDeletedData';
+import {
+    FriendsDetails,
+} from '@/widgets/friends/details/FriendsDetails/ui/FriendsDetails.tsx';
+import {
+    FriendRequestsOutDetails,
+} from '@/widgets/friends/details/FriendRequestsOutDetails/ui/FriendRequestsOutDetails.tsx';
+import {
+    FriendRequestsInDetails,
+} from '@/widgets/friends/details/FriendRequestsInDetails/ui/FriendRequestsInDetails.tsx';
 
 
 export type FriendsPageProps =
@@ -164,6 +173,10 @@ export const FriendsPage: FC<FriendsPageProps> = memo(function FriendsPage (prop
             <p>requestsIn: { friends.requestsIn.length }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>requestsOut: { friends.requestsOut.length }</p>
+
+            <FriendRequestsInDetails/>
+            <FriendRequestsOutDetails/>
+            <FriendsDetails/>
         </div>
     );
 });
