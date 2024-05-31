@@ -10,9 +10,9 @@ import {
 import {
     NotificationTitle,
 } from '@/entities/notification/title/NotificationTitle/ui/NotificationTitle.tsx';
-import {
+/*import {
     NotificationShortBody,
-} from '@/widgets/notification/body/NotificationShortBody/ui/NotificationShortBody.tsx';
+} from '@/widgets/notification/body/NotificationShortBody/ui/NotificationShortBody.tsx';*/
 import {
     NotificationItemFooter,
 } from '@/widgets/notification/footer/NotificationItemFooter/ui/NotificationItemFooter.tsx';
@@ -45,10 +45,10 @@ export const NotificationShortItem: FC<NotificationShortItemProps> = memo(functi
                     </h3>
                 </div>
             </header>
-            <NotificationShortBody
+{/*            <NotificationShortBody
                 className={ css.body }
                 notification={ notification }
-            />
+            />*/}
             <NotificationItemFooter
                 creationTime={ notification.creationDate }
             />

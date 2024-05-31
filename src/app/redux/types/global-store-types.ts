@@ -6,6 +6,9 @@ import {
 import {
     SearchUsersSchema,
 } from '@/app/redux/slices/searchUsers/types/types.ts';
+import {
+    FriendsSchema,
+} from '@/app/redux/slices/friends/types/friends.schema.ts';
 
 
 export type GlobalStoreSchema =
@@ -16,6 +19,7 @@ export type GlobalStoreSchema =
         auth?: AuthSchema;
         userPage?: UserPageSchema;
         searchUsers?: SearchUsersSchema;
+        friends?: FriendsSchema;
     };
 
 export type GlobalStoreKeys = keyof GlobalStoreSchema;

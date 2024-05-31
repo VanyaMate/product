@@ -54,7 +54,7 @@ export const UsersSearchList: FC<UsersSearchListProps> = memo(function UsersSear
             {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>offset: { searchUsers.offset }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>pending: { searchUsers.isPending }</p>
+            <p>pending: { searchUsers.isPending.toString() }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>error: { searchUsers.error?.toString() ?? 'null' }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }

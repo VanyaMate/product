@@ -19,59 +19,91 @@ export type NotificationShortItemIconOptions = {
 }
 
 export const NotificationIconByType: Record<DomainNotificationType, NotificationShortItemIconOptions> = {
-    [DomainNotificationType.ERROR]                  : {
+    [DomainNotificationType.ERROR]                      : {
         component: IoSad,
         className: css.negative,
     },
-    [DomainNotificationType.UNKNOWN]                : {
+    [DomainNotificationType.UNKNOWN]                    : {
         component: IoNotifications,
         className: css.neutral,
     },
-    [DomainNotificationType.CONNECTED]              : {
+    [DomainNotificationType.CONNECTED]                  : {
         component: IoCloudDone,
         className: css.positive,
     },
-    [DomainNotificationType.CONNECTING]             : {
+    [DomainNotificationType.CONNECTING]                 : {
         component: IoCloud,
         className: css.neutral,
     },
-    [DomainNotificationType.DISCONNECTED]           : {
+    [DomainNotificationType.DISCONNECTED]               : {
         component: IoCloudOffline,
         className: css.negative,
     },
-    [DomainNotificationType.TOKENS_UPDATE]          : {
+    [DomainNotificationType.TOKENS_UPDATE]              : {
         component: IoSync,
         className: css.neutral,
     },
-    [DomainNotificationType.USER_MESSAGE]           : {
+    [DomainNotificationType.USER_MESSAGE_IN]            : {
+        component: IoMailUnread,
+        className: css.notification,
+    },
+    [DomainNotificationType.USER_MESSAGE_OUT]           : {
         component: IoMailUnread,
         className: css.positive,
     },
-    [DomainNotificationType.USER_MESSAGE_DELETED]   : {
+    [DomainNotificationType.USER_MESSAGE_DELETED_IN]    : {
+        component: IoTrash,
+        className: css.notification,
+    },
+    [DomainNotificationType.USER_MESSAGE_DELETED_OUT]   : {
         component: IoTrash,
         className: css.neutral,
     },
-    [DomainNotificationType.USER_MESSAGE_REDACTED]  : {
+    [DomainNotificationType.USER_MESSAGE_REDACTED_IN]   : {
+        component: IoMail,
+        className: css.notification,
+    },
+    [DomainNotificationType.USER_MESSAGE_REDACTED_OUT]  : {
         component: IoMail,
         className: css.neutral,
     },
-    [DomainNotificationType.USER_MESSAGE_READ]      : {
+    [DomainNotificationType.USER_MESSAGE_READ_IN]       : {
+        component: IoMailOpen,
+        className: css.notification,
+    },
+    [DomainNotificationType.USER_MESSAGE_READ_OUT]      : {
         component: IoMailOpen,
         className: css.neutral,
     },
-    [DomainNotificationType.FRIEND_REQUEST]         : {
-        component: IoPersonAdd,
-        className: css.positive,
-    },
-    [DomainNotificationType.FRIEND_DELETED]         : {
-        component: IoPersonRemove,
-        className: css.negative,
-    },
-    [DomainNotificationType.FRIEND_REQUEST_ACCEPTED]: {
+    [DomainNotificationType.FRIEND_REQUEST_IN]          : {
         component: IoPersonAdd,
         className: css.notification,
     },
-    [DomainNotificationType.FRIEND_REQUEST_CANCELED]: {
+    [DomainNotificationType.FRIEND_REQUEST_OUT]         : {
+        component: IoPersonAdd,
+        className: css.positive,
+    },
+    [DomainNotificationType.FRIEND_DELETED_IN]          : {
+        component: IoPersonRemove,
+        className: css.notification,
+    },
+    [DomainNotificationType.FRIEND_DELETED_OUT]         : {
+        component: IoPersonRemove,
+        className: css.negative,
+    },
+    [DomainNotificationType.FRIEND_REQUEST_ACCEPTED_IN] : {
+        component: IoPersonAdd,
+        className: css.notification,
+    },
+    [DomainNotificationType.FRIEND_REQUEST_ACCEPTED_OUT]: {
+        component: IoPersonAdd,
+        className: css.positive,
+    },
+    [DomainNotificationType.FRIEND_REQUEST_CANCELED_IN] : {
+        component: IoPersonRemove,
+        className: css.notification,
+    },
+    [DomainNotificationType.FRIEND_REQUEST_CANCELED_OUT]: {
         component: IoPersonRemove,
         className: css.negative,
     },

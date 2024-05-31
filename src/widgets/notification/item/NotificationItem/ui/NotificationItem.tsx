@@ -69,27 +69,50 @@ export const NotificationItem: FC<NotificationItemProps> = memo(function Notific
         case DomainNotificationType.TOKENS_UPDATE:
             return <NotificationTokensUpdateItem
                 notification={ notification }/>;
-        case DomainNotificationType.USER_MESSAGE:
+        case DomainNotificationType.USER_MESSAGE_IN:
             return <NotificationUserMessageItem notification={ notification }/>;
-        case DomainNotificationType.USER_MESSAGE_DELETED:
+        case DomainNotificationType.USER_MESSAGE_OUT:
+            return <NotificationUserMessageItem notification={ notification }/>;
+        case DomainNotificationType.USER_MESSAGE_DELETED_IN:
             return <NotificationUserMessageDeletedItem
                 notification={ notification }/>;
-        case DomainNotificationType.USER_MESSAGE_REDACTED:
+        case DomainNotificationType.USER_MESSAGE_DELETED_OUT:
+            return <NotificationUserMessageDeletedItem
+                notification={ notification }/>;
+        case DomainNotificationType.USER_MESSAGE_REDACTED_IN:
             return <NotificationUserMessageRedactedItem
                 notification={ notification }/>;
-        case DomainNotificationType.USER_MESSAGE_READ:
+        case DomainNotificationType.USER_MESSAGE_REDACTED_OUT:
+            return <NotificationUserMessageRedactedItem
+                notification={ notification }/>;
+        case DomainNotificationType.USER_MESSAGE_READ_IN:
             return <NotificationUserMessageReadItem
                 notification={ notification }/>;
-        case DomainNotificationType.FRIEND_REQUEST:
+        case DomainNotificationType.USER_MESSAGE_READ_OUT:
+            return <NotificationUserMessageReadItem
+                notification={ notification }/>;
+        case DomainNotificationType.FRIEND_REQUEST_IN:
             return <NotificationFriendRequestItem
                 notification={ notification }/>;
-        case DomainNotificationType.FRIEND_DELETED:
+        case DomainNotificationType.FRIEND_REQUEST_OUT:
+            return <NotificationFriendRequestItem
+                notification={ notification }/>;
+        case DomainNotificationType.FRIEND_DELETED_IN:
             return <NotificationFriendDeletedItem
                 notification={ notification }/>;
-        case DomainNotificationType.FRIEND_REQUEST_ACCEPTED:
+        case DomainNotificationType.FRIEND_DELETED_OUT:
+            return <NotificationFriendDeletedItem
+                notification={ notification }/>;
+        case DomainNotificationType.FRIEND_REQUEST_ACCEPTED_IN:
             return <NotificationFriendRequestAcceptedItem
                 notification={ notification }/>;
-        case DomainNotificationType.FRIEND_REQUEST_CANCELED:
+        case DomainNotificationType.FRIEND_REQUEST_ACCEPTED_OUT:
+            return <NotificationFriendRequestAcceptedItem
+                notification={ notification }/>;
+        case DomainNotificationType.FRIEND_REQUEST_CANCELED_IN:
+            return <NotificationFriendRequestCanceledItem
+                notification={ notification }/>;
+        case DomainNotificationType.FRIEND_REQUEST_CANCELED_OUT:
             return <NotificationFriendRequestCanceledItem
                 notification={ notification }/>;
         default:

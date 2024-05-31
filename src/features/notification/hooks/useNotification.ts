@@ -28,6 +28,15 @@ const notificationController: INotificationController = new NotificationControll
 
 notificationController.subscribe(DomainNotificationType.TOKENS_UPDATE, tokenUpdate);
 
+let connectionId: string = '';
+if (localStorage.getItem('CONNECTION_ID')) {
+    connectionId = localStorage.getItem('CONNECTION_ID');
+} else {
+    const id = Math.random().toString();
+    localStorage.setItem('CONNECTION_ID', id);
+    connectionId = id;
+}
+
 const connections: Set<string> = new Set<string>();
 
 export const useNotification = function (id: string): INotificationController {
@@ -36,7 +45,7 @@ export const useNotification = function (id: string): INotificationController {
             notificationController.connect(`${ __API__ }/v1/notification`, () => ({
                 accessToken : localStorage.getItem(LOCAL_STORAGE_USER_ACCESS_TOKEN),
                 refreshToken: localStorage.getItem(LOCAL_STORAGE_USER_REFRESH_TOKEN),
-                id          : '1',
+                id          : connectionId,
             }));
         }
         connections.add(id);

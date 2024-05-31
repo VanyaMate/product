@@ -31,28 +31,44 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
         notification.subscribe(DomainNotificationType.CONNECTED, onMessage);
         notification.subscribe(DomainNotificationType.CONNECTING, onMessage);
         notification.subscribe(DomainNotificationType.DISCONNECTED, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_REQUEST, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_DELETED, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED, onMessage);
-        notification.subscribe(DomainNotificationType.USER_MESSAGE, onMessage);
-        notification.subscribe(DomainNotificationType.USER_MESSAGE_READ, onMessage);
-        notification.subscribe(DomainNotificationType.USER_MESSAGE_DELETED, onMessage);
-        notification.subscribe(DomainNotificationType.USER_MESSAGE_REDACTED, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_IN, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_OUT, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_DELETED_IN, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_DELETED_OUT, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED_IN, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED_OUT, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED_IN, onMessage);
+        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED_OUT, onMessage);
+        notification.subscribe(DomainNotificationType.USER_MESSAGE_IN, onMessage);
+        notification.subscribe(DomainNotificationType.USER_MESSAGE_OUT, onMessage);
+        notification.subscribe(DomainNotificationType.USER_MESSAGE_READ_IN, onMessage);
+        notification.subscribe(DomainNotificationType.USER_MESSAGE_READ_OUT, onMessage);
+        notification.subscribe(DomainNotificationType.USER_MESSAGE_DELETED_IN, onMessage);
+        notification.subscribe(DomainNotificationType.USER_MESSAGE_DELETED_OUT, onMessage);
+        notification.subscribe(DomainNotificationType.USER_MESSAGE_REDACTED_IN, onMessage);
+        notification.subscribe(DomainNotificationType.USER_MESSAGE_REDACTED_OUT, onMessage);
         return () => {
             notification.unsubscribe(DomainNotificationType.ERROR, onMessage);
             notification.unsubscribe(DomainNotificationType.UNKNOWN, onMessage);
             notification.unsubscribe(DomainNotificationType.CONNECTED, onMessage);
             notification.unsubscribe(DomainNotificationType.CONNECTING, onMessage);
             notification.unsubscribe(DomainNotificationType.DISCONNECTED, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_DELETED, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED, onMessage);
-            notification.unsubscribe(DomainNotificationType.USER_MESSAGE, onMessage);
-            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_READ, onMessage);
-            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_DELETED, onMessage);
-            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_REDACTED, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_IN, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_OUT, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_DELETED_IN, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_DELETED_OUT, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED_IN, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED_OUT, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED_IN, onMessage);
+            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED_OUT, onMessage);
+            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_IN, onMessage);
+            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_OUT, onMessage);
+            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_READ_IN, onMessage);
+            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_READ_OUT, onMessage);
+            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_DELETED_IN, onMessage);
+            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_DELETED_OUT, onMessage);
+            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_REDACTED_IN, onMessage);
+            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_REDACTED_OUT, onMessage);
         };
     }, [ notification ]);
 
@@ -73,7 +89,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
             <br/>
             <NotificationItem notification={ {
                 id          : '',
-                type        : DomainNotificationType.FRIEND_DELETED,
+                type        : DomainNotificationType.FRIEND_DELETED_OUT,
                 viewed      : true,
                 creationDate: new Date().toUTCString(),
                 data        : {
@@ -87,7 +103,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
             <br/>
             <NotificationItem notification={ {
                 id          : '',
-                type        : DomainNotificationType.FRIEND_REQUEST_CANCELED,
+                type        : DomainNotificationType.FRIEND_REQUEST_CANCELED_OUT,
                 viewed      : true,
                 creationDate: new Date().toUTCString(),
                 data        : {
@@ -103,7 +119,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
             <br/>
             <NotificationItem notification={ {
                 id          : '',
-                type        : DomainNotificationType.FRIEND_REQUEST_ACCEPTED,
+                type        : DomainNotificationType.FRIEND_REQUEST_ACCEPTED_OUT,
                 viewed      : true,
                 creationDate: new Date().toUTCString(),
                 data        : {
@@ -119,14 +135,16 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
             <br/>
             <NotificationItem notification={ {
                 id          : '',
-                type        : DomainNotificationType.FRIEND_REQUEST,
+                type        : DomainNotificationType.FRIEND_REQUEST_OUT,
                 viewed      : true,
                 creationDate: new Date().toUTCString(),
                 data        : {
-                    user     : {
-                        id    : '',
-                        login : 'admin',
-                        avatar: '',
+                    request  : {
+                        user: {
+                            id    : '',
+                            login : 'admin',
+                            avatar: '',
+                        },
                     },
                     requestId: '',
                     message  : 'Привет. Мы учились вместе',
@@ -193,7 +211,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                     },
                 },
                 creationDate: new Date(Date.now() - 350000).toUTCString(),
-                type        : DomainNotificationType.USER_MESSAGE,
+                type        : DomainNotificationType.USER_MESSAGE_OUT,
                 viewed      : true,
             } }/>
             <br/>
@@ -201,7 +219,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 id          : '',
                 data        : 'Mike Domer',
                 creationDate: new Date(Date.now() - 350000).toUTCString(),
-                type        : DomainNotificationType.FRIEND_REQUEST,
+                type        : DomainNotificationType.FRIEND_REQUEST_OUT,
                 viewed      : false,
             } }/>
             <br/>
@@ -230,7 +248,7 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                     },
                 },
                 creationDate: new Date(Date.now() - 650000).toUTCString(),
-                type        : DomainNotificationType.USER_MESSAGE,
+                type        : DomainNotificationType.USER_MESSAGE_OUT,
                 viewed      : false,
             } }/>
             <br/>

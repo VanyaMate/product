@@ -32,7 +32,6 @@ export const NotificationFriendRequestItem: FC<NotificationFriendRequestItemProp
     const { className, notification, ...other } = props;
     const { t }                                 = useTranslation();
 
-
     if (isDomainNotificationFriendRequestData(notification.data)) {
         return (
             <article
@@ -61,9 +60,9 @@ export const NotificationFriendRequestItem: FC<NotificationFriendRequestItemProp
                         { notification.data.user.login }
                     </Link>
                     <div className={ css.buttons } key="buttons">
-                        {/* eslint-disable-next-line i18next/no-literal-string */}
+                        {/* eslint-disable-next-line i18next/no-literal-string */ }
                         <Button styleType={ ButtonStyleType.PRIMARY }>Принять</Button>
-                        {/* eslint-disable-next-line i18next/no-literal-string */}
+                        {/* eslint-disable-next-line i18next/no-literal-string */ }
                         <Button styleType={ ButtonStyleType.DANGER }>Отклонить</Button>
                     </div>
                 </div>
