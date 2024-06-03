@@ -4,12 +4,24 @@ import {
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     getFriendsWithRequestsForUser,
-} from '@/app/redux/slices/friends/thunks/getFriendsWithRequestsForUser.ts';
+} from '@/app/redux/slices/friends/thunks/getFriendsWithRequestsForUser/getFriendsWithRequestsForUser.ts';
 import { DomainUser, isDomainUser } from 'product-types/dist/user/DomainUser';
 import {
     DomainFriendRequest,
     isDomainFriendRequest,
 } from 'product-types/dist/friends/DomainFriendRequest';
+import {
+    createFriendRequestForUser,
+} from '@/app/redux/slices/friends/thunks/createFriendRequestForUser/createFriendRequestForUser.ts';
+import {
+    acceptFriendRequest,
+} from '@/app/redux/slices/friends/thunks/acceptFriendRequest/acceptFriendRequest.ts';
+import {
+    cancelFriendRequest,
+} from '@/app/redux/slices/friends/thunks/cancelFriendRequest/cancelFriendRequest.ts';
+import {
+    removeFriend,
+} from '@/app/redux/slices/friends/thunks/removeFriend/removeFriend.ts';
 
 
 const initialState: FriendsSchema = {
@@ -44,6 +56,7 @@ export const friendsSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
+        // getFriendsWithRequestsForUser
         builder.addCase(getFriendsWithRequestsForUser.fulfilled, (state, action) => {
             state.isPending   = false;
             state.error       = null;
@@ -56,6 +69,72 @@ export const friendsSlice = createSlice({
             state.error     = null;
         });
         builder.addCase(getFriendsWithRequestsForUser.rejected, (state, action) => {
+            state.isPending = false;
+            state.error     = action.payload;
+        });
+
+
+        // createFriendRequestForUser
+        builder.addCase(createFriendRequestForUser.fulfilled, (state, action) => {
+            state.isPending = false;
+            state.error     = null;
+            state.requestsOut.push(action.payload);
+        });
+        builder.addCase(createFriendRequestForUser.pending, (state) => {
+            state.isPending = true;
+            state.error     = null;
+        });
+        builder.addCase(createFriendRequestForUser.rejected, (state, action) => {
+            state.isPending = false;
+            state.error     = action.payload;
+        });
+
+
+        // acceptFriendRequest
+        builder.addCase(acceptFriendRequest.fulfilled, (state, action) => {
+            state.isPending  = false;
+            state.error      = null;
+            state.requestsIn = state.requestsIn.filter((request) => request.requestId !== action.payload.requestId);
+            state.friends.push(action.payload.user);
+        });
+        builder.addCase(acceptFriendRequest.pending, (state) => {
+            state.isPending = true;
+            state.error     = null;
+        });
+        builder.addCase(acceptFriendRequest.rejected, (state, action) => {
+            state.isPending = false;
+            state.error     = action.payload;
+        });
+
+
+        // cancelFriendRequest
+        builder.addCase(cancelFriendRequest.fulfilled, (state, action) => {
+            state.isPending   = false;
+            state.error       = null;
+            state.requestsOut = state.requestsOut.filter((request) => request.requestId !== action.payload.requestId);
+            state.requestsIn  = state.requestsIn.filter((request) => request.requestId !== action.payload.requestId);
+        });
+        builder.addCase(cancelFriendRequest.pending, (state) => {
+            state.isPending = true;
+            state.error     = null;
+        });
+        builder.addCase(cancelFriendRequest.rejected, (state, action) => {
+            state.isPending = false;
+            state.error     = action.payload;
+        });
+
+
+        // removeFriend
+        builder.addCase(removeFriend.fulfilled, (state, action) => {
+            state.isPending = false;
+            state.error     = null;
+            state.friends   = state.friends.filter((user) => user.id !== action.payload.user.id);
+        });
+        builder.addCase(removeFriend.pending, (state) => {
+            state.isPending = true;
+            state.error     = null;
+        });
+        builder.addCase(removeFriend.rejected, (state, action) => {
             state.isPending = false;
             state.error     = action.payload;
         });

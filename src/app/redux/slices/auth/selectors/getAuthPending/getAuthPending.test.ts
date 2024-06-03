@@ -3,7 +3,7 @@ import {
 } from '@/app/redux/slices/auth/selectors/getAuthPending/getAuthPending.ts';
 import { GlobalStoreSchema } from '@/app/redux/types/global-store-types';
 import {
-    serviceErrorResponse
+    serviceErrorResponse,
 } from 'product-types/dist/_helpers/lib/serviceErrorResponse';
 
 
@@ -13,6 +13,7 @@ describe('GetAuthPendingTest', () => {
             auth: {
                 error    : serviceErrorResponse(undefined),
                 isPending: false,
+                user     : null,
             },
         };
         expect(getAuthPending(state as GlobalStoreSchema)).toBe(false);
@@ -23,6 +24,7 @@ describe('GetAuthPendingTest', () => {
             auth: {
                 error    : null,
                 isPending: true,
+                user     : null,
             },
         };
         expect(getAuthPending(state as GlobalStoreSchema)).toBe(true);

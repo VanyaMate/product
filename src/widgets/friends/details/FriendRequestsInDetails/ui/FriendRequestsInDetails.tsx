@@ -16,7 +16,14 @@ import {
 import {
     UserPreviewItem,
 } from '@/entities/user/item/UserPreviewItem/ui/UserPreviewItem.tsx';
-import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import {
+    AcceptFriendRequestButton,
+} from '@/features/friend/button/AcceptFriendRequestButton/ui/AcceptFriendRequestButton.tsx';
+import {
+    CancelFriendRequestButton,
+} from '@/features/friend/button/CancelFriendRequestButton/ui/CancelFriendRequestButton.tsx';
+import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
+import { Col } from '@/shared/ui-kit/box/Col/ui/Col';
 
 
 export type FriendRequestsInDetailsProps =
@@ -39,16 +46,25 @@ export const FriendRequestsInDetails: FC<FriendRequestsInDetailsProps> = memo(fu
                 { t('requests_in_list_title') } ({ friends.requestsIn.length })
             </DetailsTitle>
             <DetailsBody>
-                {
-                    friends.requestsIn.map((request) => (
-                        <UserPreviewItem
-                            key={ request.requestId }
-                            user={ request.user }
-                        >
-                            <Button>+</Button>
-                        </UserPreviewItem>
-                    ))
-                }
+                <Col>
+                    {
+                        friends.requestsIn.map((request) => (
+                            <UserPreviewItem
+                                key={ request.requestId }
+                                user={ request.user }
+                            >
+                                <Row>
+                                    <AcceptFriendRequestButton
+                                        requestId={ request.requestId }
+                                    />
+                                    <CancelFriendRequestButton
+                                        requestId={ request.requestId }
+                                    />
+                                </Row>
+                            </UserPreviewItem>
+                        ))
+                    }
+                </Col>
             </DetailsBody>
         </Details>
     );

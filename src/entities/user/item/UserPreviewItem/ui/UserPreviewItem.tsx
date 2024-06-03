@@ -5,6 +5,7 @@ import { Image } from '@/shared/ui-kit/image/Image/ui/Image.tsx';
 import { DomainUser } from 'product-types/dist/user/DomainUser';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import { useTranslation } from 'react-i18next';
+import { FakeAvatar } from '@/shared/ui-kit/icons/FakeAvatar/ui/FakeAvatar.tsx';
 
 
 export type UserPreviewItemProps =
@@ -29,7 +30,18 @@ export const UserPreviewItem: FC<UserPreviewItemProps> = memo(function ProfilePr
                 className={ css.link }
                 to={ `/user/${ user.login }` }
             >
-                <Image alt="" className={ css.avatar } src={ user.avatar }/>
+                {
+                    user.avatar
+                    ? <Image
+                        alt=""
+                        className={ css.avatar }
+                        src={ user.avatar }
+                    />
+                    : <FakeAvatar
+                        className={ css.avatar }
+                        letter={ user.login[0] }
+                    />
+                }
                 <p>{ user.login }</p>
             </Link>
             {

@@ -9,7 +9,6 @@ import {
 import {
     UserPreviewItem,
 } from '@/entities/user/item/UserPreviewItem/ui/UserPreviewItem.tsx';
-import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
 import { useTranslation } from 'react-i18next';
 import { useReducerConnector } from '@/app/redux/hooks/useReducerConnector.ts';
@@ -17,6 +16,10 @@ import {
     friendsReducer,
 } from '@/app/redux/slices/friends/slice/friends.slice.ts';
 import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
+import {
+    RemoveFriendButton,
+} from '@/features/friend/button/RemoveFriendButton/ui/RemoveFriendButton.tsx';
+import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 
 
 export const FriendsDetails: FC = memo(function FriendsDetails () {
@@ -33,16 +36,18 @@ export const FriendsDetails: FC = memo(function FriendsDetails () {
         <Details open={ true }>
             <DetailsTitle>{ t('friends_list_title') } ({ friends.friends.length })</DetailsTitle>
             <DetailsBody>
-                {
-                    friends.friends.map((friend) => (
-                        <UserPreviewItem
-                            key={ friend.id }
-                            user={ friend }
-                        >
-                            <Button>-</Button>
-                        </UserPreviewItem>
-                    ))
-                }
+                <Col>
+                    {
+                        friends.friends.map((friend) => (
+                            <UserPreviewItem
+                                key={ friend.id }
+                                user={ friend }
+                            >
+                                <RemoveFriendButton userId={ friend.id }/>
+                            </UserPreviewItem>
+                        ))
+                    }
+                </Col>
             </DetailsBody>
         </Details>
     );

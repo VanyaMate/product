@@ -1,0 +1,13 @@
+.container {
+    height          : 100%;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+
+    .form {
+        &.disabled {
+            pointer-events : none;
+            opacity        : .5;
+        }
+    }
+}

@@ -1,5 +1,7 @@
 import { authSlice } from '@/app/redux/slices/auth/slice/authSlice.ts';
-import { authByUsername } from '@/app/redux/slices/auth/thunks/authByUsername.ts';
+import {
+    authByUsername,
+} from '@/app/redux/slices/auth/thunks/authByUsername/authByUsername.ts';
 import { AuthSchema } from '@/app/redux/slices/auth/types/auth.schema.ts';
 
 
@@ -19,10 +21,11 @@ describe('AuthSliceTest', () => {
                     },
                 ],
             },
+            user     : null,
         };
 
         const result = authSlice.reducer(initState, { type: authByUsername.pending.type });
-        expect(result).toEqual({ isPending: true, error: null });
+        expect(result).toEqual({ isPending: true, error: null, user: null });
     });
 
     test('extra authByUsername fulfilled', () => {
@@ -40,16 +43,18 @@ describe('AuthSliceTest', () => {
                     },
                 ],
             },
+            user     : null,
         };
 
         const result = authSlice.reducer(initState, { type: authByUsername.fulfilled.type });
-        expect(result).toEqual({ isPending: false, error: null });
+        expect(result).toEqual({ isPending: false, error: null, user: null });
     });
 
     test('extra authByUsername rejected', () => {
         const initState: AuthSchema = {
             isPending: true,
             error    : null,
+            user     : null,
         };
 
         const result = authSlice.reducer(initState, {
@@ -81,6 +86,7 @@ describe('AuthSliceTest', () => {
                     },
                 ],
             },
+            user     : null,
         });
     });
 });

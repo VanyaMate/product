@@ -10,6 +10,8 @@ import {
     useInputWithError,
 } from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
+import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 
 
 export type SearchPageProps =
@@ -17,7 +19,6 @@ export type SearchPageProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const SearchPage: FC<SearchPageProps> = memo(function SearchPage (props) {
-    const { className, ...other }           = props;
     const [ searchParams, setSearchParams ] = useSearchParams();
     const setQuery                          = (query: string) => setSearchParams(new URLSearchParams({ query }));
     const search                            = useInputWithError({
@@ -28,21 +29,20 @@ export const SearchPage: FC<SearchPageProps> = memo(function SearchPage (props) 
 
     // TODO
     return (
-        <div
-            { ...other }
-            className={ className }
-        >
-            <InputWithError
-                controller={ search }
-                defaultValue={ searchParams.get('query') }
-            />
-            <Button
-                onClick={ () => setQuery(search.value.current) }>//</Button>
+        <Col { ...props }>
+            <Row>
+                <InputWithError
+                    controller={ search }
+                    defaultValue={ searchParams.get('query') }
+                />
+                <Button
+                    onClick={ () => setQuery(search.value.current) }>//</Button>
+            </Row>
             <UsersSearchList
-                limit={ 1 }
+                limit={ 10 }
                 offset={ 0 }
                 query={ searchParams.get('query') }
             />
-        </div>
+        </Col>
     );
 });

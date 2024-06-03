@@ -3,7 +3,7 @@ import {
 } from '@/app/redux/slices/auth/selectors/getAuthState/getAuthState.ts';
 import { GlobalStoreSchema } from '@/app/redux/types/global-store-types.ts';
 import {
-    serviceErrorResponse
+    serviceErrorResponse,
 } from 'product-types/dist/_helpers/lib/serviceErrorResponse';
 
 
@@ -13,11 +13,13 @@ describe('GetAuthStateTest', () => {
             auth: {
                 error    : serviceErrorResponse(undefined),
                 isPending: false,
+                user     : null,
             },
         };
         expect(getAuthState(state as GlobalStoreSchema)).toEqual({
             error    : serviceErrorResponse(undefined),
             isPending: false,
+            user     : null,
         });
     });
 

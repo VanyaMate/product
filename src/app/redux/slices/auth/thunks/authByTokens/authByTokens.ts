@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkApiConfig } from '@/app/redux/types/global-store-thunk.ts';
 import { thunkCatch } from '@/app/redux/catch/thunk-catch.ts';
-import { userActions } from '@/app/redux/slices/user/slice/userSlice.ts';
 import {
     assertDomainResponse,
     DomainResponse,
@@ -9,39 +8,41 @@ import {
 import {
     DomainServiceResponseError,
 } from 'product-types/dist/error/DomainServiceResponseError';
-import { DomainUser } from 'product-types/dist/user/DomainUser';
 import {
-    assertDomainAuthResponse,
-} from 'product-types/dist/authorization/DomainAuthResponse';
+    assertDomainUser,
+    DomainUser,
+} from 'product-types/dist/user/DomainUser';
 import { toast } from 'sonner';
 import { i18nConfig } from '@/app/i18n/config/i18n.ts';
+import {
+    LOCAL_STORAGE_USER_ACCESS_TOKEN,
+    LOCAL_STORAGE_USER_DATA,
+} from '@/app/redux/slices/user/consts/storage.const.ts';
 
-
-export type AuthByUsernameProps = {
-    login: string;
-    password: string;
-    remember?: boolean;
-}
 
 export type AuthThunkApiConfig = ThunkApiConfig<DomainServiceResponseError>;
 
-export const authByUsername = createAsyncThunk<DomainUser, AuthByUsernameProps, AuthThunkApiConfig>(
-    'auth/byUsername',
-    async (authData, thunkAPI) => {
-        const { extra: { api }, rejectWithValue, dispatch } = thunkAPI;
+export const authByTokens = createAsyncThunk<DomainUser, null, AuthThunkApiConfig>(
+    'auth/byTokens',
+    async (_, thunkAPI) => {
+        const { extra: { api }, rejectWithValue } = thunkAPI;
         try {
+            if (!localStorage.getItem(LOCAL_STORAGE_USER_ACCESS_TOKEN)) {
+                return null;
+            }
+
             const user = await api
-                .post<DomainResponse>('/v1/authentication/login', authData)
+                .get<DomainResponse>('/v1/authentication')
                 .then((response) => response.data)
                 .then((data) => {
                     assertDomainResponse(data, 'responseData', 'DomainResponse');
                     return data.data;
                 })
                 .then((data: unknown) => {
-                    assertDomainAuthResponse(data, 'data', 'DomainAuthResponse');
-                    dispatch(userActions.setAuthData(data));
+                    assertDomainUser(data, 'data', 'DomainUser');
+                    localStorage.setItem(LOCAL_STORAGE_USER_DATA, JSON.stringify(data));
                     toast(i18nConfig.t('auth_success_title'), { duration: 3000 });
-                    return data.user;
+                    return data;
                 });
             return user;
         } catch (e: unknown) {

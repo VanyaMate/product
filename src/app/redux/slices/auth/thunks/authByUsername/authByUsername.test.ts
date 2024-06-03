@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { authByUsername } from '@/app/redux/slices/auth/thunks/authByUsername.ts';
+import { authByUsername } from '@/app/redux/slices/auth/thunks/authByUsername/authByUsername.ts';
 import { Dispatch } from '@reduxjs/toolkit';
 import { GlobalStoreSchema } from '@/app/redux/types/global-store-types.ts';
-import { userActions } from '@/app/redux/slices/user/slice/userSlice.ts';
 import { DomainUser } from 'product-types/dist/user/DomainUser';
 
 
@@ -37,8 +36,7 @@ describe('AuthByUsernameTest', () => {
             api: mockedAxios,
         });
         expect(mockedAxios.post).toHaveBeenCalledTimes(1);
-        expect(dispatch).toHaveBeenCalledTimes(3);
-        expect(dispatch).toHaveBeenCalledWith(userActions.setAuthData({ user: userData, tokens: ['', ''] }));
+        expect(dispatch).toHaveBeenCalledTimes(2);
         expect(result.meta.requestStatus).toBe('fulfilled');
         expect(result.payload).toEqual({ ...userData });
     });

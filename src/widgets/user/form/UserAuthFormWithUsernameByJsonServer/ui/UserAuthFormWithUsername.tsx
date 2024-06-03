@@ -1,30 +1,36 @@
 import { FC, memo } from 'react';
 import { useDispatch } from 'react-redux';
-import { authByUsername } from '@/app/redux/slices/auth/thunks/authByUsername.ts';
+import {
+    authByUsername,
+} from '@/app/redux/slices/auth/thunks/authByUsername/authByUsername.ts';
 import { authReducer } from '@/app/redux/slices/auth/slice/authSlice.ts';
 import { useReducerConnector } from '@/app/redux/hooks/useReducerConnector.ts';
 import { GlobalStoreThunk } from '@/app/redux/types/global-store-thunk.ts';
 import {
-    useInputWithError
+    useInputWithError,
 } from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
 import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
 import {
-    AuthFormByUserNameFormType
+    AuthFormByUserNameFormType,
 } from '@/entities/auth/form/AuthFormByUsernameWithError/types/types.ts';
-import { userAuthLoginValidator } from '@/app/validation/user/login.validators.ts';
 import {
-    AuthFormByUsernameWithError
+    userAuthLoginValidator,
+} from '@/app/validation/user/login.validators.ts';
+import {
+    AuthFormByUsernameWithError,
 } from '@/entities/auth/form/AuthFormByUsernameWithError/ui/AuthFormByUsernameWithError.tsx';
-import { userAuthPasswordValidator } from '@/app/validation/user/password.validators.ts';
+import {
+    userAuthPasswordValidator,
+} from '@/app/validation/user/password.validators.ts';
 import { DomainUser } from 'product-types/dist/user/DomainUser';
 
 
-export type UserAuthFormWithUsernameByJsonServer = {
+export type UserAuthFormWithUsernameProps = {
     onSuccess?: (user: DomainUser) => void;
     onError?: (error: Error) => void;
 }
 
-export const UserAuthFormWithUsernameByJsonServer: FC<UserAuthFormWithUsernameByJsonServer> = memo(function UserAuthFormWithUsernameByJsonServer (props) {
+export const UserAuthFormWithUsername: FC<UserAuthFormWithUsernameProps> = memo(function UserAuthFormWithUsername (props) {
     const { onError, onSuccess }     = props;
     const dispatch: GlobalStoreThunk = useDispatch();
     const loginInputController       = useInputWithError({

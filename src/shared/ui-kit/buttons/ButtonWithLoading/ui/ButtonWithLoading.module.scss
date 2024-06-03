@@ -1,0 +1,9 @@
+@import "src/app/styles/animations/animations";
+
+.container {
+    .rotating {
+        animation : loading .4s infinite ease-in-out;
+        width     : 20px;
+        height    : 20px;
+    }
+}

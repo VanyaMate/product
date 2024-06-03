@@ -1,4 +1,3 @@
-import { UserSchema } from '@/app/redux/slices/user/types/user.schema.ts';
 import { AuthSchema } from '@/app/redux/slices/auth/types/auth.schema.ts';
 import {
     UserPageSchema,
@@ -13,10 +12,9 @@ import {
 
 export type GlobalStoreSchema =
     {
-        user: UserSchema;
+        auth: AuthSchema;
 
         // Асинхронные редюсеры
-        auth?: AuthSchema;
         userPage?: UserPageSchema;
         searchUsers?: SearchUsersSchema;
         friends?: FriendsSchema;

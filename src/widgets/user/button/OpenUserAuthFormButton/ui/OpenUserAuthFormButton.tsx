@@ -6,8 +6,8 @@ import {
 import { Modal } from '@/shared/ui-kit/modal/Modal/ui/Modal.tsx';
 import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
 import {
-    UserAuthFormWithUsernameByJsonServerAsync
-} from '@/widgets/user/form/UserAuthFormWithUsernameByJsonServer/ui/UserAuthFormWithUsernameByJsonServer.async.tsx';
+    UserAuthFormWithUsernameAsync
+} from '@/widgets/user/form/UserAuthFormWithUsernameByJsonServer/ui/UserAuthFormWithUsernameAsync.tsx';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 
 
@@ -24,7 +24,7 @@ export const OpenUserAuthFormButton: FC<OpenUserAuthFormButtonProps> = memo(func
                 <Suspense fallback={ <Loader/> }>
                     {
                         modalController.opened
-                        ? <UserAuthFormWithUsernameByJsonServerAsync
+                        ? <UserAuthFormWithUsernameAsync
                             onSuccess={ () => modalController.setOpened(false) }
                         />
                         : null

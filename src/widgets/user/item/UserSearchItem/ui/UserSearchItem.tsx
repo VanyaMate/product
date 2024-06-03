@@ -25,7 +25,7 @@ export const UserSearchItem: FC<UserSearchItemProps> = memo(function ProfileSear
             className={ classNames(css.container, {}, [ className ]) }
         >
             <UserPreviewItem user={ user }/>
-            <AddToFriendButton/>
+            <AddToFriendButton userId={ user.id }/>
         </article>
     );
 });
