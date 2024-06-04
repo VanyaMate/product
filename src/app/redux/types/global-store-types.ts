@@ -8,6 +8,9 @@ import {
 import {
     FriendsSchema,
 } from '@/app/redux/slices/friends/types/friends.schema.ts';
+import {
+    NotificationsSchema,
+} from '@/app/redux/slices/notifications/types/notifications.schema.ts';
 
 
 export type GlobalStoreSchema =
@@ -18,6 +21,7 @@ export type GlobalStoreSchema =
         userPage?: UserPageSchema;
         searchUsers?: SearchUsersSchema;
         friends?: FriendsSchema;
+        notifications?: NotificationsSchema;
     };
 
 export type GlobalStoreKeys = keyof GlobalStoreSchema;

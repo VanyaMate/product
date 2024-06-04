@@ -12,7 +12,10 @@ import {
 import {
     FriendRequestsInDetails,
 } from '@/widgets/friends/details/FriendRequestsInDetails/ui/FriendRequestsInDetails.tsx';
-import { useFriendsUpdater } from '@/features/store/useFriendsUpdater.ts';
+import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
+import {
+    useFriendsStoreUpdaterByNotifications,
+} from '@/features/notification/hooks/useFriendsStoreUpdaterByNotifications.ts';
 
 
 export type FriendsPageProps =
@@ -23,7 +26,7 @@ export const FriendsPage: FC<FriendsPageProps> = memo(function FriendsPage (prop
     const { className, ...other } = props;
     const friends                 = useAppSelector((state) => state.friends);
 
-    useFriendsUpdater();
+    useFriendsStoreUpdaterByNotifications();
 
     if (!friends) {
         return <PageLoader/>;
@@ -45,9 +48,11 @@ export const FriendsPage: FC<FriendsPageProps> = memo(function FriendsPage (prop
             {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>requestsOut: { friends.requestsOut.length }</p>
 
-            <FriendRequestsInDetails/>
-            <FriendRequestsOutDetails/>
-            <FriendsDetails/>
+            <Col>
+                <FriendRequestsInDetails/>
+                <FriendRequestsOutDetails/>
+                <FriendsDetails/>
+            </Col>
         </div>
     );
 });

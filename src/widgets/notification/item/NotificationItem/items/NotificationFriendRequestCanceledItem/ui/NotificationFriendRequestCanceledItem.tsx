@@ -23,16 +23,17 @@ export type NotificationFriendRequestCanceledItemProps =
 
 export const NotificationFriendRequestCanceledItem: FC<NotificationFriendRequestCanceledItemProps> = memo(function NotificationFriendRequestCanceledItem (props) {
     const { className, notification, ...other } = props;
-    const { t }                                 = useTranslation([ 'site-app', 'notification-messages' ]);
+    const { t }                                 = useTranslation([ 'site-app', 'notification-messages', 'translation' ]);
     const ariaLabel: string                     = useMemo(() =>
         isDomainNotificationFriendRequestAcceptedData(notification.data)
         ? t(notification.type, { ns: 'notification-messages' }) + '. ' + t('go_to_user_page_of', {
+            ns   : 'translation',
             login: notification.data.user.login,
         })
         : '', [ notification.data, notification.type, t ]);
     const linkTo: string                        = useMemo(() =>
         isDomainNotificationFriendRequestAcceptedData(notification.data)
-        ? `/profile/${ notification.data.user.login }`
+        ? `/user/${ notification.data.user.login }`
         : '#', [ notification.data ]);
 
     if (isDomainNotificationFriendRequestAcceptedData(notification.data)) {

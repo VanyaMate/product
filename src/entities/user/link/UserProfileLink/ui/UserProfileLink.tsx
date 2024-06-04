@@ -13,12 +13,15 @@ export type ToUserPageLinkProps =
 
 export const UserProfileLink: FC<ToUserPageLinkProps> = memo(function UserProfileLink (props) {
     const { login, to, ...other } = props;
-    const { t }                   = useTranslation();
+    const { t }                   = useTranslation([ 'translation' ]);
 
     return (
         <div { ...other } className={ css.container }>
             <AiOutlineUser/>
-            <Link aria-label={ t('go_to_user_page_of', { login }) } to={ to }>
+            <Link aria-label={ t('go_to_user_page_of', {
+                ns: 'translation',
+                login,
+            }) } to={ to }>
                 { login }
             </Link>
         </div>

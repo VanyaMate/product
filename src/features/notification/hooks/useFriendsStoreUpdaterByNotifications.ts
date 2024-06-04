@@ -1,16 +1,14 @@
-import {
-    useNotification,
-} from '@/features/notification/hooks/useNotification.ts';
 import { useReducerConnector } from '@/app/redux/hooks/useReducerConnector.ts';
 import {
     friendsActions,
     friendsReducer,
 } from '@/app/redux/slices/friends/slice/friends.slice.ts';
-import { useEffect } from 'react';
 import {
-    getFriendsWithRequestsForUser,
-} from '@/app/redux/slices/friends/thunks/getFriendsWithRequestsForUser/getFriendsWithRequestsForUser.ts';
+    useNotification,
+} from '@/features/notification/hooks/useNotification.ts';
 import { useAppDispatch } from '@/app/redux/hooks/useAppDispatch.ts';
+import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
+import { useEffect } from 'react';
 import {
     NotificationNotificatorCallback,
 } from '@/features/notification/services/notificator/notification-notificator.interface.ts';
@@ -29,11 +27,13 @@ import {
 import {
     DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
-import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
+import {
+    getFriendsWithRequestsForUser,
+} from '@/app/redux/slices/friends/thunks/getFriendsWithRequestsForUser/getFriendsWithRequestsForUser.ts';
 
 
-export const useFriendsUpdater = function () {
-    const notification = useNotification('friends');
+export const useFriendsStoreUpdaterByNotifications = function () {
+    const notification = useNotification(`friends-store-updater`);
     const dispatch     = useAppDispatch();
     const friends      = useAppSelector((state) => state.friends);
 
@@ -41,7 +41,7 @@ export const useFriendsUpdater = function () {
 
     useEffect(() => {
         dispatch(getFriendsWithRequestsForUser());
-    }, [ dispatch ]);
+    }, [dispatch]);
 
     useEffect(() => {
         if (friends) {

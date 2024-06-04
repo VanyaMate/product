@@ -37,16 +37,22 @@ export const friendsSlice = createSlice({
     initialState : initialState,
     reducers     : {
         addFriend (state, action: PayloadAction<DomainUser>) {
-            state.friends.push(action.payload);
+            if (state.friends.every((user) => user.id !== action.payload.id)) {
+                state.friends.push(action.payload);
+            }
         },
         removeFriend (state, action: PayloadAction<string>) {
             state.friends = state.friends.filter((friend) => friend.id !== action.payload);
         },
         addFriendRequestIn (state, action: PayloadAction<DomainFriendRequest>) {
-            state.requestsIn.push(action.payload);
+            if (state.requestsIn.every((request) => request.requestId !== action.payload.requestId)) {
+                state.requestsIn.push(action.payload);
+            }
         },
         addFriendRequestOut (state, action: PayloadAction<DomainFriendRequest>) {
-            state.requestsOut.push(action.payload);
+            if (state.requestsOut.every((request) => request.requestId !== action.payload.requestId)) {
+                state.requestsOut.push(action.payload);
+            }
         },
         removeFriendRequestIn (state, action: PayloadAction<string>) {
             state.requestsIn = state.requestsIn.filter((request) => request.requestId !== action.payload);
@@ -95,7 +101,10 @@ export const friendsSlice = createSlice({
             state.isPending  = false;
             state.error      = null;
             state.requestsIn = state.requestsIn.filter((request) => request.requestId !== action.payload.requestId);
-            state.friends.push(action.payload.user);
+
+            if (state.friends.every((user) => user.id !== action.payload.user.id)) {
+                state.friends.push(action.payload.user);
+            }
         });
         builder.addCase(acceptFriendRequest.pending, (state) => {
             state.isPending = true;

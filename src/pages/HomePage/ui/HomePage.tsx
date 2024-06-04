@@ -1,92 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import { FC, memo } from 'react';
 import {
-    DomainNotification,
     DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
-import {
-    useNotification,
-} from '@/features/notification/hooks/useNotification.ts';
-import {
-    NotificationNotificatorCallback,
-} from '@/features/notification/services/notificator/notification-notificator.interface.ts';
 import { DomainMessageType } from 'product-types/message/DomainMessage.ts';
 import {
     NotificationItem,
 } from '@/widgets/notification/item/NotificationItem/ui/NotificationItem.tsx';
+import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
+import {
+    GlobalNotifications,
+} from '@/widgets/notification/GlobalNotifications/ui/GlobalNotifications.tsx';
 
 
 export type HomePageContentProps = {};
 
-const HomePage: React.FC<HomePageContentProps> = (props) => {
-    const {}                                  = props;
-    const notification                        = useNotification('home-page');
-    const [ notifications, setNotifications ] = useState<DomainNotification[]>([]);
-
-    useEffect(() => {
-        const onMessage: NotificationNotificatorCallback = (message) => {
-            setNotifications((prev) => [ ...message.reverse(), ...prev ]);
-        };
-        notification.subscribe(DomainNotificationType.ERROR, onMessage);
-        notification.subscribe(DomainNotificationType.UNKNOWN, onMessage);
-        notification.subscribe(DomainNotificationType.CONNECTED, onMessage);
-        notification.subscribe(DomainNotificationType.CONNECTING, onMessage);
-        notification.subscribe(DomainNotificationType.DISCONNECTED, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_IN, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_OUT, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_DELETED_IN, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_DELETED_OUT, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED_IN, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED_OUT, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED_IN, onMessage);
-        notification.subscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED_OUT, onMessage);
-        notification.subscribe(DomainNotificationType.USER_MESSAGE_IN, onMessage);
-        notification.subscribe(DomainNotificationType.USER_MESSAGE_OUT, onMessage);
-        notification.subscribe(DomainNotificationType.USER_MESSAGE_READ_IN, onMessage);
-        notification.subscribe(DomainNotificationType.USER_MESSAGE_READ_OUT, onMessage);
-        notification.subscribe(DomainNotificationType.USER_MESSAGE_DELETED_IN, onMessage);
-        notification.subscribe(DomainNotificationType.USER_MESSAGE_DELETED_OUT, onMessage);
-        notification.subscribe(DomainNotificationType.USER_MESSAGE_REDACTED_IN, onMessage);
-        notification.subscribe(DomainNotificationType.USER_MESSAGE_REDACTED_OUT, onMessage);
-        return () => {
-            notification.unsubscribe(DomainNotificationType.ERROR, onMessage);
-            notification.unsubscribe(DomainNotificationType.UNKNOWN, onMessage);
-            notification.unsubscribe(DomainNotificationType.CONNECTED, onMessage);
-            notification.unsubscribe(DomainNotificationType.CONNECTING, onMessage);
-            notification.unsubscribe(DomainNotificationType.DISCONNECTED, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_IN, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_OUT, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_DELETED_IN, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_DELETED_OUT, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED_IN, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED_OUT, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED_IN, onMessage);
-            notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED_OUT, onMessage);
-            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_IN, onMessage);
-            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_OUT, onMessage);
-            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_READ_IN, onMessage);
-            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_READ_OUT, onMessage);
-            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_DELETED_IN, onMessage);
-            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_DELETED_OUT, onMessage);
-            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_REDACTED_IN, onMessage);
-            notification.unsubscribe(DomainNotificationType.USER_MESSAGE_REDACTED_OUT, onMessage);
-        };
-    }, [ notification ]);
+const HomePage: FC<HomePageContentProps> = (props) => {
+    const {} = props;
 
     return (
-        <div>
-            {
-                notifications.map((notification) => (
-                    <NotificationItem
-                        key={ notification.type + notification.creationDate }
-                        notification={ notification }
-                    />
-                ))
-            }
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
+        <Col>
+            <GlobalNotifications/>
             <NotificationItem notification={ {
                 id          : '',
                 type        : DomainNotificationType.FRIEND_DELETED_OUT,
@@ -259,8 +192,8 @@ const HomePage: React.FC<HomePageContentProps> = (props) => {
                 type        : DomainNotificationType.ERROR,
                 viewed      : true,
             } }/>
-        </div>
+        </Col>
     );
 };
 
-export default React.memo(HomePage);
+export default memo(HomePage);

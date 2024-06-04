@@ -23,10 +23,11 @@ export type NotificationFriendDeletedItemProps =
 
 export const NotificationFriendDeletedItem: FC<NotificationFriendDeletedItemProps> = memo(function NotificationFriendDeletedItem (props) {
     const { className, notification, ...other } = props;
-    const { t }                                 = useTranslation();
+    const { t }                                 = useTranslation([ 'translation' ]);
 
     if (isDomainNotificationFriendDeletedData(notification.data)) {
         const linkAria = t('go_to_user_page_of', {
+            ns   : 'translation',
             login: notification.data.user.login,
         });
         const linkTo   = `/user/${ notification.data.user.login }`;

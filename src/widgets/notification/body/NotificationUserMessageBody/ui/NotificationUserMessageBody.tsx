@@ -17,7 +17,7 @@ export type NotificationShortBodyUserMessageProps =
 
 export const NotificationUserMessageBody: FC<NotificationShortBodyUserMessageProps> = memo(function NotificationShortBodyUserMessage (props) {
     const { className, data, ...other } = props;
-    const { t }                         = useTranslation();
+    const { t }                         = useTranslation([ 'translation' ]);
 
     return (
         <section
@@ -28,6 +28,7 @@ export const NotificationUserMessageBody: FC<NotificationShortBodyUserMessagePro
                 <header>
                     <Link
                         aria-label={ t('go_to_user_page_of', {
+                            ns   : 'translation',
                             login: data.message.author.login,
                         }) }
                         className={ css.row }

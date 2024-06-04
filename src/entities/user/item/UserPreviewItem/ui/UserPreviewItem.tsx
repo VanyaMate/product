@@ -16,7 +16,7 @@ export type UserPreviewItemProps =
 
 export const UserPreviewItem: FC<UserPreviewItemProps> = memo(function ProfilePreviewItem (props) {
     const { className, user, children, ...other } = props;
-    const { t }                                   = useTranslation();
+    const { t }                                   = useTranslation([ 'translation' ]);
 
     return (
         <article
@@ -25,6 +25,7 @@ export const UserPreviewItem: FC<UserPreviewItemProps> = memo(function ProfilePr
         >
             <Link
                 aria-label={ t('go_to_user_page_of', {
+                    ns   : 'translation',
                     login: user.login,
                 }) }
                 className={ css.link }

@@ -25,7 +25,7 @@ export type NotificationUserMessageItemProps =
 
 export const NotificationUserMessageItem: FC<NotificationUserMessageItemProps> = memo(function NotificationUserMessageItem (props) {
     const { className, notification, ...other } = props;
-    const { t }                                 = useTranslation([ 'site-app', 'notification-links' ]);
+    const { t }                                 = useTranslation([ 'site-app', 'notification-links', 'translation' ]);
     const linkOnMessageAriaLabel                = useMemo(() => {
         if (isDomainNotificationUserMessageData(notification.data)) {
             return t(notification.type, {
@@ -57,6 +57,7 @@ export const NotificationUserMessageItem: FC<NotificationUserMessageItemProps> =
                     <div className={ css.container }>
                         <Link
                             aria-label={ t('go_to_user_page_of', {
+                                ns   : 'translation',
                                 login: notification.data.message.author.login,
                             }) }
                             to={ `/user/${ notification.data.message.author.login }` }
