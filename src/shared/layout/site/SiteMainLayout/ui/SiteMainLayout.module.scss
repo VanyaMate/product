@@ -52,6 +52,16 @@ $side-width-open : 400px;
         overflow   : auto;
         position   : relative;
 
+        &_content {
+            margin    : auto;
+            width     : 100%;
+            max-width : 800px;
+
+            &_link:focus {
+                outline : none;
+            }
+        }
+
         &_open {
             transform : translateX(20px);
         }

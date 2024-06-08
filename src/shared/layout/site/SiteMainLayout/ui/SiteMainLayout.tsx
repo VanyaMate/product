@@ -68,9 +68,11 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
                     className={ classNames(css.main, { [css.main_open]: open }) }
                     { ...inert(open) }
                 >
-                    <a href="#" onClick={ noEvent } ref={ main }
-                       tabIndex={ -1 }/>
-                    { children }
+                    <div className={ css.main_content }>
+                        <a href="#" onClick={ noEvent } ref={ main }
+                           tabIndex={ -1 } className={ css.main_content_link }/>
+                        { children }
+                    </div>
                 </main>
                 <div
                     className={ classNames(css.closeOverlay, { [css.closeOverlay_hidden]: !open }) }
