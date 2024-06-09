@@ -22,14 +22,15 @@ import {
 import {
     removeFriend,
 } from '@/app/redux/slices/friends/thunks/removeFriend/removeFriend.ts';
+import { logout } from '@/app/redux/slices/auth/thunks/logout/logout.ts';
 
 
 const initialState: FriendsSchema = {
-    requestsIn : [],
-    requestsOut: [],
-    friends    : [],
-    isPending  : false,
-    error      : null,
+    requestsReceived: [],
+    requestsSent    : [],
+    friends         : [],
+    isPending       : false,
+    error           : null,
 };
 
 export const friendsSlice = createSlice({
@@ -44,31 +45,31 @@ export const friendsSlice = createSlice({
         removeFriend (state, action: PayloadAction<string>) {
             state.friends = state.friends.filter((friend) => friend.id !== action.payload);
         },
-        addFriendRequestIn (state, action: PayloadAction<DomainFriendRequest>) {
-            if (state.requestsIn.every((request) => request.requestId !== action.payload.requestId)) {
-                state.requestsIn.push(action.payload);
+        addFriendRequestSent (state, action: PayloadAction<DomainFriendRequest>) {
+            if (state.requestsSent.every((request) => request.requestId !== action.payload.requestId)) {
+                state.requestsSent.push(action.payload);
             }
         },
-        addFriendRequestOut (state, action: PayloadAction<DomainFriendRequest>) {
-            if (state.requestsOut.every((request) => request.requestId !== action.payload.requestId)) {
-                state.requestsOut.push(action.payload);
+        addFriendRequestReceived (state, action: PayloadAction<DomainFriendRequest>) {
+            if (state.requestsReceived.every((request) => request.requestId !== action.payload.requestId)) {
+                state.requestsReceived.push(action.payload);
             }
         },
-        removeFriendRequestIn (state, action: PayloadAction<string>) {
-            state.requestsIn = state.requestsIn.filter((request) => request.requestId !== action.payload);
+        removeFriendRequestSent (state, action: PayloadAction<string>) {
+            state.requestsSent = state.requestsSent.filter((request) => request.requestId !== action.payload);
         },
-        removeFriendRequestOut (state, action: PayloadAction<string>) {
-            state.requestsOut = state.requestsOut.filter((request) => request.requestId !== action.payload);
+        removeFriendRequestReceived (state, action: PayloadAction<string>) {
+            state.requestsReceived = state.requestsReceived.filter((request) => request.requestId !== action.payload);
         },
     },
     extraReducers: (builder) => {
         // getFriendsWithRequestsForUser
         builder.addCase(getFriendsWithRequestsForUser.fulfilled, (state, action) => {
-            state.isPending   = false;
-            state.error       = null;
-            state.friends     = action.payload.friends.filter(isDomainUser);
-            state.requestsOut = action.payload.requestsOut.filter(isDomainFriendRequest);
-            state.requestsIn  = action.payload.requestsIn.filter(isDomainFriendRequest);
+            state.isPending        = false;
+            state.error            = null;
+            state.friends          = action.payload.friends.filter(isDomainUser);
+            state.requestsSent     = action.payload.requestsOut.filter(isDomainFriendRequest);
+            state.requestsReceived = action.payload.requestsIn.filter(isDomainFriendRequest);
         });
         builder.addCase(getFriendsWithRequestsForUser.pending, (state) => {
             state.isPending = true;
@@ -84,7 +85,7 @@ export const friendsSlice = createSlice({
         builder.addCase(createFriendRequestForUser.fulfilled, (state, action) => {
             state.isPending = false;
             state.error     = null;
-            state.requestsOut.push(action.payload);
+            state.requestsSent.push(action.payload);
         });
         builder.addCase(createFriendRequestForUser.pending, (state) => {
             state.isPending = true;
@@ -98,9 +99,9 @@ export const friendsSlice = createSlice({
 
         // acceptFriendRequest
         builder.addCase(acceptFriendRequest.fulfilled, (state, action) => {
-            state.isPending  = false;
-            state.error      = null;
-            state.requestsIn = state.requestsIn.filter((request) => request.requestId !== action.payload.requestId);
+            state.isPending        = false;
+            state.error            = null;
+            state.requestsReceived = state.requestsReceived.filter((request) => request.requestId !== action.payload.requestId);
 
             if (state.friends.every((user) => user.id !== action.payload.user.id)) {
                 state.friends.push(action.payload.user);
@@ -118,10 +119,10 @@ export const friendsSlice = createSlice({
 
         // cancelFriendRequest
         builder.addCase(cancelFriendRequest.fulfilled, (state, action) => {
-            state.isPending   = false;
-            state.error       = null;
-            state.requestsOut = state.requestsOut.filter((request) => request.requestId !== action.payload.requestId);
-            state.requestsIn  = state.requestsIn.filter((request) => request.requestId !== action.payload.requestId);
+            state.isPending        = false;
+            state.error            = null;
+            state.requestsSent     = state.requestsSent.filter((request) => request.requestId !== action.payload.requestId);
+            state.requestsReceived = state.requestsReceived.filter((request) => request.requestId !== action.payload.requestId);
         });
         builder.addCase(cancelFriendRequest.pending, (state) => {
             state.isPending = true;
@@ -146,6 +147,14 @@ export const friendsSlice = createSlice({
         builder.addCase(removeFriend.rejected, (state, action) => {
             state.isPending = false;
             state.error     = action.payload;
+        });
+
+        builder.addCase(logout.fulfilled, (state) => {
+            state.requestsReceived = [];
+            state.requestsSent     = [];
+            state.friends          = [];
+            state.error            = null;
+            state.isPending        = false;
         });
     },
 });

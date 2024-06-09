@@ -55,20 +55,9 @@ export const authSlice = createSlice({
         });
 
         // logout
-        // authByTokens
         builder.addCase(logout.fulfilled, (state) => {
             state.isPending = false;
             state.error     = null;
-            state.user      = null;
-        });
-        builder.addCase(logout.pending, (state) => {
-            state.isPending = true;
-            state.error     = null;
-            state.user      = null;
-        });
-        builder.addCase(logout.rejected, (state, action) => {
-            state.isPending = false;
-            state.error     = action.payload;
             state.user      = null;
         });
     },

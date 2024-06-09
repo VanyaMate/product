@@ -69,8 +69,12 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
                     { ...inert(open) }
                 >
                     <div className={ css.main_content }>
-                        <a href="#" onClick={ noEvent } ref={ main }
-                           tabIndex={ -1 } className={ css.main_content_link }/>
+                        <a className={ css.main_content_link }
+                           href="#"
+                           onClick={ noEvent }
+                           ref={ main }
+                           tabIndex={ -1 }
+                        />
                         { children }
                     </div>
                 </main>

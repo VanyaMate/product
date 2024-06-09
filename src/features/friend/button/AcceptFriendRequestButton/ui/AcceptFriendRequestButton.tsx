@@ -29,7 +29,7 @@ export const AcceptFriendRequestButton: FC<AcceptFriendRequestButtonProps> = mem
             className={ className }
             onClick={ () => dispatch(acceptFriendRequest(requestId)) }
             quad
-            styleType={ ButtonStyleType.PRIMARY }
+            styleType={ ButtonStyleType.SECOND }
         >
             <IoPersonAdd/>
         </ButtonWithLoading>

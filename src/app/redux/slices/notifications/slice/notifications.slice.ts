@@ -6,6 +6,7 @@ import {
     DomainNotification,
     DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
+import { logout } from '@/app/redux/slices/auth/thunks/logout/logout.ts';
 
 
 const initialState: NotificationsSchema = {
@@ -105,14 +106,22 @@ const initialState: NotificationsSchema = {
 };
 
 export const notificationsSlice = createSlice({
-    name        : 'notifications',
-    initialState: initialState,
-    reducers    : {
+    name         : 'notifications',
+    initialState : initialState,
+    reducers     : {
         addNotification (state, action: PayloadAction<DomainNotification>) {
             if (state.notifications.every((notification) => notification.id !== action.payload.id)) {
                 state.notifications.push(action.payload);
             }
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(logout.fulfilled, (state) => {
+            state.notifications = [];
+            state.settings      = null;
+            state.error         = null;
+            state.isPending     = false;
+        });
     },
 });
 

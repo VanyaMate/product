@@ -6,8 +6,8 @@ import {
 } from '@/entities/user/item/UserPreviewItem/ui/UserPreviewItem.tsx';
 import { DomainUser } from 'product-types/dist/user/DomainUser';
 import {
-    AddToFriendButton,
-} from '@/features/friend/button/AddToFriendButton/ui/AddToFriendButton.tsx';
+    CompositeAddFriendButton,
+} from '@/features/friend/button/CompositeAddFriendButton/ui/CompositeAddFriendButton.tsx';
 
 
 export type UserSearchItemProps =
@@ -25,7 +25,7 @@ export const UserSearchItem: FC<UserSearchItemProps> = memo(function ProfileSear
             className={ classNames(css.container, {}, [ className ]) }
         >
             <UserPreviewItem user={ user }/>
-            <AddToFriendButton userId={ user.id }/>
+            <CompositeAddFriendButton userId={ user.id }/>
         </article>
     );
 });

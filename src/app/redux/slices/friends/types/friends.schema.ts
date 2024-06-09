@@ -9,6 +9,6 @@ export type FriendsSchema =
     ThunkState &
     {
         friends: DomainUser[];
-        requestsIn: DomainFriendRequest[];
-        requestsOut: DomainFriendRequest[];
+        requestsReceived: DomainFriendRequest[];
+        requestsSent: DomainFriendRequest[];
     }

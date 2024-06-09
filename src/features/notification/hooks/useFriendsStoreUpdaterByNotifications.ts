@@ -48,7 +48,7 @@ export const useFriendsStoreUpdaterByNotifications = function () {
             const onFriendRequestIn: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestData(notification.data)) {
-                        dispatch(friendsActions.addFriendRequestOut(notification.data));
+                        dispatch(friendsActions.addFriendRequestReceived(notification.data));
                     }
                 });
             };
@@ -56,7 +56,7 @@ export const useFriendsStoreUpdaterByNotifications = function () {
             const onFriendRequestOut: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestData(notification.data)) {
-                        dispatch(friendsActions.addFriendRequestIn(notification.data));
+                        dispatch(friendsActions.addFriendRequestSent(notification.data));
                     }
                 });
             };
@@ -64,8 +64,8 @@ export const useFriendsStoreUpdaterByNotifications = function () {
             const onFriendRequestCanceledIn: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestCanceledData(notification.data)) {
-                        dispatch(friendsActions.removeFriendRequestIn(notification.data.requestId));
-                        dispatch(friendsActions.removeFriendRequestOut(notification.data.requestId));
+                        dispatch(friendsActions.removeFriendRequestSent(notification.data.requestId));
+                        dispatch(friendsActions.removeFriendRequestReceived(notification.data.requestId));
                     }
                 });
             };
@@ -73,8 +73,8 @@ export const useFriendsStoreUpdaterByNotifications = function () {
             const onFriendRequestCanceledOut: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestCanceledData(notification.data)) {
-                        dispatch(friendsActions.removeFriendRequestIn(notification.data.requestId));
-                        dispatch(friendsActions.removeFriendRequestOut(notification.data.requestId));
+                        dispatch(friendsActions.removeFriendRequestSent(notification.data.requestId));
+                        dispatch(friendsActions.removeFriendRequestReceived(notification.data.requestId));
                     }
                 });
             };
@@ -83,8 +83,8 @@ export const useFriendsStoreUpdaterByNotifications = function () {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestAcceptedData(notification.data)) {
                         dispatch(friendsActions.addFriend(notification.data.user));
-                        dispatch(friendsActions.removeFriendRequestIn(notification.data.requestId));
-                        dispatch(friendsActions.removeFriendRequestOut(notification.data.requestId));
+                        dispatch(friendsActions.removeFriendRequestSent(notification.data.requestId));
+                        dispatch(friendsActions.removeFriendRequestReceived(notification.data.requestId));
                     }
                 });
             };
@@ -93,8 +93,8 @@ export const useFriendsStoreUpdaterByNotifications = function () {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestAcceptedData(notification.data)) {
                         dispatch(friendsActions.addFriend(notification.data.user));
-                        dispatch(friendsActions.removeFriendRequestIn(notification.data.requestId));
-                        dispatch(friendsActions.removeFriendRequestOut(notification.data.requestId));
+                        dispatch(friendsActions.removeFriendRequestSent(notification.data.requestId));
+                        dispatch(friendsActions.removeFriendRequestReceived(notification.data.requestId));
                     }
                 });
             };

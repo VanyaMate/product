@@ -7,6 +7,7 @@ import { isDomainUser } from 'product-types/dist/user/DomainUser';
 import {
     fetchSearchUsersByLoginStart,
 } from '@/app/redux/slices/searchUsers/thunks/fetchProfilesByLoginStart.ts';
+import { logout } from '@/app/redux/slices/auth/thunks/logout/logout.ts';
 
 
 const initialState: SearchUsersSchema = {
@@ -56,6 +57,13 @@ export const searchUsersSchema = createSlice({
             state.error     = action.payload;
             state.users     = [];
             state.count     = 0;
+        });
+
+        builder.addCase(logout.fulfilled, (state) => {
+            state.users  = [];
+            state.count  = 0;
+            state.error  = null;
+            state.offset = 0;
         });
     },
 });

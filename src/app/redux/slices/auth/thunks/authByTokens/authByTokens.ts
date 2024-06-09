@@ -16,7 +16,6 @@ import { toast } from 'sonner';
 import { i18nConfig } from '@/app/i18n/config/i18n.ts';
 import {
     LOCAL_STORAGE_USER_ACCESS_TOKEN,
-    LOCAL_STORAGE_USER_DATA,
 } from '@/app/redux/slices/user/consts/storage.const.ts';
 
 
@@ -40,7 +39,6 @@ export const authByTokens = createAsyncThunk<DomainUser, null, AuthThunkApiConfi
                 })
                 .then((data: unknown) => {
                     assertDomainUser(data, 'data', 'DomainUser');
-                    localStorage.setItem(LOCAL_STORAGE_USER_DATA, JSON.stringify(data));
                     toast(i18nConfig.t('auth_success_title'), { duration: 3000 });
                     return data;
                 });

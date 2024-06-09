@@ -43,12 +43,12 @@ export const FriendRequestsInDetails: FC<FriendRequestsInDetailsProps> = memo(fu
     return (
         <Details>
             <DetailsTitle>
-                { t('requests_in_list_title') } ({ friends.requestsIn.length })
+                { t('requests_in_list_title') } ({ friends.requestsReceived.length })
             </DetailsTitle>
             <DetailsBody>
                 <Col>
                     {
-                        friends.requestsIn.map((request) => (
+                        friends.requestsReceived.map((request) => (
                             <UserPreviewItem
                                 key={ request.requestId }
                                 user={ request.user }

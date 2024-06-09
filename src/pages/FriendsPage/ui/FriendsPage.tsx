@@ -14,8 +14,8 @@ import {
 } from '@/widgets/friends/details/FriendRequestsInDetails/ui/FriendRequestsInDetails.tsx';
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import {
-    useFriendsStoreUpdaterByNotifications,
-} from '@/features/notification/hooks/useFriendsStoreUpdaterByNotifications.ts';
+    getFriendsState,
+} from '@/app/redux/slices/friends/selectors/getFriendsState/getFriendsState.ts';
 
 
 export type FriendsPageProps =
@@ -24,9 +24,7 @@ export type FriendsPageProps =
 
 export const FriendsPage: FC<FriendsPageProps> = memo(function FriendsPage (props) {
     const { className, ...other } = props;
-    const friends                 = useAppSelector((state) => state.friends);
-
-    useFriendsStoreUpdaterByNotifications();
+    const friends                 = useAppSelector(getFriendsState);
 
     if (!friends) {
         return <PageLoader/>;
@@ -44,9 +42,9 @@ export const FriendsPage: FC<FriendsPageProps> = memo(function FriendsPage (prop
             {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>friends: { friends.friends.length }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>requestsIn: { friends.requestsIn.length }</p>
+            <p>requestsIn: { friends.requestsReceived.length }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>requestsOut: { friends.requestsOut.length }</p>
+            <p>requestsOut: { friends.requestsSent.length }</p>
 
             <Col>
                 <FriendRequestsInDetails/>
