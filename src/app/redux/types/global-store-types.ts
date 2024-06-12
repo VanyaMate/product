@@ -11,6 +11,9 @@ import {
 import {
     NotificationsSchema,
 } from '@/app/redux/slices/notifications/types/notifications.schema.ts';
+import {
+    PrivateDialoguesSchema,
+} from '@/app/redux/slices/private-dialogues/types/private-dialogues.schema.ts';
 
 
 export type GlobalStoreSchema =
@@ -22,6 +25,7 @@ export type GlobalStoreSchema =
         searchUsers?: SearchUsersSchema;
         friends?: FriendsSchema;
         notifications?: NotificationsSchema;
+        dialogues?: PrivateDialoguesSchema;
     };
 
 export type GlobalStoreKeys = keyof GlobalStoreSchema;

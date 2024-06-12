@@ -75,15 +75,15 @@ export class NotificationController implements INotificationController {
     }
 
     subscribe (on: DomainNotificationType, callback: NotificationNotificatorCallback): void {
-        this._handlers[on].push(callback);
+        this._handlers[on]?.push(callback);
     }
 
     unsubscribe (on: DomainNotificationType, callback: NotificationNotificatorCallback): void {
-        this._handlers[on] = this._handlers[on].filter((_callback) => _callback !== callback);
+        this._handlers[on] = this._handlers[on]?.filter((_callback) => _callback !== callback) ?? [];
     }
 
     private _emitEvent (event: DomainNotificationType, events: DomainNotification[]): void {
-        this._handlers[event].forEach((callback) => callback(events));
+        this._handlers[event]?.forEach((callback) => callback(events));
     }
 
     private _connectorConnectingHandler () {

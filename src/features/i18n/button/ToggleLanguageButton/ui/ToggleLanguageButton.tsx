@@ -2,6 +2,7 @@ import { FC, memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoLanguage } from 'react-icons/io5';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 
 
 export type ToggleLanguageButtonProps = {};
@@ -20,6 +21,7 @@ export const ToggleLanguageButton: FC<ToggleLanguageButtonProps> = memo(function
             aria-label={ t('toggle_language_aria_button') }
             onClick={ toggleLanguage }
             quad
+            styleType={ ButtonStyleType.GHOST }
         >
             <IoLanguage/>
         </Button>

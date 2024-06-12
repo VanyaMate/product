@@ -15,8 +15,8 @@ export type ButtonWithLoadingProps =
     & Omit<ButtonProps, 'onClick'>;
 
 export const ButtonWithLoading: FC<ButtonWithLoadingProps> = memo(function ButtonWithLoading (props) {
-    const { className, children, quad, onClick, ...other } = props;
-    const [ pending, setPending ]                          = useState<boolean>(false);
+    const { className, children, quad, onClick, disabled, ...other } = props;
+    const [ pending, setPending ]                                    = useState<boolean>(false);
 
     const onClickHandler = function () {
         setPending(true);
@@ -27,7 +27,7 @@ export const ButtonWithLoading: FC<ButtonWithLoadingProps> = memo(function Butto
         <Button
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
-            disabled={ pending }
+            disabled={ disabled || pending }
             onClick={ onClickHandler }
             quad={ quad }
         >

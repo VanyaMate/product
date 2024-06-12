@@ -41,19 +41,11 @@ export const useFriendsStoreUpdaterByNotifications = function () {
 
     useEffect(() => {
         dispatch(getFriendsWithRequestsForUser());
-    }, [dispatch]);
+    }, [ dispatch ]);
 
     useEffect(() => {
         if (friends) {
             const onFriendRequestIn: NotificationNotificatorCallback = (notifications) => {
-                notifications.forEach((notification) => {
-                    if (isDomainNotificationFriendRequestData(notification.data)) {
-                        dispatch(friendsActions.addFriendRequestReceived(notification.data));
-                    }
-                });
-            };
-
-            const onFriendRequestOut: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestData(notification.data)) {
                         dispatch(friendsActions.addFriendRequestSent(notification.data));
@@ -61,11 +53,19 @@ export const useFriendsStoreUpdaterByNotifications = function () {
                 });
             };
 
+            const onFriendRequestOut: NotificationNotificatorCallback = (notifications) => {
+                notifications.forEach((notification) => {
+                    if (isDomainNotificationFriendRequestData(notification.data)) {
+                        dispatch(friendsActions.addFriendRequestReceived(notification.data));
+                    }
+                });
+            };
+
             const onFriendRequestCanceledIn: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestCanceledData(notification.data)) {
-                        dispatch(friendsActions.removeFriendRequestSent(notification.data.requestId));
                         dispatch(friendsActions.removeFriendRequestReceived(notification.data.requestId));
+                        dispatch(friendsActions.removeFriendRequestSent(notification.data.requestId));
                     }
                 });
             };

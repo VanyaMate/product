@@ -53,10 +53,9 @@ $side-width-open : 400px;
         position   : relative;
 
         &_content {
-            margin    : auto;
-            width     : 100%;
-            height    : 100%;
-            max-width : 800px;
+            margin : auto;
+            width  : 100%;
+            height : 100%;
 
             &_link:focus {
                 outline : none;

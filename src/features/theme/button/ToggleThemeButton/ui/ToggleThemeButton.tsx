@@ -19,7 +19,7 @@ export const ToggleThemeButton: FC<ToggleThemeButtonProps> = memo(function Toggl
             aria-label={ t('toggle_theme_aria_button') }
             onClick={ toggleTheme }
             quad
-            styleType={ ButtonStyleType.PRIMARY }
+            styleType={ ButtonStyleType.GHOST }
         >
             {
                 theme === Theme.DARK ? <IoMdMoon/> : <IoMdSunny/>
