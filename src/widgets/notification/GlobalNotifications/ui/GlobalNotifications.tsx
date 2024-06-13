@@ -50,6 +50,7 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
         notification.subscribe(DomainNotificationType.CONNECTED, onMessage);
         notification.subscribe(DomainNotificationType.CONNECTING, onMessage);
         notification.subscribe(DomainNotificationType.DISCONNECTED, onMessage);
+
         notification.subscribe(DomainNotificationType.FRIEND_REQUEST_IN, onMessageWithSound);
         notification.subscribe(DomainNotificationType.FRIEND_REQUEST_OUT, onMessageWithSound);
         notification.subscribe(DomainNotificationType.FRIEND_DELETED_IN, onMessageWithSound);
@@ -58,6 +59,7 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
         notification.subscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED_OUT, onMessageWithSound);
         notification.subscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED_IN, onMessageWithSound);
         notification.subscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED_OUT, onMessageWithSound);
+
         notification.subscribe(DomainNotificationType.USER_MESSAGE_IN, onMessageWithSound);
         notification.subscribe(DomainNotificationType.USER_MESSAGE_OUT, onMessageWithSound);
         notification.subscribe(DomainNotificationType.USER_MESSAGE_READ_IN, onMessageWithSound);
@@ -66,12 +68,17 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
         notification.subscribe(DomainNotificationType.USER_MESSAGE_DELETED_OUT, onMessageWithSound);
         notification.subscribe(DomainNotificationType.USER_MESSAGE_REDACTED_IN, onMessageWithSound);
         notification.subscribe(DomainNotificationType.USER_MESSAGE_REDACTED_OUT, onMessageWithSound);
+
+        notification.subscribe(DomainNotificationType.PRIVATE_MESSAGE_OUT, onMessageWithSound);
+        notification.subscribe(DomainNotificationType.PRIVATE_MESSAGE_IN, onMessageWithSound);
+
         return () => {
             notification.unsubscribe(DomainNotificationType.ERROR, onMessage);
             notification.unsubscribe(DomainNotificationType.UNKNOWN, onMessage);
             notification.unsubscribe(DomainNotificationType.CONNECTED, onMessage);
             notification.unsubscribe(DomainNotificationType.CONNECTING, onMessage);
             notification.unsubscribe(DomainNotificationType.DISCONNECTED, onMessage);
+
             notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_IN, onMessageWithSound);
             notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_OUT, onMessageWithSound);
             notification.unsubscribe(DomainNotificationType.FRIEND_DELETED_IN, onMessageWithSound);
@@ -80,6 +87,7 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
             notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_ACCEPTED_OUT, onMessageWithSound);
             notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED_IN, onMessageWithSound);
             notification.unsubscribe(DomainNotificationType.FRIEND_REQUEST_CANCELED_OUT, onMessageWithSound);
+
             notification.unsubscribe(DomainNotificationType.USER_MESSAGE_IN, onMessageWithSound);
             notification.unsubscribe(DomainNotificationType.USER_MESSAGE_OUT, onMessageWithSound);
             notification.unsubscribe(DomainNotificationType.USER_MESSAGE_READ_IN, onMessageWithSound);
@@ -88,6 +96,9 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
             notification.unsubscribe(DomainNotificationType.USER_MESSAGE_DELETED_OUT, onMessageWithSound);
             notification.unsubscribe(DomainNotificationType.USER_MESSAGE_REDACTED_IN, onMessageWithSound);
             notification.unsubscribe(DomainNotificationType.USER_MESSAGE_REDACTED_OUT, onMessageWithSound);
+
+            notification.unsubscribe(DomainNotificationType.PRIVATE_MESSAGE_OUT, onMessageWithSound);
+            notification.unsubscribe(DomainNotificationType.PRIVATE_MESSAGE_IN, onMessageWithSound);
         };
     }, [ notification ]);
 

@@ -12,91 +12,211 @@ import { logout } from '@/app/redux/slices/auth/thunks/logout/logout.ts';
 const initialState: NotificationsSchema = {
     notifications: [],
     settings     : {
-        [DomainNotificationType.ERROR]                      : {
+        [DomainNotificationType.ERROR]                          : {
             sound: false,
             mark : false,
         },
-        [DomainNotificationType.UNKNOWN]                    : {
+        [DomainNotificationType.UNKNOWN]                        : {
             sound: false,
             mark : false,
         },
-        [DomainNotificationType.CONNECTED]                  : {
+        [DomainNotificationType.CONNECTED]                      : {
             sound: false,
             mark : false,
         },
-        [DomainNotificationType.CONNECTING]                 : {
+        [DomainNotificationType.CONNECTING]                     : {
             sound: false,
             mark : false,
         },
-        [DomainNotificationType.DISCONNECTED]               : {
+        [DomainNotificationType.DISCONNECTED]                   : {
             sound: false,
             mark : false,
         },
-        [DomainNotificationType.TOKENS_UPDATE]              : {
+        [DomainNotificationType.TOKENS_UPDATE]                  : {
             sound: false,
             mark : false,
         },
-        [DomainNotificationType.USER_MESSAGE_IN]            : {
+        [DomainNotificationType.USER_MESSAGE_IN]                : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.USER_MESSAGE_OUT]           : {
+        [DomainNotificationType.USER_MESSAGE_OUT]               : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.USER_MESSAGE_DELETED_IN]    : {
+        [DomainNotificationType.USER_MESSAGE_DELETED_IN]        : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.USER_MESSAGE_DELETED_OUT]   : {
+        [DomainNotificationType.USER_MESSAGE_DELETED_OUT]       : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.USER_MESSAGE_REDACTED_IN]   : {
+        [DomainNotificationType.USER_MESSAGE_REDACTED_IN]       : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.USER_MESSAGE_REDACTED_OUT]  : {
+        [DomainNotificationType.USER_MESSAGE_REDACTED_OUT]      : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.USER_MESSAGE_READ_IN]       : {
+        [DomainNotificationType.USER_MESSAGE_READ_IN]           : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.USER_MESSAGE_READ_OUT]      : {
+        [DomainNotificationType.USER_MESSAGE_READ_OUT]          : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.FRIEND_REQUEST_IN]          : {
+        [DomainNotificationType.FRIEND_REQUEST_IN]              : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.FRIEND_REQUEST_OUT]         : {
+        [DomainNotificationType.FRIEND_REQUEST_OUT]             : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.FRIEND_DELETED_IN]          : {
+        [DomainNotificationType.FRIEND_DELETED_IN]              : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.FRIEND_DELETED_OUT]         : {
+        [DomainNotificationType.FRIEND_DELETED_OUT]             : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.FRIEND_REQUEST_ACCEPTED_IN] : {
+        [DomainNotificationType.FRIEND_REQUEST_ACCEPTED_IN]     : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.FRIEND_REQUEST_ACCEPTED_OUT]: {
+        [DomainNotificationType.FRIEND_REQUEST_ACCEPTED_OUT]    : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.FRIEND_REQUEST_CANCELED_IN] : {
+        [DomainNotificationType.FRIEND_REQUEST_CANCELED_IN]     : {
             sound: true,
             mark : true,
         },
-        [DomainNotificationType.FRIEND_REQUEST_CANCELED_OUT]: {
+        [DomainNotificationType.FRIEND_REQUEST_CANCELED_OUT]    : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_MESSAGE_IN]             : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_MESSAGE_OUT]            : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_MESSAGE_DELETED_IN]     : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_MESSAGE_DELETED_OUT]    : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_MESSAGE_REDACTED_IN]    : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_MESSAGE_REDACTED_OUT]   : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_MESSAGE_READ_IN]        : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_MESSAGE_READ_OUT]       : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_MESSAGE_READ_ALL_IN]    : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_MESSAGE_READ_ALL_OUT]   : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.DIALOGUE_CREATED_IN]            : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.DIALOGUE_CREATED_OUT]           : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.DIALOGUE_UPDATED_IN]            : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.DIALOGUE_UPDATED_OUT]           : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.DIALOGUE_DELETED_IN]            : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.DIALOGUE_DELETED_OUT]           : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.DIALOGUE_ARCHIVED_IN]           : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.DIALOGUE_ARCHIVED_OUT]          : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_DIALOGUE_CREATED_IN]    : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_DIALOGUE_CREATED_OUT]   : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_DIALOGUE_UPDATED_IN]    : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_DIALOGUE_UPDATED_OUT]   : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_DIALOGUE_DELETED_IN]    : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_DIALOGUE_DELETED_OUT]   : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_DIALOGUE_UNDELETED_IN]  : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_DIALOGUE_UNDELETED_OUT] : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_DIALOGUE_ARCHIVED_IN]   : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_DIALOGUE_ARCHIVED_OUT]  : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_DIALOGUE_UNARCHIVED_IN] : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.PRIVATE_DIALOGUE_UNARCHIVED_OUT]: {
             sound: true,
             mark : true,
         },

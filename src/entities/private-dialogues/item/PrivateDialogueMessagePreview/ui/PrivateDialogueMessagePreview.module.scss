@@ -1,0 +1,25 @@
+.container {
+    display     : flex;
+    align-items : end;
+    gap         : var(--offset-small);
+    overflow    : hidden;
+
+    .sender {
+        font-size : var(--font-size-m);
+        color     : var(--primary-color);
+    }
+
+    .text {
+        font-size          : var(--font-size-m);
+        color              : var(--ghost-color);
+        display            : -webkit-box;
+        -webkit-box-orient : vertical;
+        -webkit-line-clamp : 1;
+        overflow           : hidden;
+    }
+
+    .empty {
+        font-size : var(--font-size-m);
+        color     : var(--ghost-color);
+    }
+}

@@ -5,47 +5,57 @@ import {
     DomainPrivateDialogueFull,
 } from 'product-types/dist/private-dialogue/DomainPrivateDialogueFull';
 import { ThunkState } from '@/app/redux/types/thunkError.ts';
-import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
-import { Image } from '@/shared/ui-kit/image/Image/ui/Image.tsx';
-import { FakeAvatar } from '@/shared/ui-kit/icons/FakeAvatar/ui/FakeAvatar.tsx';
-import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
+import {
+    PrivateDialogueIcon,
+} from '@/entities/private-dialogues/icon/PrivateDialogueIcon/ui/PrivateDialogueIcon.tsx';
+import { IoArchive, IoTrashBin } from 'react-icons/io5';
+import {
+    PrivateDialogueMessagePreview,
+} from '@/entities/private-dialogues/item/PrivateDialogueMessagePreview/ui/PrivateDialogueMessagePreview.tsx';
 
 
 export type PrivateDialogueProps =
     {
         dialogue: DomainPrivateDialogueFull;
         status: ThunkState;
+        login: string;
     }
     & ComponentPropsWithoutRef<'article'>;
 
 export const PrivateDialogue: FC<PrivateDialogueProps> = memo(function PrivateDialogue (props) {
-    const { className, dialogue, status, ...other } = props;
+    const { className, dialogue, status, login, ...other } = props;
+
+    console.log(status);
 
     return (
         <article
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            <Row>
-                {
-                    (dialogue.avatar || dialogue.user.avatar)
-                    ? <Image alt=""
-                             className={ css.image }
-                             src={ dialogue.avatar || dialogue.user.avatar }
-                    />
-                    : <FakeAvatar
-                        className={ css.image }
-                        letter={ (dialogue.title || dialogue.user.login)[0] }
-                    />
-                }
-                <Col>
+            <PrivateDialogueIcon
+                className={ css.image }
+                dialogueAvatar={ dialogue.avatar }
+                dialogueTitle={ dialogue.title }
+                userAvatar={ dialogue.user.avatar }
+                userLogin={ dialogue.user.login }
+            />
+            <div className={ css.content }>
+                <header className={ css.header }>
                     <h3 className={ css.title }>{ dialogue.title || dialogue.user.login }</h3>
-                    <p className={ css.message }>{ dialogue.messages[0]?.message ?? 'No message' }</p>
-                </Col>
-                <span>
-                { status.isPending ? '[?]' : '[+]' }
-                </span>
-            </Row>
+                    <div className={ css.status }>
+                        { dialogue.companionArchived
+                          ? <IoArchive className={ css.item }/> : null }
+                        { dialogue.companionDeleted
+                          ? <IoTrashBin className={ css.item }/> : null }
+                        { dialogue.meArchived
+                          ? <IoArchive className={ css.item_me }/> : null }
+                    </div>
+                </header>
+                <PrivateDialogueMessagePreview
+                    login={ login }
+                    message={ dialogue.messages[dialogue.messages.length - 1] }
+                />
+            </div>
         </article>
     );
 });

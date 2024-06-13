@@ -18,12 +18,13 @@ export type NotificationShortItemIconProps =
 
 export const NotificationShortItemIcon: FC<NotificationShortItemIconProps> = memo(function NotificationShortItemIcon (props) {
     const { className, type, ...other } = props;
-    const Icon                          = NotificationIconByType[type].component;
+    const Icon                          = NotificationIconByType[type]?.component ?? NotificationIconByType[DomainNotificationType.UNKNOWN].component;
+    const additionalClassName           = NotificationIconByType[type]?.className ?? NotificationIconByType[DomainNotificationType.UNKNOWN].className;
 
     return (
         <Icon
             { ...other }
-            className={ classNames(css.container, {}, [ className, NotificationIconByType[type].className ]) }
+            className={ classNames(css.container, {}, [ className, additionalClassName ]) }
         />
     );
 });

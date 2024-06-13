@@ -1,7 +1,7 @@
 import {
     PrivateDialoguesSchema,
 } from '@/app/redux/slices/private-dialogues/types/private-dialogues.schema.ts';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     getListPrivateDialogues,
 } from '@/app/redux/slices/private-dialogues/thunks/getListPrivateDialogues/getListPrivateDialogues.ts';
@@ -17,6 +17,10 @@ import {
 import {
     removePrivateDialogue,
 } from '@/app/redux/slices/private-dialogues/thunks/removePrivateDialogue/removePrivateDialogue.ts';
+import {
+    DomainPrivateDialogueFull,
+} from 'product-types/dist/private-dialogue/DomainPrivateDialogueFull';
+import { DomainMessage } from 'product-types/dist/message/DomainMessage';
 
 
 /**
@@ -40,7 +44,26 @@ const initialState: PrivateDialoguesSchema = {
 export const privateDialogues = createSlice({
     name         : 'private-dialogues',
     initialState : initialState,
-    reducers     : {},
+    reducers     : {
+        addDialogue (state, action: PayloadAction<DomainPrivateDialogueFull>) {
+            state.dialogues.push(action.payload);
+            state.dialoguesStatus[action.payload.id] = {
+                isPending: false,
+                error    : null,
+            };
+            state.withUser[action.payload.user.id]   = {
+                isPending: false,
+                error    : null,
+                created  : true,
+            };
+        },
+        addMessageToDialogue (state, action: PayloadAction<DomainMessage>) {
+            const dialogue = state.dialogues.find((dialogue) => dialogue.id === action.payload.dialogueId);
+            if (dialogue) {
+                dialogue.messages.push(action.payload);
+            }
+        },
+    },
     extraReducers: (builder) => {
         // getListPrivateDialogues
         builder.addCase(getListPrivateDialogues.fulfilled, (state, action) => {
