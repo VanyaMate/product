@@ -10,6 +10,9 @@ import { FriendsPageAsync } from '@/pages/FriendsPage/ui/FriendsPage.async.tsx';
 import { SearchPageAsync } from '@/pages/SearchPage/ui/SearchPage.async.tsx';
 
 
+export const SITE_ROUTE_DIALOGUE_ID = 'dialogueId';
+export const SITE_ROUTE_USER_LOGIN  = 'login';
+
 export enum SiteAppRoute {
     HOME      = 'home',
     ABOUT     = 'about',
@@ -25,10 +28,10 @@ export const SiteAppRoutePath: Record<SiteAppRoute, string> = {
     [SiteAppRoute.HOME]     : '/',
     [SiteAppRoute.FRIENDS]  : '/friends',
     [SiteAppRoute.SEARCH]   : '/search',
-    [SiteAppRoute.DIALOGUE] : '/dialogue/:dialogueId',
+    [SiteAppRoute.DIALOGUE] : `/dialogue/:${ SITE_ROUTE_DIALOGUE_ID }`,
     [SiteAppRoute.DIALOGUES]: '/dialogues',
     [SiteAppRoute.ABOUT]    : '/about',
-    [SiteAppRoute.USER]     : '/user/:login',
+    [SiteAppRoute.USER]     : `/user/:${ SITE_ROUTE_USER_LOGIN }`,
     [SiteAppRoute.NOT_FOUND]: '*',
 };
 
@@ -41,7 +44,7 @@ export const MainSiteRouteConfig: Record<SiteAppRoute, RouteProps> = {
         path   : SiteAppRoutePath[SiteAppRoute.ABOUT],
         element: <AboutPageAsync/>,
     },
-    [SiteAppRoute.USER]: {
+    [SiteAppRoute.USER]     : {
         path   : SiteAppRoutePath[SiteAppRoute.USER],
         element: <UserPageAsync/>,
     },

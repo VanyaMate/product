@@ -8,16 +8,24 @@ import { DomainUser } from 'product-types/dist/user/DomainUser';
 import {
     CompositeAddFriendButton,
 } from '@/features/friend/button/CompositeAddFriendButton/ui/CompositeAddFriendButton.tsx';
+import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
+import {
+    GoToPrivateDialogue,
+} from '@/features/private-dialogue/button/GoToPrivateDialogue/ui/GoToPrivateDialogue.tsx';
+import {
+    DomainUserPermissions,
+} from 'product-types/dist/user/DomainUserPermissions';
 
 
 export type UserSearchItemProps =
     {
         user: DomainUser;
+        permissions: DomainUserPermissions;
     }
     & ComponentPropsWithoutRef<'article'>;
 
 export const UserSearchItem: FC<UserSearchItemProps> = memo(function ProfileSearchItem (props) {
-    const { className, user, ...other } = props;
+    const { className, user, permissions, ...other } = props;
 
     return (
         <article
@@ -25,7 +33,13 @@ export const UserSearchItem: FC<UserSearchItemProps> = memo(function ProfileSear
             className={ classNames(css.container, {}, [ className ]) }
         >
             <UserPreviewItem user={ user }/>
-            <CompositeAddFriendButton userId={ user.id }/>
+            <Row>
+                <GoToPrivateDialogue
+                    permissions={ permissions.privateDialogue }
+                    userId={ user.id }
+                />
+                <CompositeAddFriendButton userId={ user.id }/>
+            </Row>
         </article>
     );
 });

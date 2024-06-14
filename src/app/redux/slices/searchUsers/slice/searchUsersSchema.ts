@@ -3,11 +3,13 @@ import {
     SearchUsersSchema,
 } from '@/app/redux/slices/searchUsers/types/types.ts';
 import { DomainSearchItem } from 'product-types/dist/search/DomainSearchItem';
-import { isDomainUser } from 'product-types/dist/user/DomainUser';
 import {
     fetchSearchUsersByLoginStart,
 } from '@/app/redux/slices/searchUsers/thunks/fetchProfilesByLoginStart.ts';
 import { logout } from '@/app/redux/slices/auth/thunks/logout/logout.ts';
+import {
+    isDomainUserWithPermissions,
+} from 'product-types/dist/user/DomainUserWithPermissions';
 
 
 const initialState: SearchUsersSchema = {
@@ -25,7 +27,7 @@ export const searchUsersSchema = createSlice({
     initialState : initialState,
     reducers     : {
         setData (state, action: PayloadAction<DomainSearchItem>) {
-            state.users = action.payload.list.filter(isDomainUser);
+            state.users = action.payload.list.filter(isDomainUserWithPermissions);
             state.count = action.payload.count;
         },
         setQuery (state, action: PayloadAction<string>) {
@@ -42,7 +44,7 @@ export const searchUsersSchema = createSlice({
         builder.addCase(fetchSearchUsersByLoginStart.fulfilled, (state, action) => {
             state.isPending = false;
             state.error     = null;
-            state.users     = action.payload.list.filter(isDomainUser);
+            state.users     = action.payload.list.filter(isDomainUserWithPermissions);
             state.count     = action.payload.count;
         });
         builder.addCase(fetchSearchUsersByLoginStart.pending, (state, action) => {

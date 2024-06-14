@@ -63,7 +63,11 @@ export const UsersSearchList: FC<UsersSearchListProps> = memo(function UsersSear
             <p>items: { searchUsers.users.length }</p>
             {
                 searchUsers.users.map((user) => (
-                    <UserSearchItem key={ user.id } user={ user }/>
+                    <UserSearchItem
+                        key={ user.id }
+                        permissions={ user.permissions }
+                        user={ user }
+                    />
                 ))
             }
         </section>

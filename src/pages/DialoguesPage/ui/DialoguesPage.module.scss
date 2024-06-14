@@ -1,0 +1,15 @@
+.container {
+    align-items : start;
+
+    .dialogues {
+        min-width : 400px;
+        max-width : 400px;
+        position  : sticky;
+        top       : 0;
+        height    : 100%;
+    }
+
+    .messages {
+        width : 100%;
+    }
+}

@@ -40,7 +40,7 @@
     }
 
     &.ghost {
-        color : var(--ghost-color);
+        color : var(--text-second-color);
 
         &::selection {
             background : var(--ghost-color);

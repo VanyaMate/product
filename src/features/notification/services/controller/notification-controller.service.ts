@@ -175,7 +175,7 @@ export class NotificationController implements INotificationController {
             this._currentNotificationIndex            = messages.length;
 
             if (__IS_DEV__) {
-                console.log('NOTIFICATION: Message', notifications);
+                console.log('NOTIFICATION: MyMessage', notifications);
             }
 
             notifications.forEach(this._notificationHandler.bind(this));

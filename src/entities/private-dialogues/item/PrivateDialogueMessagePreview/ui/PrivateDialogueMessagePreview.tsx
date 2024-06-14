@@ -8,19 +8,20 @@ export type PrivateDialogueMessagePreviewProps =
     {
         message: DomainMessage;
         login: string;
+        selected: boolean;
     }
     & ComponentPropsWithoutRef<'div'>;
 
 export const PrivateDialogueMessagePreview: FC<PrivateDialogueMessagePreviewProps> = memo(function PrivateDialogueMessagePreview (props) {
-    const { className, message, login, ...other } = props;
+    const { className, message, login, selected, ...other } = props;
 
     if (!message) {
         return (
             <div
                 { ...other }
-                className={ classNames(css.container, {}, [ className ]) }
+                className={ classNames(css.container, { [css.selected]: selected }, [ className ]) }
             >
-                {/* eslint-disable-next-line i18next/no-literal-string */}
+                {/* eslint-disable-next-line i18next/no-literal-string */ }
                 <span className={ css.empty }>Empty dialogue</span>
             </div>
         );
@@ -29,7 +30,7 @@ export const PrivateDialogueMessagePreview: FC<PrivateDialogueMessagePreviewProp
     return (
         <div
             { ...other }
-            className={ classNames(css.container, {}, [ className ]) }
+            className={ classNames(css.container, { [css.selected]: selected }, [ className ]) }
         >
             <span className={ css.sender }>
                 {

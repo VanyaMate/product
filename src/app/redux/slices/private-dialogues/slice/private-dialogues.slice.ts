@@ -141,20 +141,32 @@ export const privateDialogues = createSlice({
             };
         });
         builder.addCase(createPrivateDialogue.fulfilled, (state, action) => {
-            state.withUser[action.meta.arg]          = {
+            state.withUser[action.meta.arg]                   = {
                 isPending: false,
                 created  : true,
                 error    : null,
             };
-            state.dialoguesStatus[action.payload.id] = {
+            state.dialoguesStatus[action.payload.dialogue.id] = {
                 isPending: false,
                 error    : null,
             };
-            state.dialogues                          = [ ...state.dialogues.map((dialogue) =>
-                (dialogue.id === action.payload.id)
-                ? action.payload
-                : dialogue,
-            ) ];
+
+            let exist: boolean = false;
+            const dialogues    = state.dialogues.map((dialogue) => {
+                    if (dialogue.id === action.payload.dialogue.id) {
+                        exist = true;
+                        return action.payload.dialogue;
+                    } else {
+                        return dialogue;
+                    }
+                },
+            );
+
+            if (!exist) {
+                dialogues.push(action.payload.dialogue);
+            }
+
+            state.dialogues = dialogues;
         });
 
         // archivePrivateDialogue

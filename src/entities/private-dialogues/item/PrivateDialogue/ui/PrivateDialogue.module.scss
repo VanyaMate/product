@@ -1,7 +1,17 @@
 .container {
-    display     : flex;
-    gap         : var(--offset-small);
-    align-items : center;
+    .link {
+        display         : flex;
+        gap             : var(--offset-small);
+        align-items     : center;
+        text-decoration : none;
+        border-radius   : var(--offset-medium);
+        width           : 100%;
+        padding         : var(--offset-small);
+
+        &:hover {
+            background : var(--bg-ghost-color);
+        }
+    }
 
     .image {
         width           : 50px;
@@ -39,6 +49,30 @@
 
                     &_me {
                         color : var(--primary-color);
+                    }
+                }
+            }
+        }
+    }
+
+    &.selected {
+        .link {
+            background : var(--primary-color);
+        }
+
+        .content {
+            .header {
+                .title {
+                    color : var(--white);
+                }
+            }
+
+            .status {
+                .item {
+                    color : var(--light-gray);
+
+                    &_me {
+                        color : var(--white);
                     }
                 }
             }

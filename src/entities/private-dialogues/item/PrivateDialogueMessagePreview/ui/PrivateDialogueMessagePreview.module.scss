@@ -22,4 +22,14 @@
         font-size : var(--font-size-m);
         color     : var(--ghost-color);
     }
+
+    &.selected {
+        .sender {
+            color : var(--white);
+        }
+
+        .text, .empty {
+            color : var(--light-gray);
+        }
+    }
 }

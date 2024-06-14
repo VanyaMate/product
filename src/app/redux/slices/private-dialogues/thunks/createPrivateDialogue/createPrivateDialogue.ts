@@ -1,9 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
-    assertDomainPrivateDialogueFull,
-    DomainPrivateDialogueFull,
-} from 'product-types/dist/private-dialogue/DomainPrivateDialogueFull';
-import {
     DomainServiceResponseError,
 } from 'product-types/dist/error/DomainServiceResponseError';
 import { ThunkApiConfig } from '@/app/redux/types/global-store-thunk.ts';
@@ -11,9 +7,13 @@ import { thunkCatch } from '@/app/redux/catch/thunk-catch.ts';
 import {
     assertDomainResponse,
 } from 'product-types/dist/response/DomainResponse';
+import {
+    assertDomainNotificationPrivateDialogueCreateData,
+    DomainNotificationPrivateDialogueCreateData,
+} from 'product-types/dist/notification/notification-data-types/DomainNotificationPrivateDialogueCreateData';
 
 
-export const createPrivateDialogue = createAsyncThunk<DomainPrivateDialogueFull, string, ThunkApiConfig<DomainServiceResponseError>>(
+export const createPrivateDialogue = createAsyncThunk<DomainNotificationPrivateDialogueCreateData, string, ThunkApiConfig<DomainServiceResponseError>>(
     'private-dialogues/createPrivateDialogue',
     async (userId, thunkAPI) => {
         const { extra: { api }, rejectWithValue } = thunkAPI;
@@ -26,7 +26,7 @@ export const createPrivateDialogue = createAsyncThunk<DomainPrivateDialogueFull,
                     return data.data;
                 })
                 .then((data: unknown) => {
-                    assertDomainPrivateDialogueFull(data, 'data', 'DomainPrivateDialogueFull');
+                    assertDomainNotificationPrivateDialogueCreateData(data, 'data', 'DomainNotificationPrivateDialogueCreateData');
                     return data;
                 });
 
