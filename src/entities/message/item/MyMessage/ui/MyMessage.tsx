@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import 'dayjs/locale/ru.js';
 import {
-    UserAvatar
+    UserAvatar,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 
 
@@ -42,7 +42,8 @@ export const MyMessage: FC<MyMessageProps> = memo(function MyMessage (props) {
                         <h3 className={ css.login }>{ message.author.login }</h3>
                     </Link>
                     <div className={ css.info }>
-                        <time dateTime={ message.creationDate }>
+                        <time className={ css.date }
+                              dateTime={ message.creationDate }>
                             { dayJs.current.format('LLL') }
                         </time>
                         {

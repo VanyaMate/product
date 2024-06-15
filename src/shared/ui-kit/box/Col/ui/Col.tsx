@@ -1,4 +1,8 @@
-import { ComponentPropsWithoutRef, FC, memo } from 'react';
+import {
+    ComponentPropsWithoutRef,
+    FC,
+    memo,
+} from 'react';
 import classNames from 'classnames';
 import css from './Col.module.scss';
 

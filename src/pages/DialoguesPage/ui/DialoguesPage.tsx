@@ -21,7 +21,9 @@ import {
 } from '@/app/redux/slices/private-dialogues/thunks/getOnePrivateDialogues/getOnePrivateDialogues.ts';
 import classNames from 'classnames';
 import css from './DialoguesPage.module.scss';
-import { Message } from '@/entities/message/item/Message/ui/Message.tsx';
+import {
+    PrivateDialogueWindow,
+} from '@/widgets/private-dialogue/PrivateDialogueWindow/ui/PrivateDialogueWindow.tsx';
 
 
 export type DialoguesPageProps =
@@ -38,7 +40,9 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
     const dispatch                                 = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getOnePrivateDialogues(dialogueId));
+        if (dialogueId) {
+            dispatch(getOnePrivateDialogues(dialogueId));
+        }
     }, [ dialogueId, dispatch ]);
 
     if (!dialogues || dialogues.isPending) {
@@ -61,23 +65,7 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
                     ))
                 }
             </Col>
-            {
-                dialogueId ? <Col className={ css.messages }>
-                    {
-                        dialogues
-                            .dialogues
-                            .find((dialogue) => dialogue.id === dialogueId)
-                            .messages
-                            .map((message) =>
-                                <Message
-                                    key={ message.id }
-                                    message={ message }
-                                    userId={ userData.id }
-                                />,
-                            )
-                    }
-                </Col> : 'Select dialogue'
-            }
+            <PrivateDialogueWindow dialogueId={ dialogueId }/>
         </Row>
     );
 });

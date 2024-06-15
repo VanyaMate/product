@@ -1,0 +1,22 @@
+$header-height : 43px;
+$input-height  : 80px;
+
+.container {
+    height         : 100%;
+    width          : 100%;
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);
+
+    .header {
+        height : $header-height;
+    }
+
+    .messages {
+        height : calc(100% - $header-height - $input-height - var(--offset-small) * 2);
+    }
+
+    .input {
+        height : $input-height;
+    }
+}

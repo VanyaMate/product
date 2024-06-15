@@ -9,7 +9,7 @@ import { IoBuild } from 'react-icons/io5';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
-import 'dayjs/locale/ru.js'
+import 'dayjs/locale/ru.js';
 
 
 dayjs.extend(localizedFormat);
@@ -42,7 +42,8 @@ export const CompanionMessage: FC<CompanionMessageProps> = memo(function Compani
                         <h3 className={ css.login }>{ message.author.login }</h3>
                     </Link>
                     <div className={ css.info }>
-                        <time dateTime={ message.creationDate }>
+                        <time className={ css.date }
+                              dateTime={ message.creationDate }>
                             { dayJs.current.format('LLL') }
                         </time>
                         {

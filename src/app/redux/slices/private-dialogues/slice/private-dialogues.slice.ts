@@ -21,6 +21,9 @@ import {
     DomainPrivateDialogueFull,
 } from 'product-types/dist/private-dialogue/DomainPrivateDialogueFull';
 import { DomainMessage } from 'product-types/dist/message/DomainMessage';
+import {
+    sendPrivateMessage,
+} from '@/app/redux/slices/private-messages/thunks/sendPrivateMessage.ts';
 
 
 /**
@@ -38,6 +41,7 @@ const initialState: PrivateDialoguesSchema = {
     error          : null,
     dialogues      : [],
     dialoguesStatus: {},
+    dialogueSearch : {},
     withUser       : {},
 };
 
@@ -59,8 +63,10 @@ export const privateDialogues = createSlice({
         },
         addMessageToDialogue (state, action: PayloadAction<DomainMessage>) {
             const dialogue = state.dialogues.find((dialogue) => dialogue.id === action.payload.dialogueId);
-            if (dialogue) {
-                dialogue.messages.push(action.payload);
+            if (dialogue && !state.dialogueSearch[dialogue.id]) {
+                if (!dialogue.messages.some((message) => message.id === action.payload.id)) {
+                    dialogue.messages.push(action.payload);
+                }
             }
         },
     },
@@ -211,6 +217,15 @@ export const privateDialogues = createSlice({
             delete state.dialoguesStatus[action.payload.id];
             delete state.withUser[action.payload.user.id];
             state.dialogues = state.dialogues.filter((dialogue) => dialogue.id !== action.meta.arg);
+        });
+
+        builder.addCase(sendPrivateMessage.fulfilled, (state, action) => {
+            const dialogue = state.dialogues.find((dialogue) => dialogue.id === action.payload.dialogue.id);
+            if (dialogue && !state.dialogueSearch[dialogue.id]) {
+                if (!dialogue.messages.some((message) => message.id === action.payload.message.id)) {
+                    dialogue.messages.push(action.payload.message);
+                }
+            }
         });
     },
 });

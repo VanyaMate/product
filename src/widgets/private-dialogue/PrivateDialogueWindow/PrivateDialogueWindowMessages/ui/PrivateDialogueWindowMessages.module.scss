@@ -1,0 +1,10 @@
+.container {
+    overflow : auto;
+
+    .content {
+        display         : flex;
+        flex-direction  : column;
+        gap             : var(--offset-medium);
+        justify-content : end;
+    }
+}
