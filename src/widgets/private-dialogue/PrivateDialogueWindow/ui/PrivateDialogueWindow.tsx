@@ -10,6 +10,9 @@ import {
 import {
     PrivateDialogueWindowInput,
 } from '@/widgets/private-dialogue/PrivateDialogueWindow/PrivateDialogueWindowInput/PrivateDialogueWindowInput.tsx';
+import {
+    NoSelectDialogue,
+} from '@/entities/private-dialogues/NoSelectDialogue/ui/NoSelectDialogue.tsx';
 
 
 export type PrivateDialogueWindowProps =
@@ -20,6 +23,12 @@ export type PrivateDialogueWindowProps =
 
 export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(function PrivateDialogueWindow (props) {
     const { className, dialogueId, ...other } = props;
+
+    if (!dialogueId) {
+        return (
+            <NoSelectDialogue/>
+        );
+    }
 
     return (
         <div

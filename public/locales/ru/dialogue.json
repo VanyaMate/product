@@ -1,0 +1,11 @@
+{
+    "dialogue_not_selected": "Диалог не выбран",
+    "send_message": "Отправить сообщение",
+    "search_message": "Найти сообщения",
+    "empty_dialogue": "Пустой диалог",
+    "dialogue_me": "я",
+    "dialogue_archived_by_user": "Диалог заархивирован пользователем",
+    "dialogue_deleted_by_user": "Диалог удален пользователем",
+    "dialogue_archived_by_me": "Диалог заархивирован вами",
+    "dialogue_deleted_by_me": "Диалог удален вами"
+}

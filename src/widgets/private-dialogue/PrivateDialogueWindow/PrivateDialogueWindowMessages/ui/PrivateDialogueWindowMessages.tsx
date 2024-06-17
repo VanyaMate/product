@@ -29,10 +29,6 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
         }
     }, [ dialogueId, dialogues ]);
 
-    if (!dialogueId) {
-        return 'No selected dialogue';
-    }
-
     return (
         <div
             { ...other }

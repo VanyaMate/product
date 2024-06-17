@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './PrivateDialogueMessagePreview.module.scss';
 import { DomainMessage } from 'product-types/dist/message/DomainMessage';
+import { useTranslation } from 'react-i18next';
 
 
 export type PrivateDialogueMessagePreviewProps =
@@ -14,6 +15,7 @@ export type PrivateDialogueMessagePreviewProps =
 
 export const PrivateDialogueMessagePreview: FC<PrivateDialogueMessagePreviewProps> = memo(function PrivateDialogueMessagePreview (props) {
     const { className, message, login, selected, ...other } = props;
+    const { t }                                             = useTranslation([ 'dialogue' ]);
 
     if (!message) {
         return (
@@ -21,8 +23,7 @@ export const PrivateDialogueMessagePreview: FC<PrivateDialogueMessagePreviewProp
                 { ...other }
                 className={ classNames(css.container, { [css.selected]: selected }, [ className ]) }
             >
-                {/* eslint-disable-next-line i18next/no-literal-string */ }
-                <span className={ css.empty }>Empty dialogue</span>
+                <span className={ css.empty }>{ t('empty_dialogue') }</span>
             </div>
         );
     }
@@ -35,15 +36,11 @@ export const PrivateDialogueMessagePreview: FC<PrivateDialogueMessagePreviewProp
             <span className={ css.sender }>
                 {
                     message.author.login === login
-                    ? 'me:'
+                    ? `${ t('dialogue_me') }:`
                     : `${ message.author.login[0] }:`
                 }
             </span>
-            <span className={ css.text }>
-                {
-                    message.message
-                }
-            </span>
+            <span className={ css.text }>{ message.message }</span>
         </div>
     );
 });
