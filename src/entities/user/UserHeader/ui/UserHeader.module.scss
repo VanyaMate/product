@@ -1,0 +1,20 @@
+.container {
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-medium);
+    align-items    : center;
+
+    .avatar {
+        width           : 100px;
+        height          : 100px;
+        font-size       : var(--font-size-xxxl);
+        border-radius   : var(--offset-medium);
+        background      : var(--bg-main-color);
+        text-decoration : none;
+        font-weight     : 200;
+    }
+
+    .login {
+        font-size : var(--font-size-l);
+    }
+}

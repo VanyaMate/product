@@ -6,6 +6,7 @@ $side-width-open : 400px;
     position : relative;
     overflow : hidden;
     padding  : $header-height 0 0 $side-width;
+    display  : flex;
 
     .header {
         position    : fixed;
@@ -25,7 +26,7 @@ $side-width-open : 400px;
         }
     }
 
-    .sideMenu {
+    .leftSideMenu {
         position   : fixed;
         top        : $header-height;
         overflow   : hidden;
@@ -44,6 +45,26 @@ $side-width-open : 400px;
         }
     }
 
+    .rightSideMenu {
+        height     : calc(100dvh - $header-height);
+        background : var(--bg-second-color);
+        width      : 0;
+        min-width  : 0;
+        overflow   : hidden;
+        transition : var(--transition-medium);
+
+        &_open {
+            min-width : $side-width-open;
+            width     : $side-width-open;
+        }
+
+        .content {
+            padding   : var(--offset-small);
+            width     : 100%;
+            min-width : $side_width-open;
+        }
+    }
+
     .main {
         transition : var(--transition-medium);
         transform  : translateX(0);
@@ -51,6 +72,7 @@ $side-width-open : 400px;
         height     : calc(100dvh - $header-height);
         overflow   : auto;
         position   : relative;
+        width      : 100%;
 
         &_content {
             margin : auto;

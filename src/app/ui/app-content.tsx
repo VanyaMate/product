@@ -22,6 +22,9 @@ import { WelcomePage } from '@/pages/WelcomePage/ui/WelcomePage.tsx';
 import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
+import {
+    UserRightSideMenu,
+} from '@/widgets/user/menu/UserRightSideMenu/ui/UserRightSideMenu.tsx';
 
 
 export type AppProps = {};
@@ -39,7 +42,8 @@ export const AppContent: FC<AppProps> = memo(function App (props) {
             <ScreenHeight>
                 <SiteMainLayout
                     header={ <HeaderNavBar/> }
-                    sideMenu={ <SiteNavigationMenu/> }
+                    leftSideMenu={ <SiteNavigationMenu/> }
+                    rightSideMenu={ <UserRightSideMenu/> }
                 >
                     <MainSiteRouter/>
                 </SiteMainLayout>

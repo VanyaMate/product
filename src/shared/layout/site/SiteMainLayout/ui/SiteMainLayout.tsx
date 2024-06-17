@@ -8,7 +8,7 @@ import {
 } from 'react';
 import classNames from 'classnames';
 import css from './SiteMainLayout.module.scss';
-import { IoClose, IoMenu } from 'react-icons/io5';
+import { IoClose, IoMenu, IoPersonCircle } from 'react-icons/io5';
 import { inert } from '@/shared/lib/react/inert.ts';
 import { keyboardClose } from '@/shared/lib/react/keyboardClose.ts';
 import { noEvent } from '@/shared/lib/react/noEvent.ts';
@@ -21,52 +21,67 @@ import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 export type SiteMainLayoutProps =
     {
         header: ReactNode;
-        sideMenu: ReactNode;
+        leftSideMenu: ReactNode;
+        rightSideMenu: ReactNode;
     }
     & ComponentPropsWithoutRef<'div'>;
 
 export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLayout (props) {
-    const { className, header, sideMenu, children, ...other } = props;
-    const [ open, setOpen ]                                   = useState(false);
-    const main                                                = useRef<HTMLAnchorElement>();
-    const onCompleteAction                                    = useCallback(() => {
-        setOpen(false);
+    const {
+              className,
+              header,
+              leftSideMenu,
+              rightSideMenu,
+              children,
+              ...other
+          }                                       = props;
+    const [ leftMenuOpened, setLeftMenuOpened ]   = useState(false);
+    const [ rightMenuOpened, setRightMenuOpened ] = useState<boolean>(true);
+    const main                                    = useRef<HTMLAnchorElement>();
+    const onCompleteAction                        = useCallback(() => {
+        setLeftMenuOpened(false);
         setTimeout(() => main.current?.focus());
     }, []);
 
     useEffect(() => {
-        return keyboardClose(open, setOpen);
-    }, [ open ]);
+        return keyboardClose(leftMenuOpened, setLeftMenuOpened);
+    }, [ leftMenuOpened ]);
 
     return (
         <SiteMainLayoutSideMenuProvider
             onCompleteAction={ onCompleteAction }
-            opened={ open }
-            setOpened={ setOpen }
+            opened={ leftMenuOpened }
+            setOpened={ setLeftMenuOpened }
         >
             <div { ...other }
                  className={ classNames(css.container, {}, [ className ]) }>
                 <header className={ css.header }>
                     <Button
-                        onClick={ () => setOpen((prev) => !prev) }
+                        onClick={ () => setLeftMenuOpened((prev) => !prev) }
                         quad
                     >
-                        { open ? <IoClose/> : <IoMenu/> }
+                        { leftMenuOpened ? <IoClose/> : <IoMenu/> }
                     </Button>
                     <div
                         className={ css.content }
-                        { ...inert(open) }
+                        { ...inert(leftMenuOpened) }
                     >
                         { header }
                     </div>
+                    <Button
+                        onClick={ () => setRightMenuOpened((prev) => !prev) }
+                        quad
+                    >
+                        { rightMenuOpened ? <IoClose/> : <IoPersonCircle/> }
+                    </Button>
                 </header>
                 <div
-                    className={ classNames(css.sideMenu, { [css.sideMenu_open]: open }) }>
-                    { sideMenu }
+                    className={ classNames(css.leftSideMenu, { [css.leftSideMenu_open]: leftMenuOpened }) }>
+                    { leftSideMenu }
                 </div>
                 <main
-                    className={ classNames(css.main, { [css.main_open]: open }) }
-                    { ...inert(open) }
+                    className={ classNames(css.main, { [css.main_open]: leftMenuOpened }) }
+                    { ...inert(leftMenuOpened) }
                 >
                     <div className={ css.main_content }>
                         <a className={ css.main_content_link }
@@ -79,8 +94,16 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
                     </div>
                 </main>
                 <div
-                    className={ classNames(css.closeOverlay, { [css.closeOverlay_hidden]: !open }) }
-                    onClick={ () => setOpen(false) }
+                    className={ classNames(css.rightSideMenu, { [css.rightSideMenu_open]: rightMenuOpened && !leftMenuOpened }) }
+                    { ...inert(leftMenuOpened) }
+                >
+                    <div className={ css.content }>
+                        { rightSideMenu }
+                    </div>
+                </div>
+                <div
+                    className={ classNames(css.closeOverlay, { [css.closeOverlay_hidden]: !leftMenuOpened }) }
+                    onClick={ () => setLeftMenuOpened(false) }
                 />
             </div>
         </SiteMainLayoutSideMenuProvider>

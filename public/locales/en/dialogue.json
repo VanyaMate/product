@@ -3,5 +3,10 @@
     "send_message": "Send message",
     "search_message": "Search message",
     "empty_dialogue": "Empty dialogue",
-    "dialogue_me": "me"
+    "dialogue_me": "me",
+    "dialogue_archived_by_user": "Dialogue was archived by user",
+    "dialogue_deleted_by_user": "Dialogue was removed by user",
+    "dialogue_archived_by_me": "Dialogue was archived by you",
+    "dialogue_deleted_by_me": "Dialogue was removed by you",
+    "write_message": "Write message"
 }

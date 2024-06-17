@@ -1,4 +1,10 @@
-import { ComponentPropsWithoutRef, FC, memo, useEffect } from 'react';
+import {
+    ComponentPropsWithoutRef,
+    FC,
+    memo,
+    useCallback,
+    useEffect,
+} from 'react';
 import classNames from 'classnames';
 import css from './PrivateDialogueWindowInput.module.scss';
 import {
@@ -17,6 +23,10 @@ import {
 } from '@/app/redux/slices/private-messages/thunks/sendPrivateMessage.ts';
 import { DomainMessageType } from 'product-types/dist/message/DomainMessage';
 import { IoSend } from 'react-icons/io5';
+import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
+import { Form } from '@/shared/ui-kit/forms/Form/ui/Form.tsx';
+import { ButtonSizeType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import { useTranslation } from 'react-i18next';
 
 
 export type PrivateDialogueWindowInputProps =
@@ -27,31 +37,48 @@ export type PrivateDialogueWindowInputProps =
 
 export const PrivateDialogueWindowInput: FC<PrivateDialogueWindowInputProps> = memo(function PrivateDialogueWindowInput (props) {
     const { className, dialogueId, ...other } = props;
-    const inputController                     = useInputWithError({ name: '' });
+    const { t }                               = useTranslation([ 'dialogue' ]);
+    const inputController                     = useInputWithError({ name: 'message' });
+    const form                                = useForm<{ message: string }>({
+        inputs  : [ inputController ],
+        onSubmit: (data) => dispatch(sendPrivateMessage([ dialogueId, {
+            message    : data.message,
+            messageType: DomainMessageType.TEXT,
+        } ])).then(resetInput),
+    });
     const dispatch                            = useAppDispatch();
 
-    useEffect(() => {
+    const resetInput = useCallback(() => {
         inputController.inputRef.current.value = '';
         inputController.value.current          = '';
-    }, [ dialogueId, inputController.inputRef, inputController.value ]);
+    }, [ inputController.inputRef, inputController.value ]);
+
+    useEffect(() => {
+        resetInput();
+    }, [ dialogueId, resetInput ]);
 
     return (
         <div
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            <Row>
-                <InputWithError controller={ inputController }/>
-                <ButtonWithLoading
-                    onClick={ () => dispatch(sendPrivateMessage([ dialogueId, {
-                        message    : inputController.value.current,
-                        messageType: DomainMessageType.TEXT,
-                    } ])) }
-                    quad
-                >
-                    <IoSend/>
-                </ButtonWithLoading>
-            </Row>
+            <Form controller={ form }>
+                <Row>
+                    <InputWithError
+                        className={ css.input }
+                        controller={ inputController }
+                        placeholder={ t('write_message') }
+                    />
+                    <ButtonWithLoading
+                        loading={ form.pending }
+                        quad
+                        size={ ButtonSizeType.LARGE }
+                        type="submit"
+                    >
+                        <IoSend/>
+                    </ButtonWithLoading>
+                </Row>
+            </Form>
         </div>
     );
 });

@@ -60,7 +60,7 @@
         height        : 20px;
         padding       : 0 var(--offset-small);
         border-radius : var(--offset-small);
-        font-size     : .75em;
+        font-size     : .85em;
 
         &.quad {
             width     : 20px;
@@ -84,8 +84,8 @@
     &.large {
         height        : 40px;
         padding       : 0 var(--offset-large);
-        border-radius : var(--offset-medium);
-        font-size     : 1.25em;
+        border-radius : var(--offset-small);
+        font-size     : 1.15em;
 
         &.quad {
             width     : 40px;

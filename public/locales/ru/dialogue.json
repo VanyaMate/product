@@ -7,5 +7,6 @@
     "dialogue_archived_by_user": "Диалог заархивирован пользователем",
     "dialogue_deleted_by_user": "Диалог удален пользователем",
     "dialogue_archived_by_me": "Диалог заархивирован вами",
-    "dialogue_deleted_by_me": "Диалог удален вами"
+    "dialogue_deleted_by_me": "Диалог удален вами",
+    "write_message": "Введите сообщение"
 }
