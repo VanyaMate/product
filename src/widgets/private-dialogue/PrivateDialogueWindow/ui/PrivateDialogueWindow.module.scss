@@ -15,6 +15,7 @@ $right-side-width : 400px;
         flex-direction : column;
         gap            : var(--offset-small);
         transition     : var(--transition-medium);
+        position       : relative;
     }
 
     .rightSide {
@@ -23,6 +24,7 @@ $right-side-width : 400px;
         transition    : var(--transition-medium);
         background    : var(--bg-ghost-color);
         border-radius : var(--offset-medium);
+        position      : relative;
 
         .content {
             min-width : $right-side-width;

@@ -37,10 +37,20 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
         >
             <div className={ css.content }>
                 {
-                    dialogues
+                    dialogues.dialogueSearch[dialogueId]
+                    ? dialogues.dialogueSearch[dialogueId]
+                        .messages
+                        .map((message) =>
+                            <Message
+                                key={ message.id }
+                                message={ message }
+                                userId={ userData.id }
+                            />,
+                        )
+                    : dialogues
                         .dialogues
                         .find((dialogue) => dialogue.id === dialogueId)
-                        .messages
+                        ?.messages
                         .map((message) =>
                             <Message
                                 key={ message.id }

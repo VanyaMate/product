@@ -16,7 +16,7 @@ import {
 
 export type UserRightSideMenuProps =
     {}
-    & ComponentPropsWithoutRef<'div'>;
+    & ComponentPropsWithoutRef<'section'>;
 
 export const UserRightSideMenu: FC<UserRightSideMenuProps> = memo(function UserRightSideMenu (props) {
     const { className, ...other } = props;

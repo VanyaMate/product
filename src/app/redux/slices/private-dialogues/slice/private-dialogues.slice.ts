@@ -20,10 +20,19 @@ import {
 import {
     DomainPrivateDialogueFull,
 } from 'product-types/dist/private-dialogue/DomainPrivateDialogueFull';
-import { DomainMessage } from 'product-types/dist/message/DomainMessage';
+import {
+    DomainMessage,
+    isDomainMessage,
+} from 'product-types/dist/message/DomainMessage';
 import {
     sendPrivateMessage,
 } from '@/app/redux/slices/private-messages/thunks/sendPrivateMessage.ts';
+import {
+    searchPrivateMessages,
+} from '@/app/redux/slices/private-messages/thunks/searchPrivateMessages.ts';
+import {
+    removePrivateMessageSearch,
+} from '@/app/redux/slices/private-messages/thunks/removePrivateMessageSearch.ts';
 
 
 /**
@@ -235,6 +244,45 @@ export const privateDialogues = createSlice({
                     dialogue.messages.push(action.payload.message);
                 }
             }
+        });
+
+        // searchPrivateMessages
+        builder.addCase(searchPrivateMessages.pending, (state, action) => {
+            const [ dialogueId, options ]    = action.meta.arg;
+            const dialogueSearchState        = state.dialogueSearch[dialogueId];
+            const sameQuery                  = options.query === dialogueSearchState?.options.query;
+            state.dialogueSearch[dialogueId] = {
+                isPending: true,
+                error    : null,
+                options  : options,
+                messages : sameQuery ? dialogueSearchState?.messages ?? [] : [],
+                count    : sameQuery ? dialogueSearchState?.count ?? 0 : 0,
+            };
+        });
+        builder.addCase(searchPrivateMessages.rejected, (state, action) => {
+            const [ dialogueId, options ]    = action.meta.arg;
+            state.dialogueSearch[dialogueId] = {
+                isPending: true,
+                error    : action.payload?.errors?.[0] ?? null,
+                options  : options,
+                messages : [],
+                count    : 0,
+            };
+        });
+        builder.addCase(searchPrivateMessages.fulfilled, (state, action) => {
+            const [ dialogueId, options ]    = action.meta.arg;
+            state.dialogueSearch[dialogueId] = {
+                isPending: false,
+                error    : null,
+                options  : options,
+                messages : [ ...action.payload.list.filter(isDomainMessage), ...state.dialogueSearch[dialogueId].messages ],
+                count    : action.payload.count,
+            };
+        });
+
+        // removePrivateMessageSearch
+        builder.addCase(removePrivateMessageSearch.fulfilled, (state, action) => {
+            delete state.dialogueSearch[action.meta.arg];
         });
     },
 });
