@@ -1,7 +1,7 @@
 import { RouteProps } from 'react-router-dom';
 import { HomePageAsync } from '@/pages/HomePage/ui/HomePage.async.tsx';
 import { AboutPageAsync } from '@/pages/AboutPage/ui/AboutPage.async.tsx';
-import { UserPageAsync } from '@/pages/ProfilePage/ui/UserPageAsync.tsx';
+import { ProfilePageAsync } from '@/pages/ProfilePage/ui/ProfilePageAsync.tsx';
 import { NotFoundPage } from '@/pages/NotFoundPage/ui/NotFoundPage.tsx';
 import {
     DialoguesPageAsync,
@@ -46,7 +46,7 @@ export const MainSiteRouteConfig: Record<SiteAppRoute, RouteProps> = {
     },
     [SiteAppRoute.USER]     : {
         path   : SiteAppRoutePath[SiteAppRoute.USER],
-        element: <UserPageAsync/>,
+        element: <ProfilePageAsync/>,
     },
     [SiteAppRoute.DIALOGUES]: {
         path   : SiteAppRoutePath[SiteAppRoute.DIALOGUES],

@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, memo } from 'react';
+import { ComponentPropsWithoutRef, FC, memo, useState } from 'react';
 import classNames from 'classnames';
 import css from './PrivateDialogueWindow.module.scss';
 import {
@@ -13,6 +13,11 @@ import {
 import {
     NoSelectDialogue,
 } from '@/entities/private-dialogues/NoSelectDialogue/ui/NoSelectDialogue.tsx';
+import {
+    PrivateDialogueWindowUserPreview,
+} from '@/widgets/private-dialogue/PrivateDialogueWindow/PrivateDialogueWindowUserPreview/ui/PrivateDialogueWindowUserPreview.tsx';
+import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import { IoClose, IoPerson } from 'react-icons/io5';
 
 
 export type PrivateDialogueWindowProps =
@@ -22,7 +27,8 @@ export type PrivateDialogueWindowProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(function PrivateDialogueWindow (props) {
-    const { className, dialogueId, ...other } = props;
+    const { className, dialogueId, ...other }     = props;
+    const [ rightMenuOpened, setRightMenuOpened ] = useState<boolean>(false);
 
     if (!dialogueId) {
         return (
@@ -33,20 +39,37 @@ export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(functi
     return (
         <div
             { ...other }
-            className={ classNames(css.container, {}, [ className ]) }
+            className={ classNames(css.container, { [css.container_opened]: rightMenuOpened }, [ className ]) }
         >
-            <PrivateDialogueWindowHeader
-                className={ css.header }
-                dialogueId={ dialogueId }
-            />
-            <PrivateDialogueWindowMessages
-                className={ css.messages }
-                dialogueId={ dialogueId }
-            />
-            <PrivateDialogueWindowInput
-                className={ css.input }
-                dialogueId={ dialogueId }
-            />
+            <div className={ css.leftSide }>
+                <PrivateDialogueWindowHeader
+                    className={ css.header }
+                    dialogueId={ dialogueId }
+                >
+                    <Button
+                        onClick={ () => setRightMenuOpened(prev => !prev) }
+                        quad
+                    >
+                        { rightMenuOpened ? <IoClose/> : <IoPerson/> }
+                    </Button>
+                </PrivateDialogueWindowHeader>
+                <PrivateDialogueWindowMessages
+                    className={ css.messages }
+                    dialogueId={ dialogueId }
+                />
+                <PrivateDialogueWindowInput
+                    className={ css.input }
+                    dialogueId={ dialogueId }
+                />
+            </div>
+            <div className={ css.rightSide }>
+                <div className={ css.content }>
+                    <PrivateDialogueWindowUserPreview
+                        dialogueId={ dialogueId }
+                        opened={ true }
+                    />
+                </div>
+            </div>
         </div>
     );
 });

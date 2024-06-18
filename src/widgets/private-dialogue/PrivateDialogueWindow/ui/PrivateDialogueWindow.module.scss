@@ -1,12 +1,47 @@
-$header-height : 43px;
-$input-height  : 80px;
+$header-height    : 43px;
+$input-height     : 80px;
+$right-side-width : 400px;
 
 .container {
-    height         : 100%;
-    width          : 100%;
-    display        : flex;
-    flex-direction : column;
-    gap            : var(--offset-small);
+    height     : 100%;
+    width      : 100%;
+    display    : flex;
+    gap        : 0;
+    transition : var(--transition-medium);
+
+    .leftSide {
+        width          : 100%;
+        display        : flex;
+        flex-direction : column;
+        gap            : var(--offset-small);
+        transition     : var(--transition-medium);
+    }
+
+    .rightSide {
+        width         : 0;
+        overflow      : hidden;
+        transition    : var(--transition-medium);
+        background    : var(--bg-ghost-color);
+        border-radius : var(--offset-medium);
+
+        .content {
+            min-width : $right-side-width;
+            padding   : var(--offset-small);
+        }
+    }
+
+    &_opened {
+        gap : var(--offset-small);
+
+        .leftSide {
+            gap   : var(--offset-small);
+            width : calc(100% - $right-side-width - var(--offset-small));
+        }
+
+        .rightSide {
+            width : $right-side-width;
+        }
+    }
 
     .header {
         height : $header-height;

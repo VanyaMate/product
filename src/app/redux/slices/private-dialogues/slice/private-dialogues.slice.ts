@@ -73,9 +73,18 @@ export const privateDialogues = createSlice({
     extraReducers: (builder) => {
         // getListPrivateDialogues
         builder.addCase(getListPrivateDialogues.fulfilled, (state, action) => {
-            state.isPending = false;
-            state.error     = null;
-            state.dialogues = action.payload;
+            state.isPending       = false;
+            state.error           = null;
+            const loadedDialogues = state.dialogues;
+            state.dialogues       = action.payload;
+
+            loadedDialogues.forEach((dialogue) => {
+                const loadedDialogue = state.dialogues.find((stateDialogue) => stateDialogue.id === dialogue.id);
+                if (loadedDialogue) {
+                    loadedDialogue.messages = dialogue.messages;
+                }
+            });
+
             action.payload.forEach((dialogue) => {
                 state.dialoguesStatus[dialogue.id] = {
                     isPending: false,

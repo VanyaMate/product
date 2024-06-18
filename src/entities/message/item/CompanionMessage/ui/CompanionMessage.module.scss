@@ -1,8 +1,9 @@
 .container {
-    width     : 80%;
+    width     : 100%;
     display   : flex;
     gap       : var(--offset-small);
     max-width : 600px;
+    padding   : var(--offset-small);
 
     .avatar {
         width           : 50px;

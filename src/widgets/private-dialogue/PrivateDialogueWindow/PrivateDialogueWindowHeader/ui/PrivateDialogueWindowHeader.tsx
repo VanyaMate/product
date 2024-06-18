@@ -19,8 +19,8 @@ export type PrivateDialogueWindowHeaderProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const PrivateDialogueWindowHeader: FC<PrivateDialogueWindowHeaderProps> = memo(function PrivateDialogueWindowHeader (props) {
-    const { className, dialogueId, ...other } = props;
-    const search                              = useInputWithError({
+    const { className, dialogueId, children, ...other } = props;
+    const search                                        = useInputWithError({
         name    : '',
         debounce: 500,
     });
@@ -43,6 +43,7 @@ export const PrivateDialogueWindowHeader: FC<PrivateDialogueWindowHeaderProps> =
                 <Button quad><IoAdd/></Button>
                 <Button quad><IoAdd/></Button>
             </Row>
+            { children }
         </div>
     );
 });

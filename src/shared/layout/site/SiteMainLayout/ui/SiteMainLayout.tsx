@@ -71,6 +71,7 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
                     <Button
                         onClick={ () => setRightMenuOpened((prev) => !prev) }
                         quad
+                        { ...inert(leftMenuOpened) }
                     >
                         { rightMenuOpened ? <IoClose/> : <IoPersonCircle/> }
                     </Button>
