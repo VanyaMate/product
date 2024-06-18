@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => ({
         __API__   : JSON.stringify(
             mode === 'development'
             ? 'http://localhost:3000/api'
-            : 'https://8080-cs-810881314682-default.cs-europe-west4-bhnf.cloudshell.dev/api',
+            : 'https://product-backend-production-7913.up.railway.app/api',
         ),
     },
     publicDir: 'public',
