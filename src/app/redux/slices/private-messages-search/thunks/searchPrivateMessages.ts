@@ -17,7 +17,7 @@ import {
 
 
 export const searchPrivateMessages = createAsyncThunk<DomainSearchItem, [ string, DomainSearchItemOptions ], ThunkApiConfig<DomainServiceResponseError>>(
-    'private-messages/searchPrivateMessages',
+    'private-messages-search/searchPrivateMessages',
     async ([ dialogueId, options ], thunkAPI) => {
         const { extra: { api }, rejectWithValue } = thunkAPI;
         try {

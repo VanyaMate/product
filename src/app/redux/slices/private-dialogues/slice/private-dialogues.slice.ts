@@ -29,10 +29,10 @@ import {
 } from '@/app/redux/slices/private-messages/thunks/sendPrivateMessage.ts';
 import {
     searchPrivateMessages,
-} from '@/app/redux/slices/private-messages/thunks/searchPrivateMessages.ts';
+} from '@/app/redux/slices/private-messages-search/thunks/searchPrivateMessages.ts';
 import {
     removePrivateMessageSearch,
-} from '@/app/redux/slices/private-messages/thunks/removePrivateMessageSearch.ts';
+} from '@/app/redux/slices/private-messages-search/thunks/removePrivateMessageSearch.ts';
 
 
 /**

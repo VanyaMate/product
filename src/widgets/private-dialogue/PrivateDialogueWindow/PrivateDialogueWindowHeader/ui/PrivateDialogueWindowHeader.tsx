@@ -13,10 +13,10 @@ import {
 import { useAppDispatch } from '@/app/redux/hooks/useAppDispatch.ts';
 import {
     searchPrivateMessages,
-} from '@/app/redux/slices/private-messages/thunks/searchPrivateMessages.ts';
+} from '@/app/redux/slices/private-messages-search/thunks/searchPrivateMessages.ts';
 import {
     removePrivateMessageSearch,
-} from '@/app/redux/slices/private-messages/thunks/removePrivateMessageSearch.ts';
+} from '@/app/redux/slices/private-messages-search/thunks/removePrivateMessageSearch.ts';
 
 
 export type PrivateDialogueWindowHeaderProps =
