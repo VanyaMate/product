@@ -8,11 +8,12 @@ import {
 import {
     NotificationDefaultLayout,
 } from '@/widgets/notification/item/NotificationItem/layouts/NotificationDefaultLayout/ui/NotificationDefaultLayout.tsx';
-import { useTranslation } from 'react-i18next';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import {
     NotificationLinkLayout,
 } from '@/widgets/notification/item/NotificationItem/layouts/NotificationLinkLayout/ui/NotificationLinkLayout.tsx';
+import { getUserPageUrl } from '@/features/routes/lib/getUserPageUrl.ts';
+import { getUserPageLinkAria } from '@/app/i18n/lib/getUserPageLinkAria.ts';
 
 
 export type NotificationFriendDeletedItemProps =
@@ -23,14 +24,10 @@ export type NotificationFriendDeletedItemProps =
 
 export const NotificationFriendDeletedItem: FC<NotificationFriendDeletedItemProps> = memo(function NotificationFriendDeletedItem (props) {
     const { className, notification, ...other } = props;
-    const { t }                                 = useTranslation([ 'translation' ]);
 
     if (isDomainNotificationFriendDeletedData(notification.data)) {
-        const linkAria = t('go_to_user_page_of', {
-            ns   : 'translation',
-            login: notification.data.user.login,
-        });
-        const linkTo   = `/user/${ notification.data.user.login }`;
+        const linkAria = getUserPageLinkAria(notification.data.user.login);
+        const linkTo   = getUserPageUrl(notification.data.user.login);
 
         return <NotificationLinkLayout
             { ...other }

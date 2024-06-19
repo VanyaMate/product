@@ -44,6 +44,9 @@ import {
 import {
     NotificationFriendRequestCanceledItem,
 } from '@/widgets/notification/item/NotificationItem/items/NotificationFriendRequestCanceledItem/ui/NotificationFriendRequestCanceledItem.tsx';
+import {
+    NotificationPrivateMessageItem,
+} from '@/widgets/notification/item/NotificationItem/items/NotificationPrivateMessageItem/ui/NotificationPrivateMessageItem.tsx';
 
 
 export type NotificationItemProps =
@@ -89,6 +92,30 @@ export const NotificationItem: FC<NotificationItemProps> = memo(function Notific
             return <NotificationUserMessageReadItem
                 notification={ notification }/>;
         case DomainNotificationType.USER_MESSAGE_READ_OUT:
+            return <NotificationUserMessageReadItem
+                notification={ notification }/>;
+        case DomainNotificationType.PRIVATE_MESSAGE_IN:
+            return <NotificationPrivateMessageItem
+                notification={ notification }/>;
+        case DomainNotificationType.PRIVATE_MESSAGE_OUT:
+            return <NotificationPrivateMessageItem
+                notification={ notification }/>;
+        case DomainNotificationType.PRIVATE_MESSAGE_DELETED_IN:
+            return <NotificationUserMessageDeletedItem
+                notification={ notification }/>;
+        case DomainNotificationType.PRIVATE_MESSAGE_DELETED_OUT:
+            return <NotificationUserMessageDeletedItem
+                notification={ notification }/>;
+        case DomainNotificationType.PRIVATE_MESSAGE_REDACTED_IN:
+            return <NotificationUserMessageRedactedItem
+                notification={ notification }/>;
+        case DomainNotificationType.PRIVATE_MESSAGE_REDACTED_OUT:
+            return <NotificationUserMessageRedactedItem
+                notification={ notification }/>;
+        case DomainNotificationType.PRIVATE_MESSAGE_READ_IN:
+            return <NotificationUserMessageReadItem
+                notification={ notification }/>;
+        case DomainNotificationType.PRIVATE_MESSAGE_READ_OUT:
             return <NotificationUserMessageReadItem
                 notification={ notification }/>;
         case DomainNotificationType.FRIEND_REQUEST_IN:

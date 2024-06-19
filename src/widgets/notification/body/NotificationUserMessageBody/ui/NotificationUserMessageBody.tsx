@@ -7,6 +7,10 @@ import {
 import { IoArrowForward, IoPeople, IoPerson } from 'react-icons/io5';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import { useTranslation } from 'react-i18next';
+import {
+    getDialoguePageUrl,
+} from '@/features/routes/lib/getDialoguePageUrl.ts';
+import { getUserPageUrl } from '@/features/routes/lib/getUserPageUrl.ts';
 
 
 export type NotificationShortBodyUserMessageProps =
@@ -32,7 +36,7 @@ export const NotificationUserMessageBody: FC<NotificationShortBodyUserMessagePro
                             login: data.message.author.login,
                         }) }
                         className={ css.row }
-                        to={ `/user/${ data.message.author.login }` }
+                        to={ getUserPageUrl(data.message.author.login) }
                     >
                         <IoPerson/>
                         <span>{ data.message.author.login }</span>
@@ -46,7 +50,7 @@ export const NotificationUserMessageBody: FC<NotificationShortBodyUserMessagePro
                             dialogue_name: data.dialogue.title,
                         }) }
                         className={ css.row }
-                        to={ `/dialogue/${ data.dialogue.id }` }
+                        to={ getDialoguePageUrl(data.dialogue.id) }
                     >
                         <IoPeople/>
                         <span>{ data.dialogue.title }</span>

@@ -19,6 +19,14 @@
     "u_msg_r_out": "Message edited",
     "u_msg_read_in": "Message read",
     "u_msg_read_out": "Message read",
+    "p_msg_in": "New message",
+    "p_msg_out": "New message",
+    "p_msg_d_in": "Message deleted",
+    "p_msg_d_out": "Message deleted",
+    "p_msg_r_in": "Message edited",
+    "p_msg_r_out": "Message edited",
+    "p_msg_read_in": "Message read",
+    "p_msg_read_out": "Message read",
     "tkn": "Access tokens updated",
     "unk": "Unknown notification"
 }
