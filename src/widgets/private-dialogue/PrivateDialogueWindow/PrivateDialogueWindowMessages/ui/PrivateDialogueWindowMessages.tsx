@@ -9,6 +9,9 @@ import {
     PrivateMessage,
 } from '@/entities/message/item/PrivateMessage/ui/PrivateMessage.tsx';
 import { useLocation } from 'react-router-dom';
+import {
+    usePrivateDialogueMessagesLoaderTrigger,
+} from '@/features/private-dialogue/hooks/usePrivateDialogueMessagesLoaderTrigger/usePrivateDialogueMessagesLoaderTrigger.ts';
 
 
 export type PrivateDialogueWindowMessagesProps =
@@ -25,8 +28,10 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
     const { hash }                            = useLocation();
     const container                           = useRef<HTMLDivElement>(null);
 
+    // TODO: Переделать этот ужас со скроллами
+
     useEffect(() => {
-        if (hash) {
+        if (hash && container.current) {
             const element: HTMLElement = container.current.querySelector(`#m_${ hash.substring(1) }`);
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
@@ -34,6 +39,7 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
             } else {
                 // TODO
                 // loading messages
+                // scroll to message
             }
         }
     }, [ hash ]);
@@ -52,10 +58,12 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
     }, [ dialogueId, messages ]);
 
     useEffect(() => {
-        if (dialogueId) {
+        if (dialogueId && container.current) {
             container.current.scroll({ top: container.current.scrollHeight });
         }
     }, [ dialogueId ]);
+
+    usePrivateDialogueMessagesLoaderTrigger(dialogueId, container);
 
     return (
         <div

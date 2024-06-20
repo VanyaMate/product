@@ -38,6 +38,10 @@ import {
 import {
     removePrivateMessageNotification,
 } from '@/app/redux/slices/private-messages/thunks/removePrivateMessageNotification.ts';
+import {
+    getMessagesByCursor,
+} from '@/app/redux/slices/private-messages/thunks/getMessagesByCursor.ts';
+import { isDomainMessage } from 'product-types/dist/message/DomainMessage';
 
 
 const initialState: PrivateMessagesSchema = {};
@@ -217,6 +221,31 @@ export const privateMessagesSlice = createSlice({
             if (currentState) {
                 currentState.messages = currentState.messages.filter((message) => message.id !== action.payload.message.id);
             }
+        });
+
+
+        builder.addCase(getMessagesByCursor.pending, (state, action) => {
+            const dialogueId = action.meta.arg[0];
+            if (!state[dialogueId]) {
+                state[dialogueId] = {
+                    isPending: true,
+                    messages : [],
+                    offset   : 0,
+                    error    : null,
+                };
+            }
+            state[dialogueId].isPending = true;
+        });
+        builder.addCase(getMessagesByCursor.rejected, (state, action) => {
+            const dialogueId            = action.meta.arg[0];
+            state[dialogueId].error     = action.payload;
+            state[dialogueId].isPending = false;
+        });
+        builder.addCase(getMessagesByCursor.fulfilled, (state, action) => {
+            const dialogueId            = action.meta.arg[0];
+            state[dialogueId].isPending = false;
+            state[dialogueId].error     = null;
+            state[dialogueId].messages  = [ ...action.payload.list.filter(isDomainMessage), ...state[dialogueId].messages ];
         });
     },
 });
