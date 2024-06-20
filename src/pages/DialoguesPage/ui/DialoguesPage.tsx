@@ -38,6 +38,7 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
         [SITE_ROUTE_DIALOGUE_ID]: string
     }>();
     const dispatch                                 = useAppDispatch();
+    const messages                                 = useAppSelector((state) => state.privateMessages);
 
     useEffect(() => {
         if (dialogueId) {
@@ -58,6 +59,7 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
                         <PrivateDialogue
                             dialogue={ dialogue }
                             key={ dialogue.id }
+                            lastMessage={ messages[dialogue.id].messages[messages[dialogue.id].messages.length - 1] }
                             login={ userData.login }
                             selected={ dialogueId === dialogue.id }
                             status={ dialogues.dialoguesStatus[dialogue.id] }

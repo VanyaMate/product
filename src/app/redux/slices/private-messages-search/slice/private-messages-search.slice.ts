@@ -13,8 +13,8 @@ import {
 
 const initialState: PrivateMessagesSearchSchema = {};
 
-export const privateMessageSlice = createSlice({
-    name         : 'private-messages-slice',
+export const privateMessagesSearchSlice = createSlice({
+    name         : 'private-messages-search-slice',
     initialState : initialState,
     reducers     : {},
     extraReducers: (builder) => {
@@ -73,3 +73,8 @@ export const privateMessageSlice = createSlice({
         });
     },
 });
+
+export const {
+                 actions: privateMessagesSearchActions,
+                 reducer: privateMessagesSearchReducer,
+             } = privateMessagesSearchSlice;

@@ -1,6 +1,5 @@
 import { useReducerConnector } from '@/app/redux/hooks/useReducerConnector.ts';
 import {
-    friendsActions,
     friendsReducer,
 } from '@/app/redux/slices/friends/slice/friends.slice.ts';
 import {
@@ -30,6 +29,21 @@ import {
 import {
     getFriendsWithRequestsForUser,
 } from '@/app/redux/slices/friends/thunks/getFriendsWithRequestsForUser/getFriendsWithRequestsForUser.ts';
+import {
+    createFriendRequestForUserNotification,
+} from '@/app/redux/slices/friends/thunks/createFriendRequestForUser/createFriendRequestForUserNotification.ts';
+import {
+    receivedFriendRequestNotification,
+} from '@/app/redux/slices/friends/thunks/createFriendRequestForUser/receivedFriendRequestNotification.ts';
+import {
+    cancelFriendRequestNotification,
+} from '@/app/redux/slices/friends/thunks/cancelFriendRequest/cancelFriendRequestNotification.ts';
+import {
+    acceptFriendRequestNotification,
+} from '@/app/redux/slices/friends/thunks/acceptFriendRequest/acceptFriendRequestNotification.ts';
+import {
+    removeFriendNotification,
+} from '@/app/redux/slices/friends/thunks/removeFriend/removeFriendNotification.ts';
 
 
 export const useFriendsStoreUpdaterByNotifications = function () {
@@ -48,7 +62,7 @@ export const useFriendsStoreUpdaterByNotifications = function () {
             const onFriendRequestIn: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestData(notification.data)) {
-                        dispatch(friendsActions.addFriendRequestSent(notification.data));
+                        dispatch(createFriendRequestForUserNotification(notification.data));
                     }
                 });
             };
@@ -56,7 +70,7 @@ export const useFriendsStoreUpdaterByNotifications = function () {
             const onFriendRequestOut: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestData(notification.data)) {
-                        dispatch(friendsActions.addFriendRequestReceived(notification.data));
+                        dispatch(receivedFriendRequestNotification(notification.data));
                     }
                 });
             };
@@ -64,8 +78,7 @@ export const useFriendsStoreUpdaterByNotifications = function () {
             const onFriendRequestCanceledIn: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestCanceledData(notification.data)) {
-                        dispatch(friendsActions.removeFriendRequestReceived(notification.data.requestId));
-                        dispatch(friendsActions.removeFriendRequestSent(notification.data.requestId));
+                        dispatch(cancelFriendRequestNotification(notification.data));
                     }
                 });
             };
@@ -73,8 +86,7 @@ export const useFriendsStoreUpdaterByNotifications = function () {
             const onFriendRequestCanceledOut: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestCanceledData(notification.data)) {
-                        dispatch(friendsActions.removeFriendRequestSent(notification.data.requestId));
-                        dispatch(friendsActions.removeFriendRequestReceived(notification.data.requestId));
+                        dispatch(cancelFriendRequestNotification(notification.data));
                     }
                 });
             };
@@ -82,9 +94,7 @@ export const useFriendsStoreUpdaterByNotifications = function () {
             const onFriendRequestAcceptedIn: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestAcceptedData(notification.data)) {
-                        dispatch(friendsActions.addFriend(notification.data.user));
-                        dispatch(friendsActions.removeFriendRequestSent(notification.data.requestId));
-                        dispatch(friendsActions.removeFriendRequestReceived(notification.data.requestId));
+                        dispatch(acceptFriendRequestNotification(notification.data));
                     }
                 });
             };
@@ -92,9 +102,7 @@ export const useFriendsStoreUpdaterByNotifications = function () {
             const onFriendRequestAcceptedOut: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendRequestAcceptedData(notification.data)) {
-                        dispatch(friendsActions.addFriend(notification.data.user));
-                        dispatch(friendsActions.removeFriendRequestSent(notification.data.requestId));
-                        dispatch(friendsActions.removeFriendRequestReceived(notification.data.requestId));
+                        dispatch(acceptFriendRequestNotification(notification.data));
                     }
                 });
             };
@@ -102,7 +110,7 @@ export const useFriendsStoreUpdaterByNotifications = function () {
             const onFriendDeletedIn: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendDeletedData(notification.data)) {
-                        dispatch(friendsActions.removeFriend(notification.data.user.id));
+                        dispatch(removeFriendNotification(notification.data));
                     }
                 });
             };
@@ -110,7 +118,7 @@ export const useFriendsStoreUpdaterByNotifications = function () {
             const onFriendDeletedOut: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationFriendDeletedData(notification.data)) {
-                        dispatch(friendsActions.removeFriend(notification.data.user.id));
+                        dispatch(removeFriendNotification(notification.data));
                     }
                 });
             };

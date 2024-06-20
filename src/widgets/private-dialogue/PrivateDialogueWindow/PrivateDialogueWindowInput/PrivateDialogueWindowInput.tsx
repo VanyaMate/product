@@ -21,12 +21,14 @@ import { useAppDispatch } from '@/app/redux/hooks/useAppDispatch.ts';
 import {
     sendPrivateMessage,
 } from '@/app/redux/slices/private-messages/thunks/sendPrivateMessage.ts';
-import { DomainMessageType } from 'product-types/dist/message/DomainMessage';
 import { IoSend } from 'react-icons/io5';
 import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
 import { Form } from '@/shared/ui-kit/forms/Form/ui/Form.tsx';
 import { ButtonSizeType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { useTranslation } from 'react-i18next';
+import {
+    getMessageTypeByBody,
+} from '@/entities/message/lib/getMessageTypeByBody.ts';
 
 
 export type PrivateDialogueWindowInputProps =
@@ -43,7 +45,7 @@ export const PrivateDialogueWindowInput: FC<PrivateDialogueWindowInputProps> = m
         inputs  : [ inputController ],
         onSubmit: (data) => dispatch(sendPrivateMessage([ dialogueId, {
             message    : data.message,
-            messageType: DomainMessageType.TEXT,
+            messageType: getMessageTypeByBody(data.message),
         } ])).then(resetInput),
     });
     const dispatch                            = useAppDispatch();

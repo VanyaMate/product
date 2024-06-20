@@ -14,7 +14,7 @@ import {
 
 
 export const readAllPrivateMessage = createAsyncThunk<DomainNotificationPrivateMessageReadAllData, string, ThunkApiConfig<DomainServiceResponseError>>(
-    'private-messages',
+    'private-messages/readAllPrivateMessage',
     async (dialogueId, thunkAPI) => {
         const { extra: { api }, rejectWithValue } = thunkAPI;
         try {

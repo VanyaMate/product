@@ -14,6 +14,12 @@ import {
 import {
     PrivateDialoguesSchema,
 } from '@/app/redux/slices/private-dialogues/types/private-dialogues.schema.ts';
+import {
+    PrivateMessagesSchema,
+} from '@/app/redux/slices/private-messages/types/privateMessages.schema.ts';
+import {
+    PrivateMessagesSearchSchema,
+} from '@/app/redux/slices/private-messages-search/types/private-messages-search.schema.ts';
 
 
 export type GlobalStoreSchema =
@@ -26,6 +32,8 @@ export type GlobalStoreSchema =
         friends?: FriendsSchema;
         notifications?: NotificationsSchema;
         dialogues?: PrivateDialoguesSchema;
+        privateMessages?: PrivateMessagesSchema;
+        privateMessagesSearch?: PrivateMessagesSearchSchema;
     };
 
 export type GlobalStoreKeys = keyof GlobalStoreSchema;

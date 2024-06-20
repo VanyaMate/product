@@ -5,7 +5,6 @@ import { useAppDispatch } from '@/app/redux/hooks/useAppDispatch.ts';
 import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
 import { useReducerConnector } from '@/app/redux/hooks/useReducerConnector.ts';
 import {
-    privateDialoguesActions,
     privateDialoguesReducer,
 } from '@/app/redux/slices/private-dialogues/slice/private-dialogues.slice.ts';
 import { useEffect } from 'react';
@@ -21,6 +20,15 @@ import {
 import {
     DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
+import {
+    sendPrivateMessageNotification,
+} from '@/app/redux/slices/private-messages/thunks/sendPrivateMessageNotification.ts';
+import {
+    privateMessagesReducer,
+} from '@/app/redux/slices/private-messages/slice/privateMessages.slice.ts';
+import {
+    privateMessagesSearchReducer,
+} from '@/app/redux/slices/private-messages-search/slice/private-messages-search.slice.ts';
 
 
 export const useDialoguesStoreUpdaterByNotifications = function () {
@@ -29,6 +37,8 @@ export const useDialoguesStoreUpdaterByNotifications = function () {
     const dialogues    = useAppSelector((state) => state.dialogues);
 
     useReducerConnector('dialogues', privateDialoguesReducer);
+    useReducerConnector('privateMessages', privateMessagesReducer);
+    useReducerConnector('privateMessagesSearch', privateMessagesSearchReducer);
 
     useEffect(() => {
         dispatch(getListPrivateDialogues({
@@ -43,7 +53,7 @@ export const useDialoguesStoreUpdaterByNotifications = function () {
             const onPrivateMessageIn: NotificationNotificatorCallback = function (notifications) {
                 notifications.forEach((notification) => {
                     if (isDomainNotificationPrivateMessageData(notification.data)) {
-                        dispatch(privateDialoguesActions.addMessageToDialogue(notification.data.message));
+                        dispatch(sendPrivateMessageNotification(notification.data));
                     }
                 });
             };

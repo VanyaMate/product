@@ -1,25 +1,25 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
-    DomainServiceResponseError,
-} from 'product-types/dist/error/DomainServiceResponseError';
-import { ThunkApiConfig } from '@/app/redux/types/global-store-thunk.ts';
-import { thunkCatch } from '@/app/redux/catch/thunk-catch.ts';
-import {
-    assertDomainResponse,
-} from 'product-types/dist/response/DomainResponse';
-import {
     assertDomainNotificationPrivateDialogueArchiveData,
     DomainNotificationPrivateDialogueArchiveData,
 } from 'product-types/dist/notification/notification-data-types/DomainNotificationPrivateDialogueArchiveData';
+import { ThunkApiConfig } from '@/app/redux/types/global-store-thunk.ts';
+import {
+    DomainServiceResponseError,
+} from 'product-types/dist/error/DomainServiceResponseError';
+import {
+    assertDomainResponse,
+} from 'product-types/dist/response/DomainResponse';
+import { thunkCatch } from '@/app/redux/catch/thunk-catch.ts';
 
 
-export const archivePrivateDialogue = createAsyncThunk<DomainNotificationPrivateDialogueArchiveData, string, ThunkApiConfig<DomainServiceResponseError>>(
-    'private-dialogues/archivePrivateDialogue',
+export const unArchivePrivateDialogue = createAsyncThunk<DomainNotificationPrivateDialogueArchiveData, string, ThunkApiConfig<DomainServiceResponseError>>(
+    'private-dialogues/unArchivePrivateDialogue',
     async (dialogueId, thunkAPI) => {
         const { extra: { api }, rejectWithValue } = thunkAPI;
         try {
             const privateDialogue = await api
-                .post(`/v1/private-dialogue/archive/${ dialogueId }`)
+                .post(`/v1/private-dialogue/un-archive/${ dialogueId }`)
                 .then((response) => response.data)
                 .then((data) => {
                     assertDomainResponse(data, 'responseData', 'DomainResponse');

@@ -1,7 +1,7 @@
 import {
     ComponentPropsWithoutRef,
     FC,
-    memo,
+    memo, Suspense,
     useEffect, useRef,
     useState,
 } from 'react';
@@ -21,6 +21,9 @@ import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import {
     NotificationItem,
 } from '@/widgets/notification/item/NotificationItem/ui/NotificationItem.tsx';
+import {
+    PageLoader,
+} from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
 
 
 export type GlobalNotificationsProps =
@@ -109,16 +112,18 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
         >
             <audio ref={ audioRef }
                    src="/audio/notification/notification-sound.mp3"/>
-            <Col>
-                {
-                    notifications.map((notification) => (
-                        <NotificationItem
-                            key={ notification.id + notification.type + notification.creationDate }
-                            notification={ notification }
-                        />
-                    ))
-                }
-            </Col>
+            <Suspense fallback={ <PageLoader/> }>
+                <Col>
+                    {
+                        notifications.map((notification) => (
+                            <NotificationItem
+                                key={ notification.id + notification.type + notification.creationDate }
+                                notification={ notification }
+                            />
+                        ))
+                    }
+                </Col>
+            </Suspense>
         </section>
     );
 });

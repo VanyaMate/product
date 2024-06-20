@@ -1,8 +1,6 @@
 import { ComponentPropsWithoutRef, FC, memo, useEffect } from 'react';
 import classNames from 'classnames';
 import css from './PrivateDialogueWindowHeader.module.scss';
-import { IoAdd } from 'react-icons/io5';
-import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import {
     InputWithError,
@@ -17,6 +15,12 @@ import {
 import {
     removePrivateMessageSearch,
 } from '@/app/redux/slices/private-messages-search/thunks/removePrivateMessageSearch.ts';
+import {
+    ArchivePrivateDialogue,
+} from '@/features/private-dialogue/button/ArchivePrivateDialogue/ui/ArchivePrivateDialogue.tsx';
+import {
+    RemovePrivateDialogue,
+} from '@/features/private-dialogue/button/RemovePrivateDialogue/ui/RemovePrivateDialogue.tsx';
 
 
 export type PrivateDialogueWindowHeaderProps =
@@ -55,13 +59,16 @@ export const PrivateDialogueWindowHeader: FC<PrivateDialogueWindowHeaderProps> =
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            <Row>
-                <InputWithError controller={ search }/>
-                <Button quad><IoAdd/></Button>
-                <Button quad><IoAdd/></Button>
-                <Button quad><IoAdd/></Button>
-                <Button quad><IoAdd/></Button>
-            </Row>
+            <div className={ css.sides }>
+                <Row>
+                    <InputWithError controller={ search }/>
+                </Row>
+                <Row>
+                    <ArchivePrivateDialogue dialogueId={ dialogueId }/>
+                    <RemovePrivateDialogue dialogueId={ dialogueId }/>
+                </Row>
+            </div>
+            <div className={ css.divider }/>
             { children }
         </div>
     );

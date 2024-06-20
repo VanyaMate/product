@@ -1,14 +1,67 @@
+@keyframes mark {
+    0% {
+        box-shadow : 0 0 0 3px var(--bg-main-color), 0 0 0 5px var(--primary-color);
+    }
+
+    50% {
+        box-shadow : 0 0 0 3px var(--bg-main-color), 0 0 0 5px var(--bg-ghost-color);
+    }
+
+    100% {
+        box-shadow : 0 0 0 3px var(--bg-main-color), 0 0 0 5px var(--primary-color);
+    }
+}
+
+@keyframes mark-me {
+    0% {
+        box-shadow : 0 0 0 3px var(--primary-color);
+    }
+
+    100% {
+        box-shadow : 0 0 0 3px var(--bg-main-color), -3px 0 0 2px var(--primary-color);
+    }
+}
+
+@keyframes mark-not-me {
+    0% {
+        box-shadow : 0 0 0 3px var(--primary-color);
+    }
+
+    100% {
+        box-shadow : 0 0 0 3px var(--bg-main-color), -3px 0 0 2px var(--ghost-color);
+    }
+}
+
+
 .container {
     width         : 100%;
     display       : flex;
     gap           : var(--offset-small);
     max-width     : 600px;
     padding       : var(--offset-small);
-    background    : var(--bg-second-color);
     border-radius : var(--offset-medium);
+    box-shadow    : 0 0 0 3px var(--bg-main-color), -3px 0 0 2px var(--bg-second-color);
+    transition    : var(--transition-fast), var(--transition-medium) box-shadow;
 
-    &.target {
-        box-shadow : 0 0 10px 5px var(--primary-color);
+    &:not(.me).target {
+        animation : mark .5s ease-in-out 5;
+    }
+
+    &.me {
+        box-shadow : 0 0 0 3px var(--bg-main-color), -3px 0 0 2px var(--primary-color);
+
+        &.target {
+            animation : mark .5s ease-in-out 5;
+        }
+    }
+
+    &.notRead {
+        background : var(--bg-second-color);
+    }
+
+    &:hover {
+        cursor     : pointer;
+        box-shadow : 0 0 0 3px var(--bg-main-color), 0 0 0 5px var(--primary-color);
     }
 
     .avatar {
@@ -58,6 +111,10 @@
 
         .message {
             color : var(--text-main-color);
+
+            &_content {
+                width : 100%;
+            }
         }
     }
 }

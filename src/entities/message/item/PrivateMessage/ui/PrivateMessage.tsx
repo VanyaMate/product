@@ -1,36 +1,44 @@
 import { ComponentPropsWithoutRef, FC, memo, useRef } from 'react';
 import classNames from 'classnames';
-import css from './MyMessage.module.scss';
-import { DomainMessage } from 'product-types/dist/message/DomainMessage';
-import { IoBuild } from 'react-icons/io5';
-import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
+import css from './PrivateMessage.module.scss';
 import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
-import 'dayjs/locale/ru.js';
 import {
     UserAvatar,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
+import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
+import { IoBuild } from 'react-icons/io5';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { DomainMessage } from 'product-types/dist/message/DomainMessage';
+import {
+    MessageBody,
+} from '@/entities/message/item/MessageBody/ui/MessageBody.tsx';
+import 'dayjs/locale/ru.js';
 
 
 dayjs.extend(localizedFormat);
 dayjs.locale('ru');
 
-
-export type MyMessageProps =
+export type PrivateMessageProps =
     {
         message: DomainMessage;
+        userId: string;
+        hash: string;
     }
     & ComponentPropsWithoutRef<'article'>;
 
-export const MyMessage: FC<MyMessageProps> = memo(function MyMessage (props) {
-    const { className, message, ...other } = props;
-    const dayJs                            = useRef(dayjs(message.creationDate));
+export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMessage (props) {
+    const { className, message, hash, userId, ...other } = props;
+    const dayJs                                          = useRef(dayjs(message.creationDate));
 
     return (
         <article
             { ...other }
-            className={ classNames(css.container, {}, [ className ]) }
-            id={ message.id }
+            className={ classNames(css.container, {
+                [css.target] : hash === `#${ message.id }`,
+                [css.me]     : userId === message.author.id,
+                [css.notRead]: !message.read,
+            }, [ className ]) }
+            id={ `m_${ message.id }` }
         >
             <UserAvatar
                 avatar={ message.author.avatar }
@@ -55,7 +63,11 @@ export const MyMessage: FC<MyMessageProps> = memo(function MyMessage (props) {
                     </div>
                 </header>
                 <div className={ css.message }>
-                    { message.message }
+                    <MessageBody
+                        body={ message.message }
+                        className={ css.message_content }
+                        type={ message.type }
+                    />
                 </div>
             </div>
         </article>

@@ -1,13 +1,12 @@
 import {
     FriendsSchema,
 } from '@/app/redux/slices/friends/types/friends.schema.ts';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
     getFriendsWithRequestsForUser,
 } from '@/app/redux/slices/friends/thunks/getFriendsWithRequestsForUser/getFriendsWithRequestsForUser.ts';
-import { DomainUser, isDomainUser } from 'product-types/dist/user/DomainUser';
+import { isDomainUser } from 'product-types/dist/user/DomainUser';
 import {
-    DomainFriendRequest,
     isDomainFriendRequest,
 } from 'product-types/dist/friends/DomainFriendRequest';
 import {
@@ -23,6 +22,21 @@ import {
     removeFriend,
 } from '@/app/redux/slices/friends/thunks/removeFriend/removeFriend.ts';
 import { logout } from '@/app/redux/slices/auth/thunks/logout/logout.ts';
+import {
+    removeFriendNotification,
+} from '@/app/redux/slices/friends/thunks/removeFriend/removeFriendNotification.ts';
+import {
+    cancelFriendRequestNotification,
+} from '@/app/redux/slices/friends/thunks/cancelFriendRequest/cancelFriendRequestNotification.ts';
+import {
+    acceptFriendRequestNotification,
+} from '@/app/redux/slices/friends/thunks/acceptFriendRequest/acceptFriendRequestNotification.ts';
+import {
+    createFriendRequestForUserNotification,
+} from '@/app/redux/slices/friends/thunks/createFriendRequestForUser/createFriendRequestForUserNotification.ts';
+import {
+    receivedFriendRequestNotification,
+} from '@/app/redux/slices/friends/thunks/createFriendRequestForUser/receivedFriendRequestNotification.ts';
 
 
 const initialState: FriendsSchema = {
@@ -36,32 +50,7 @@ const initialState: FriendsSchema = {
 export const friendsSlice = createSlice({
     name         : 'friends',
     initialState : initialState,
-    reducers     : {
-        addFriend (state, action: PayloadAction<DomainUser>) {
-            if (state.friends.every((user) => user.id !== action.payload.id)) {
-                state.friends.push(action.payload);
-            }
-        },
-        removeFriend (state, action: PayloadAction<string>) {
-            state.friends = state.friends.filter((friend) => friend.id !== action.payload);
-        },
-        addFriendRequestSent (state, action: PayloadAction<DomainFriendRequest>) {
-            if (state.requestsSent.every((request) => request.requestId !== action.payload.requestId)) {
-                state.requestsSent.push(action.payload);
-            }
-        },
-        addFriendRequestReceived (state, action: PayloadAction<DomainFriendRequest>) {
-            if (state.requestsReceived.every((request) => request.requestId !== action.payload.requestId)) {
-                state.requestsReceived.push(action.payload);
-            }
-        },
-        removeFriendRequestSent (state, action: PayloadAction<string>) {
-            state.requestsSent = state.requestsSent.filter((request) => request.requestId !== action.payload);
-        },
-        removeFriendRequestReceived (state, action: PayloadAction<string>) {
-            state.requestsReceived = state.requestsReceived.filter((request) => request.requestId !== action.payload);
-        },
-    },
+    reducers     : {},
     extraReducers: (builder) => {
         // getFriendsWithRequestsForUser
         builder.addCase(getFriendsWithRequestsForUser.fulfilled, (state, action) => {
@@ -85,7 +74,9 @@ export const friendsSlice = createSlice({
         builder.addCase(createFriendRequestForUser.fulfilled, (state, action) => {
             state.isPending = false;
             state.error     = null;
-            state.requestsSent.push(action.payload);
+            if (!state.requestsSent.find((request) => request.requestId === action.payload.requestId)) {
+                state.requestsSent.push(action.payload);
+            }
         });
         builder.addCase(createFriendRequestForUser.pending, (state) => {
             state.isPending = true;
@@ -95,6 +86,16 @@ export const friendsSlice = createSlice({
             state.isPending = false;
             state.error     = action.payload;
         });
+        builder.addCase(createFriendRequestForUserNotification.fulfilled, (state, action) => {
+            if (!state.requestsSent.find((request) => request.requestId === action.payload.requestId)) {
+                state.requestsSent.push(action.payload);
+            }
+        });
+        builder.addCase(receivedFriendRequestNotification.fulfilled, (state, action) => {
+            if (!state.requestsReceived.find((request) => request.requestId === action.payload.requestId)) {
+                state.requestsReceived.push(action.payload);
+            }
+        });
 
 
         // acceptFriendRequest
@@ -102,8 +103,9 @@ export const friendsSlice = createSlice({
             state.isPending        = false;
             state.error            = null;
             state.requestsReceived = state.requestsReceived.filter((request) => request.requestId !== action.payload.requestId);
+            state.requestsSent     = state.requestsSent.filter((request) => request.requestId !== action.payload.requestId);
 
-            if (state.friends.every((user) => user.id !== action.payload.user.id)) {
+            if (!state.friends.some((user) => user.id === action.payload.user.id)) {
                 state.friends.push(action.payload.user);
             }
         });
@@ -114,6 +116,14 @@ export const friendsSlice = createSlice({
         builder.addCase(acceptFriendRequest.rejected, (state, action) => {
             state.isPending = false;
             state.error     = action.payload;
+        });
+        builder.addCase(acceptFriendRequestNotification.fulfilled, (state, action) => {
+            state.requestsReceived = state.requestsReceived.filter((request) => request.requestId !== action.payload.requestId);
+            state.requestsSent     = state.requestsSent.filter((request) => request.requestId !== action.payload.requestId);
+
+            if (!state.friends.some((user) => user.id === action.payload.user.id)) {
+                state.friends.push(action.payload.user);
+            }
         });
 
 
@@ -132,6 +142,10 @@ export const friendsSlice = createSlice({
             state.isPending = false;
             state.error     = action.payload;
         });
+        builder.addCase(cancelFriendRequestNotification.fulfilled, (state, action) => {
+            state.requestsSent     = state.requestsSent.filter((request) => request.requestId !== action.payload.requestId);
+            state.requestsReceived = state.requestsReceived.filter((request) => request.requestId !== action.payload.requestId);
+        });
 
 
         // removeFriend
@@ -148,6 +162,10 @@ export const friendsSlice = createSlice({
             state.isPending = false;
             state.error     = action.payload;
         });
+        builder.addCase(removeFriendNotification.fulfilled, (state, action) => {
+            state.friends = state.friends.filter((user) => user.id !== action.payload.user.id);
+        });
+
 
         builder.addCase(logout.fulfilled, (state) => {
             state.requestsReceived = [];

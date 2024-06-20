@@ -15,7 +15,7 @@ export type PrivateDialogueWindowUserPreviewProps =
 export const PrivateDialogueWindowUserPreview: FC<PrivateDialogueWindowUserPreviewProps> = memo(function PrivateDialogueWindowUserPreview (props) {
     const { dialogueId } = props;
     // TODO
-    const user           = useAppSelector((state) => state.dialogues).dialogues.find((dialogue) => dialogue.id === dialogueId).user.login;
+    const user           = useAppSelector((state) => state.dialogues).dialogues.find((dialogue) => dialogue.id === dialogueId)?.user.login ?? '';
 
     return (
         <UserContainer login={ user }/>

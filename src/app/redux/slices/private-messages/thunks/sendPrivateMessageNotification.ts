@@ -6,4 +6,4 @@ import {
 } from 'product-types/dist/notification/notification-data-types/DomainNotificationPrivateMessageData';
 
 
-export const sendPrivateMessageNotification = createNotificationAction<DomainNotificationPrivateMessageData>('private-messages/send-private-message');
+export const sendPrivateMessageNotification = createNotificationAction<DomainNotificationPrivateMessageData>('private-messages/sendPrivateMessageNotification');

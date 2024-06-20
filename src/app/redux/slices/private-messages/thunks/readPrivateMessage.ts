@@ -14,7 +14,7 @@ import { thunkCatch } from '@/app/redux/catch/thunk-catch.ts';
 
 
 export const readPrivateMessage = createAsyncThunk<DomainNotificationPrivateMessageReadData, string, ThunkApiConfig<DomainServiceResponseError>>(
-    'private-messages',
+    'private-messages/readPrivateMessage',
     async (messageId, thunkAPI) => {
         const { extra: { api }, rejectWithValue } = thunkAPI;
         try {

@@ -6,4 +6,4 @@ import {
 } from '@/app/redux/lib/createNotificationAction.ts';
 
 
-export const removePrivateMessageNotification = createNotificationAction<DomainNotificationPrivateMessageDeletedData>('private-messages/remove-private-message-notification');
+export const removePrivateMessageNotification = createNotificationAction<DomainNotificationPrivateMessageDeletedData>('private-messages/removePrivateMessageNotification');

@@ -13,11 +13,13 @@ import {
     PrivateDialogueMessagePreview,
 } from '@/entities/private-dialogues/item/PrivateDialogueMessagePreview/ui/PrivateDialogueMessagePreview.tsx';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
+import { DomainMessage } from 'product-types/dist/message/DomainMessage';
 
 
 export type PrivateDialogueProps =
     {
         dialogue: DomainPrivateDialogueFull;
+        lastMessage: DomainMessage;
         status: ThunkState;
         login: string;
         selected: boolean;
@@ -25,7 +27,15 @@ export type PrivateDialogueProps =
     & ComponentPropsWithoutRef<'article'>;
 
 export const PrivateDialogue: FC<PrivateDialogueProps> = memo(function PrivateDialogue (props) {
-    const { className, dialogue, status, selected, login, ...other } = props;
+    const {
+              className,
+              dialogue,
+              lastMessage,
+              status,
+              selected,
+              login,
+              ...other
+          } = props;
 
     console.log(status);
 
@@ -56,7 +66,7 @@ export const PrivateDialogue: FC<PrivateDialogueProps> = memo(function PrivateDi
                     </header>
                     <PrivateDialogueMessagePreview
                         login={ login }
-                        message={ dialogue.messages[dialogue.messages.length - 1] }
+                        message={ lastMessage }
                         selected={ selected }
                     />
                 </div>

@@ -6,4 +6,4 @@ import {
 } from '@/app/redux/lib/createNotificationAction.ts';
 
 
-export const readAllPrivateMessageNotification = createNotificationAction<DomainNotificationPrivateMessageReadAllData>('private-messages/read-all-private-message-notification');
+export const readAllPrivateMessageNotification = createNotificationAction<DomainNotificationPrivateMessageReadAllData>('private-messages/readAllPrivateMessageNotification');

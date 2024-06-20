@@ -30,6 +30,7 @@ export const CompanionMessage: FC<CompanionMessageProps> = memo(function Compani
         <article
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
+            id={ message.id }
         >
             <UserAvatar
                 avatar={ message.author.avatar }

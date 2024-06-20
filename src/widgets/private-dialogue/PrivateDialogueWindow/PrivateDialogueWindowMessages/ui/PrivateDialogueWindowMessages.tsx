@@ -2,10 +2,13 @@ import { ComponentPropsWithoutRef, FC, memo, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import css from './PrivateDialogueWindowMessages.module.scss';
 import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
-import { Message } from '@/entities/message/item/Message/ui/Message.tsx';
 import {
     getAuthUser,
 } from '@/app/redux/slices/auth/selectors/getAuthUser/getAuthUser.ts';
+import {
+    PrivateMessage,
+} from '@/entities/message/item/PrivateMessage/ui/PrivateMessage.tsx';
+import { useLocation } from 'react-router-dom';
 
 
 export type PrivateDialogueWindowMessagesProps =
@@ -16,18 +19,43 @@ export type PrivateDialogueWindowMessagesProps =
 
 export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProps> = memo(function PrivateDialogueWindowMessages (props) {
     const { className, dialogueId, ...other } = props;
-    const dialogues                           = useAppSelector((state) => state.dialogues);
+    const messages                            = useAppSelector((state) => state.privateMessages);
+    const searchMessages                      = useAppSelector((state) => state.privateMessagesSearch);
     const userData                            = useAppSelector(getAuthUser);
+    const { hash }                            = useLocation();
     const container                           = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (dialogueId && container.current) {
-            container.current.scroll({
-                behavior: 'smooth',
-                top     : container.current.scrollHeight,
-            });
+        if (hash) {
+            const element: HTMLElement = container.current.querySelector(`#m_${ hash.substring(1) }`);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                element.focus();
+            } else {
+                // TODO
+                // loading messages
+            }
         }
-    }, [ dialogueId, dialogues ]);
+    }, [ hash ]);
+
+    useEffect(() => {
+        if (container.current && dialogueId && messages[dialogueId]) {
+            const { clientHeight, scrollHeight, scrollTop } = container.current;
+            const scrollPlaceInBottom                       = scrollHeight - clientHeight - scrollTop < 200;
+            if (scrollPlaceInBottom) {
+                container.current.scroll({
+                    behavior: 'smooth',
+                    top     : container.current.scrollHeight,
+                });
+            }
+        }
+    }, [ dialogueId, messages ]);
+
+    useEffect(() => {
+        if (dialogueId) {
+            container.current.scroll({ top: container.current.scrollHeight });
+        }
+    }, [ dialogueId ]);
 
     return (
         <div
@@ -37,22 +65,22 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
         >
             <div className={ css.content }>
                 {
-                    dialogues.dialogueSearch[dialogueId]
-                    ? dialogues.dialogueSearch[dialogueId]
-                        .messages
+                    searchMessages[dialogueId]
+                    ? searchMessages[dialogueId]
+                        .searchMessages
                         .map((message) =>
-                            <Message
+                            <PrivateMessage
+                                hash={ hash }
                                 key={ message.id }
                                 message={ message }
                                 userId={ userData.id }
                             />,
                         )
-                    : dialogues
-                        .dialogues
-                        .find((dialogue) => dialogue.id === dialogueId)
-                        ?.messages
+                    : messages[dialogueId]
+                        .messages
                         .map((message) =>
-                            <Message
+                            <PrivateMessage
+                                hash={ hash }
                                 key={ message.id }
                                 message={ message }
                                 userId={ userData.id }

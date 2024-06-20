@@ -8,12 +8,12 @@ import {
     assertDomainResponse,
 } from 'product-types/dist/response/DomainResponse';
 import {
-    assertDomainPrivateDialogueWithUser,
-    DomainPrivateDialogueWithUser,
-} from 'product-types/dist/private-dialogue/DomainPrivateDialogueWithUser';
+    assertDomainNotificationPrivateDialogueDeletedData,
+    DomainNotificationPrivateDialogueDeletedData,
+} from 'product-types/dist/notification/notification-data-types/DomainNotificationPrivateDialogueDeletedData';
 
 
-export const removePrivateDialogue = createAsyncThunk<DomainPrivateDialogueWithUser, string, ThunkApiConfig<DomainServiceResponseError>>(
+export const removePrivateDialogue = createAsyncThunk<DomainNotificationPrivateDialogueDeletedData, string, ThunkApiConfig<DomainServiceResponseError>>(
     'private-dialogues/removePrivateDialogue',
     async (dialogueId, thunkAPI) => {
         const { extra: { api }, rejectWithValue } = thunkAPI;
@@ -26,7 +26,7 @@ export const removePrivateDialogue = createAsyncThunk<DomainPrivateDialogueWithU
                     return data.data;
                 })
                 .then((data: unknown) => {
-                    assertDomainPrivateDialogueWithUser(data, 'data', 'DomainPrivateDialogueWithUser');
+                    assertDomainNotificationPrivateDialogueDeletedData(data, 'data', 'DomainNotificationPrivateDialogueDeletedData');
                     return data;
                 });
 

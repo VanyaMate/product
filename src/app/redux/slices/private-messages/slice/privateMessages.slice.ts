@@ -76,7 +76,7 @@ export const privateMessagesSlice = createSlice({
                 ...state[action.meta.arg],
                 isPending: false,
                 error    : null,
-                messages : mergedMessages,
+                messages : action.payload.messages,
             };
         });
 
@@ -220,3 +220,8 @@ export const privateMessagesSlice = createSlice({
         });
     },
 });
+
+export const {
+                 actions: privateMessagesActions,
+                 reducer: privateMessagesReducer,
+             } = privateMessagesSlice;
