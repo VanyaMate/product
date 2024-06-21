@@ -43,10 +43,15 @@ export const PrivateDialogueWindowInput: FC<PrivateDialogueWindowInputProps> = m
     const inputController                     = useInputWithError({ name: 'message' });
     const form                                = useForm<{ message: string }>({
         inputs  : [ inputController ],
-        onSubmit: (data) => dispatch(sendPrivateMessage([ dialogueId, {
-            message    : data.message,
-            messageType: getMessageTypeByBody(data.message),
-        } ])).then(resetInput),
+        onSubmit: (data) => {
+            if (data.message) {
+                return dispatch(sendPrivateMessage([ dialogueId, {
+                    message    : data.message,
+                    messageType: getMessageTypeByBody(data.message),
+                } ])).then(resetInput);
+            }
+            return Promise.resolve();
+        },
     });
     const dispatch                            = useAppDispatch();
 
@@ -64,10 +69,11 @@ export const PrivateDialogueWindowInput: FC<PrivateDialogueWindowInputProps> = m
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            <Form controller={ form }>
-                <Row>
+            <Form className={ css.form } controller={ form }>
+                <Row className={ css.interface }>
                     <InputWithError
                         className={ css.input }
+                        containerClassName={ css.inputContainer }
                         controller={ inputController }
                         placeholder={ t('write_message') }
                     />

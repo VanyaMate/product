@@ -2,11 +2,24 @@
     width         : 100%;
     background    : var(--bg-ghost-color);
     border-radius : var(--offset-medium);
-    padding       : var(--offset-medium);
+    padding       : var(--offset-small);
     display       : flex;
     align-items   : center;
 
-    .input {
-        height : 40px;
+    .form {
+        width : 100%;
+    }
+
+    .interface {
+        width : 100%;
+
+        .inputContainer {
+            width     : 100%;
+            min-width : 300px;
+        }
+
+        .input {
+            height : 40px;
+        }
     }
 }

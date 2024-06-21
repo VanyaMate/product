@@ -3,6 +3,7 @@
     "send_message": "Отправить сообщение",
     "search_message": "Найти сообщения",
     "empty_dialogue": "Пустой диалог",
+    "no_more_messages_in_dialogue": "Больше сообщений нет",
     "dialogue_me": "я",
     "dialogue_archived_by_user": "Диалог заархивирован пользователем",
     "dialogue_deleted_by_user": "Диалог удален пользователем",

@@ -18,10 +18,10 @@ export const usePrivateDialogueMessagesLoaderTrigger = function (dialogueId: str
         const container = ref.current;
         if (container && dialogueId) {
             const onScroll = () => throttle(() => {
-                if (ref.current.scrollTop < 250) {
+                if (ref.current.scrollTop < 1000) {
                     const dialogueMessages = messages[dialogueId];
                     if (dialogueMessages) {
-                        if (dialogueMessages.messages.length && !dialogueMessages.isPending) {
+                        if (dialogueMessages.messages.length && !dialogueMessages.isPending && dialogueMessages.hasMoreMessage) {
                             dispatch(getMessagesByCursor([ dialogueId, {
                                 cursor: dialogueMessages.messages[0].id,
                                 limit : 20,

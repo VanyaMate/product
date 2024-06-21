@@ -46,7 +46,7 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
         }
     }, [ dialogueId, dispatch ]);
 
-    if (!dialogues || dialogues.isPending) {
+    if (!dialogues || dialogues.isPending || (dialogueId && !messages[dialogueId])) {
         return <PageLoader/>;
     }
 

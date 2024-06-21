@@ -41,7 +41,10 @@ import {
 import {
     getMessagesByCursor,
 } from '@/app/redux/slices/private-messages/thunks/getMessagesByCursor.ts';
-import { isDomainMessage } from 'product-types/dist/message/DomainMessage';
+import {
+    DomainMessage,
+    isDomainMessage,
+} from 'product-types/dist/message/DomainMessage';
 
 
 const initialState: PrivateMessagesSchema = {};
@@ -54,10 +57,13 @@ export const privateMessagesSlice = createSlice({
         builder.addCase(getOnePrivateDialogues.pending, (state, action) => {
             const currentState     = state[action.meta.arg];
             state[action.meta.arg] = {
-                isPending: true,
-                error    : null,
-                messages : currentState.messages ?? [],
-                offset   : currentState.offset ?? 0,
+                isPending     : true,
+                error         : null,
+                messages      : currentState?.messages ?? [],
+                lastMessageId : '',
+                firstMessageId: '',
+                hasMoreMessage: currentState?.hasMoreMessage ?? true,
+                offset        : currentState?.offset ?? 0,
             };
         });
         builder.addCase(getOnePrivateDialogues.rejected, (state, action) => {
@@ -68,40 +74,47 @@ export const privateMessagesSlice = createSlice({
             };
         });
         builder.addCase(getOnePrivateDialogues.fulfilled, (state, action) => {
-            const mergedMessages = state[action.meta.arg].messages;
-
-            action.payload.messages.forEach((message) => {
-                if (!mergedMessages.find((mergedMessage) => mergedMessage.id === message.id)) {
-                    mergedMessages.push(message);
-                }
-            });
-
             state[action.meta.arg] = {
                 ...state[action.meta.arg],
-                isPending: false,
-                error    : null,
-                messages : action.payload.messages,
+                isPending     : false,
+                error         : null,
+                messages      : action.payload.messages,
+                lastMessageId : action.payload.messages.slice(-1)[0]?.id ?? '',
+                hasMoreMessage: action.payload.messages.length === 20,
             };
         });
 
 
         builder.addCase(getListPrivateDialogues.fulfilled, (state, action) => {
+            console.log(action.payload);
             action.payload.forEach((dialogue) => {
+                console.log('Before getListPrivateDialogues', dialogue.id);
+                console.log('Before state', state[dialogue.id]?.lastMessageId);
                 const storedDialogue = state[dialogue.id];
                 if (storedDialogue) {
-                    const lastMessage       = dialogue.messages[0];
-                    const lastMessagesEqual = storedDialogue.messages[storedDialogue.messages.length - 1]?.id !== lastMessage?.id;
-                    if (lastMessage && lastMessagesEqual) {
-                        storedDialogue.messages.push(lastMessage);
+                    const lastMessage = dialogue.messages.slice(-1)[0];
+                    console.log('Stored exist. Last message ->', lastMessage);
+                    const lastMessagesEqual = storedDialogue.messages[storedDialogue.messages.length - 1]?.id === lastMessage?.id;
+                    if (lastMessage && !lastMessagesEqual) {
+                        if (!storedDialogue.messages.find((message) => message.id === lastMessage.id)) {
+                            storedDialogue.messages.push(lastMessage);
+                            console.log('Change last message from', storedDialogue.lastMessageId, 'to', lastMessage.id);
+                            storedDialogue.lastMessageId = lastMessage.id;
+                        }
                     }
                 } else {
+                    const messageId    = dialogue.messages.slice(-1)[0]?.id ?? '';
                     state[dialogue.id] = {
-                        isPending: false,
-                        error    : null,
-                        messages : dialogue.messages,
-                        offset   : 0,
+                        isPending     : false,
+                        error         : null,
+                        messages      : dialogue.messages,
+                        lastMessageId : messageId,
+                        firstMessageId: '',
+                        offset        : 0,
+                        hasMoreMessage: true,
                     };
                 }
+                console.log('After', state[dialogue.id].lastMessageId);
             });
         });
 
@@ -115,10 +128,13 @@ export const privateMessagesSlice = createSlice({
             }
 
             state[action.meta.arg[0]] = {
-                isPending: currentState.isPending ?? false,
-                error    : currentState.error ?? null,
-                messages : mergedMessages,
-                offset   : 0,
+                isPending     : currentState?.isPending ?? false,
+                error         : currentState?.error ?? null,
+                messages      : mergedMessages,
+                lastMessageId : action.payload.message.id,
+                firstMessageId: currentState?.firstMessageId ?? '',
+                offset        : 0,
+                hasMoreMessage: currentState?.hasMoreMessage ?? true,
             };
         });
         builder.addCase(sendPrivateMessageNotification.fulfilled, (state, action) => {
@@ -130,10 +146,13 @@ export const privateMessagesSlice = createSlice({
             }
 
             state[action.payload.dialogue.id] = {
-                isPending: currentState.isPending ?? false,
-                error    : currentState.error ?? null,
-                messages : mergedMessages,
-                offset   : 0,
+                isPending     : currentState?.isPending ?? false,
+                error         : currentState?.error ?? null,
+                messages      : mergedMessages,
+                lastMessageId : action.payload.message.id,
+                firstMessageId: currentState?.firstMessageId ?? '',
+                offset        : 0,
+                hasMoreMessage: currentState?.hasMoreMessage ?? true,
             };
         });
 
@@ -228,10 +247,13 @@ export const privateMessagesSlice = createSlice({
             const dialogueId = action.meta.arg[0];
             if (!state[dialogueId]) {
                 state[dialogueId] = {
-                    isPending: true,
-                    messages : [],
-                    offset   : 0,
-                    error    : null,
+                    isPending     : true,
+                    messages      : [],
+                    lastMessageId : '',
+                    firstMessageId: '',
+                    offset        : 0,
+                    error         : null,
+                    hasMoreMessage: true,
                 };
             }
             state[dialogueId].isPending = true;
@@ -242,10 +264,22 @@ export const privateMessagesSlice = createSlice({
             state[dialogueId].isPending = false;
         });
         builder.addCase(getMessagesByCursor.fulfilled, (state, action) => {
-            const dialogueId            = action.meta.arg[0];
-            state[dialogueId].isPending = false;
-            state[dialogueId].error     = null;
-            state[dialogueId].messages  = [ ...action.payload.list.filter(isDomainMessage), ...state[dialogueId].messages ];
+            const payloadMessages                 = action.payload.list.filter(isDomainMessage);
+            const dialogueId                      = action.meta.arg[0];
+            const mergedMessages: DomainMessage[] = [];
+
+            payloadMessages.forEach((message) => {
+                if (!state[dialogueId].messages.find((stateMessage) => stateMessage.id === message.id)) {
+                    mergedMessages.push(message);
+                }
+            });
+
+            state[dialogueId].isPending      = false;
+            state[dialogueId].error          = null;
+            state[dialogueId].firstMessageId = state[dialogueId].messages[0]?.id ?? '';
+            state[dialogueId].lastMessageId  = state[dialogueId].lastMessageId ?? state[dialogueId].messages.slice(-1)[0]?.id ?? payloadMessages.slice(-1)[0]?.id ?? '';
+            state[dialogueId].messages       = [ ...mergedMessages, ...state[dialogueId].messages ];
+            state[dialogueId].hasMoreMessage = action.payload.list.length === action.meta.arg[1].limit;
         });
     },
 });

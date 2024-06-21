@@ -21,6 +21,9 @@ import {
 import {
     RemovePrivateDialogue,
 } from '@/features/private-dialogue/button/RemovePrivateDialogue/ui/RemovePrivateDialogue.tsx';
+import {
+    ReadAllMessagesPrivateDialogue,
+} from '@/features/private-dialogue/button/ReadAllMessagesPrivateDialogue/ui/ReadAllMessagesPrivateDialogue.tsx';
 
 
 export type PrivateDialogueWindowHeaderProps =
@@ -64,6 +67,8 @@ export const PrivateDialogueWindowHeader: FC<PrivateDialogueWindowHeaderProps> =
                     <InputWithError controller={ search }/>
                 </Row>
                 <Row>
+                    <ReadAllMessagesPrivateDialogue dialogueId={ dialogueId }/>
+                    <div className={ css.divider }/>
                     <ArchivePrivateDialogue dialogueId={ dialogueId }/>
                     <RemovePrivateDialogue dialogueId={ dialogueId }/>
                 </Row>
