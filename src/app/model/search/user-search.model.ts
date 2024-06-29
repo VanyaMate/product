@@ -11,22 +11,22 @@ import {
 import { returnValidErrors } from '@/app/lib/error/returnValidErrors.ts';
 
 
-export const getUsersByLoginStartEffect = effect(getUsersByLoginStartAction);
+export const searchUsersByLoginStartEffect = effect(getUsersByLoginStartAction);
 
 
 export const usersSearchIsPending = store<boolean>(false)
-    .on(getUsersByLoginStartEffect, 'onBefore', () => true)
-    .on(getUsersByLoginStartEffect, 'onFinally', () => false);
+    .on(searchUsersByLoginStartEffect, 'onBefore', () => true)
+    .on(searchUsersByLoginStartEffect, 'onFinally', () => false);
 
 
 export const usersSearchError = store<DomainServiceResponseError | null>(null)
-    .on(getUsersByLoginStartEffect, 'onError', (_, { error }) => returnValidErrors(error))
-    .on(getUsersByLoginStartEffect, 'onSuccess', () => null);
+    .on(searchUsersByLoginStartEffect, 'onError', (_, { error }) => returnValidErrors(error))
+    .on(searchUsersByLoginStartEffect, 'onSuccess', () => null);
 
 
 export const usersSearch = store<Array<DomainUserWithPermissions>>([])
-    .on(getUsersByLoginStartEffect, 'onSuccess', (_, { result }) => result.list.filter(isDomainUserWithPermissions));
+    .on(searchUsersByLoginStartEffect, 'onSuccess', (_, { result }) => result.list.filter(isDomainUserWithPermissions));
 
 
 export const usersSearchCount = store<number>(0)
-    .on(getUsersByLoginStartEffect, 'onSuccess', (_, { result }) => result.count);
+    .on(searchUsersByLoginStartEffect, 'onSuccess', (_, { result }) => result.count);
