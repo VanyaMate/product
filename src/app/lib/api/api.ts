@@ -1,0 +1,24 @@
+import {
+    createFetchWithInterceptors,
+} from '../fetch/createFetchWithInterceptors';
+import {
+    addUserTokensInterceptor,
+} from '@/app/lib/api/interceptors/request/add-user-tokens.interceptor.ts';
+import {
+    addBaseUrlInterceptor,
+} from '@/app/lib/api/interceptors/request/add-base-url.interceptor.ts';
+import {
+    addJsonContentTypeInterceptor,
+} from '@/app/lib/api/interceptors/request/add-json-content-type.interceptor.ts';
+import {
+    responseTokenRefreshedInterceptor,
+} from '@/app/lib/api/interceptors/response/refresh-user-tokens.interceptor.ts';
+
+
+export const api = createFetchWithInterceptors([
+    addBaseUrlInterceptor(`${ __API__ }/v1/`),
+    addJsonContentTypeInterceptor,
+    addUserTokensInterceptor,
+], [
+    responseTokenRefreshedInterceptor,
+]);
