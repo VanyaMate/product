@@ -43,6 +43,8 @@
         "@reduxjs/toolkit": "^2.2.3",
         "@types/redux-thunk": "^2.1.0",
         "@vanyamate/helpers": "^0.0.5",
+        "@vanyamate/sec": "^0.1.0",
+        "@vanyamate/sec-react": "^0.0.4",
         "axios": "^1.6.8",
         "class-variance-authority": "^0.7.0",
         "classnames": "^2.5.1",
