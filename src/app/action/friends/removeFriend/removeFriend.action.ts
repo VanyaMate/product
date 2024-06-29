@@ -6,7 +6,7 @@ import {
 
 export const removeFriendAction = (userId: string) =>
     request(
-        `/v1/friend/remove/${ userId }`,
+        `v1/friend/remove/${ userId }`,
         { method: 'POST' },
         isDomainNotificationFriendDeletedData,
     );

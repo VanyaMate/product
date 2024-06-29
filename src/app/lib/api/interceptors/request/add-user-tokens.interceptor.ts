@@ -2,8 +2,9 @@ import {
     RequestInterceptor,
 } from '@/app/lib/fetch/createFetchWithInterceptors';
 import {
-    LOCAL_STORAGE_USER_ACCESS_TOKEN, LOCAL_STORAGE_USER_REFRESH_TOKEN,
-} from '@/app/redux/slices/user/consts/storage.const.ts';
+    LOCAL_STORAGE_USER_ACCESS_TOKEN,
+    LOCAL_STORAGE_USER_REFRESH_TOKEN,
+} from '@/app/model/auth/const';
 
 
 export const addUserTokensInterceptor: RequestInterceptor = async (data, init) => {

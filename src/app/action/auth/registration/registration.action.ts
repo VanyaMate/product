@@ -7,7 +7,7 @@ import { isDomainUser } from 'product-types/dist/user/DomainUser';
 
 export const registrationAction = (registrationData: DomainRegistrationData) =>
     request(
-        `authentication/registration`,
+        `v1/authentication/registration`,
         {
             method: 'POST',
             body  : JSON.stringify(registrationData),

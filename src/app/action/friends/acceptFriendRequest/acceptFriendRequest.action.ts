@@ -6,7 +6,7 @@ import {
 
 export const acceptFriendRequestAction = (requestId: string) =>
     request(
-        `/v1/friend/accept/${ requestId }`,
+        `v1/friend/accept/${ requestId }`,
         { method: 'POST' },
         isDomainNotificationFriendRequestAcceptedData,
     );

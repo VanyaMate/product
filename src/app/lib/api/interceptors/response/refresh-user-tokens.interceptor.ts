@@ -4,8 +4,9 @@ import {
     ResponseInterceptor,
 } from '@/app/lib/fetch/createFetchWithInterceptors.ts';
 import {
-    LOCAL_STORAGE_USER_ACCESS_TOKEN, LOCAL_STORAGE_USER_REFRESH_TOKEN,
-} from '@/app/redux/slices/user/consts/storage.const.ts';
+    LOCAL_STORAGE_USER_ACCESS_TOKEN,
+    LOCAL_STORAGE_USER_REFRESH_TOKEN,
+} from '@/app/model/auth/const';
 import {
     isDomainAuthResponse,
 } from 'product-types/dist/authorization/DomainAuthResponse';

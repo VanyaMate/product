@@ -6,7 +6,7 @@ import {
 
 export const cancelFriendRequestAction = (requestId: string) =>
     request(
-        `/v1/friend/cancel/${ requestId }`,
+        `v1/friend/cancel/${ requestId }`,
         { method: 'POST' },
         isDomainNotificationFriendRequestCanceledData,
     );

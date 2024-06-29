@@ -17,7 +17,7 @@ import {
 
 
 export const getMessagesByQuery = createAsyncThunk<DomainSearchItem, [ string, DomainSearchItemOptions ], ThunkApiConfig<DomainServiceResponseError>>(
-    'private-messages/getMessagesByQuery',
+    'private-messages/getPrivateMessagesByQuery',
     async ([ dialogueId, options ], thunkAPI) => {
         const { extra: { api }, rejectWithValue } = thunkAPI;
         try {

@@ -7,7 +7,7 @@ import { isDomainUser } from 'product-types/dist/user/DomainUser';
 
 export const loginAction = (loginData: DomainLoginData) =>
     request(
-        `authentication/login`,
+        `v1/authentication/login`,
         {
             method: 'POST',
             body  : JSON.stringify(loginData),

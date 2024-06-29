@@ -16,7 +16,7 @@ import {
 
 
 export const api = createFetchWithInterceptors([
-    addBaseUrlInterceptor(`${ __API__ }/v1/`),
+    addBaseUrlInterceptor(`${ __API__ }/`),
     addJsonContentTypeInterceptor,
     addUserTokensInterceptor,
 ], [
