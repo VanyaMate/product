@@ -255,4 +255,135 @@ export const privateDialoguesStatus = store<Record<string, PrivateDialogueStatus
     );
 
 
-export const privateDialogueWithUser = store<Record<string, PrivateDialogueStatusWithUser>>({});
+export const privateDialogueWithUser = store<Record<string, PrivateDialogueStatusWithUser>>({})
+    .on(
+        archivePrivateDialogueEffect,
+        'onBefore',
+        (state, { args: [ userId ] }) => ({
+            ...state,
+            [userId]: {
+                isPending: true,
+                error    : null,
+                created  : state[userId]?.created ?? false,
+            },
+        }),
+    )
+    .on(
+        archivePrivateDialogueEffect,
+        'onSuccess',
+        (state, { args: [ userId ] }) => ({
+            ...state,
+            [userId]: {
+                isPending: false,
+                error    : null,
+                created  : state[userId]?.created ?? true,
+            },
+        }),
+    )
+    .on(
+        archivePrivateDialogueEffect,
+        'onError',
+        (state, { args: [ userId ], error }) => ({
+            ...state,
+            [userId]: {
+                isPending: false,
+                error    : returnValidErrors(error),
+                created  : state[userId]?.created ?? false,
+            },
+        }),
+    )
+    .on(
+        unArchivePrivateDialogueEffect,
+        'onBefore',
+        (state, { args: [ userId ] }) => ({
+            ...state,
+            [userId]: {
+                isPending: true,
+                error    : null,
+                created  : state[userId]?.created ?? false,
+            },
+        }),
+    )
+    .on(
+        unArchivePrivateDialogueEffect,
+        'onSuccess',
+        (state, { args: [ userId ] }) => ({
+            ...state,
+            [userId]: {
+                isPending: false,
+                error    : null,
+                created  : state[userId]?.created ?? true,
+            },
+        }),
+    )
+    .on(
+        unArchivePrivateDialogueEffect,
+        'onError',
+        (state, { args: [ userId ], error }) => ({
+            ...state,
+            [userId]: {
+                isPending: false,
+                error    : returnValidErrors(error),
+                created  : state[userId]?.created ?? false,
+            },
+        }),
+    )
+    .on(
+        removePrivateDialogueEffect,
+        'onBefore',
+        (state, { args: [ userId ] }) => ({
+            ...state,
+            [userId]: {
+                isPending: true,
+                error    : null,
+                created  : state[userId]?.created ?? false,
+            },
+        }),
+    )
+    .on(
+        removePrivateDialogueEffect,
+        'onSuccess',
+        (state, { args: [ userId ] }) => {
+            delete state[userId];
+            return { ...state };
+        },
+    )
+    .on(
+        removePrivateDialogueEffect,
+        'onError',
+        (state, { args: [ userId ], error }) => ({
+            ...state,
+            [userId]: {
+                isPending: true,
+                error    : returnValidErrors(error),
+                created  : state[userId]?.created ?? false,
+            },
+        }),
+    )
+    .on(
+        getListPrivateDialogueEffect,
+        'onSuccess',
+        (_, { result }) => {
+            const status: Record<string, PrivateDialogueStatusWithUser> = {};
+
+            result.forEach((dialogue) => status[dialogue.user.id] = {
+                isPending: false,
+                error    : null,
+                created  : true,
+            });
+
+            return status;
+        },
+    )
+    .on(
+        getOnePrivateDialogueEffect,
+        'onSuccess',
+        (state, { result }) => ({
+            ...state,
+            [result.user.id]: {
+                isPending: false,
+                error    : null,
+                created  : state[result.user.id]?.created ?? true,
+            },
+        }),
+    );

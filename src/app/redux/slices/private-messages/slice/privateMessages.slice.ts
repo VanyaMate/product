@@ -86,19 +86,14 @@ export const privateMessagesSlice = createSlice({
 
 
         builder.addCase(getListPrivateDialogues.fulfilled, (state, action) => {
-            console.log(action.payload);
             action.payload.forEach((dialogue) => {
-                console.log('Before getListPrivateDialogues', dialogue.id);
-                console.log('Before state', state[dialogue.id]?.lastMessageId);
                 const storedDialogue = state[dialogue.id];
                 if (storedDialogue) {
-                    const lastMessage = dialogue.messages.slice(-1)[0];
-                    console.log('Stored exist. Last message ->', lastMessage);
+                    const lastMessage       = dialogue.messages.slice(-1)[0];
                     const lastMessagesEqual = storedDialogue.messages[storedDialogue.messages.length - 1]?.id === lastMessage?.id;
                     if (lastMessage && !lastMessagesEqual) {
                         if (!storedDialogue.messages.find((message) => message.id === lastMessage.id)) {
                             storedDialogue.messages.push(lastMessage);
-                            console.log('Change last message from', storedDialogue.lastMessageId, 'to', lastMessage.id);
                             storedDialogue.lastMessageId = lastMessage.id;
                         }
                     }
@@ -114,7 +109,6 @@ export const privateMessagesSlice = createSlice({
                         hasMoreMessage: true,
                     };
                 }
-                console.log('After', state[dialogue.id].lastMessageId);
             });
         });
 
