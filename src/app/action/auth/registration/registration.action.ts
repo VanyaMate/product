@@ -2,7 +2,9 @@ import {
     DomainRegistrationData,
 } from 'product-types/dist/authorization/DomainRegistrationData';
 import { request } from '@/app/lib/fetch/request.ts';
-import { isDomainUser } from 'product-types/dist/user/DomainUser';
+import {
+    isDomainAuthResponse,
+} from 'product-types/dist/authorization/DomainAuthResponse';
 
 
 export const registrationAction = (registrationData: DomainRegistrationData) =>
@@ -12,5 +14,5 @@ export const registrationAction = (registrationData: DomainRegistrationData) =>
             method: 'POST',
             body  : JSON.stringify(registrationData),
         },
-        isDomainUser,
+        isDomainAuthResponse,
     );

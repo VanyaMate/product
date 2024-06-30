@@ -1,7 +1,3 @@
-import { useReducerConnector } from '@/app/redux/hooks/useReducerConnector.ts';
-import {
-    friendsReducer,
-} from '@/app/redux/slices/friends/slice/friends.slice.ts';
 import {
     useNotification,
 } from '@/features/notification/hooks/useNotification.ts';
@@ -50,8 +46,6 @@ export const useFriendsStoreUpdaterByNotifications = function () {
     const notification = useNotification(`friends-store-updater`);
     const dispatch     = useAppDispatch();
     const friends      = useAppSelector((state) => state.friends);
-
-    useReducerConnector('friends', friendsReducer);
 
     useEffect(() => {
         dispatch(getFriendsWithRequestsForUser());

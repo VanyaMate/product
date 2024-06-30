@@ -1,10 +1,6 @@
 import { ComponentPropsWithoutRef, FC, memo, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import css from './PrivateDialogueWindowMessages.module.scss';
-import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
-import {
-    getAuthUser,
-} from '@/app/redux/slices/auth/selectors/getAuthUser/getAuthUser.ts';
 import {
     PrivateMessage,
 } from '@/entities/message/item/PrivateMessage/ui/PrivateMessage.tsx';
@@ -18,6 +14,12 @@ import {
 import {
     EmptyDialogue,
 } from '@/entities/dialogue/EmptyDialogue/ui/EmptyDialogue.tsx';
+import { useStore } from '@vanyamate/sec-react';
+import {
+    privateMessagesHasMore,
+    privateMessagesList, privateMessagesSearchMessages,
+} from '@/app/model/private-messages/private-messages.model.ts';
+import { authUser } from '@/app/model/auth/auth.model.ts';
 
 
 export type PrivateDialogueWindowMessagesProps =
@@ -28,12 +30,15 @@ export type PrivateDialogueWindowMessagesProps =
 
 export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProps> = memo(function PrivateDialogueWindowMessages (props) {
     const { className, dialogueId, ...other } = props;
-    const messages                            = useAppSelector((state) => state.privateMessages);
-    const searchMessages                      = useAppSelector((state) => state.privateMessagesSearch);
-    const userData                            = useAppSelector(getAuthUser);
+    const messages                            = useStore(privateMessagesList);
+    const searchMessages                      = useStore(privateMessagesSearchMessages);
+    const hasMoreMessages                     = useStore(privateMessagesHasMore);
+    const userData                            = useStore(authUser);
     const { hash }                            = useLocation();
     const container                           = useRef<HTMLDivElement>(null);
     const needScrollToBottom                  = useRef<boolean>(true);
+
+    console.log('Messages', messages);
 
     // TODO: Переделать этот ужас со скроллами
 
@@ -71,6 +76,9 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
     useEffect(() => {
         if (container.current && dialogueId && messages[dialogueId]) {
             setTimeout(() => {
+                if (!container.current) {
+                    return null;
+                }
                 const {
                           clientHeight,
                           scrollHeight,
@@ -79,19 +87,17 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
                 const scrollPlaceInBottom = scrollHeight - clientHeight - scrollTop < 200;
                 const scrollPlaceInTop    = scrollTop === 0;
 
-                if (scrollPlaceInBottom && messages[dialogueId].lastMessageId) {
-                    const lastMessage = container.current.querySelector(`#m_${ messages[dialogueId].lastMessageId }`);
-                    console.log('lastMessageId message id is', messages[dialogueId].lastMessageId);
+                if (scrollPlaceInBottom && messages[dialogueId].lastId) {
+                    const lastMessage = container.current.querySelector(`#m_${ messages[dialogueId].lastId }`);
                     lastMessage?.scrollIntoView({ behavior: 'smooth' });
-                } else if (scrollPlaceInTop && messages[dialogueId].firstMessageId) {
-                    const firstMessage = container.current.querySelector(`#m_${ messages[dialogueId].firstMessageId }`);
-                    console.log('firstMessage message id is', messages[dialogueId].lastMessageId);
+                } else if (scrollPlaceInTop && messages[dialogueId].firstId) {
+                    const firstMessage = container.current.querySelector(`#m_${ messages[dialogueId].firstId }`);
                     firstMessage?.scrollIntoView({ behavior: 'instant' });
                 }
             }, 100);
         }
         //eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ dialogueId, messages[dialogueId]?.firstMessageId, messages[dialogueId]?.lastMessageId ]);
+    }, [ dialogueId, messages[dialogueId]?.firstId, messages[dialogueId]?.lastId ]);
 
     usePrivateDialogueMessagesLoaderTrigger(dialogueId, container);
 
@@ -105,13 +111,12 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
                 {
                     !messages[dialogueId].messages.length ?
                     <EmptyDialogue/> :
-                    !messages[dialogueId].hasMoreMessage ?
+                    !hasMoreMessages[dialogueId] ?
                     <NoMoreMessageDialogue/> : null
                 }
                 {
                     searchMessages[dialogueId]
                     ? searchMessages[dialogueId]
-                        .searchMessages
                         .map((message) =>
                             <PrivateMessage
                                 hash={ hash }

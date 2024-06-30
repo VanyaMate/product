@@ -18,7 +18,10 @@ import {
 } from '@/widgets/private-dialogue/PrivateDialogueWindow/PrivateDialogueWindowUserPreview/ui/PrivateDialogueWindowUserPreview.tsx';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { IoClose, IoPerson } from 'react-icons/io5';
-import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
+import { useStore } from '@vanyamate/sec-react';
+import {
+    privateDialoguesStatus,
+} from '@/app/model/private-dialogues/private-dialogues.model.ts';
 
 
 export type PrivateDialogueWindowProps =
@@ -30,9 +33,9 @@ export type PrivateDialogueWindowProps =
 export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(function PrivateDialogueWindow (props) {
     const { className, dialogueId, ...other }     = props;
     const [ rightMenuOpened, setRightMenuOpened ] = useState<boolean>(false);
-    const dialogues                               = useAppSelector((state) => state.dialogues);
+    const dialogues                               = useStore(privateDialoguesStatus);
 
-    if (!dialogueId || !dialogues.dialoguesStatus[dialogueId]) {
+    if (!dialogueId || !dialogues[dialogueId]) {
         return (
             <NoSelectDialogue/>
         );

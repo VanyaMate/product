@@ -1,21 +1,19 @@
 import { FC, memo } from 'react';
 import { useWelcomeAuth } from '@/features/auth/hooks/useWelcomeAuth.ts';
 import css from './WelcomePage.module.scss';
-import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
-import {
-    getAuthPending,
-} from '@/app/redux/slices/auth/selectors/getAuthPending/getAuthPending.ts';
 import classNames from 'classnames';
 import {
-    UserAuthFormWithUsernameAsync
+    UserAuthFormWithUsernameAsync,
 } from '@/widgets/user/form/UserAuthFormWithUsernameByJsonServer/ui/UserAuthFormWithUsernameAsync.tsx';
+import { useStore } from '@vanyamate/sec-react';
+import { authIsPending } from '@/app/model/auth/auth.model.ts';
 
 
 export type WelcomePageProps = {};
 
 export const WelcomePage: FC<WelcomePageProps> = memo(function WelcomePage (props) {
     const {}          = props;
-    const authPending = useAppSelector(getAuthPending);
+    const authPending = useStore(authIsPending);
 
     useWelcomeAuth();
 

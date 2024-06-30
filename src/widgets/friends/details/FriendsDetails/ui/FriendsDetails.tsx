@@ -9,24 +9,19 @@ import {
 import {
     UserPreviewItem,
 } from '@/entities/user/item/UserPreviewItem/ui/UserPreviewItem.tsx';
-import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
 import { useTranslation } from 'react-i18next';
-import { useReducerConnector } from '@/app/redux/hooks/useReducerConnector.ts';
-import {
-    friendsReducer,
-} from '@/app/redux/slices/friends/slice/friends.slice.ts';
 import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
 import {
     RemoveFriendButton,
 } from '@/features/friend/button/RemoveFriendButton/ui/RemoveFriendButton.tsx';
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
+import { useStore } from '@vanyamate/sec-react';
+import { friendsList } from '@/app/model/friends/friends.model.ts';
 
 
 export const FriendsDetails: FC = memo(function FriendsDetails () {
-    const friends = useAppSelector((state) => state.friends);
+    const friends = useStore(friendsList);
     const { t }   = useTranslation([ 'friends-page' ]);
-
-    useReducerConnector('friends', friendsReducer);
 
     if (!friends) {
         return <Loader/>;
@@ -34,11 +29,11 @@ export const FriendsDetails: FC = memo(function FriendsDetails () {
 
     return (
         <Details open={ true }>
-            <DetailsTitle>{ t('friends_list_title') } ({ friends.friends.length })</DetailsTitle>
+            <DetailsTitle>{ t('friends_list_title') } ({ friends.length })</DetailsTitle>
             <DetailsBody>
                 <Col>
                     {
-                        friends.friends.map((friend) => (
+                        friends.map((friend) => (
                             <UserPreviewItem
                                 key={ friend.id }
                                 user={ friend }

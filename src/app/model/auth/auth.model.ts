@@ -42,7 +42,7 @@ export const authError = store<DomainServiceResponseError | null>(null)
 
 
 export const authUser = store<DomainUser | null>(null)
-    .on(loginEffect, 'onSuccess', (_, { result }) => result)
-    .on(registrationEffect, 'onSuccess', (_, { result }) => result)
+    .on(loginEffect, 'onSuccess', (_, { result }) => result.user)
+    .on(registrationEffect, 'onSuccess', (_, { result }) => result.user)
     .on(refreshAuthEffect, 'onSuccess', (_, { result }) => result)
     .on(logoutEffect, 'onBefore', () => null);

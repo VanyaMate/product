@@ -33,6 +33,9 @@ import {
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import { returnValidErrors } from '@/app/lib/error/returnValidErrors.ts';
 import { logoutEffect } from '@/app/model/auth/auth.model.ts';
+import {
+    resetPrivateMessageSearchAction,
+} from '@/app/action/private-messages/resetMessageSearch/resetPrivateMessageSearch.action.ts';
 
 
 export const getPrivateMessagesByCursorEffect = effect(getPrivateMessageByCursorAction);
@@ -42,6 +45,7 @@ export const readPrivateMessageEffect         = effect(readPrivateMessageAction)
 export const removePrivateMessageEffect       = effect(removePrivateMessageAction);
 export const sendPrivateMessageEffect         = effect(sendPrivateMessageAction);
 export const updatePrivateMessageEffect       = effect(updatePrivateMessageAction);
+export const resetPrivateMessagesSearchEffect = effect(resetPrivateMessageSearchAction);
 
 
 export const privateMessagesIsPending = store<Record<string, boolean>>({})
@@ -199,7 +203,7 @@ export const privateMessagesList = store<Record<string, {
     .on(
         getOnePrivateDialogueEffect,
         'onSuccess',
-        (state, { args: [ [ dialogueId ] ], result }) => {
+        (state, { args: [ dialogueId ], result }) => {
             const messages = result.messages;
             return {
                 ...state,
@@ -210,6 +214,18 @@ export const privateMessagesList = store<Record<string, {
                 },
             };
         },
+    )
+    .on(
+        getListPrivateDialogueEffect,
+        'onSuccess',
+        (_, { result }) => result.reduce((acc, dialogue) => ({
+            ...acc,
+            [dialogue.id]: {
+                messages: dialogue.messages,
+                lastId  : dialogue.messages.slice(-1)[0]?.id ?? '',
+                firstId : dialogue.messages[0]?.id ?? '',
+            },
+        }), {}),
     )
     .on(
         removePrivateMessageEffect,
@@ -332,3 +348,17 @@ export const privateMessagesHasMore = store<Record<string, boolean>>({})
         }),
     )
     .on(logoutEffect, 'onBefore', () => ({}));
+
+
+export const privateMessagesSearchMessages = store<Record<string, Array<DomainMessage>>>({})
+    .on(getPrivateMessagesByQueryEffect, 'onSuccess', (state, {
+        result,
+        args: [ [ dialogueId ] ],
+    }) => ({
+        ...state,
+        [dialogueId]: result.list.filter(isDomainMessage),
+    }))
+    .on(resetPrivateMessagesSearchEffect, 'onSuccess', (state, { args: [ dialogueId ] }) => {
+        delete state[dialogueId];
+        return { ...state };
+    });

@@ -2,7 +2,9 @@ import {
     DomainLoginData,
 } from 'product-types/dist/authorization/DomainLoginData';
 import { request } from '@/app/lib/fetch/request.ts';
-import { isDomainUser } from 'product-types/dist/user/DomainUser';
+import {
+    isDomainAuthResponse,
+} from 'product-types/dist/authorization/DomainAuthResponse';
 
 
 export const loginAction = (loginData: DomainLoginData) =>
@@ -12,5 +14,5 @@ export const loginAction = (loginData: DomainLoginData) =>
             method: 'POST',
             body  : JSON.stringify(loginData),
         },
-        isDomainUser,
+        isDomainAuthResponse,
     );

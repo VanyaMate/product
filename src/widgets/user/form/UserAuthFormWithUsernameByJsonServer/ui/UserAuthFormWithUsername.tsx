@@ -1,11 +1,4 @@
 import { FC, memo } from 'react';
-import { useDispatch } from 'react-redux';
-import {
-    authByUsername,
-} from '@/app/redux/slices/auth/thunks/authByUsername/authByUsername.ts';
-import { authReducer } from '@/app/redux/slices/auth/slice/authSlice.ts';
-import { useReducerConnector } from '@/app/redux/hooks/useReducerConnector.ts';
-import { GlobalStoreThunk } from '@/app/redux/types/global-store-thunk.ts';
 import {
     useInputWithError,
 } from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
@@ -23,6 +16,7 @@ import {
     userAuthPasswordValidator,
 } from '@/app/validation/user/password.validators.ts';
 import { DomainUser } from 'product-types/dist/user/DomainUser';
+import { loginEffect } from '@/app/model/auth/auth.model.ts';
 
 
 export type UserAuthFormWithUsernameProps = {
@@ -31,29 +25,25 @@ export type UserAuthFormWithUsernameProps = {
 }
 
 export const UserAuthFormWithUsername: FC<UserAuthFormWithUsernameProps> = memo(function UserAuthFormWithUsername (props) {
-    const { onError, onSuccess }     = props;
-    const dispatch: GlobalStoreThunk = useDispatch();
-    const loginInputController       = useInputWithError({
+    const { onError, onSuccess }  = props;
+    const loginInputController    = useInputWithError({
         name            : 'login',
         validationMethod: userAuthLoginValidator,
         debounce        : 500,
     });
-    const passwordInputController    = useInputWithError({
+    const passwordInputController = useInputWithError({
         name            : 'password',
         validationMethod: userAuthPasswordValidator,
         debounce        : 500,
     });
-    const form                       = useForm<AuthFormByUserNameFormType>({
+    const form                    = useForm<AuthFormByUserNameFormType>({
         inputs  : [ loginInputController, passwordInputController ],
         onSubmit: async (authData) => {
-            return dispatch(authByUsername(authData))
-                .unwrap()
-                .then(onSuccess)
+            return loginEffect({ ...authData, remember: true })
+                .then((data) => onSuccess(data.user))
                 .catch(onError);
         },
     });
-
-    useReducerConnector('auth', authReducer);
 
     return (
         <AuthFormByUsernameWithError

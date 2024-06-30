@@ -1,21 +1,17 @@
 import { ComponentPropsWithoutRef, FC, memo, useEffect } from 'react';
 import classNames from 'classnames';
 import css from './UsersSearchList.module.scss';
-import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
-import { useReducerConnector } from '@/app/redux/hooks/useReducerConnector.ts';
-import {
-    searchUsersReducer,
-} from '@/app/redux/slices/searchUsers/slice/searchUsersSchema.ts';
-import {
-    fetchSearchUsersByLoginStart,
-} from '@/app/redux/slices/searchUsers/thunks/fetchProfilesByLoginStart.ts';
-import { useAppDispatch } from '@/app/redux/hooks/useAppDispatch.ts';
 import {
     UserSearchItem,
 } from '@/widgets/user/item/UserSearchItem/ui/UserSearchItem.tsx';
 import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
+import { useStore } from '@vanyamate/sec-react';
+import {
+    searchUsersByLoginStartEffect,
+    usersSearch, usersSearchCount, usersSearchError, usersSearchIsPending,
+} from '@/app/model/search/user-search.model.ts';
 
 
 export type UsersSearchListProps =
@@ -28,15 +24,14 @@ export type UsersSearchListProps =
 
 export const UsersSearchList: FC<UsersSearchListProps> = memo(function UsersSearchList (props) {
     const { query, limit, offset, className, ...other } = props;
-    const searchUsers                                   = useAppSelector((state) => state.searchUsers);
-    const dispatch                                      = useAppDispatch();
+    const searchUsers                                   = useStore(usersSearch);
+    const searchCount                                   = useStore(usersSearchCount);
+    const searchPending                                 = useStore(usersSearchIsPending);
+    const searchError                                   = useStore(usersSearchError);
 
     useEffect(() => {
-        dispatch(
-            fetchSearchUsersByLoginStart({ query, limit, offset }),
-        );
-    }, [ query, limit, offset, dispatch ]);
-    useReducerConnector('searchUsers', searchUsersReducer);
+        searchUsersByLoginStartEffect({ query, limit, offset });
+    }, [ query, limit, offset ]);
 
     if (!searchUsers) {
         return <PageLoader/>;
@@ -48,21 +43,21 @@ export const UsersSearchList: FC<UsersSearchListProps> = memo(function UsersSear
             className={ classNames(css.container, {}, [ className ]) }
         >
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>query: { searchUsers.query }</p>
+            <p>query: { query }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>limit: { searchUsers.limit }</p>
+            <p>limit: { limit }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>offset: { searchUsers.offset }</p>
+            <p>offset: { offset }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>pending: { searchUsers.isPending.toString() }</p>
+            <p>pending: { searchPending.toString() }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>error: { searchUsers.error?.toString() ?? 'null' }</p>
+            <p>error: { JSON.stringify(searchError) ?? 'null' }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>count: { searchUsers.count }</p>
+            <p>count: { searchCount }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>items: { searchUsers.users.length }</p>
+            <p>items: { searchUsers.length }</p>
             {
-                searchUsers.users.map((user) => (
+                searchUsers.map((user) => (
                     <UserSearchItem
                         key={ user.id }
                         permissions={ user.permissions }

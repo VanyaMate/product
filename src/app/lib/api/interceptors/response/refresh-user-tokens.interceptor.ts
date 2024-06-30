@@ -13,7 +13,7 @@ import {
 
 
 export const responseTokenRefreshedInterceptor: ResponseInterceptor = async (response) => {
-    const responsePayload: unknown = await response.json();
+    const responsePayload: unknown = await response.clone().json();
     if (responsePayload) {
         if (isDomainResponse(responsePayload)) {
             if (isDomainTokens(responsePayload.tokens)) {

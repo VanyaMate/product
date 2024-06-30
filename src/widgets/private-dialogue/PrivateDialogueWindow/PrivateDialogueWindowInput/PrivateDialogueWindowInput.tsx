@@ -17,10 +17,6 @@ import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
-import { useAppDispatch } from '@/app/redux/hooks/useAppDispatch.ts';
-import {
-    sendPrivateMessage,
-} from '@/app/redux/slices/private-messages/thunks/sendPrivateMessage.ts';
 import { IoSend } from 'react-icons/io5';
 import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
 import { Form } from '@/shared/ui-kit/forms/Form/ui/Form.tsx';
@@ -29,6 +25,9 @@ import { useTranslation } from 'react-i18next';
 import {
     getMessageTypeByBody,
 } from '@/entities/message/lib/getMessageTypeByBody.ts';
+import {
+    sendPrivateMessageEffect,
+} from '@/app/model/private-messages/private-messages.model.ts';
 
 
 export type PrivateDialogueWindowInputProps =
@@ -45,15 +44,15 @@ export const PrivateDialogueWindowInput: FC<PrivateDialogueWindowInputProps> = m
         inputs  : [ inputController ],
         onSubmit: (data) => {
             if (data.message) {
-                return dispatch(sendPrivateMessage([ dialogueId, {
+                return sendPrivateMessageEffect([ dialogueId, {
                     message    : data.message,
                     messageType: getMessageTypeByBody(data.message),
-                } ])).then(resetInput);
+                } ])
+                    .then(resetInput);
             }
             return Promise.resolve();
         },
     });
-    const dispatch                            = useAppDispatch();
 
     const resetInput = useCallback(() => {
         inputController.inputRef.current.value = '';

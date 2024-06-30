@@ -34,6 +34,7 @@ export type PrivateDialogueStatus = {
 
 export type PrivateDialogueStatusWithUser = PrivateDialogueStatus & {
     created: boolean;
+    dialogueId: string;
 }
 
 
@@ -262,21 +263,23 @@ export const privateDialogueWithUser = store<Record<string, PrivateDialogueStatu
         (state, { args: [ userId ] }) => ({
             ...state,
             [userId]: {
-                isPending: true,
-                error    : null,
-                created  : state[userId]?.created ?? false,
+                isPending : true,
+                error     : null,
+                created   : state[userId]?.created ?? false,
+                dialogueId: state[userId]?.dialogueId ?? '',
             },
         }),
     )
     .on(
         archivePrivateDialogueEffect,
         'onSuccess',
-        (state, { args: [ userId ] }) => ({
+        (state, { args: [ userId ], result }) => ({
             ...state,
             [userId]: {
-                isPending: false,
-                error    : null,
-                created  : state[userId]?.created ?? true,
+                isPending : false,
+                error     : null,
+                created   : state[userId]?.created ?? true,
+                dialogueId: state[userId]?.dialogueId ?? result.dialogue.id,
             },
         }),
     )
@@ -286,9 +289,10 @@ export const privateDialogueWithUser = store<Record<string, PrivateDialogueStatu
         (state, { args: [ userId ], error }) => ({
             ...state,
             [userId]: {
-                isPending: false,
-                error    : returnValidErrors(error),
-                created  : state[userId]?.created ?? false,
+                isPending : false,
+                error     : returnValidErrors(error),
+                created   : state[userId]?.created ?? false,
+                dialogueId: state[userId]?.dialogueId ?? '',
             },
         }),
     )
@@ -298,21 +302,23 @@ export const privateDialogueWithUser = store<Record<string, PrivateDialogueStatu
         (state, { args: [ userId ] }) => ({
             ...state,
             [userId]: {
-                isPending: true,
-                error    : null,
-                created  : state[userId]?.created ?? false,
+                isPending : true,
+                error     : null,
+                created   : state[userId]?.created ?? false,
+                dialogueId: state[userId]?.dialogueId ?? '',
             },
         }),
     )
     .on(
         unArchivePrivateDialogueEffect,
         'onSuccess',
-        (state, { args: [ userId ] }) => ({
+        (state, { args: [ userId ], result }) => ({
             ...state,
             [userId]: {
-                isPending: false,
-                error    : null,
-                created  : state[userId]?.created ?? true,
+                isPending : false,
+                error     : null,
+                created   : state[userId]?.created ?? true,
+                dialogueId: state[userId]?.dialogueId ?? result.dialogue.id,
             },
         }),
     )
@@ -322,9 +328,10 @@ export const privateDialogueWithUser = store<Record<string, PrivateDialogueStatu
         (state, { args: [ userId ], error }) => ({
             ...state,
             [userId]: {
-                isPending: false,
-                error    : returnValidErrors(error),
-                created  : state[userId]?.created ?? false,
+                isPending : false,
+                error     : returnValidErrors(error),
+                created   : state[userId]?.created ?? false,
+                dialogueId: state[userId]?.dialogueId ?? '',
             },
         }),
     )
@@ -334,9 +341,10 @@ export const privateDialogueWithUser = store<Record<string, PrivateDialogueStatu
         (state, { args: [ userId ] }) => ({
             ...state,
             [userId]: {
-                isPending: true,
-                error    : null,
-                created  : state[userId]?.created ?? false,
+                isPending : true,
+                error     : null,
+                created   : state[userId]?.created ?? false,
+                dialogueId: state[userId]?.dialogueId ?? '',
             },
         }),
     )
@@ -354,9 +362,10 @@ export const privateDialogueWithUser = store<Record<string, PrivateDialogueStatu
         (state, { args: [ userId ], error }) => ({
             ...state,
             [userId]: {
-                isPending: true,
-                error    : returnValidErrors(error),
-                created  : state[userId]?.created ?? false,
+                isPending : true,
+                error     : returnValidErrors(error),
+                created   : state[userId]?.created ?? false,
+                dialogueId: state[userId]?.dialogueId ?? '',
             },
         }),
     )
@@ -367,9 +376,10 @@ export const privateDialogueWithUser = store<Record<string, PrivateDialogueStatu
             const status: Record<string, PrivateDialogueStatusWithUser> = {};
 
             result.forEach((dialogue) => status[dialogue.user.id] = {
-                isPending: false,
-                error    : null,
-                created  : true,
+                isPending : false,
+                error     : null,
+                created   : true,
+                dialogueId: dialogue.id,
             });
 
             return status;
@@ -381,9 +391,10 @@ export const privateDialogueWithUser = store<Record<string, PrivateDialogueStatu
         (state, { result }) => ({
             ...state,
             [result.user.id]: {
-                isPending: false,
-                error    : null,
-                created  : state[result.user.id]?.created ?? true,
+                isPending : false,
+                error     : null,
+                created   : state[result.user.id]?.created ?? true,
+                dialogueId: result.id,
             },
         }),
     );

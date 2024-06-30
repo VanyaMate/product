@@ -1,14 +1,4 @@
 import { FC, memo } from 'react';
-import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
-import {
-    getFriendsList,
-} from '@/app/redux/slices/friends/selectors/getFriendsList/getFriendsList.ts';
-import {
-    getFriendsRequestsSent,
-} from '@/app/redux/slices/friends/selectors/getFriendsRequestsOut/getFriendsRequestsSent.ts';
-import {
-    getFriendsRequestsReceived,
-} from '@/app/redux/slices/friends/selectors/getFriendsRequestsIn/getFriendsRequestsReceived.ts';
 import {
     DomainFriendRequest,
 } from 'product-types/dist/friends/DomainFriendRequest';
@@ -21,6 +11,12 @@ import {
 import {
     AddToFriendButton,
 } from '@/features/friend/button/AddToFriendButton/ui/AddToFriendButton.tsx';
+import {
+    friendRequestsReceived,
+    friendRequestsSent,
+    friendsList,
+} from '@/app/model/friends/friends.model.ts';
+import { useStore } from '@vanyamate/sec-react';
 
 
 export type CompositeAddFriendButtonProps =
@@ -30,9 +26,9 @@ export type CompositeAddFriendButtonProps =
 
 export const CompositeAddFriendButton: FC<CompositeAddFriendButtonProps> = memo(function CompositeAddFriendButton (props) {
     const { userId }       = props;
-    const friends          = useAppSelector(getFriendsList);
-    const requestsSent     = useAppSelector(getFriendsRequestsSent);
-    const requestsReceived = useAppSelector(getFriendsRequestsReceived);
+    const friends          = useStore(friendsList);
+    const requestsSent     = useStore(friendRequestsSent);
+    const requestsReceived = useStore(friendRequestsReceived);
 
     const isFriend: boolean = friends.some((friend) => friend.id === userId);
     if (isFriend) {
