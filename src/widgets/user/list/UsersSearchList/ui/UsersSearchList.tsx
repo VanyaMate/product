@@ -10,7 +10,7 @@ import {
 import { useStore } from '@vanyamate/sec-react';
 import {
     searchUsersByLoginStartEffect,
-    usersSearch, usersSearchCount, usersSearchError, usersSearchIsPending,
+    $usersSearch, $usersSearchCount, $usersSearchError, $usersSearchIsPending,
 } from '@/app/model/search/user-search.model.ts';
 
 
@@ -24,10 +24,10 @@ export type UsersSearchListProps =
 
 export const UsersSearchList: FC<UsersSearchListProps> = memo(function UsersSearchList (props) {
     const { query, limit, offset, className, ...other } = props;
-    const searchUsers                                   = useStore(usersSearch);
-    const searchCount                                   = useStore(usersSearchCount);
-    const searchPending                                 = useStore(usersSearchIsPending);
-    const searchError                                   = useStore(usersSearchError);
+    const searchUsers                                   = useStore($usersSearch);
+    const searchCount                                   = useStore($usersSearchCount);
+    const searchPending                                 = useStore($usersSearchIsPending);
+    const searchError                                   = useStore($usersSearchError);
 
     useEffect(() => {
         searchUsersByLoginStartEffect({ query, limit, offset });

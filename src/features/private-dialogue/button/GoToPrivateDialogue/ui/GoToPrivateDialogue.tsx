@@ -15,10 +15,10 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { useStore } from '@vanyamate/sec-react';
-import { friendsList } from '@/app/model/friends/friends.model.ts';
+import { $friendsList } from '@/app/model/friends/friends.model.ts';
 import {
     createPrivateDialogueEffect,
-    privateDialogueWithUser,
+    $privateDialogueWithUser,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 
 
@@ -31,8 +31,8 @@ export type GoToPrivateDialogueProps =
 
 export const GoToPrivateDialogue: FC<GoToPrivateDialogueProps> = memo(function GoToPrivateDialogue (props) {
     const { className, userId, permissions, ...other } = props;
-    const friends                                      = useStore(friendsList);
-    const dialogueWithUser                             = useStore(privateDialogueWithUser);
+    const friends                                      = useStore($friendsList);
+    const dialogueWithUser                             = useStore($privateDialogueWithUser);
     const navigate                                     = useNavigate();
 
     // if exist

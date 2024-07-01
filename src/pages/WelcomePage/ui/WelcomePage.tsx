@@ -6,14 +6,14 @@ import {
     UserAuthFormWithUsernameAsync,
 } from '@/widgets/user/form/UserAuthFormWithUsernameByJsonServer/ui/UserAuthFormWithUsernameAsync.tsx';
 import { useStore } from '@vanyamate/sec-react';
-import { authIsPending } from '@/app/model/auth/auth.model.ts';
+import { $authIsPending } from '@/app/model/auth/auth.model.ts';
 
 
 export type WelcomePageProps = {};
 
 export const WelcomePage: FC<WelcomePageProps> = memo(function WelcomePage (props) {
     const {}          = props;
-    const authPending = useStore(authIsPending);
+    const authPending = useStore($authIsPending);
 
     useWelcomeAuth();
 

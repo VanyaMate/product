@@ -16,11 +16,11 @@ import {
 } from '@/features/friend/button/RemoveFriendButton/ui/RemoveFriendButton.tsx';
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import { useStore } from '@vanyamate/sec-react';
-import { friendsList } from '@/app/model/friends/friends.model.ts';
+import { $friendsList } from '@/app/model/friends/friends.model.ts';
 
 
 export const FriendsDetails: FC = memo(function FriendsDetails () {
-    const friends = useStore(friendsList);
+    const friends = useStore($friendsList);
     const { t }   = useTranslation([ 'friends-page' ]);
 
     if (!friends) {

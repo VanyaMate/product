@@ -21,14 +21,14 @@ import {
     UserRightSideMenu,
 } from '@/widgets/user/menu/UserRightSideMenu/ui/UserRightSideMenu.tsx';
 import { useStore } from '@vanyamate/sec-react';
-import { authUser } from '@/app/model/auth/auth.model.ts';
+import { $authUser } from '@/app/model/auth/auth.model.ts';
 
 
 export type AppProps = {};
 
 export const AppContent: FC<AppProps> = memo(function App (props) {
     const {}   = props;
-    const user = useStore(authUser);
+    const user = useStore($authUser);
 
     if (user === null) {
         return <WelcomePage/>;

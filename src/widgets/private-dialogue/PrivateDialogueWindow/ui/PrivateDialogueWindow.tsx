@@ -20,7 +20,7 @@ import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { IoClose, IoPerson } from 'react-icons/io5';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    privateDialoguesStatus,
+    $privateDialoguesStatus,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 
 
@@ -33,7 +33,7 @@ export type PrivateDialogueWindowProps =
 export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(function PrivateDialogueWindow (props) {
     const { className, dialogueId, ...other }     = props;
     const [ rightMenuOpened, setRightMenuOpened ] = useState<boolean>(false);
-    const dialogues                               = useStore(privateDialoguesStatus);
+    const dialogues                               = useStore($privateDialoguesStatus);
 
     if (!dialogueId || !dialogues[dialogueId]) {
         return (

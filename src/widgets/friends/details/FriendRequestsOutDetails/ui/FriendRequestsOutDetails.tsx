@@ -17,12 +17,12 @@ import {
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    friendRequestsSent,
+    $friendRequestsSent,
 } from '@/app/model/friends/friends.model.ts';
 
 
 export const FriendRequestsOutDetails: FC = memo(function FriendRequestsOutDetails () {
-    const friends = useStore(friendRequestsSent);
+    const friends = useStore($friendRequestsSent);
     const { t }   = useTranslation([ 'friends-page' ]);
 
     if (!friends) {

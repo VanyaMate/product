@@ -12,9 +12,9 @@ import {
     AddToFriendButton,
 } from '@/features/friend/button/AddToFriendButton/ui/AddToFriendButton.tsx';
 import {
-    friendRequestsReceived,
-    friendRequestsSent,
-    friendsList,
+    $friendRequestsReceived,
+    $friendRequestsSent,
+    $friendsList,
 } from '@/app/model/friends/friends.model.ts';
 import { useStore } from '@vanyamate/sec-react';
 
@@ -26,9 +26,9 @@ export type CompositeAddFriendButtonProps =
 
 export const CompositeAddFriendButton: FC<CompositeAddFriendButtonProps> = memo(function CompositeAddFriendButton (props) {
     const { userId }       = props;
-    const friends          = useStore(friendsList);
-    const requestsSent     = useStore(friendRequestsSent);
-    const requestsReceived = useStore(friendRequestsReceived);
+    const friends          = useStore($friendsList);
+    const requestsSent     = useStore($friendRequestsSent);
+    const requestsReceived = useStore($friendRequestsReceived);
 
     const isFriend: boolean = friends.some((friend) => friend.id === userId);
     if (isFriend) {

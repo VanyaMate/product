@@ -19,7 +19,7 @@ export const registrationEffect = effect(registrationAction);
 export const refreshAuthEffect  = effect(refreshAuthAction);
 export const logoutEffect       = effect(logoutAction);
 
-export const authIsPending = store<boolean>(false)
+export const $authIsPending = store<boolean>(false)
     .on(loginEffect, 'onBefore', () => true)
     .on(registrationEffect, 'onBefore', () => true)
     .on(refreshAuthEffect, 'onBefore', () => true)
@@ -30,7 +30,7 @@ export const authIsPending = store<boolean>(false)
     .on(logoutEffect, 'onFinally', () => false);
 
 
-export const authError = store<DomainServiceResponseError | null>(null)
+export const $authError = store<DomainServiceResponseError | null>(null)
     .on(loginEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(registrationEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(refreshAuthEffect, 'onError', (_, { error }) => returnValidErrors(error))
@@ -41,7 +41,7 @@ export const authError = store<DomainServiceResponseError | null>(null)
     .on(logoutEffect, 'onBefore', () => null);
 
 
-export const authUser = store<DomainUser | null>(null)
+export const $authUser = store<DomainUser | null>(null)
     .on(loginEffect, 'onSuccess', (_, { result }) => result.user)
     .on(registrationEffect, 'onSuccess', (_, { result }) => result.user)
     .on(refreshAuthEffect, 'onSuccess', (_, { result }) => result)

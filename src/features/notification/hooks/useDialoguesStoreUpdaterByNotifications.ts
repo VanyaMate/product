@@ -14,13 +14,13 @@ import {
 import { useStore } from '@vanyamate/sec-react';
 import {
     getListPrivateDialogueEffect,
-    privateDialogues,
+    $privateDialogues,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 
 
 export const useDialoguesStoreUpdaterByNotifications = function () {
     const notification = useNotification('dialogues-store-updater');
-    const dialogues    = useStore(privateDialogues);
+    const dialogues    = useStore($privateDialogues);
 
     useEffect(() => {
         getListPrivateDialogueEffect({ limit: 1000, query: '', offset: 0 });

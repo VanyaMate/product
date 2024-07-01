@@ -32,7 +32,7 @@ export const getMyFriendsEffect        = effect(getMyFriendsAction);
 export const removeFriendEffect        = effect(removeFriendAction);
 
 
-export const friendsIsPending = store<boolean>(false)
+export const $friendsIsPending = store<boolean>(false)
     .on(acceptFriendRequestEffect, 'onBefore', () => true)
     .on(cancelFriendRequestEffect, 'onBefore', () => true)
     .on(createFriendRequestEffect, 'onBefore', () => true)
@@ -45,7 +45,7 @@ export const friendsIsPending = store<boolean>(false)
     .on(removeFriendEffect, 'onFinally', () => false);
 
 
-export const friendsError = store<DomainServiceResponseError | null>(null)
+export const $friendsError = store<DomainServiceResponseError | null>(null)
     .on(acceptFriendRequestEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(cancelFriendRequestEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(createFriendRequestEffect, 'onError', (_, { error }) => returnValidErrors(error))
@@ -54,21 +54,21 @@ export const friendsError = store<DomainServiceResponseError | null>(null)
     .on(logoutEffect, 'onBefore', () => null);
 
 
-export const friendsList = store<Array<DomainUser>>([])
+export const $friendsList = store<Array<DomainUser>>([])
     .on(acceptFriendRequestEffect, 'onSuccess', (state, { result }) => [ ...state, result.user ])
     .on(getMyFriendsEffect, 'onSuccess', (_, { result }) => result.friends.filter(isDomainUser))
     .on(removeFriendEffect, 'onSuccess', (state, { args: [ userId ] }) => state.filter((friend) => friend.id !== userId))
     .on(logoutEffect, 'onBefore', () => null);
 
 
-export const friendRequestsReceived = store<Array<DomainFriendRequest>>([])
+export const $friendRequestsReceived = store<Array<DomainFriendRequest>>([])
     .on(acceptFriendRequestEffect, 'onSuccess', (state, { args: [ requestId ] }) => state.filter((request) => request.requestId !== requestId))
     .on(cancelFriendRequestEffect, 'onSuccess', (state, { args: [ requestId ] }) => state.filter((request) => request.requestId !== requestId))
     .on(getMyFriendsEffect, 'onSuccess', (_, { result }) => result.requestsIn.filter(isDomainFriendRequest))
     .on(logoutEffect, 'onBefore', () => null);
 
 
-export const friendRequestsSent = store<Array<DomainFriendRequest>>([])
+export const $friendRequestsSent = store<Array<DomainFriendRequest>>([])
     .on(cancelFriendRequestEffect, 'onSuccess', (state, { args: [ requestId ] }) => state.filter((request) => request.requestId !== requestId))
     .on(createFriendRequestEffect, 'onSuccess', (state, { result }) => [ ...state, result ])
     .on(getMyFriendsEffect, 'onSuccess', (_, { result }) => result.requestsIn.filter(isDomainFriendRequest))

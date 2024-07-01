@@ -48,7 +48,7 @@ export const updatePrivateMessageEffect       = effect(updatePrivateMessageActio
 export const resetPrivateMessagesSearchEffect = effect(resetPrivateMessageSearchAction);
 
 
-export const privateMessagesIsPending = store<Record<string, boolean>>({})
+export const $privateMessagesIsPending = store<Record<string, boolean>>({})
     .on(
         getPrivateMessagesByCursorEffect,
         'onBefore',
@@ -99,21 +99,7 @@ export const privateMessagesIsPending = store<Record<string, boolean>>({})
     );
 
 
-export const privateMessagesRemoving = store<Array<string>>([])
-    .on(
-        removePrivateMessageEffect,
-        'onBefore',
-        (state, { args: [ messageId ] }) => [ ...state, messageId ],
-    )
-    .on(
-        removePrivateMessageEffect,
-        'onFinally',
-        (state, { args: [ messageId ] }) => state.filter((id) => messageId !== id),
-    )
-    .on(logoutEffect, 'onBefore', () => []);
-
-
-export const privateMessagesError = store<Record<string, DomainServiceResponseError | null>>({})
+export const $privateMessagesError = store<Record<string, DomainServiceResponseError | null>>({})
     .on(
         getPrivateMessagesByQueryEffect,
         'onError',
@@ -165,11 +151,7 @@ export const privateMessagesError = store<Record<string, DomainServiceResponseEr
     .on(logoutEffect, 'onBefore', () => ({}));
 
 
-export const privateMessagesList = store<Record<string, {
-    messages: Array<DomainMessage>,
-    lastId: string;
-    firstId: string;
-}>>({})
+export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
     .on(
         getPrivateMessagesByQueryEffect,
         'onSuccess',
@@ -177,11 +159,7 @@ export const privateMessagesList = store<Record<string, {
             const messages = result.list.filter(isDomainMessage);
             return {
                 ...state,
-                [dialogueId]: {
-                    messages: [ ...(state[dialogueId]?.messages ?? []), ...messages ],
-                    lastId  : state[dialogueId]?.lastId,
-                    firstId : messages[0]?.id ?? '',
-                },
+                [dialogueId]: [ ...messages, ...(state[dialogueId] ?? []) ],
             };
         },
     )
@@ -192,11 +170,7 @@ export const privateMessagesList = store<Record<string, {
             const messages = result.list.filter(isDomainMessage);
             return {
                 ...state,
-                [dialogueId]: {
-                    messages: [ ...(state[dialogueId]?.messages ?? []), ...messages ],
-                    lastId  : state[dialogueId]?.lastId,
-                    firstId : messages[0]?.id ?? '',
-                },
+                [dialogueId]: [ ...messages, ...(state[dialogueId] ?? []) ],
             };
         },
     )
@@ -207,11 +181,7 @@ export const privateMessagesList = store<Record<string, {
             const messages = result.messages;
             return {
                 ...state,
-                [dialogueId]: {
-                    messages: messages,
-                    lastId  : messages.slice(-1)[0]?.id ?? '',
-                    firstId : messages[0]?.id ?? '',
-                },
+                [dialogueId]: messages,
             };
         },
     )
@@ -220,25 +190,17 @@ export const privateMessagesList = store<Record<string, {
         'onSuccess',
         (_, { result }) => result.reduce((acc, dialogue) => ({
             ...acc,
-            [dialogue.id]: {
-                messages: dialogue.messages,
-                lastId  : dialogue.messages.slice(-1)[0]?.id ?? '',
-                firstId : dialogue.messages[0]?.id ?? '',
-            },
+            [dialogue.id]: dialogue.messages,
         }), {}),
     )
     .on(
         removePrivateMessageEffect,
         'onSuccess',
         (state, { result }) => {
-            const messages = state[result.dialogue.id]?.messages.filter(({ id }) => id !== result.message.id) ?? [];
+            const messages = state[result.dialogue.id]?.filter(({ id }) => id !== result.message.id) ?? [];
             return {
                 ...state,
-                [result.dialogue.id]: {
-                    messages: messages,
-                    lastId  : messages.slice(-1)[0]?.id ?? '',
-                    firstId : messages[0]?.id ?? '',
-                },
+                [result.dialogue.id]: messages,
             };
         },
     )
@@ -246,15 +208,11 @@ export const privateMessagesList = store<Record<string, {
         sendPrivateMessageEffect,
         'onSuccess',
         (state, { result }) => {
-            const messages = state[result.dialogue.id]?.messages ?? [];
+            const messages = state[result.dialogue.id] ?? [];
             messages.push(result.message);
             return {
                 ...state,
-                [result.dialogue.id]: {
-                    messages: messages,
-                    lastId  : messages.slice(-1)[0]?.id ?? '',
-                    firstId : messages[0]?.id ?? '',
-                },
+                [result.dialogue.id]: messages,
             };
         },
     )
@@ -262,16 +220,12 @@ export const privateMessagesList = store<Record<string, {
         updatePrivateMessageEffect,
         'onSuccess',
         (state, { result }) => {
-            const messages = (state[result.dialogue.id]?.messages ?? [])
+            const messages = (state[result.dialogue.id] ?? [])
                 .map((message) => message.id === result.message.id
                                   ? result.message : message);
             return {
                 ...state,
-                [result.dialogue.id]: {
-                    messages: messages,
-                    lastId  : messages.slice(-1)[0]?.id ?? '',
-                    firstId : messages[0]?.id ?? '',
-                },
+                [result.dialogue.id]: messages,
             };
         },
     )
@@ -279,15 +233,11 @@ export const privateMessagesList = store<Record<string, {
         readAllPrivateMessagesEffect,
         'onSuccess',
         (state, { result }) => {
-            const messages = (state[result.dialogue.id]?.messages ?? [])
+            const messages = (state[result.dialogue.id] ?? [])
                 .map((message) => ({ ...message, read: true }));
             return {
                 ...state,
-                [result.dialogue.id]: {
-                    messages: messages,
-                    lastId  : messages.slice(-1)[0]?.id ?? '',
-                    firstId : messages[0]?.id ?? '',
-                },
+                [result.dialogue.id]: messages,
             };
         },
     )
@@ -295,23 +245,19 @@ export const privateMessagesList = store<Record<string, {
         readPrivateMessageEffect,
         'onSuccess',
         (state, { result }) => {
-            const messages = (state[result.dialogue.id]?.messages ?? [])
+            const messages = (state[result.dialogue.id] ?? [])
                 .map((message) => message.id === result.message.id
                                   ? { ...message, read: true } : message);
             return {
                 ...state,
-                [result.dialogue.id]: {
-                    messages: messages,
-                    lastId  : messages.slice(-1)[0]?.id ?? '',
-                    firstId : messages[0]?.id ?? '',
-                },
+                [result.dialogue.id]: messages,
             };
         },
     )
     .on(logoutEffect, 'onBefore', () => ({}));
 
 
-export const privateMessagesHasMore = store<Record<string, boolean>>({})
+export const $privateMessagesHasMore = store<Record<string, boolean>>({})
     .on(
         getPrivateMessagesByCursorEffect,
         'onSuccess',
@@ -349,8 +295,34 @@ export const privateMessagesHasMore = store<Record<string, boolean>>({})
     )
     .on(logoutEffect, 'onBefore', () => ({}));
 
+export const $privateMessageScrollToId = store<string>('')
+    .on(
+        getPrivateMessagesByCursorEffect,
+        'onSuccess',
+        (_, { result }) => {
+            const lastItem: unknown = result.list.slice(-1)[0];
+            if (isDomainMessage(lastItem)) {
+                return lastItem.id;
+            } else {
+                return '';
+            }
+        },
+    )
+    .on(
+        getPrivateMessagesByCursorEffect,
+        'onSuccess',
+        (_, { result }) => {
+            const lastItem: unknown = result.list.slice(-1)[0];
+            if (isDomainMessage(lastItem)) {
+                return lastItem.id;
+            } else {
+                return '';
+            }
+        },
+    );
 
-export const privateMessagesSearchMessages = store<Record<string, Array<DomainMessage>>>({})
+
+export const $privateMessagesSearchMessages = store<Record<string, Array<DomainMessage>>>({})
     .on(getPrivateMessagesByQueryEffect, 'onSuccess', (state, {
         result,
         args: [ [ dialogueId ] ],

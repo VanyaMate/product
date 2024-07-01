@@ -12,16 +12,16 @@ import { returnValidErrors } from '@/app/lib/error/returnValidErrors.ts';
 export const getUserPageDataEffect = effect(getUserDataByLoginAction);
 
 
-export const userPageIsPending = store<boolean>(false)
+export const $userPageIsPending = store<boolean>(false)
     .on(getUserPageDataEffect, 'onBefore', () => true)
     .on(getUserPageDataEffect, 'onFinally', () => false);
 
 
-export const userPageError = store<DomainServiceResponseError | null>(null)
+export const $userPageError = store<DomainServiceResponseError | null>(null)
     .on(getUserPageDataEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(getUserPageDataEffect, 'onSuccess', () => null);
 
 
-export const userPageData = store<DomainUserFull | null>(null)
+export const $userPageData = store<DomainUserFull | null>(null)
     .on(getUserPageDataEffect, 'onBefore', () => null)
     .on(getUserPageDataEffect, 'onSuccess', (_, { result }) => result);

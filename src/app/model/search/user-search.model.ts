@@ -14,19 +14,19 @@ import { returnValidErrors } from '@/app/lib/error/returnValidErrors.ts';
 export const searchUsersByLoginStartEffect = effect(getUsersByLoginStartAction);
 
 
-export const usersSearchIsPending = store<boolean>(false)
+export const $usersSearchIsPending = store<boolean>(false)
     .on(searchUsersByLoginStartEffect, 'onBefore', () => true)
     .on(searchUsersByLoginStartEffect, 'onFinally', () => false);
 
 
-export const usersSearchError = store<DomainServiceResponseError | null>(null)
+export const $usersSearchError = store<DomainServiceResponseError | null>(null)
     .on(searchUsersByLoginStartEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(searchUsersByLoginStartEffect, 'onSuccess', () => null);
 
 
-export const usersSearch = store<Array<DomainUserWithPermissions>>([])
+export const $usersSearch = store<Array<DomainUserWithPermissions>>([])
     .on(searchUsersByLoginStartEffect, 'onSuccess', (_, { result }) => result.list.filter(isDomainUserWithPermissions));
 
 
-export const usersSearchCount = store<number>(0)
+export const $usersSearchCount = store<number>(0)
     .on(searchUsersByLoginStartEffect, 'onSuccess', (_, { result }) => result.count);

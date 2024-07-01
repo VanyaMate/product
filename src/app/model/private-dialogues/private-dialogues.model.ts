@@ -46,7 +46,7 @@ export const getListPrivateDialogueEffect   = effect(getListPrivateDialogueActio
 export const getOnePrivateDialogueEffect    = effect(getOnePrivateDialogueAction);
 
 
-export const privateDialoguesIsPending = store<boolean>(false)
+export const $privateDialoguesIsPending = store<boolean>(false)
     .on(archivePrivateDialogueEffect, 'onBefore', () => true)
     .on(unArchivePrivateDialogueEffect, 'onBefore', () => true)
     .on(createPrivateDialogueEffect, 'onBefore', () => true)
@@ -61,7 +61,7 @@ export const privateDialoguesIsPending = store<boolean>(false)
     .on(getOnePrivateDialogueEffect, 'onFinally', () => false);
 
 
-export const privateDialoguesError = store<DomainServiceResponseError | null>(null)
+export const $privateDialoguesError = store<DomainServiceResponseError | null>(null)
     .on(archivePrivateDialogueEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(unArchivePrivateDialogueEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(createPrivateDialogueEffect, 'onError', (_, { error }) => returnValidErrors(error))
@@ -75,7 +75,7 @@ export const privateDialoguesError = store<DomainServiceResponseError | null>(nu
     .on(getListPrivateDialogueEffect, 'onSuccess', () => null)
     .on(getOnePrivateDialogueEffect, 'onSuccess', () => null);
 
-export const privateDialogues = store<Array<DomainPrivateDialogueFull>>([])
+export const $privateDialogues = store<Array<DomainPrivateDialogueFull>>([])
     .on(
         archivePrivateDialogueEffect,
         'onSuccess',
@@ -116,7 +116,7 @@ export const privateDialogues = store<Array<DomainPrivateDialogueFull>>([])
     .on(logoutEffect, 'onBefore', () => []);
 
 
-export const privateDialoguesStatus = store<Record<string, PrivateDialogueStatus>>({})
+export const $privateDialoguesStatus = store<Record<string, PrivateDialogueStatus>>({})
     .on(
         archivePrivateDialogueEffect,
         'onBefore',
@@ -256,7 +256,7 @@ export const privateDialoguesStatus = store<Record<string, PrivateDialogueStatus
     );
 
 
-export const privateDialogueWithUser = store<Record<string, PrivateDialogueStatusWithUser>>({})
+export const $privateDialogueWithUser = store<Record<string, PrivateDialogueStatusWithUser>>({})
     .on(
         archivePrivateDialogueEffect,
         'onBefore',

@@ -18,8 +18,8 @@ import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { useStore } from '@vanyamate/sec-react';
 import {
     getUserPageDataEffect,
-    userPageData,
-    userPageIsPending,
+    $userPageData,
+    $userPageIsPending,
 } from '@/app/model/user-page/user-page.model.ts';
 
 
@@ -31,8 +31,8 @@ export type UserContainerProps =
 
 export const UserContainer: FC<UserContainerProps> = memo(function UserContainer (props) {
     const { className, login, ...other } = props;
-    const userPagePending                = useStore(userPageIsPending);
-    const user                           = useStore(userPageData);
+    const userPagePending                = useStore($userPageIsPending);
+    const user                           = useStore($userPageData);
 
     useEffect(() => {
         getUserPageDataEffect(login);

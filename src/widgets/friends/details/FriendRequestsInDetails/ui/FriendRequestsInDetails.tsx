@@ -21,7 +21,7 @@ import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    friendRequestsReceived,
+    $friendRequestsReceived,
 } from '@/app/model/friends/friends.model.ts';
 
 
@@ -30,7 +30,7 @@ export type FriendRequestsInDetailsProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const FriendRequestsInDetails: FC<FriendRequestsInDetailsProps> = memo(function FriendRequestsInDetails () {
-    const friends = useStore(friendRequestsReceived);
+    const friends = useStore($friendRequestsReceived);
     const { t }   = useTranslation([ 'friends-page' ]);
 
     if (!friends) {

@@ -16,10 +16,13 @@ import {
 } from '@/entities/dialogue/EmptyDialogue/ui/EmptyDialogue.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    privateMessagesHasMore,
-    privateMessagesList, privateMessagesSearchMessages,
+    $privateMessagesHasMore,
+    $privateMessages,
+    $privateMessagesSearchMessages,
+    $privateMessageScrollToId,
+    $privateMessagesIsPending,
 } from '@/app/model/private-messages/private-messages.model.ts';
-import { authUser } from '@/app/model/auth/auth.model.ts';
+import { $authUser } from '@/app/model/auth/auth.model.ts';
 
 
 export type PrivateDialogueWindowMessagesProps =
@@ -30,35 +33,36 @@ export type PrivateDialogueWindowMessagesProps =
 
 export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProps> = memo(function PrivateDialogueWindowMessages (props) {
     const { className, dialogueId, ...other } = props;
-    const messages                            = useStore(privateMessagesList);
-    const searchMessages                      = useStore(privateMessagesSearchMessages);
-    const hasMoreMessages                     = useStore(privateMessagesHasMore);
-    const userData                            = useStore(authUser);
+    const messages                            = useStore($privateMessages);
+    const searchMessages                      = useStore($privateMessagesSearchMessages);
+    const hasMoreMessages                     = useStore($privateMessagesHasMore);
+    const messageIdScroll                     = useStore($privateMessageScrollToId);
+    const messageLoading                      = useStore($privateMessagesIsPending);
+    const userData                            = useStore($authUser);
     const { hash }                            = useLocation();
     const container                           = useRef<HTMLDivElement>(null);
     const needScrollToBottom                  = useRef<boolean>(true);
 
-    console.log('Messages', messages);
+    // Надо нафиг переделать о.О
 
-    // TODO: Переделать этот ужас со скроллами
-
+    // Если меняется диалог -> нужно проскролить в самый низ
     useEffect(() => {
         needScrollToBottom.current = true;
     }, [ dialogueId ]);
 
+    // Если есть диалог, если есть что скроллить, и если нужно проскролить
+    // -> скролл в самый низ
     useEffect(() => {
-        if (dialogueId && container.current) {
-            if (needScrollToBottom.current) {
-                container.current.scroll({
-                    top     : container.current.scrollHeight,
-                    behavior: 'instant',
-                });
-
-                needScrollToBottom.current = container.current.scrollHeight === container.current.clientHeight;
+        if (dialogueId && container.current && needScrollToBottom.current) {
+            container.current.scrollTop = container.current.scrollHeight;
+            console.log('Toggle need scroll to: false', container.current.scrollHeight > container.current.clientHeight);
+            if (container.current.scrollHeight > container.current.clientHeight) {
+                needScrollToBottom.current = false;
             }
         }
     }, [ dialogueId, messages ]);
 
+    // Скролл до элемента из hash-а
     useEffect(() => {
         if (hash && container.current) {
             const element: HTMLElement = container.current.querySelector(`#m_${ hash.substring(1) }`);
@@ -73,33 +77,33 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
         }
     }, [ hash ]);
 
+    // Скролл до первого нового сообщения после загрузки
     useEffect(() => {
-        if (container.current && dialogueId && messages[dialogueId]) {
+        if (container.current && dialogueId && !needScrollToBottom.current) {
+            const { scrollTop }    = container.current;
+            const scrollPlaceInTop = scrollTop <= 5;
             setTimeout(() => {
                 if (!container.current) {
                     return null;
                 }
-                const {
-                          clientHeight,
-                          scrollHeight,
-                          scrollTop,
-                      }                   = container.current;
-                const scrollPlaceInBottom = scrollHeight - clientHeight - scrollTop < 200;
-                const scrollPlaceInTop    = scrollTop === 0;
 
-                if (scrollPlaceInBottom && messages[dialogueId].lastId) {
-                    const lastMessage = container.current.querySelector(`#m_${ messages[dialogueId].lastId }`);
-                    lastMessage?.scrollIntoView({ behavior: 'smooth' });
-                } else if (scrollPlaceInTop && messages[dialogueId].firstId) {
-                    const firstMessage = container.current.querySelector(`#m_${ messages[dialogueId].firstId }`);
-                    firstMessage?.scrollIntoView({ behavior: 'instant' });
+                if (scrollPlaceInTop && messageIdScroll !== '') {
+                    const firstMessage = container.current.querySelector(`#m_${ messageIdScroll }`);
+                    firstMessage?.scrollIntoView({ behavior: 'smooth' });
                 }
             }, 100);
         }
-        //eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ dialogueId, messages[dialogueId]?.firstId, messages[dialogueId]?.lastId ]);
+    }, [ dialogueId, messageIdScroll ]);
 
-    usePrivateDialogueMessagesLoaderTrigger(dialogueId, container);
+    useEffect(() => {
+        if (dialogueId && messageLoading && container.current && !needScrollToBottom.current) {
+            if (container.current.scrollTop === 0) {
+                container.current.scrollTop = 1;
+            }
+        }
+    }, [ dialogueId, messageLoading ]);
+
+    usePrivateDialogueMessagesLoaderTrigger(dialogueId, container, !needScrollToBottom.current);
 
     return (
         <div
@@ -109,7 +113,7 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
         >
             <div className={ css.content }>
                 {
-                    !messages[dialogueId].messages.length ?
+                    !messages[dialogueId].length ?
                     <EmptyDialogue/> :
                     !hasMoreMessages[dialogueId] ?
                     <NoMoreMessageDialogue/> : null
@@ -126,7 +130,6 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
                             />,
                         )
                     : messages[dialogueId]
-                        .messages
                         .map((message) =>
                             <PrivateMessage
                                 hash={ hash }

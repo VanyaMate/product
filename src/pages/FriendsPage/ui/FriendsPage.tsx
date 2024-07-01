@@ -14,8 +14,8 @@ import {
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    friendRequestsReceived, friendRequestsSent, friendsError, friendsIsPending,
-    friendsList,
+    $friendRequestsReceived, $friendRequestsSent, $friendsError, $friendsIsPending,
+    $friendsList,
 } from '@/app/model/friends/friends.model.ts';
 
 
@@ -25,11 +25,11 @@ export type FriendsPageProps =
 
 export const FriendsPage: FC<FriendsPageProps> = memo(function FriendsPage (props) {
     const { className, ...other } = props;
-    const isPending               = useStore(friendsIsPending);
-    const error                   = useStore(friendsError);
-    const friends                 = useStore(friendsList);
-    const requestsReceived        = useStore(friendRequestsReceived);
-    const requestsSent            = useStore(friendRequestsSent);
+    const isPending               = useStore($friendsIsPending);
+    const error                   = useStore($friendsError);
+    const friends                 = useStore($friendsList);
+    const requestsReceived        = useStore($friendRequestsReceived);
+    const requestsSent            = useStore($friendRequestsSent);
 
     if (!friends) {
         return <PageLoader/>;

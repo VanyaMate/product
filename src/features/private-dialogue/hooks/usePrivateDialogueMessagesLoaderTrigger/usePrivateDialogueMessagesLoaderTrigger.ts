@@ -3,30 +3,30 @@ import { useThrottle } from '@/shared/hooks/useThrottle/useThrottle.ts';
 import { useStore } from '@vanyamate/sec-react';
 import {
     getPrivateMessagesByCursorEffect,
-    privateMessagesHasMore,
-    privateMessagesIsPending,
-    privateMessagesList,
+    $privateMessagesHasMore,
+    $privateMessagesIsPending,
+    $privateMessages,
 } from '@/app/model/private-messages/private-messages.model.ts';
 
 
-export const usePrivateDialogueMessagesLoaderTrigger = function (dialogueId: string, ref: MutableRefObject<HTMLDivElement>): void {
-    const throttle          = useThrottle(250);
-    const messages          = useStore(privateMessagesList);
-    const messagesIsPending = useStore(privateMessagesIsPending);
-    const messagesHasMore   = useStore(privateMessagesHasMore);
+export const usePrivateDialogueMessagesLoaderTrigger = function (dialogueId: string, ref: MutableRefObject<HTMLDivElement>, enable: boolean): void {
+    const throttle          = useThrottle(200);
+    const messages          = useStore($privateMessages);
+    const messagesIsPending = useStore($privateMessagesIsPending);
+    const messagesHasMore   = useStore($privateMessagesHasMore);
 
     // TODO: Переделать этот ужас
 
     useEffect(() => {
         const container = ref.current;
-        if (container && dialogueId) {
+        if (container && dialogueId && enable) {
             const onScroll = () => throttle(() => {
                 if (ref.current.scrollTop < 1000) {
                     const dialogueMessages = messages[dialogueId];
                     if (dialogueMessages) {
-                        if (dialogueMessages.messages.length && !messagesIsPending[dialogueId] && messagesHasMore[dialogueId]) {
+                        if (dialogueMessages.length && !messagesIsPending[dialogueId] && messagesHasMore[dialogueId]) {
                             getPrivateMessagesByCursorEffect([ dialogueId, {
-                                cursor: dialogueMessages.messages[0].id,
+                                cursor: dialogueMessages[0].id,
                                 limit : 20,
                                 query : '',
                             } ]);

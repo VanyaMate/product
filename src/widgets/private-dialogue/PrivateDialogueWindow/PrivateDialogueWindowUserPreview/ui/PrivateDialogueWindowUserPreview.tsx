@@ -4,7 +4,7 @@ import {
 } from '@/widgets/user/containers/UserContainer/ui/UserContainer.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    privateDialogues,
+    $privateDialogues,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 
 
@@ -18,7 +18,7 @@ export type PrivateDialogueWindowUserPreviewProps =
 export const PrivateDialogueWindowUserPreview: FC<PrivateDialogueWindowUserPreviewProps> = memo(function PrivateDialogueWindowUserPreview (props) {
     const { dialogueId } = props;
     // TODO
-    const login          = useStore(privateDialogues).find(({ id }) => id === dialogueId)?.user.login;
+    const login          = useStore($privateDialogues).find(({ id }) => id === dialogueId)?.user.login;
 
     return (
         <UserContainer login={ login }/>

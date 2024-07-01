@@ -8,7 +8,7 @@ import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { useStore } from '@vanyamate/sec-react';
 import {
     archivePrivateDialogueEffect,
-    privateDialogues, unArchivePrivateDialogueEffect,
+    $privateDialogues, unArchivePrivateDialogueEffect,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 
 
@@ -20,7 +20,7 @@ export type ArchivePrivateDialogueProps =
 
 export const ArchivePrivateDialogue: FC<ArchivePrivateDialogueProps> = memo(function ArchivePrivateDialogue (props) {
     const { className, dialogueId, ...other } = props;
-    const dialogues                           = useStore(privateDialogues);
+    const dialogues                           = useStore($privateDialogues);
     const inArchive                           = useMemo(() => dialogues.find((dialogue) => dialogue.id === dialogueId).meArchived, [ dialogueId, dialogues ]);
 
     return (
