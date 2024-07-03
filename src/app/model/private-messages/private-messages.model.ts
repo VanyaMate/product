@@ -156,10 +156,11 @@ export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
         getPrivateMessagesByQueryEffect,
         'onSuccess',
         (state, { args: [ [ dialogueId ] ], result }) => {
-            const messages = result.list.filter(isDomainMessage);
+            const messages       = result.list.filter(isDomainMessage);
+            const uniqueMessages = messages.filter((message) => !state[dialogueId].find(({ id }) => message.id === id));
             return {
                 ...state,
-                [dialogueId]: [ ...messages, ...(state[dialogueId] ?? []) ],
+                [dialogueId]: [ ...uniqueMessages, ...(state[dialogueId] ?? []) ],
             };
         },
     )
@@ -167,10 +168,11 @@ export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
         getPrivateMessagesByCursorEffect,
         'onSuccess',
         (state, { args: [ [ dialogueId ] ], result }) => {
-            const messages = result.list.filter(isDomainMessage);
+            const messages       = result.list.filter(isDomainMessage);
+            const uniqueMessages = messages.filter((message) => !state[dialogueId].find(({ id }) => message.id === id));
             return {
                 ...state,
-                [dialogueId]: [ ...messages, ...(state[dialogueId] ?? []) ],
+                [dialogueId]: [ ...uniqueMessages, ...(state[dialogueId] ?? []) ],
             };
         },
     )

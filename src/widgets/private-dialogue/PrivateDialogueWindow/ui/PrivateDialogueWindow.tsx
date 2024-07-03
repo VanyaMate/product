@@ -5,9 +5,6 @@ import {
     PrivateDialogueWindowHeader,
 } from '@/widgets/private-dialogue/PrivateDialogueWindow/PrivateDialogueWindowHeader/ui/PrivateDialogueWindowHeader.tsx';
 import {
-    PrivateDialogueWindowMessages,
-} from '@/widgets/private-dialogue/PrivateDialogueWindow/PrivateDialogueWindowMessages/ui/PrivateDialogueWindowMessages.tsx';
-import {
     PrivateDialogueWindowInput,
 } from '@/widgets/private-dialogue/PrivateDialogueWindow/PrivateDialogueWindowInput/PrivateDialogueWindowInput.tsx';
 import {
@@ -22,6 +19,9 @@ import { useStore } from '@vanyamate/sec-react';
 import {
     $privateDialoguesStatus,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
+import {
+    PrivateMessagesContainer,
+} from '@/widgets/message/PrivateMessagesContainer/ui/PrivateMessagesContainer.tsx';
 
 
 export type PrivateDialogueWindowProps =
@@ -58,7 +58,7 @@ export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(functi
                         { rightMenuOpened ? <IoClose/> : <IoPerson/> }
                     </Button>
                 </PrivateDialogueWindowHeader>
-                <PrivateDialogueWindowMessages
+                <PrivateMessagesContainer
                     className={ css.messages }
                     dialogueId={ dialogueId }
                 />

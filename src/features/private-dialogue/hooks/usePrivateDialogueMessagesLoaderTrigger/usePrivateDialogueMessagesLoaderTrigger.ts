@@ -20,20 +20,27 @@ export const usePrivateDialogueMessagesLoaderTrigger = function (dialogueId: str
     useEffect(() => {
         const container = ref.current;
         if (container && dialogueId && enable) {
-            const onScroll = () => throttle(() => {
-                if (ref.current.scrollTop < 1000) {
-                    const dialogueMessages = messages[dialogueId];
-                    if (dialogueMessages) {
-                        if (dialogueMessages.length && !messagesIsPending[dialogueId] && messagesHasMore[dialogueId]) {
-                            getPrivateMessagesByCursorEffect([ dialogueId, {
-                                cursor: dialogueMessages[0].id,
-                                limit : 20,
-                                query : '',
-                            } ]);
-                        }
+            const loadMessageHandler = () => {
+                const dialogueMessages = messages[dialogueId];
+                if (dialogueMessages) {
+                    if (dialogueMessages.length && !messagesIsPending[dialogueId] && messagesHasMore[dialogueId]) {
+                        getPrivateMessagesByCursorEffect([ dialogueId, {
+                            cursor: dialogueMessages[0].id,
+                            limit : 20,
+                            query : '',
+                        } ]);
                     }
                 }
+            };
+            const onScroll           = () => throttle(() => {
+                if (ref.current.scrollTop < 1000) {
+                    loadMessageHandler();
+                }
             });
+
+            if (ref.current.offsetHeight === ref.current.scrollHeight) {
+                loadMessageHandler();
+            }
 
             container.addEventListener('scroll', onScroll);
 

@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, memo, useEffect } from 'react';
+import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import {
     PrivateDialogue,
 } from '@/entities/private-dialogues/item/PrivateDialogue/ui/PrivateDialogue.tsx';
@@ -18,7 +18,6 @@ import {
 } from '@/widgets/private-dialogue/PrivateDialogueWindow/ui/PrivateDialogueWindow.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    getOnePrivateDialogueEffect,
     $privateDialogues, $privateDialoguesIsPending, $privateDialoguesStatus,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import { $authUser } from '@/app/model/auth/auth.model.ts';
@@ -42,12 +41,6 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
     }>();
     const messages                                 = useStore($privateMessages);
 
-    useEffect(() => {
-        if (dialogueId) {
-            getOnePrivateDialogueEffect(dialogueId);
-        }
-    }, [ dialogueId ]);
-
     if (!dialogues || (dialoguesIsPending && !messages[dialogueId]) || (dialogueId && !messages[dialogueId])) {
         return <PageLoader/>;
     }
@@ -61,7 +54,7 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
                         <PrivateDialogue
                             dialogue={ dialogue }
                             key={ dialogue.id }
-                            lastMessage={ messages[dialogue.id].slice(-1)[0] }
+                            lastMessage={ messages[dialogue.id]?.slice(-1)[0] }
                             login={ userData.login }
                             selected={ dialogueId === dialogue.id }
                             status={ dialoguesStatus[dialogue.id] }
