@@ -17,15 +17,15 @@
 - **TypeScript**
 - **React**
     - **React-Router-Dom**
-    - ~~**Redux**~~ - `слишком много весит.`
+    - ~~**Redux**~~ - `слишком много весит. ~45kb (15kb gzip)`
         - ~~**Redux Toolkit**~~
         - ~~**Redux ThunkError**~~
-    - **@vanyamate/sec** - `store вместо redux`
+    - **@vanyamate/sec** - `вместо redux`
 - **SCSS** + **CSS Modules**
 - **I18N-Next**
 - ~~**Shadcn UI**~~ - `слишком много весит. ~45kb (15kb gzip)`
     - ~~**Tailwind**~~
-- ~~**Axios**~~ - `слишком много весит. ~24kb (7kb gzip)`
+- ~~**Axios**~~ - `слишком много весит. ~70kb (25kb gzip) o.O`
 - **@vanyamate/fetch-with-interceptors** - `вместо axios`
 
 ### DevTools
