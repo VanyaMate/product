@@ -21,15 +21,17 @@ export type ArchivePrivateDialogueProps =
 export const ArchivePrivateDialogue: FC<ArchivePrivateDialogueProps> = memo(function ArchivePrivateDialogue (props) {
     const { className, dialogueId, ...other } = props;
     const dialogues                           = useStore($privateDialogues);
-    const inArchive                           = useMemo(() => dialogues.find((dialogue) => dialogue.id === dialogueId).meArchived, [ dialogueId, dialogues ]);
+    const inArchive                           = useMemo(() => dialogues.find((dialogue) => dialogue.id === dialogueId)?.meArchived, [ dialogueId, dialogues ]);
 
     return (
         <ButtonWithLoading
             { ...other }
             className={ className }
-            onClick={ () => inArchive
-                            ? unArchivePrivateDialogueEffect(dialogueId)
-                            : archivePrivateDialogueEffect(dialogueId) }
+            onClick={
+                () => inArchive
+                      ? unArchivePrivateDialogueEffect(dialogueId)
+                      : archivePrivateDialogueEffect(dialogueId)
+            }
             quad
             styleType={ inArchive ? ButtonStyleType.PRIMARY
                                   : ButtonStyleType.GHOST }

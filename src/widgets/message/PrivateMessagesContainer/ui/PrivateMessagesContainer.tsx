@@ -4,7 +4,7 @@ import css from './PrivateMessagesContainer.module.scss';
 import { useStore } from '@vanyamate/sec-react';
 import {
     $privateMessages, $privateMessageScrollToId,
-    $privateMessagesIsPending,
+    $privateMessagesIsPending, $privateMessagesSearchMessages,
 } from '@/app/model/private-messages/private-messages.model.ts';
 import {
     PrivateMessage,
@@ -30,16 +30,46 @@ export const PrivateMessagesContainer: FC<PrivateMessagesContainerProps> = memo(
     const containerRef                        = useRef<HTMLDivElement | null>(null);
     const scrollToLastMessage                 = useRef<boolean>(true);
     const scrollToFirstMessage                = useRef<boolean>(false);
+    const scrollSmoothToLastMessage           = useRef<boolean>(false);
 
     const { hash }          = useLocation();
     const authData          = useStore($authUser);
     const messages          = useStore($privateMessages);
     const messagesIsLoading = useStore($privateMessagesIsPending);
     const scrollToMessageId = useStore($privateMessageScrollToId);
+    const searchMessages    = useStore($privateMessagesSearchMessages);
 
     useEffect(() => {
-        scrollToLastMessage.current = true;
+        scrollToLastMessage.current       = true;
+        scrollSmoothToLastMessage.current = false;
     }, [ dialogueId ]);
+
+    useEffect(() => {
+        if (containerRef.current) {
+            const ref             = containerRef.current;
+            const onScrollHandler = function () {
+                const {
+                          scrollTop,
+                          scrollHeight,
+                          offsetHeight,
+                      }                           = ref;
+                scrollSmoothToLastMessage.current = (scrollTop + offsetHeight) === scrollHeight;
+            };
+            ref.addEventListener('scroll', onScrollHandler);
+            return () => ref.removeEventListener('scroll', onScrollHandler);
+        }
+    }, [ containerRef ]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (containerRef.current && scrollSmoothToLastMessage.current) {
+                containerRef.current.scrollTo({
+                    behavior: 'smooth',
+                    top     : containerRef.current.scrollHeight - containerRef.current.offsetHeight,
+                });
+            }
+        });
+    }, [ containerRef, messages ]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -89,8 +119,8 @@ export const PrivateMessagesContainer: FC<PrivateMessagesContainerProps> = memo(
         >
             <div className={ css.content }>
                 {
-                    messages[dialogueId]
-                    ? messages[dialogueId].map((message) => (
+                    searchMessages[dialogueId]
+                    ? searchMessages[dialogueId].map((message) => (
                         <PrivateMessage
                             hash={ hash }
                             key={ message.id }
@@ -98,7 +128,16 @@ export const PrivateMessagesContainer: FC<PrivateMessagesContainerProps> = memo(
                             userId={ authData.id }
                         />
                     ))
-                    : <EmptyDialogue/>
+                    : messages[dialogueId]
+                      ? messages[dialogueId].map((message) => (
+                            <PrivateMessage
+                                hash={ hash }
+                                key={ message.id }
+                                message={ message }
+                                userId={ authData.id }
+                            />
+                        ))
+                      : <EmptyDialogue/>
                 }
             </div>
         </div>

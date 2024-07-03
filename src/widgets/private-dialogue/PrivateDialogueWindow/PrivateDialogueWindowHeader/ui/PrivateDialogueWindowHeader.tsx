@@ -57,7 +57,10 @@ export const PrivateDialogueWindowHeader: FC<PrivateDialogueWindowHeaderProps> =
         >
             <div className={ css.sides }>
                 <Row>
-                    <InputWithError controller={ search }/>
+                    <InputWithError
+                        controller={ search }
+                        placeholder="Поиск сообщений"
+                    />
                 </Row>
                 <Row>
                     <ReadAllMessagesPrivateDialogue dialogueId={ dialogueId }/>

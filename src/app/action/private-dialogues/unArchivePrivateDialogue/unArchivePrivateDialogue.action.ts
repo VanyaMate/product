@@ -7,6 +7,6 @@ import {
 export const unArchivePrivateDialogueAction = (dialogueId: string) =>
     request(
         `v1/private-dialogue/un-archive/${ dialogueId }`,
-        { method: 'POST ' },
+        { method: 'POST' },
         isDomainNotificationPrivateDialogueArchiveData,
     );

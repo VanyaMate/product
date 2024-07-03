@@ -71,5 +71,5 @@ export const $friendRequestsReceived = store<Array<DomainFriendRequest>>([])
 export const $friendRequestsSent = store<Array<DomainFriendRequest>>([])
     .on(cancelFriendRequestEffect, 'onSuccess', (state, { args: [ requestId ] }) => state.filter((request) => request.requestId !== requestId))
     .on(createFriendRequestEffect, 'onSuccess', (state, { result }) => [ ...state, result ])
-    .on(getMyFriendsEffect, 'onSuccess', (_, { result }) => result.requestsIn.filter(isDomainFriendRequest))
+    .on(getMyFriendsEffect, 'onSuccess', (_, { result }) => result.requestsOut.filter(isDomainFriendRequest))
     .on(logoutEffect, 'onBefore', () => null);

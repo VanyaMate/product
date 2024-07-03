@@ -1,7 +1,4 @@
 import {
-    createFetchWithInterceptors,
-} from '../fetch/createFetchWithInterceptors';
-import {
     addUserTokensInterceptor,
 } from '@/app/lib/api/interceptors/request/add-user-tokens.interceptor.ts';
 import {
@@ -13,6 +10,9 @@ import {
 import {
     responseTokenRefreshedInterceptor,
 } from '@/app/lib/api/interceptors/response/refresh-user-tokens.interceptor.ts';
+import {
+    createFetchWithInterceptors,
+} from '@vanyamate/fetch-with-interceptors';
 
 
 export const api = createFetchWithInterceptors([

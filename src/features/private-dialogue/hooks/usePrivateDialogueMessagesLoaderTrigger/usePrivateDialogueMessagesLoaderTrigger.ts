@@ -9,7 +9,11 @@ import {
 } from '@/app/model/private-messages/private-messages.model.ts';
 
 
-export const usePrivateDialogueMessagesLoaderTrigger = function (dialogueId: string, ref: MutableRefObject<HTMLDivElement>, enable: boolean): void {
+export const usePrivateDialogueMessagesLoaderTrigger = function (
+    dialogueId: string,
+    ref: MutableRefObject<HTMLDivElement>,
+    enable: boolean,
+): void {
     const throttle          = useThrottle(200);
     const messages          = useStore($privateMessages);
     const messagesIsPending = useStore($privateMessagesIsPending);

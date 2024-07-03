@@ -153,18 +153,6 @@ export const $privateMessagesError = store<Record<string, DomainServiceResponseE
 
 export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
     .on(
-        getPrivateMessagesByQueryEffect,
-        'onSuccess',
-        (state, { args: [ [ dialogueId ] ], result }) => {
-            const messages       = result.list.filter(isDomainMessage);
-            const uniqueMessages = messages.filter((message) => !state[dialogueId].find(({ id }) => message.id === id));
-            return {
-                ...state,
-                [dialogueId]: [ ...uniqueMessages, ...(state[dialogueId] ?? []) ],
-            };
-        },
-    )
-    .on(
         getPrivateMessagesByCursorEffect,
         'onSuccess',
         (state, { args: [ [ dialogueId ] ], result }) => {
@@ -236,7 +224,17 @@ export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
         'onSuccess',
         (state, { result }) => {
             const messages = (state[result.dialogue.id] ?? [])
-                .map((message) => ({ ...message, read: true }));
+                .map((message) => {
+                    const companionId = result.dialogue.user.id;
+                    if (message.author.id === companionId) {
+                        return {
+                            ...message,
+                            read: true,
+                        };
+                    } else {
+                        return message;
+                    }
+                });
             return {
                 ...state,
                 [result.dialogue.id]: messages,
@@ -297,6 +295,7 @@ export const $privateMessagesHasMore = store<Record<string, boolean>>({})
     )
     .on(logoutEffect, 'onBefore', () => ({}));
 
+
 export const $privateMessageScrollToId = store<string>('')
     .on(
         getPrivateMessagesByCursorEffect,
@@ -310,18 +309,7 @@ export const $privateMessageScrollToId = store<string>('')
             }
         },
     )
-    .on(
-        getPrivateMessagesByCursorEffect,
-        'onSuccess',
-        (_, { result }) => {
-            const lastItem: unknown = result.list.slice(-1)[0];
-            if (isDomainMessage(lastItem)) {
-                return lastItem.id;
-            } else {
-                return '';
-            }
-        },
-    );
+    .on(logoutEffect, 'onBefore', () => '');
 
 
 export const $privateMessagesSearchMessages = store<Record<string, Array<DomainMessage>>>({})

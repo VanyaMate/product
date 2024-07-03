@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useEffect } from 'react';
 import css from './HeaderNavBar.module.scss';
 import classNames from 'classnames';
 import {
@@ -11,12 +11,17 @@ import {
     UserProfileOrAuthButton,
 } from '@/widgets/user/button/UserProfileOrAuthButton/ui/UserProfileOrAuthButton.tsx';
 import { SiteLogoLinkTitle } from '@/entities/site/logo/SiteLogoLinkTitle.tsx';
+import { getMyFriendsEffect } from '@/app/model/friends/friends.model.ts';
 
 
 export type HeaderNavBarProps = {};
 
 export const HeaderNavBar: FC<HeaderNavBarProps> = memo(function HeaderNavBar (props) {
     const {} = props;
+
+    useEffect(() => {
+        getMyFriendsEffect();
+    }, []);
 
     return (
         <div className={ css.container }>
