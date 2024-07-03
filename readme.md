@@ -32,6 +32,7 @@
 
 - **Vite**
     - **vite-bundle-visualizer**
+    - **vite-plugin-bundle-monitoring**
 - **Git**
     - **GitHub**
         - **GitHub Actions**
