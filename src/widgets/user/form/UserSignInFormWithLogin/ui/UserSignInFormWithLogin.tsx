@@ -19,12 +19,12 @@ import { DomainUser } from 'product-types/dist/user/DomainUser';
 import { loginEffect } from '@/app/model/auth/auth.model.ts';
 
 
-export type UserAuthFormWithUsernameProps = {
+export type UserSignInFormWithLoginProps = {
     onSuccess?: (user: DomainUser) => void;
     onError?: (error: Error) => void;
 }
 
-export const UserAuthFormWithUsername: FC<UserAuthFormWithUsernameProps> = memo(function UserAuthFormWithUsername (props) {
+export const UserSignInFormWithLogin: FC<UserSignInFormWithLoginProps> = memo(function UserSignInFormWithLogin (props) {
     const { onError, onSuccess }  = props;
     const loginInputController    = useInputWithError({
         name            : 'login',

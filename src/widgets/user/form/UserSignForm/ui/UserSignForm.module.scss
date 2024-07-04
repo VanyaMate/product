@@ -1,0 +1,14 @@
+.container {
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-medium);
+
+    .control {
+        display : flex;
+        gap     : var(--offset-small);
+
+        & > * {
+            flex : 1;
+        }
+    }
+}

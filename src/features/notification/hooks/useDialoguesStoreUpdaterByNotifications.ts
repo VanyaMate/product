@@ -6,9 +6,6 @@ import {
     NotificationNotificatorCallback,
 } from '@/features/notification/services/notificator/notification-notificator.interface.ts';
 import {
-    isDomainNotificationPrivateMessageData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationPrivateMessageData';
-import {
     DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
 import { useStore } from '@vanyamate/sec-react';
@@ -16,6 +13,9 @@ import {
     getListPrivateDialogueEffect,
     $privateDialogues,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
+import {
+    sendPrivateMessageNotificationEffect,
+} from '@/app/model/private-messages/private-messages.model.ts';
 
 
 export const useDialoguesStoreUpdaterByNotifications = function () {
@@ -29,11 +29,7 @@ export const useDialoguesStoreUpdaterByNotifications = function () {
     useEffect(() => {
         if (dialogues) {
             const onPrivateMessageIn: NotificationNotificatorCallback = function (notifications) {
-                notifications.forEach((notification) => {
-                    if (isDomainNotificationPrivateMessageData(notification.data)) {
-                        // dispatch(sendPrivateMessageNotification(notification.data));
-                    }
-                });
+                notifications.forEach(({ data }) => sendPrivateMessageNotificationEffect(data));
             };
 
             notification.subscribe(DomainNotificationType.PRIVATE_MESSAGE_IN, onPrivateMessageIn);

@@ -36,16 +36,20 @@ import { logoutEffect } from '@/app/model/auth/auth.model.ts';
 import {
     resetPrivateMessageSearchAction,
 } from '@/app/action/private-messages/resetMessageSearch/resetPrivateMessageSearch.action.ts';
+import {
+    sendPrivateMessageNotificationAction,
+} from '@/app/action/private-messages/sendPrivateMessage/sendPrivateMessageNotification.action.ts';
 
 
-export const getPrivateMessagesByCursorEffect = effect(getPrivateMessageByCursorAction);
-export const getPrivateMessagesByQueryEffect  = effect(getPrivateMessageByQueryAction);
-export const readAllPrivateMessagesEffect     = effect(readAllPrivateMessageAction);
-export const readPrivateMessageEffect         = effect(readPrivateMessageAction);
-export const removePrivateMessageEffect       = effect(removePrivateMessageAction);
-export const sendPrivateMessageEffect         = effect(sendPrivateMessageAction);
-export const updatePrivateMessageEffect       = effect(updatePrivateMessageAction);
-export const resetPrivateMessagesSearchEffect = effect(resetPrivateMessageSearchAction);
+export const getPrivateMessagesByCursorEffect     = effect(getPrivateMessageByCursorAction);
+export const getPrivateMessagesByQueryEffect      = effect(getPrivateMessageByQueryAction);
+export const readAllPrivateMessagesEffect         = effect(readAllPrivateMessageAction);
+export const readPrivateMessageEffect             = effect(readPrivateMessageAction);
+export const removePrivateMessageEffect           = effect(removePrivateMessageAction);
+export const sendPrivateMessageEffect             = effect(sendPrivateMessageAction);
+export const sendPrivateMessageNotificationEffect = effect(sendPrivateMessageNotificationAction);
+export const updatePrivateMessageEffect           = effect(updatePrivateMessageAction);
+export const resetPrivateMessagesSearchEffect     = effect(resetPrivateMessageSearchAction);
 
 
 export const $privateMessagesIsPending = store<Record<string, boolean>>({})
@@ -178,10 +182,17 @@ export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
     .on(
         getListPrivateDialogueEffect,
         'onSuccess',
-        (_, { result }) => result.reduce((acc, dialogue) => ({
-            ...acc,
-            [dialogue.id]: dialogue.messages,
-        }), {}),
+        (_, { result }) => {
+            // TODO: Tempo logs
+            console.log('GetListPrivate', result);
+            const state = result.reduce((acc, dialogue) => ({
+                ...acc,
+                [dialogue.id]: dialogue.messages,
+            }), {});
+
+            console.log('New state is', state);
+            return state;
+        },
     )
     .on(
         removePrivateMessageEffect,
@@ -253,6 +264,20 @@ export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
                 [result.dialogue.id]: messages,
             };
         },
+    )
+    .on(
+        sendPrivateMessageNotificationEffect,
+        'onSuccess',
+        (state, { result }) =>
+            state[result.dialogue.id]?.some((message) => message.id === result.message.id)
+            ? state
+            : {
+                    ...state,
+                    [result.dialogue.id]: [
+                        ...(state[result.dialogue.id] ?? []),
+                        result.message,
+                    ],
+                },
     )
     .on(logoutEffect, 'onBefore', () => ({}));
 
