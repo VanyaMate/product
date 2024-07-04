@@ -1,14 +1,19 @@
-import { useEffect } from 'react';
-import { useAppDispatch } from '@/app/redux/hooks/useAppDispatch.ts';
+import { useEffect, useRef } from 'react';
 import {
-    authByTokens,
-} from '@/app/redux/slices/auth/thunks/authByTokens/authByTokens.ts';
+    $authIsPending,
+    refreshAuthEffect,
+} from '@/app/model/auth/auth.model.ts';
+import { useStore } from '@vanyamate/sec-react';
 
 
 export const useWelcomeAuth = function () {
-    const dispatch = useAppDispatch();
+    const send        = useRef<boolean>(true);
+    const authPending = useStore($authIsPending);
 
     useEffect(() => {
-        dispatch(authByTokens());
-    }, [ dispatch ]);
+        if (!authPending && send.current) {
+            send.current = false;
+            refreshAuthEffect();
+        }
+    }, [ authPending ]);
 };

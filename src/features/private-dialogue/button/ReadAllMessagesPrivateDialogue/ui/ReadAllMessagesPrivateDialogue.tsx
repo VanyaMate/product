@@ -5,10 +5,9 @@ import {
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
 import { IoReader } from 'react-icons/io5';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
-import { useAppDispatch } from '@/app/redux/hooks/useAppDispatch.ts';
 import {
-    readAllPrivateMessage,
-} from '@/app/redux/slices/private-messages/thunks/readAllPrivateMessage.ts';
+    readAllPrivateMessagesEffect,
+} from '@/app/model/private-messages/private-messages.model.ts';
 
 
 export type ReadAllMessagesPrivateDialogueProps =
@@ -19,12 +18,11 @@ export type ReadAllMessagesPrivateDialogueProps =
 
 export const ReadAllMessagesPrivateDialogue: FC<ReadAllMessagesPrivateDialogueProps> = memo(function ReadAllMessagesPrivateDialogue (props) {
     const { dialogueId, ...other } = props;
-    const dispatch                 = useAppDispatch();
 
     return (
         <ButtonWithLoading
             { ...other }
-            onClick={ () => dispatch(readAllPrivateMessage(dialogueId)) }
+            onClick={ () => readAllPrivateMessagesEffect(dialogueId) }
             quad
             styleType={ ButtonStyleType.PRIMARY }
         >

@@ -17,7 +17,7 @@ import {
 
 
 export const getMessagesByCursor = createAsyncThunk<DomainSearchItem, [ string, DomainSearchCursorOptions ], ThunkApiConfig<DomainServiceResponseError>>(
-    'private-messages/getMessagesByCursor',
+    'private-messages/getPrivateMessagesByCursor',
     async ([ dialogueId, options ], thunkAPI) => {
         const { extra: { api }, rejectWithValue } = thunkAPI;
         try {

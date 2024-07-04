@@ -1,30 +1,36 @@
 import { FC, memo } from 'react';
 import { useWelcomeAuth } from '@/features/auth/hooks/useWelcomeAuth.ts';
 import css from './WelcomePage.module.scss';
-import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
-import {
-    getAuthPending,
-} from '@/app/redux/slices/auth/selectors/getAuthPending/getAuthPending.ts';
 import classNames from 'classnames';
+import { useStore } from '@vanyamate/sec-react';
+import { $authIsPending } from '@/app/model/auth/auth.model.ts';
 import {
-    UserAuthFormWithUsernameAsync
-} from '@/widgets/user/form/UserAuthFormWithUsernameByJsonServer/ui/UserAuthFormWithUsernameAsync.tsx';
+    UserSignForm,
+} from '@/widgets/user/form/UserSignForm/ui/UserSignForm.tsx';
+import { Image } from '@/shared/ui-kit/image/Image/ui/Image.tsx';
 
 
 export type WelcomePageProps = {};
 
 export const WelcomePage: FC<WelcomePageProps> = memo(function WelcomePage (props) {
     const {}          = props;
-    const authPending = useAppSelector(getAuthPending);
+    const authPending = useStore($authIsPending);
 
     useWelcomeAuth();
 
     return (
         <div className={ css.container }>
-            <div
-                className={ classNames(css.form, { [css.disabled]: authPending }) }
-            >
-                <UserAuthFormWithUsernameAsync/>
+            <div className={ css.content }>
+                <Image
+                    alt="Logo"
+                    className={ css.logo }
+                    src="/images/logo/android-chrome-192x192.png"
+                />
+                <div
+                    className={ classNames(css.form, { [css.disabled]: authPending }) }
+                >
+                    <UserSignForm/>
+                </div>
             </div>
         </div>
     );

@@ -1,3 +1,6 @@
+$logo-size   : 180px;
+$margin-size : 90px;
+
 .container {
     height          : 100dvh;
     max-width       : 100%;
@@ -5,7 +8,26 @@
     align-items     : center;
     justify-content : center;
 
+    .content {
+        display     : flex;
+        align-items : center;
+
+        .logo {
+            width         : $logo-size;
+            min-width     : $logo-size;
+            height        : $logo-size;
+            min-height    : $logo-size;
+            margin-right  : $margin-size;
+            border-radius : 50%;
+            border-right  : 1px solid var(--bg-second-color);
+            box-shadow    : 0 0 200px -20px var(--primary-color);
+        }
+    }
+
     .form {
+        border-left  : 1px solid var(--bg-second-color);
+        padding-left : $margin-size;
+
         &.disabled {
             pointer-events : none;
             opacity        : .5;

@@ -8,20 +8,18 @@ import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
 import { IoChatbox } from 'react-icons/io5';
-import { useAppDispatch } from '@/app/redux/hooks/useAppDispatch.ts';
-import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
-import {
-    getFriendsList,
-} from '@/app/redux/slices/friends/selectors/getFriendsList/getFriendsList.ts';
 import {
     Button,
     ButtonProps,
 } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { useNavigate } from 'react-router-dom';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import { useStore } from '@vanyamate/sec-react';
+import { $friendsList } from '@/app/model/friends/friends.model.ts';
 import {
-    createPrivateDialogue,
-} from '@/app/redux/slices/private-dialogues/thunks/createPrivateDialogue/createPrivateDialogue.ts';
+    createPrivateDialogueEffect,
+    $privateDialogueWithUser,
+} from '@/app/model/private-dialogues/private-dialogues.model.ts';
 
 
 export type GoToPrivateDialogueProps =
@@ -33,16 +31,15 @@ export type GoToPrivateDialogueProps =
 
 export const GoToPrivateDialogue: FC<GoToPrivateDialogueProps> = memo(function GoToPrivateDialogue (props) {
     const { className, userId, permissions, ...other } = props;
-    const dispatch                                     = useAppDispatch();
-    const friends                                      = useAppSelector(getFriendsList);
-    const privateDialogueState                         = useAppSelector((state) => state.dialogues);
+    const friends                                      = useStore($friendsList);
+    const dialogueWithUser                             = useStore($privateDialogueWithUser);
     const navigate                                     = useNavigate();
 
-    // if not exist
-    if (privateDialogueState.withUser[userId]?.created) {
+    // if exist
+    if (dialogueWithUser[userId]?.created) {
         return (
             <Button
-                onClick={ () => navigate(`/dialogue/${ privateDialogueState.dialogues.find((dialogue) => dialogue.user.id === userId).id }`) }
+                onClick={ () => navigate(`/dialogue/${ dialogueWithUser[userId].dialogueId }`) }
                 quad
                 styleType={ ButtonStyleType.SECOND }
             >
@@ -62,7 +59,7 @@ export const GoToPrivateDialogue: FC<GoToPrivateDialogueProps> = memo(function G
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
             disabled={ !isCreatableDialogue }
-            onClick={ () => dispatch(createPrivateDialogue(userId)).unwrap().then((dialogue) => navigate(`/dialogue/${ dialogue.dialogue.id }`)) }
+            onClick={ () => createPrivateDialogueEffect(userId).then((dialogue) => navigate(`/dialogue/${ dialogue.dialogue.id }`)) }
             quad
         >
             <IoChatbox/>

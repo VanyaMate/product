@@ -1,5 +1,4 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
-import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
 import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
@@ -13,9 +12,11 @@ import {
     FriendRequestsInDetails,
 } from '@/widgets/friends/details/FriendRequestsInDetails/ui/FriendRequestsInDetails.tsx';
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
+import { useStore } from '@vanyamate/sec-react';
 import {
-    getFriendsState,
-} from '@/app/redux/slices/friends/selectors/getFriendsState/getFriendsState.ts';
+    $friendRequestsReceived, $friendRequestsSent, $friendsError, $friendsIsPending,
+    $friendsList,
+} from '@/app/model/friends/friends.model.ts';
 
 
 export type FriendsPageProps =
@@ -24,7 +25,11 @@ export type FriendsPageProps =
 
 export const FriendsPage: FC<FriendsPageProps> = memo(function FriendsPage (props) {
     const { className, ...other } = props;
-    const friends                 = useAppSelector(getFriendsState);
+    const isPending               = useStore($friendsIsPending);
+    const error                   = useStore($friendsError);
+    const friends                 = useStore($friendsList);
+    const requestsReceived        = useStore($friendRequestsReceived);
+    const requestsSent            = useStore($friendRequestsSent);
 
     if (!friends) {
         return <PageLoader/>;
@@ -36,15 +41,15 @@ export const FriendsPage: FC<FriendsPageProps> = memo(function FriendsPage (prop
             className={ className }
         >
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>pending: { friends.isPending.toString() }</p>
+            <p>pending: { isPending.toString() }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>error: { friends.error?.toString() }</p>
+            <p>error: { JSON.stringify(error) ?? 'null' }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>friends: { friends.friends.length }</p>
+            <p>friends: { friends.length }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>requestsIn: { friends.requestsReceived.length }</p>
+            <p>requestsIn: { requestsReceived.length }</p>
             {/* eslint-disable-next-line i18next/no-literal-string */ }
-            <p>requestsOut: { friends.requestsSent.length }</p>
+            <p>requestsOut: { requestsSent.length }</p>
 
             <Col>
                 <FriendRequestsInDetails/>

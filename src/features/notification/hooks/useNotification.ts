@@ -10,15 +10,15 @@ import {
 import {
     INotificationController,
 } from '@/features/notification/services/controller/notification-controller.interface.ts';
-import {
-    LOCAL_STORAGE_USER_ACCESS_TOKEN,
-    LOCAL_STORAGE_USER_REFRESH_TOKEN,
-} from '@/app/redux/slices/user/consts/storage.const.ts';
 import { useEffect } from 'react';
 import {
     DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
 import { tokenUpdate } from '@/features/notification/lib/tokenUpdate.ts';
+import {
+    LOCAL_STORAGE_USER_ACCESS_TOKEN,
+    LOCAL_STORAGE_USER_REFRESH_TOKEN,
+} from '@/app/model/auth/const.ts';
 
 
 const notificationController: INotificationController = new NotificationController(

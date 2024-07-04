@@ -4,7 +4,8 @@
 
 ### Architecture
 
-- **FSD**
+- ~~**FSD**~~
+- **_UMA_** - [ссылка на статью](https://habr.com/ru/articles/824842/)
 
 ### Builder
 
@@ -16,19 +17,22 @@
 - **TypeScript**
 - **React**
     - **React-Router-Dom**
-    - **Redux**
-        - **Redux Toolkit**
-        - **Redux ThunkError**
+    - ~~**Redux**~~ - `слишком много весит. ~45kb (15kb gzip)`
+        - ~~**Redux Toolkit**~~
+        - ~~**Redux ThunkError**~~
+    - **@vanyamate/sec** - `вместо redux`
 - **SCSS** + **CSS Modules**
 - **I18N-Next**
-- **Shadcn UI** - `только sonner. ~45kb (15kb gzip)`
-    - **Tailwind**
-- **Axios** - `~24kb (7kb gzip)`
+- ~~**Shadcn UI**~~ - `слишком много весит. ~45kb (15kb gzip)`
+    - ~~**Tailwind**~~
+- ~~**Axios**~~ - `слишком много весит. ~70kb (25kb gzip) o.O`
+- **@vanyamate/fetch-with-interceptors** - `вместо axios`
 
 ### DevTools
 
 - **Vite**
     - **vite-bundle-visualizer**
+    - **vite-plugin-bundle-monitoring**
 - **Git**
     - **GitHub**
         - **GitHub Actions**
@@ -49,8 +53,8 @@
             - `если в тесте несколько подряд скриншотов, обновлять будет нужно их по очереди. как варинат - использовать 1 скриншот в 1 тесте`
     - **reg-cli**
     - **Husky**
-- **MockServer**
-    - **json-server**
+- ~~**MockServer**~~ - `уже не нужен`
+    - ~~**json-server**~~
 
 ## Rules
 

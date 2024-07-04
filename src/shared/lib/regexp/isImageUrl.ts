@@ -1,1 +1,1 @@
-export const isImageUrl = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp|webp|svg))$/;
+export const isImageUrl = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp|webp|svg))(?:\?.*)?$/;

@@ -1,17 +1,15 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './UserRightSideMenu.module.scss';
-import { useAppSelector } from '@/app/redux/hooks/useAppSelector.ts';
-import {
-    getAuthUser,
-} from '@/app/redux/slices/auth/selectors/getAuthUser/getAuthUser.ts';
-import {
-    GlobalNotifications,
-} from '@/widgets/notification/GlobalNotifications/ui/GlobalNotifications.tsx';
 import { UserHeader } from '@/entities/user/UserHeader/ui/UserHeader.tsx';
 import {
     UserControlMenu,
 } from '@/widgets/user/menu/UserControlMenu/ui/UserControlMenu.tsx';
+import { useStore } from '@vanyamate/sec-react';
+import { $authUser } from '@/app/model/auth/auth.model.ts';
+import {
+    GlobalNotificationsAsync,
+} from '@/widgets/notification/GlobalNotifications/ui/GlobalNotifications.async.tsx';
 
 
 export type UserRightSideMenuProps =
@@ -20,7 +18,7 @@ export type UserRightSideMenuProps =
 
 export const UserRightSideMenu: FC<UserRightSideMenuProps> = memo(function UserRightSideMenu (props) {
     const { className, ...other } = props;
-    const userData                = useAppSelector(getAuthUser);
+    const userData                = useStore($authUser);
 
     return (
         <section
@@ -29,7 +27,7 @@ export const UserRightSideMenu: FC<UserRightSideMenuProps> = memo(function UserR
         >
             <UserHeader user={ userData }/>
             <UserControlMenu/>
-            <GlobalNotifications/>
+            <GlobalNotificationsAsync/>
         </section>
     );
 });
