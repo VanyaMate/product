@@ -35,7 +35,7 @@ export const SiteAppRoutePath: Record<SiteAppRoute, string> = {
     [SiteAppRoute.NOT_FOUND]: '*',
 };
 
-export const MainSiteRouteConfig: Record<SiteAppRoute, RouteProps> = {
+export const SiteAppRouteConfig: Record<SiteAppRoute, RouteProps> = {
     [SiteAppRoute.HOME]     : {
         path   : SiteAppRoutePath[SiteAppRoute.HOME],
         element: <HomePageAsync/>,
