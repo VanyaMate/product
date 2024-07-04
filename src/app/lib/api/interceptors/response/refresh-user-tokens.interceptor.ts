@@ -1,15 +1,13 @@
 import { isDomainResponse } from 'product-types/dist/response/DomainResponse';
 import { isDomainTokens } from 'product-types/dist/token/DomainTokens';
 import {
-    ResponseInterceptor,
-} from '@/app/lib/fetch/createFetchWithInterceptors.ts';
-import {
     LOCAL_STORAGE_USER_ACCESS_TOKEN,
     LOCAL_STORAGE_USER_REFRESH_TOKEN,
 } from '@/app/model/auth/const';
 import {
     isDomainAuthResponse,
 } from 'product-types/dist/authorization/DomainAuthResponse';
+import { ResponseInterceptor } from '@vanyamate/fetch-with-interceptors';
 
 
 export const responseTokenRefreshedInterceptor: ResponseInterceptor = async (response) => {

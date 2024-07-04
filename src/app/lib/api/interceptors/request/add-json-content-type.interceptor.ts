@@ -1,6 +1,4 @@
-import {
-    RequestInterceptor,
-} from '@/app/lib/fetch/createFetchWithInterceptors.ts';
+import { RequestInterceptor } from '@vanyamate/fetch-with-interceptors';
 
 
 export const addJsonContentTypeInterceptor: RequestInterceptor = async function (url, init) {

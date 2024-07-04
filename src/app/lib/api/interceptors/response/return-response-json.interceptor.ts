@@ -1,6 +1,4 @@
-import {
-    ResponseInterceptor,
-} from '@/app/lib/fetch/createFetchWithInterceptors.ts';
+import { ResponseInterceptor } from '@vanyamate/fetch-with-interceptors';
 
 
 export const returnResponseJsonInterceptor: ResponseInterceptor = async (response) => {
