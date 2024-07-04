@@ -24,6 +24,9 @@ import {
 import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
+import {
+    useGlobalStoreUpdaterByNotifications,
+} from '@/features/notification/hooks/useGlobalStoreUpdaterByNotifications.ts';
 
 
 export type GlobalNotificationsProps =
@@ -35,6 +38,8 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
     const notification                        = useNotification('global-notifications');
     const [ notifications, setNotifications ] = useState<DomainNotification[]>([]);
     const audioRef                            = useRef<HTMLAudioElement>(null);
+
+    useGlobalStoreUpdaterByNotifications();
 
     useEffect(() => {
         const onMessage: NotificationNotificatorCallback = (message) => {

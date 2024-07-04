@@ -7,6 +7,9 @@ import {
 } from '@/widgets/user/menu/UserControlMenu/ui/UserControlMenu.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import { $authUser } from '@/app/model/auth/auth.model.ts';
+import {
+    GlobalNotifications,
+} from '@/widgets/notification/GlobalNotifications/ui/GlobalNotifications.tsx';
 
 
 export type UserRightSideMenuProps =
@@ -24,6 +27,7 @@ export const UserRightSideMenu: FC<UserRightSideMenuProps> = memo(function UserR
         >
             <UserHeader user={ userData }/>
             <UserControlMenu/>
+            <GlobalNotifications/>
         </section>
     );
 });

@@ -16,6 +16,9 @@ import {
     SiteMainLayoutSideMenuProvider,
 } from '@/shared/layout/site/SiteMainLayout/provider/SiteMainLayoutSideMenuProvider.tsx';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import {
+    LOCAL_STORAGE_SITE_MAIN_LAYOUT_RIGHT_MENU_OPENED,
+} from '@/shared/layout/site/SiteMainLayout/const/site-main-layout.const.ts';
 
 
 export type SiteMainLayoutProps =
@@ -36,12 +39,21 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
               ...other
           }                                       = props;
     const [ leftMenuOpened, setLeftMenuOpened ]   = useState(false);
-    const [ rightMenuOpened, setRightMenuOpened ] = useState<boolean>(true);
+    const [ rightMenuOpened, setRightMenuOpened ] = useState<boolean>(
+        localStorage.getItem(LOCAL_STORAGE_SITE_MAIN_LAYOUT_RIGHT_MENU_OPENED) === 'true',
+    );
     const main                                    = useRef<HTMLAnchorElement>();
     const onCompleteAction                        = useCallback(() => {
         setLeftMenuOpened(false);
         setTimeout(() => main.current?.focus());
     }, []);
+
+    const rightMenuToggle = function () {
+        setRightMenuOpened((prev) => {
+            localStorage.setItem(LOCAL_STORAGE_SITE_MAIN_LAYOUT_RIGHT_MENU_OPENED, (!prev).toString());
+            return !prev;
+        });
+    };
 
     useEffect(() => {
         return keyboardClose(leftMenuOpened, setLeftMenuOpened);
@@ -69,7 +81,7 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
                         { header }
                     </div>
                     <Button
-                        onClick={ () => setRightMenuOpened((prev) => !prev) }
+                        onClick={ rightMenuToggle }
                         quad
                         { ...inert(leftMenuOpened) }
                     >
