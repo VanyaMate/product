@@ -18,8 +18,18 @@ import {
     ReadAllMessagesPrivateDialogue,
 } from '@/features/private-dialogue/button/ReadAllMessagesPrivateDialogue/ui/ReadAllMessagesPrivateDialogue.tsx';
 import {
+    $privateMessagesIsPending,
     getPrivateMessagesByQueryEffect, resetPrivateMessagesSearchEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
+import { useTranslation } from 'react-i18next';
+import { useStore } from '@vanyamate/sec-react';
+import {
+    $privateDialoguesStatus,
+} from '@/app/model/private-dialogues/private-dialogues.model.ts';
+import {
+    ButtonWithLoading,
+} from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
+import { IoSearch } from 'react-icons/io5';
 
 
 export type PrivateDialogueWindowHeaderProps =
@@ -30,6 +40,8 @@ export type PrivateDialogueWindowHeaderProps =
 
 export const PrivateDialogueWindowHeader: FC<PrivateDialogueWindowHeaderProps> = memo(function PrivateDialogueWindowHeader (props) {
     const { className, dialogueId, children, ...other } = props;
+    const messagesStatus                                = useStore($privateMessagesIsPending);
+    const { t }                                         = useTranslation([ 'dialogue' ]);
     const search                                        = useInputWithError({
         name           : '',
         debounce       : 500,
@@ -57,9 +69,16 @@ export const PrivateDialogueWindowHeader: FC<PrivateDialogueWindowHeaderProps> =
         >
             <div className={ css.sides }>
                 <Row>
+                    <ButtonWithLoading
+                        disabled
+                        loading={ messagesStatus[dialogueId] ?? false }
+                        quad
+                    >
+                        <IoSearch/>
+                    </ButtonWithLoading>
                     <InputWithError
                         controller={ search }
-                        placeholder="Поиск сообщений"
+                        placeholder={ t(`search_message`) }
                     />
                 </Row>
                 <Row>

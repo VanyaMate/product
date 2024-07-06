@@ -11,9 +11,10 @@
     overflow        : hidden;
 
     &:disabled {
-        background : var(--ghost-color);
-        color      : var(--on-ghost-text-color);
-        cursor     : default;
+        background     : var(--bg-ghost-color);
+        color          : var(--text-second-color);
+        cursor         : default;
+        pointer-events : none;
     }
 
     &.primary:not(:disabled) {
