@@ -1,0 +1,12 @@
+.container {
+    display    : flex;
+
+    .content {
+        width           : 100%;
+        display         : flex;
+        gap             : var(--offset-medium);
+        justify-content : end;
+        padding         : var(--offset-small);
+        position        : relative;
+    }
+}

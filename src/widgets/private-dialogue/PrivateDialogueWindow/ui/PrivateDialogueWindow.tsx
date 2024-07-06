@@ -20,8 +20,8 @@ import {
     $privateDialoguesStatus,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import {
-    PrivateMessagesContainer,
-} from '@/widgets/message/PrivateMessagesContainer/ui/PrivateMessagesContainer.tsx';
+    PrivateMessagesVirtualContainer,
+} from '@/widgets/message/PrivateMessageVirtualContainer/ui/PrivateMessageVirtualContainer.tsx';
 
 
 export type PrivateDialogueWindowProps =
@@ -58,7 +58,7 @@ export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(functi
                         { rightMenuOpened ? <IoClose/> : <IoPerson/> }
                     </Button>
                 </PrivateDialogueWindowHeader>
-                <PrivateMessagesContainer
+                <PrivateMessagesVirtualContainer
                     className={ css.messages }
                     dialogueId={ dialogueId }
                 />
