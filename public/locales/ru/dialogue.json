@@ -9,5 +9,6 @@
     "dialogue_deleted_by_user": "Диалог удален пользователем",
     "dialogue_archived_by_me": "Диалог заархивирован вами",
     "dialogue_deleted_by_me": "Диалог удален вами",
-    "write_message": "Введите сообщение"
+    "write_message": "Введите сообщение",
+    "search_messages_not_found": "Сообщения не найдены"
 }

@@ -9,5 +9,6 @@
     "dialogue_deleted_by_user": "Dialogue was removed by user",
     "dialogue_archived_by_me": "Dialogue was archived by you",
     "dialogue_deleted_by_me": "Dialogue was removed by you",
-    "write_message": "Write message"
+    "write_message": "Write message",
+    "search_messages_not_found": "Messages not found"
 }
