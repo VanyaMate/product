@@ -44,7 +44,7 @@
         "@types/redux-thunk": "^2.1.0",
         "@vanyamate/fetch-with-interceptors": "^0.0.1",
         "@vanyamate/helpers": "^0.0.5",
-        "@vanyamate/react-infinity-virtual": "^0.0.8",
+        "@vanyamate/react-infinity-virtual": "^0.0.10",
         "@vanyamate/sec": "^0.1.0",
         "@vanyamate/sec-react": "^0.0.4",
         "axios": "^1.6.8",
