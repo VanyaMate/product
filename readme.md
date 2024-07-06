@@ -27,6 +27,7 @@
     - ~~**Tailwind**~~
 - ~~**Axios**~~ - `слишком много весит. ~70kb (25kb gzip) o.O`
 - **@vanyamate/fetch-with-interceptors** - `вместо axios`
+- **@vanyamate/react-infinity-virtual** - динамический виртуальный скролл вместо react-window и tanstack virtual
 
 ### DevTools
 
