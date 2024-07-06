@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    $privateMessages,
+    $privateMessages, $privateMessagesHasMore,
     $privateMessagesIsPending,
     getPrivateMessagesByCursorEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
@@ -33,11 +33,12 @@ export const PrivateMessagesVirtualContainer: FC<PrivateMessagesVirtualContainer
     const authData                            = useStore($authUser);
     const messages                            = useStore($privateMessages);
     const messagesIsLoading                   = useStore($privateMessagesIsPending);
+    const messagesHasMore                     = useStore($privateMessagesHasMore);
 
     useEffect(() => {
         if (messages[dialogueId].length < 60) {
             getPrivateMessagesByCursorEffect([ dialogueId, {
-                cursor: messages[dialogueId][0].id,
+                cursor: messages[dialogueId]?.[0]?.id,
                 limit : 60,
                 query : '',
             } ]);
@@ -46,14 +47,15 @@ export const PrivateMessagesVirtualContainer: FC<PrivateMessagesVirtualContainer
     }, [ dialogueId ]);
 
     const OnShowIndexChange = useCallback((index: number) => {
-        if ((index < 60) && !messagesIsLoading[dialogueId]) {
+        if ((index < 60) && !messagesIsLoading[dialogueId] && messagesHasMore[dialogueId]) {
             getPrivateMessagesByCursorEffect([ dialogueId, {
-                cursor: messages[dialogueId][0].id,
+                cursor: messages[dialogueId]?.[0]?.id,
                 limit : 60,
                 query : '',
             } ]);
         }
-    }, [ dialogueId, messages, messagesIsLoading ]);
+        // eslint-disable-next-line
+    }, [ dialogueId, messagesIsLoading, messagesHasMore ]);
 
     return (
         <BottomInfinityScroll
