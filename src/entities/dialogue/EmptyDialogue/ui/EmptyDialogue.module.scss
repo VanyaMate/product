@@ -1,5 +1,9 @@
 .container {
-    text-align : center;
-    padding    : var(--offset-medium);
-    color      : var(--text-second-color);
+    text-align      : center;
+    padding         : var(--offset-medium);
+    color           : var(--text-second-color);
+    font-size       : var(--font-size-l);
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
 }

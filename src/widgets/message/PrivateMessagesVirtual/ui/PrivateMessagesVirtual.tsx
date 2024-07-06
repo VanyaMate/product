@@ -19,6 +19,9 @@ import {
 import classNames from 'classnames';
 import css from './PrivateMessagesVirtual.module.scss';
 import { BottomInfinityScroll } from '@vanyamate/react-infinity-virtual';
+import {
+    EmptyDialogue,
+} from '@/entities/dialogue/EmptyDialogue/ui/EmptyDialogue.tsx';
 
 
 export type PrivateMessagesVirtualProps =
@@ -61,6 +64,15 @@ export const PrivateMessagesVirtual: FC<PrivateMessagesVirtualProps> = memo(func
         }
         // eslint-disable-next-line
     }, [ dialogueId, messagesIsLoading, messagesHasMore ]);
+
+    if (messages[dialogueId].length === 0) {
+        return (
+            <EmptyDialogue
+                { ...other }
+                className={ classNames(className, css.container) }
+            />
+        );
+    }
 
     return (
         <div

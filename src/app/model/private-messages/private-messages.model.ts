@@ -28,6 +28,7 @@ import {
     updatePrivateMessageAction,
 } from '@/app/action/private-messages/updatePrivateMessage/updatePrivateMessage.action.ts';
 import {
+    createPrivateDialogueEffect,
     getListPrivateDialogueEffect,
     getOnePrivateDialogueEffect,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
@@ -278,6 +279,14 @@ export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
                         result.message,
                     ],
                 },
+    )
+    .on(
+        createPrivateDialogueEffect,
+        'onSuccess',
+        (state, { result }) => ({
+            ...state,
+            [result.dialogue.id]: [],
+        }),
     )
     .on(logoutEffect, 'onBefore', () => ({}));
 

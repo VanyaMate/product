@@ -253,6 +253,14 @@ export const $privateDialoguesStatus = store<Record<string, PrivateDialogueStatu
             ...state,
             [dialogueId]: { isPending: false, error: returnValidErrors(error) },
         }),
+    )
+    .on(
+        createPrivateDialogueEffect,
+        'onSuccess',
+        (state, { result }) => ({
+            ...state,
+            [result.dialogue.id]: { isPending: false, error: null },
+        }),
     );
 
 
