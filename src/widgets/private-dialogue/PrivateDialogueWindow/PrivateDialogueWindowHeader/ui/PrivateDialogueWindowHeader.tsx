@@ -24,9 +24,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    $privateDialoguesStatus,
-} from '@/app/model/private-dialogues/private-dialogues.model.ts';
-import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
 import { IoSearch } from 'react-icons/io5';
