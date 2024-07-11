@@ -33,7 +33,12 @@ export const CreatePostForm: FC<CreatePostFormProps> = memo(function CreatePostF
 
     const formController = useForm<{ message: string }>({
         inputs  : [ inputController ],
-        onSubmit: async (data) => createPostEffect(data).then(),
+        onSubmit: async (data) => createPostEffect(data).then(
+            () => {
+                inputController.inputRef.current.value = '';
+                inputController.value.current          = '';
+            },
+        ),
     });
 
     return (

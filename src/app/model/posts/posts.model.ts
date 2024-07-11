@@ -26,8 +26,8 @@ export const $postsList = store<Array<DomainPost>>([])
     .on(getPostsByUserIdEffect, 'onBefore', () => [])
     .on(getPostsByUserIdEffect, 'onSuccess', (_, { result }) => result.list.filter(isDomainPost))
     .on(createPostEffect, 'onSuccess', (state, { result }) => {
-        if ($currentPostUserId.get() === result.author.id) {
-            return [ ...state, result ];
+        if ($currentPostUserId.get() === result.post.author.id) {
+            return [ result.post, ...state ];
         } else {
             return state;
         }
