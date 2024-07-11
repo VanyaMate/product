@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--offset-small);
+
+    .input {
+        flex: 1;
+    }
+}

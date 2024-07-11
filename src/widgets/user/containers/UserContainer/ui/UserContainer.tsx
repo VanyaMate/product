@@ -21,6 +21,7 @@ import {
     $userPageData,
     $userPageIsPending,
 } from '@/app/model/user-page/user-page.model.ts';
+import { UserPosts } from '@/widgets/posts/UserPosts/ui/UserPosts.tsx';
 
 
 export type UserContainerProps =
@@ -58,10 +59,7 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
                     <IoBan/>
                 </Button>
             </Row>
-            <p>{ user.contacts.email }</p>
-            <p>{ user.contacts.phoneNumber }</p>
-            <p>{ user.nameInfo.firstName }</p>
-            <p>{ user.nameInfo.lastName }</p>
+            <UserPosts userId={ user.id }/>
         </section>
     );
 });

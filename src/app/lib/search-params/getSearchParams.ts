@@ -1,4 +1,4 @@
-export const getSearchParams = function (options: Record<string, any>): string {
+export const getSearchParams = function (options: Record<string, any> = {}): string {
     const convertedOptions: Record<string, string> = {};
 
     Object.entries(options).forEach(([ key, value ]) => {
