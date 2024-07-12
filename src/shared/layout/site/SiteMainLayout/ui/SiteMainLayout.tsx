@@ -42,10 +42,10 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
     const [ rightMenuOpened, setRightMenuOpened ] = useState<boolean>(
         localStorage.getItem(LOCAL_STORAGE_SITE_MAIN_LAYOUT_RIGHT_MENU_OPENED) === 'true',
     );
-    const main                                    = useRef<HTMLAnchorElement>();
+    const mainLinkRef                             = useRef<HTMLAnchorElement>(null);
     const onCompleteAction                        = useCallback(() => {
         setLeftMenuOpened(false);
-        setTimeout(() => main.current?.focus());
+        setTimeout(() => mainLinkRef.current?.focus());
     }, []);
 
     const rightMenuToggle = function () {
@@ -100,7 +100,7 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
                         <a className={ css.main_content_link }
                            href="#"
                            onClick={ noEvent }
-                           ref={ main }
+                           ref={ mainLinkRef }
                            tabIndex={ -1 }
                         />
                         { children }

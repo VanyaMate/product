@@ -20,16 +20,15 @@ $right-side-width : 400px;
 
     .rightSide {
         width         : 0;
-        overflow      : hidden;
-        overflow-y    : auto;
+        overflow-x    : hidden;
         transition    : var(--transition-medium);
         background    : var(--bg-ghost-color);
         border-radius : var(--offset-medium);
         position      : relative;
 
         .content {
-            min-width : $right-side-width;
-            padding   : var(--offset-small);
+            width   : 100%;
+            padding : var(--offset-small);
         }
     }
 

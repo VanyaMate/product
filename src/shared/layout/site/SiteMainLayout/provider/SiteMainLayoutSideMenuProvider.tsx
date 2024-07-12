@@ -21,9 +21,9 @@ export type SiteMainLayoutSideMenuProviderProps =
 
 export const SiteMainLayoutSideMenuProvider: FC<SiteMainLayoutSideMenuProviderProps> = memo(function SiteMainLayoutSideMenuProvider (props) {
     const { children, opened, setOpened, onCompleteAction } = props;
-    const contextValue                                      = useMemo<SiteMainLayoutSideMenuContextProps>(() => ({
+    const contextValue                                            = useMemo<SiteMainLayoutSideMenuContextProps>(() => ({
         opened, setOpened, onCompleteAction,
-    }), [ onCompleteAction, opened, setOpened ]);
+    }), [ opened, setOpened, onCompleteAction ]);
 
     return (
         <SiteMainLayoutSideMenuContext.Provider value={ contextValue }>

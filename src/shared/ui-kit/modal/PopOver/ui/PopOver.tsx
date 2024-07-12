@@ -11,6 +11,9 @@ import classNames from 'classnames';
 import css from './PopOver.module.scss';
 import { keyboardClose } from '@/shared/lib/react/keyboardClose.ts';
 import { createPortal } from 'react-dom';
+import {
+    getModalPosition,
+} from '@/shared/lib/modal-position/getModalPosition.ts';
 
 
 export type PopOverProps =
@@ -51,44 +54,10 @@ export const PopOver: FC<PopOverProps> = memo(function PopOver (props) {
         keyboardClose(opened, setOpened);
 
         if (opened && containerRef.current && popoverRef.current) {
-            // get container position
-            const {
-                      top,
-                      left,
-                      right,
-                      width,
-                      height,
-                  }             = containerRef.current.getBoundingClientRect();
-            const popoverHeight = popoverRef.current.clientHeight;
-            const popoverWidth  = popoverRef.current.clientWidth;
-            const bodyWidth     = document.body.clientWidth;
-
-            // calculate popover position
-            const topPosition: number = top > (popoverHeight + 5)
-                                        ? top - popoverHeight - 5
-                                        : top + height + 5;
-            let leftPosition: number  = 0;
-            const leftCenterPosition  = left + width / 2;
-            const rightCenterPosition = bodyWidth - right + width / 2;
-            const halfPopoverWidth    = popoverWidth / 2;
-
-            if (bodyWidth <= popoverWidth) {
-                leftPosition = leftCenterPosition - halfPopoverWidth;
-            } else if (leftCenterPosition > halfPopoverWidth) {
-                if (rightCenterPosition > halfPopoverWidth) {
-                    leftPosition = leftCenterPosition - halfPopoverWidth;
-                } else {
-                    leftPosition = leftCenterPosition - halfPopoverWidth - (halfPopoverWidth - rightCenterPosition);
-                }
-            } else {
-                leftPosition = leftCenterPosition - halfPopoverWidth + (halfPopoverWidth - leftCenterPosition);
-            }
-
-            // set popover position
-            popoverRef.current.style.top  = `${ topPosition }px`;
-            popoverRef.current.style.left = `${ leftPosition }px`;
+            const { top, left }           = getModalPosition(containerRef, popoverRef);
+            popoverRef.current.style.top  = `${ top }px`;
+            popoverRef.current.style.left = `${ left }px`;
         }
-
     }, [ opened ]);
 
     return (

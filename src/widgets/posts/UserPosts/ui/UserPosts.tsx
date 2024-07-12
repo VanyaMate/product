@@ -1,4 +1,9 @@
-import { ComponentPropsWithoutRef, FC, memo, useEffect } from 'react';
+import {
+    ComponentPropsWithoutRef,
+    FC,
+    memo,
+    useLayoutEffect,
+} from 'react';
 import classNames from 'classnames';
 import css from './UserPosts.module.scss';
 import {
@@ -13,12 +18,10 @@ import {
 } from '@/widgets/posts/CreatePostForm/ui/CreatePostForm.tsx';
 import { $authUser } from '@/app/model/auth/auth.model.ts';
 import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
-import {
-    IoEllipsisHorizontal,
-} from 'react-icons/io5';
-import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button';
-import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { useTranslation } from 'react-i18next';
+import {
+    PostDropdownButton,
+} from '@/features/post/button/PostDropdownButton/ui/PostDropdownButton.tsx';
 
 
 export type UserPostsProps =
@@ -34,7 +37,7 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
     const authData                        = useStore($authUser);
     const { t }                           = useTranslation([ 'posts' ]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         getPostsByUserIdEffect(userId, { limit: 20 });
     }, [ userId ]);
 
@@ -60,12 +63,7 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
                             posts.map((post) => (
                                 <Post
                                     extra={
-                                        <Button
-                                            quad
-                                            styleType={ ButtonStyleType.GHOST }
-                                        >
-                                            <IoEllipsisHorizontal/>
-                                        </Button>
+                                        <PostDropdownButton postId={ post.id }/>
                                     }
                                     key={ post.id }
                                     post={ post }
