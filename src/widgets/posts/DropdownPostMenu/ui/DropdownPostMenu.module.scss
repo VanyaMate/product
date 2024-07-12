@@ -1,11 +1,11 @@
 .container {
-    display         : flex;
-    flex-direction  : column;
-    gap             : var(--offset-small);
-    list-style-type : none;
-    width           : 200px;
+    width     : fit-content;
+    max-width : 300px;
 
-    .row {
-        width : 100%;
+    .divider {
+        width      : 1px;
+        height     : 20px;
+        margin     : 0 var(--offset-small);
+        background : var(--border-main-color);
     }
 }

@@ -5,7 +5,7 @@ import {
     ButtonProps,
 } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
-import { IoEllipsisHorizontal } from 'react-icons/io5';
+import { IoClose, IoEllipsisHorizontal } from 'react-icons/io5';
 import {
     useDropdownController,
 } from '@/shared/ui-kit/modal/Dropdown/hooks/useDropdownController.ts';
@@ -34,7 +34,11 @@ export const PostDropdownButton: FC<PostDropdownButtonProps> = memo(function Pos
                 quad
                 styleType={ ButtonStyleType.GHOST }
             >
-                <IoEllipsisHorizontal/>
+                {
+                    dropdownController.opened
+                    ? <IoClose/>
+                    : <IoEllipsisHorizontal/>
+                }
             </Button>
         </Dropdown>
     );

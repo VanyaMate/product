@@ -5,7 +5,7 @@
 ### Architecture
 
 - ~~**FSD**~~
-- **_UMA_** - [ссылка на статью](https://habr.com/ru/articles/824842/)
+- **_VMA_** - [ссылка на статью](https://habr.com/ru/articles/824842/)
 
 ### Builder
 

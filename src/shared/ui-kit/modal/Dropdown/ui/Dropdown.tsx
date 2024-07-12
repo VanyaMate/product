@@ -2,8 +2,9 @@ import {
     ComponentPropsWithoutRef,
     FC,
     memo,
-    ReactNode, useEffect,
-    useLayoutEffect, useRef,
+    ReactNode,
+    useLayoutEffect,
+    useRef,
 } from 'react';
 import classNames from 'classnames';
 import css from './Dropdown.module.scss';
@@ -34,26 +35,41 @@ export const Dropdown: FC<DropdownProps> = memo(function Dropdown (props) {
     const containerRef = useRef<HTMLDivElement>(null);
     const dropdownRef  = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const ref     = containerRef.current;
         const dropRef = dropdownRef.current;
 
-        if (ref) {
-            const onClickHandler  = (event: Event) => {
-                event.stopPropagation();
-                controller.setOpened((prev) => !prev);
-            };
-            const closeHandler    = () => controller.setOpened(false);
-            const stopPropHandler = (event: Event) => event.stopPropagation();
+        if (ref && dropRef) {
+            if (controller.opened) {
+                const closeHandler   = (event: Event) => {
+                    if (!dropRef.contains(event.target as Node) && !ref.contains(event.target as Node)) {
+                        controller.setOpened(false);
+                    }
+                };
+                const onClickHandler = (event: Event) => {
+                    if (ref.contains(event.target as Node)) {
+                        controller.setOpened(false);
+                    }
+                };
 
-            document.addEventListener('click', closeHandler);
-            ref.addEventListener('click', onClickHandler);
-            dropRef.addEventListener('click', stopPropHandler);
-            return () => {
-                document.removeEventListener('click', closeHandler);
-                ref.removeEventListener('click', onClickHandler);
-                dropRef.removeEventListener('click', stopPropHandler);
-            };
+                ref.addEventListener('click', onClickHandler, true);
+                document.addEventListener('click', closeHandler, true);
+                return () => {
+                    document.removeEventListener('click', closeHandler, true);
+                    ref.removeEventListener('click', onClickHandler, true);
+                };
+            } else {
+                const onClickHandler = (event: Event) => {
+                    if (ref.contains(event.target as Node)) {
+                        controller.setOpened((prev) => !prev);
+                    }
+                };
+
+                ref.addEventListener('click', onClickHandler, true);
+                return () => {
+                    ref.removeEventListener('click', onClickHandler, true);
+                };
+            }
         }
     }, [ controller ]);
 

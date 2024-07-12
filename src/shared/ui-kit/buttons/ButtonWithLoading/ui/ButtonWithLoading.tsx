@@ -1,4 +1,10 @@
-import { FC, memo, useCallback, useEffect, useState } from 'react';
+import {
+    FC,
+    memo,
+    useCallback,
+    useLayoutEffect,
+    useState,
+} from 'react';
 import classNames from 'classnames';
 import css from './ButtonWithLoading.module.scss';
 import {
@@ -34,7 +40,7 @@ export const ButtonWithLoading: FC<ButtonWithLoadingProps> = memo(function Butto
         }
     }, [ onClick ]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setPending(loading);
     }, [ loading ]);
 
