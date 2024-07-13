@@ -18,5 +18,6 @@
     "show_interlocutor": "Show interlocutor",
     "hide_interlocutor": "Hide interlocutor",
     "open_dialogue": "Open dialogue",
-    "create_dialogue": "Create dialogue"
+    "create_dialogue": "Create dialogue",
+    "remove_message": "Remove message"
 }

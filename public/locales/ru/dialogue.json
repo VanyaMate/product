@@ -18,5 +18,6 @@
     "show_interlocutor": "Показать собеседника",
     "hide_interlocutor": "Скрыть собеседника",
     "open_dialogue": "Открыть диалог",
-    "create_dialogue": "Создать dialogue"
+    "create_dialogue": "Создать dialogue",
+    "remove_message": "Удалить сообщение"
 }

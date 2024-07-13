@@ -6,18 +6,16 @@ import {
     UserAvatar,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
-import { IoBuild, IoEllipsisHorizontal } from 'react-icons/io5';
+import { IoBuild } from 'react-icons/io5';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { DomainMessage } from 'product-types/dist/message/DomainMessage';
 import {
     MessageBody,
 } from '@/entities/message/item/MessageBody/ui/MessageBody.tsx';
 import 'dayjs/locale/ru.js';
-import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import {
-    ButtonSizeType,
-    ButtonStyleType,
-} from '@/shared/ui-kit/buttons/Button/types/types.ts';
+    PrivateMessageDropdownButton,
+} from '@/widgets/message/PrivateMessageDropdownButton/ui/PrivateMessageDropdownButton.tsx';
 
 
 dayjs.extend(localizedFormat);
@@ -65,13 +63,10 @@ export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMess
                             ? <IoBuild className={ css.redacted }/>
                             : null
                         }
-                        <Button
-                            quad
-                            size={ ButtonSizeType.SMALL }
-                            styleType={ ButtonStyleType.GHOST }
-                        >
-                            <IoEllipsisHorizontal/>
-                        </Button>
+                        <PrivateMessageDropdownButton
+                            key="dropdown-button"
+                            messageId={ message.id }
+                        />
                     </div>
                 </header>
                 <div className={ css.message }>
