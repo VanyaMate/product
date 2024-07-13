@@ -7,6 +7,7 @@ import {
 import classNames from 'classnames';
 import css from './UserPosts.module.scss';
 import {
+    $currentPostUserId,
     $postsList,
     $postsPending,
     getPostsByUserIdEffect,
@@ -32,14 +33,17 @@ export type UserPostsProps =
 
 export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
     const { userId, className, ...other } = props;
+    const currentPostsUserId              = useStore($currentPostUserId);
     const posts                           = useStore($postsList);
     const postsPending                    = useStore($postsPending);
     const authData                        = useStore($authUser);
     const { t }                           = useTranslation([ 'posts' ]);
 
     useLayoutEffect(() => {
-        getPostsByUserIdEffect(userId, { limit: 20 });
-    }, [ userId ]);
+        if (currentPostsUserId !== userId) {
+            getPostsByUserIdEffect(userId, { limit: 20 });
+        }
+    }, [ currentPostsUserId, userId ]);
 
     return (
         <section
@@ -55,7 +59,7 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
                 : null
             }
             {
-                postsPending
+                postsPending && !posts.length
                 ? <Loader className={ css.loader }/>
                 : posts.length ? (
                     <div className={ css.posts } key="posts">

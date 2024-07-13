@@ -23,5 +23,10 @@ export const $userPageError = store<DomainServiceResponseError | null>(null)
 
 
 export const $userPageData = store<DomainUserFull | null>(null)
-    .on(getUserPageDataEffect, 'onBefore', () => null)
+    .on(getUserPageDataEffect, 'onBefore', (state, { args: [ login ] }) => {
+        if (state?.login !== login) {
+            return null;
+        }
+        return state;
+    })
     .on(getUserPageDataEffect, 'onSuccess', (_, { result }) => result);

@@ -41,8 +41,10 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
     const user                           = useStore($userPageData);
 
     useLayoutEffect(() => {
-        getUserPageDataEffect(login);
-    }, [ login ]);
+        if (user?.login !== login) {
+            getUserPageDataEffect(login);
+        }
+    }, [ login, user?.login ]);
 
     if (!user || (userPagePending && user?.login !== login) || !user) {
         return <PageLoader/>;
