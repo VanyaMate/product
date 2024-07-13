@@ -184,15 +184,10 @@ export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
         getListPrivateDialogueEffect,
         'onSuccess',
         (_, { result }) => {
-            // TODO: Tempo logs
-            console.log('GetListPrivate', result);
-            const state = result.reduce((acc, dialogue) => ({
+            return result.reduce((acc, dialogue) => ({
                 ...acc,
                 [dialogue.id]: dialogue.messages,
             }), {});
-
-            console.log('New state is', state);
-            return state;
         },
     )
     .on(

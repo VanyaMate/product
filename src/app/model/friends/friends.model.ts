@@ -77,7 +77,7 @@ export const $friendsList = store<Array<DomainUser>>([])
     .on(getMyFriendsEffect, 'onSuccess', (_, { result }) => result.friends.filter(isDomainUser))
     .on(removeFriendEffect, 'onSuccess', (state, { args: [ userId ] }) => state.filter((friend) => friend.id !== userId))
     .on(removeFriendNotificationEffect, 'onSuccess', (state, { result }) => state.filter((friend) => friend.id !== result.user.id))
-    .on(logoutEffect, 'onBefore', () => null);
+    .on(logoutEffect, 'onBefore', () => []);
 
 
 export const $friendRequestsReceived = store<Array<DomainFriendRequest>>([])
@@ -94,7 +94,7 @@ export const $friendRequestsReceived = store<Array<DomainFriendRequest>>([])
             : [ ...state, result ],
     )
     .on(getMyFriendsEffect, 'onSuccess', (_, { result }) => result.requestsIn.filter(isDomainFriendRequest))
-    .on(logoutEffect, 'onBefore', () => null);
+    .on(logoutEffect, 'onBefore', () => []);
 
 
 export const $friendRequestsSent = store<Array<DomainFriendRequest>>([])
@@ -111,4 +111,4 @@ export const $friendRequestsSent = store<Array<DomainFriendRequest>>([])
             : [ ...state, result ],
     )
     .on(getMyFriendsEffect, 'onSuccess', (_, { result }) => result.requestsOut.filter(isDomainFriendRequest))
-    .on(logoutEffect, 'onBefore', () => null);
+    .on(logoutEffect, 'onBefore', () => []);

@@ -1,8 +1,7 @@
 import { FC, memo } from 'react';
-import classNames from 'classnames';
-import css from './PrivateDialogueIcon.module.scss';
-import { Image } from '@/shared/ui-kit/image/Image/ui/Image.tsx';
-import { FakeAvatar } from '@/shared/ui-kit/icons/FakeAvatar/ui/FakeAvatar.tsx';
+import {
+    UserAvatar,
+} from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 
 
 export type PrivateDialogueIconProps =
@@ -23,19 +22,11 @@ export const PrivateDialogueIcon: FC<PrivateDialogueIconProps> = memo(function P
               userLogin,
           } = props;
 
-    if (dialogueAvatar || userAvatar) {
-        // TODO: Change alt to i18n
-        return <Image
-            alt="Dialogue avatar"
-            className={ classNames(css.container, {}, [ className ]) }
-            src={ dialogueAvatar || userAvatar }
-        />;
-    }
-
-    if (dialogueTitle || userLogin) {
-        return <FakeAvatar
-            className={ classNames(css.container, {}, [ className ]) }
-            letter={ (dialogueTitle || userLogin)[0] }
-        />;
-    }
+    return (
+        <UserAvatar
+            avatar={ dialogueAvatar || userAvatar }
+            className={ className }
+            login={ dialogueTitle || userLogin }
+        />
+    );
 });

@@ -1,4 +1,9 @@
-import { ComponentPropsWithoutRef, FC, memo, useEffect } from 'react';
+import {
+    ComponentPropsWithoutRef,
+    FC,
+    memo,
+    useLayoutEffect,
+} from 'react';
 import classNames from 'classnames';
 import css from './UserContainer.module.scss';
 import {
@@ -35,7 +40,7 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
     const userPagePending                = useStore($userPageIsPending);
     const user                           = useStore($userPageData);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         getUserPageDataEffect(login);
     }, [ login ]);
 
@@ -46,20 +51,24 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
     return (
         <section { ...other }
                  className={ classNames(css.container, {}, [ className ]) }>
-            <UserHeader user={ user }/>
-            <Row>
-                <CompositeAddFriendButton userId={ user.id }/>
-                <GoToPrivateDialogue
-                    permissions={ user.permissions.privateDialogue }
-                    userId={ user.id }/>
-                <Button
-                    quad
-                    styleType={ ButtonStyleType.DANGER }
-                >
-                    <IoBan/>
-                </Button>
-            </Row>
-            <UserPosts userId={ user.id }/>
+            <div className={ css.content }>
+                <section className={ css.left }>
+                    <UserHeader user={ user }/>
+                    <Row>
+                        <CompositeAddFriendButton userId={ user.id }/>
+                        <GoToPrivateDialogue
+                            permissions={ user.permissions.privateDialogue }
+                            userId={ user.id }/>
+                        <Button
+                            quad
+                            styleType={ ButtonStyleType.DANGER }
+                        >
+                            <IoBan/>
+                        </Button>
+                    </Row>
+                </section>
+                <UserPosts className={ css.right } userId={ user.id }/>
+            </div>
         </section>
     );
 });

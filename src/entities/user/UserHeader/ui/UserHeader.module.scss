@@ -3,10 +3,16 @@
     flex-direction : column;
     gap            : var(--offset-medium);
     align-items    : center;
+    padding        : var(--offset-medium);
+    border-radius  : var(--offset-medium);
+    background     : var(--bg-main-color);
+    width          : 100%;
+    border         : 1px solid var(--border-main-color);
 
     .avatar {
-        width           : 100px;
-        height          : 100px;
+        width           : 100%;
+        height          : 0;
+        padding-bottom  : 100%;
         font-size       : var(--font-size-xxxl);
         border-radius   : var(--offset-medium);
         background      : var(--bg-main-color);

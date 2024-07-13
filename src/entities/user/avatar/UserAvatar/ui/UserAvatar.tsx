@@ -1,6 +1,10 @@
 import { FC, memo } from 'react';
-import { Image } from '@/shared/ui-kit/image/Image/ui/Image.tsx';
 import { FakeAvatar } from '@/shared/ui-kit/icons/FakeAvatar/ui/FakeAvatar.tsx';
+import classNames from 'classnames';
+import css from './UserAvatar.module.scss';
+import {
+    ImageBackground,
+} from '@/shared/ui-kit/image/ImageBackground/ui/ImageBackground.tsx';
 
 
 export type UserAvatarProps =
@@ -13,14 +17,20 @@ export type UserAvatarProps =
 export const UserAvatar: FC<UserAvatarProps> = memo(function UserAvatar (props) {
     const { className, avatar, login } = props;
 
-    return avatar
-           ? <Image
-               alt={ `Avatar of ${ login }` }
-               className={ className }
-               src={ avatar }
-           />
-           : <FakeAvatar
-               className={ className }
-               letter={ login[0] }
-           />;
+    return (
+        <div className={ classNames(css.container, {}, [ className ]) }>
+            {
+                avatar
+                ? <ImageBackground
+                    alt={ `Avatar of ${ login }` }
+                    className={ css.image }
+                    src={ avatar }
+                />
+                : <FakeAvatar
+                    className={ css.image }
+                    letter={ login[0] }
+                />
+            }
+        </div>
+    );
 });

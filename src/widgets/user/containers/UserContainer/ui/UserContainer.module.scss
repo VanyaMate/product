@@ -1,8 +1,30 @@
 .container {
-    display        : flex;
-    flex-direction : column;
-    gap            : var(--offset-medium);
-    align-items    : center;
-    font-weight    : 400;
-    text-align     : center;
+    container-name : container;
+    container-type : inline-size;
+
+    .content {
+        display : flex;
+        gap     : var(--offset-small);
+
+        @container container (max-width: 650px) {
+            flex-direction : column;
+            align-items    : center;
+            gap            : var(--offset-medium);
+        }
+
+        .left {
+            display        : flex;
+            flex-direction : column;
+            gap            : var(--offset-small);
+            align-items    : center;
+            max-width      : 400px;
+            width          : 100%;
+            min-width      : 250px;
+            height         : fit-content;
+        }
+
+        .right {
+            height : fit-content;
+        }
+    }
 }
