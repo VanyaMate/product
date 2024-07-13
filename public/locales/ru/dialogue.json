@@ -10,5 +10,13 @@
     "dialogue_archived_by_me": "Диалог заархивирован вами",
     "dialogue_deleted_by_me": "Диалог удален вами",
     "write_message": "Введите сообщение",
-    "search_messages_not_found": "Сообщения не найдены"
+    "search_messages_not_found": "Сообщения не найдены",
+    "mark_all_messages_as_read": "Отметить все сообщения как прочитанные",
+    "archive_dialogue": "Архивировать диалог",
+    "unarchive_dialogue": "Разархивировать диалог",
+    "remove_dialogue": "Удалить диалог",
+    "show_interlocutor": "Показать собеседника",
+    "hide_interlocutor": "Скрыть собеседника",
+    "open_dialogue": "Открыть диалог",
+    "create_dialogue": "Создать dialogue"
 }

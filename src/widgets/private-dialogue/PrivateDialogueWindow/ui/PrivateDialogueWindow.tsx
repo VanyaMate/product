@@ -22,6 +22,8 @@ import {
 import {
     PrivateMessagesVirtualContainer,
 } from '@/widgets/message/PrivateMessageVirtualContainer/ui/PrivateMessageVirtualContainer.tsx';
+import { useTranslation } from 'react-i18next';
+import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
 
 
 export type PrivateDialogueWindowProps =
@@ -34,6 +36,7 @@ export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(functi
     const { className, dialogueId, ...other }     = props;
     const [ rightMenuOpened, setRightMenuOpened ] = useState<boolean>(false);
     const dialogues                               = useStore($privateDialoguesStatus);
+    const { t }                                   = useTranslation([ 'dialogue' ]);
 
     if (!dialogueId || !dialogues[dialogueId]) {
         return (
@@ -51,12 +54,24 @@ export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(functi
                     className={ css.header }
                     dialogueId={ dialogueId }
                 >
-                    <Button
-                        onClick={ () => setRightMenuOpened(prev => !prev) }
-                        quad
+                    <PopOver popover={ t(
+                        rightMenuOpened
+                        ? 'hide_interlocutor'
+                        : 'show_interlocutor',
+                    ) }
                     >
-                        { rightMenuOpened ? <IoClose/> : <IoPerson/> }
-                    </Button>
+                        <Button
+                            aria-label={ t(
+                                rightMenuOpened
+                                ? 'hide_interlocutor'
+                                : 'show_interlocutor',
+                            ) }
+                            onClick={ () => setRightMenuOpened(prev => !prev) }
+                            quad
+                        >
+                            { rightMenuOpened ? <IoClose/> : <IoPerson/> }
+                        </Button>
+                    </PopOver>
                 </PrivateDialogueWindowHeader>
                 <PrivateMessagesVirtualContainer
                     className={ css.messages }

@@ -1,5 +1,6 @@
 {
     "posts_title": "Posts",
     "empty_posts_list": "No posts yet",
-    "write_new_post": "Enter a new post"
+    "write_new_post": "Enter a new post",
+    "delete_post": "Удалить пост"
 }

@@ -10,5 +10,13 @@
     "dialogue_archived_by_me": "Dialogue was archived by you",
     "dialogue_deleted_by_me": "Dialogue was removed by you",
     "write_message": "Write message",
-    "search_messages_not_found": "Messages not found"
+    "search_messages_not_found": "Messages not found",
+    "mark_all_messages_as_read": "Mark all messages as read",
+    "archive_dialogue": "Archive dialogue",
+    "unarchive_dialogue": "Unarchive dialogue",
+    "remove_dialogue": "Remove dialogue",
+    "show_interlocutor": "Show interlocutor",
+    "hide_interlocutor": "Hide interlocutor",
+    "open_dialogue": "Open dialogue",
+    "create_dialogue": "Create dialogue"
 }

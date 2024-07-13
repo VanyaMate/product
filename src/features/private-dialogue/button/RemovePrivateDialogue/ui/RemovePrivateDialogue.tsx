@@ -8,6 +8,8 @@ import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import {
     removePrivateDialogueEffect,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
+import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
+import { useTranslation } from 'react-i18next';
 
 
 export type RemovePrivateDialogueProps =
@@ -18,16 +20,20 @@ export type RemovePrivateDialogueProps =
 
 export const RemovePrivateDialogue: FC<RemovePrivateDialogueProps> = memo(function RemovePrivateDialogue (props) {
     const { className, dialogueId, ...other } = props;
+    const { t }                               = useTranslation([ 'dialogue' ]);
 
     return (
-        <ButtonWithLoading
-            { ...other }
-            className={ className }
-            onClick={ () => removePrivateDialogueEffect(dialogueId) }
-            quad
-            styleType={ ButtonStyleType.DANGER }
-        >
-            <IoRemoveCircle/>
-        </ButtonWithLoading>
+        <PopOver popover={ t('remove_dialogue') }>
+            <ButtonWithLoading
+                { ...other }
+                aria-label={ t('remove_dialogue') }
+                className={ className }
+                onClick={ () => removePrivateDialogueEffect(dialogueId) }
+                quad
+                styleType={ ButtonStyleType.DANGER }
+            >
+                <IoRemoveCircle/>
+            </ButtonWithLoading>
+        </PopOver>
     );
 });

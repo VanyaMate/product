@@ -8,6 +8,8 @@ import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
 import { removeFriendEffect } from '@/app/model/friends/friends.model.ts';
+import { useTranslation } from 'react-i18next';
+import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
 
 
 export type RemoveFriendButtonProps =
@@ -18,16 +20,20 @@ export type RemoveFriendButtonProps =
 
 export const RemoveFriendButton: FC<RemoveFriendButtonProps> = memo(function RemoveFriendButton (props) {
     const { className, userId, ...other } = props;
+    const { t }                           = useTranslation([ 'friends-page' ]);
 
     return (
-        <ButtonWithLoading
-            { ...other }
-            className={ className }
-            onClick={ () => removeFriendEffect(userId) }
-            quad
-            styleType={ ButtonStyleType.DANGER }
-        >
-            <IoPersonRemove/>
-        </ButtonWithLoading>
+        <PopOver popover={ t('remove_from_friends') }>
+            <ButtonWithLoading
+                { ...other }
+                aria-label={ t('remove_from_friends') }
+                className={ className }
+                onClick={ () => removeFriendEffect(userId) }
+                quad
+                styleType={ ButtonStyleType.DANGER }
+            >
+                <IoPersonRemove/>
+            </ButtonWithLoading>
+        </PopOver>
     );
 });

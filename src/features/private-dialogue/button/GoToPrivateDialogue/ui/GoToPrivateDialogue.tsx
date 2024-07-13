@@ -20,6 +20,8 @@ import {
     createPrivateDialogueEffect,
     $privateDialogueWithUser,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
+import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
+import { useTranslation } from 'react-i18next';
 
 
 export type GoToPrivateDialogueProps =
@@ -34,17 +36,21 @@ export const GoToPrivateDialogue: FC<GoToPrivateDialogueProps> = memo(function G
     const friends                                      = useStore($friendsList);
     const dialogueWithUser                             = useStore($privateDialogueWithUser);
     const navigate                                     = useNavigate();
+    const { t }                                        = useTranslation([ 'dialogue' ]);
 
     // if exist
     if (dialogueWithUser[userId]?.created) {
         return (
-            <Button
-                onClick={ () => navigate(`/dialogue/${ dialogueWithUser[userId].dialogueId }`) }
-                quad
-                styleType={ ButtonStyleType.SECOND }
-            >
-                <IoChatbox/>
-            </Button>
+            <PopOver popover={ t('open_dialogue') }>
+                <Button
+                    aria-label={ t('open_dialogue') }
+                    onClick={ () => navigate(`/dialogue/${ dialogueWithUser[userId].dialogueId }`) }
+                    quad
+                    styleType={ ButtonStyleType.SECOND }
+                >
+                    <IoChatbox/>
+                </Button>
+            </PopOver>
         );
     }
 
@@ -55,14 +61,17 @@ export const GoToPrivateDialogue: FC<GoToPrivateDialogueProps> = memo(function G
                                   : false;
 
     return (
-        <ButtonWithLoading
-            { ...other }
-            className={ classNames(css.container, {}, [ className ]) }
-            disabled={ !isCreatableDialogue }
-            onClick={ () => createPrivateDialogueEffect(userId).then((dialogue) => navigate(`/dialogue/${ dialogue.dialogue.id }`)) }
-            quad
-        >
-            <IoChatbox/>
-        </ButtonWithLoading>
+        <PopOver popover={ t('create_dialogue') }>
+            <ButtonWithLoading
+                { ...other }
+                aria-label={ t('create_dialogue') }
+                className={ classNames(css.container, {}, [ className ]) }
+                disabled={ !isCreatableDialogue }
+                onClick={ () => createPrivateDialogueEffect(userId).then((dialogue) => navigate(`/dialogue/${ dialogue.dialogue.id }`)) }
+                quad
+            >
+                <IoChatbox/>
+            </ButtonWithLoading>
+        </PopOver>
     );
 });

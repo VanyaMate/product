@@ -7,5 +7,9 @@
     "user_page": "Пользователь {{login}}",
     "search_page": "Поиск",
     "friends_page": "Друзья",
-    "dialogues_page": "Диалоги"
+    "dialogues_page": "Диалоги",
+    "open_navigation_menu": "Открыть меню",
+    "close_navigation_menu": "Закрыть меню",
+    "open_user_menu": "Открыть меню пользователя",
+    "close_user_menu": "Закрыть меню пользователя"
 }

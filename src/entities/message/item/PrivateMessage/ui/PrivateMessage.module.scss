@@ -95,9 +95,10 @@
             }
 
             .info {
-                display : flex;
-                gap     : var(--offset-small);
-                color   : var(--text-second-color);
+                display     : flex;
+                gap         : var(--offset-small);
+                color       : var(--text-second-color);
+                align-items : center;
 
                 .date {
                     font-size : var(--font-size-s);

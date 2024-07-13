@@ -8,6 +8,8 @@ import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import {
     readAllPrivateMessagesEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
+import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
+import { useTranslation } from 'react-i18next';
 
 
 export type ReadAllMessagesPrivateDialogueProps =
@@ -18,15 +20,19 @@ export type ReadAllMessagesPrivateDialogueProps =
 
 export const ReadAllMessagesPrivateDialogue: FC<ReadAllMessagesPrivateDialogueProps> = memo(function ReadAllMessagesPrivateDialogue (props) {
     const { dialogueId, ...other } = props;
+    const { t }                    = useTranslation([ 'dialogue' ]);
 
     return (
-        <ButtonWithLoading
-            { ...other }
-            onClick={ () => readAllPrivateMessagesEffect(dialogueId) }
-            quad
-            styleType={ ButtonStyleType.PRIMARY }
-        >
-            <IoReader/>
-        </ButtonWithLoading>
+        <PopOver popover={ t('mark_all_messages_as_read') }>
+            <ButtonWithLoading
+                { ...other }
+                aria-label={ t('mark_all_messages_as_read') }
+                onClick={ () => readAllPrivateMessagesEffect(dialogueId) }
+                quad
+                styleType={ ButtonStyleType.PRIMARY }
+            >
+                <IoReader/>
+            </ButtonWithLoading>
+        </PopOver>
     );
 });

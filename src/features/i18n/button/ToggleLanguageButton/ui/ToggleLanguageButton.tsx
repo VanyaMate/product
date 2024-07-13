@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { IoLanguage } from 'react-icons/io5';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
 
 
 export type ToggleLanguageButtonProps = {};
@@ -17,13 +18,15 @@ export const ToggleLanguageButton: FC<ToggleLanguageButtonProps> = memo(function
     }, [ isRuEng, i18n ]);
 
     return (
-        <Button
-            aria-label={ t('toggle_language_aria_button') }
-            onClick={ toggleLanguage }
-            quad
-            styleType={ ButtonStyleType.GHOST }
-        >
-            <IoLanguage/>
-        </Button>
+        <PopOver popover={ t('toggle_language_aria_button') }>
+            <Button
+                aria-label={ t('toggle_language_aria_button') }
+                onClick={ toggleLanguage }
+                quad
+                styleType={ ButtonStyleType.GHOST }
+            >
+                <IoLanguage/>
+            </Button>
+        </PopOver>
     );
 });

@@ -7,5 +7,9 @@
     "user_page": "User {{login}}",
     "search_page": "Search",
     "friends_page": "Friends",
-    "dialogues_page": "Dialogues"
+    "dialogues_page": "Dialogues",
+    "open_navigation_menu": "Open menu",
+    "close_navigation_menu": "Close menu",
+    "open_user_menu": "Open user menu",
+    "close_user_menu": "Close user menu"
 }

@@ -19,6 +19,8 @@ import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import {
     LOCAL_STORAGE_SITE_MAIN_LAYOUT_RIGHT_MENU_OPENED,
 } from '@/shared/layout/site/SiteMainLayout/const/site-main-layout.const.ts';
+import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
+import { useTranslation } from 'react-i18next';
 
 
 export type SiteMainLayoutProps =
@@ -47,6 +49,7 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
         setLeftMenuOpened(false);
         setTimeout(() => mainLinkRef.current?.focus());
     }, []);
+    const { t }                                   = useTranslation([ 'site-app' ]);
 
     const rightMenuToggle = function () {
         setRightMenuOpened((prev) => {
@@ -68,25 +71,51 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
             <div { ...other }
                  className={ classNames(css.container, {}, [ className ]) }>
                 <header className={ css.header }>
-                    <Button
-                        onClick={ () => setLeftMenuOpened((prev) => !prev) }
-                        quad
+                    <PopOver
+                        popover={ t(
+                            leftMenuOpened
+                            ? 'close_navigation_menu'
+                            : 'open_navigation_menu',
+                        ) }
                     >
-                        { leftMenuOpened ? <IoClose/> : <IoMenu/> }
-                    </Button>
+                        <Button
+                            aria-label={ t(
+                                leftMenuOpened
+                                ? 'close_navigation_menu'
+                                : 'open_navigation_menu',
+                            ) }
+                            onClick={ () => setLeftMenuOpened((prev) => !prev) }
+                            quad
+                        >
+                            { leftMenuOpened ? <IoClose/> : <IoMenu/> }
+                        </Button>
+                    </PopOver>
                     <div
                         className={ css.content }
                         { ...inert(leftMenuOpened) }
                     >
                         { header }
                     </div>
-                    <Button
-                        onClick={ rightMenuToggle }
-                        quad
-                        { ...inert(leftMenuOpened) }
+                    <PopOver
+                        popover={ t(
+                            rightMenuOpened
+                            ? 'close_user_menu'
+                            : 'open_user_menu',
+                        ) }
                     >
-                        { rightMenuOpened ? <IoClose/> : <IoPersonCircle/> }
-                    </Button>
+                        <Button
+                            aria-label={ t(
+                                rightMenuOpened
+                                ? 'close_user_menu'
+                                : 'open_user_menu',
+                            ) }
+                            onClick={ rightMenuToggle }
+                            quad
+                            { ...inert(leftMenuOpened) }
+                        >
+                            { rightMenuOpened ? <IoClose/> : <IoPersonCircle/> }
+                        </Button>
+                    </PopOver>
                 </header>
                 <div
                     className={ classNames(css.leftSideMenu, { [css.leftSideMenu_open]: leftMenuOpened }) }>

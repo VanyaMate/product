@@ -1,5 +1,9 @@
 {
     "requests_in_list_title": "Incoming requests",
     "requests_out_list_title": "Sent requests",
-    "friends_list_title": "Friend list"
+    "friends_list_title": "Friend list",
+    "add_to_friends": "Add to friends",
+    "remove_from_friends": "Remove from friends",
+    "accept_friend_request": "Accept friend request",
+    "cancel_friend_request": "Cancel friend request"
 }

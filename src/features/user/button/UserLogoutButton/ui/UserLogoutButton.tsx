@@ -7,6 +7,7 @@ import { AiOutlineLogout } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 import { ButtonProps } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { logoutEffect } from '@/app/model/auth/auth.model.ts';
+import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
 
 
 export type UserLogoutButtonProps =
@@ -18,15 +19,17 @@ export const UserLogoutButton: FC<UserLogoutButtonProps> = memo(function UserLog
     const { t }                   = useTranslation();
 
     return (
-        <ButtonWithLoading
-            { ...other }
-            aria-label={ t('logout_button') }
-            className={ className }
-            onClick={ logoutEffect }
-            quad
-            styleType={ ButtonStyleType.DANGER }
-        >
-            <AiOutlineLogout/>
-        </ButtonWithLoading>
+        <PopOver popover={ t('logout_button') }>
+            <ButtonWithLoading
+                { ...other }
+                aria-label={ t('logout_button') }
+                className={ className }
+                onClick={ logoutEffect }
+                quad
+                styleType={ ButtonStyleType.DANGER }
+            >
+                <AiOutlineLogout/>
+            </ButtonWithLoading>
+        </PopOver>
     );
 });

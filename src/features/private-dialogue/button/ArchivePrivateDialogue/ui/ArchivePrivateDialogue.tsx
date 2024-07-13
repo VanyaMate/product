@@ -10,6 +10,8 @@ import {
     archivePrivateDialogueEffect,
     $privateDialogues, unArchivePrivateDialogueEffect,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
+import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
+import { useTranslation } from 'react-i18next';
 
 
 export type ArchivePrivateDialogueProps =
@@ -22,21 +24,28 @@ export const ArchivePrivateDialogue: FC<ArchivePrivateDialogueProps> = memo(func
     const { className, dialogueId, ...other } = props;
     const dialogues                           = useStore($privateDialogues);
     const inArchive                           = useMemo(() => dialogues.find((dialogue) => dialogue.id === dialogueId)?.meArchived, [ dialogueId, dialogues ]);
+    const { t }                               = useTranslation([ 'dialogue' ]);
 
     return (
-        <ButtonWithLoading
-            { ...other }
-            className={ className }
-            onClick={
-                () => inArchive
-                      ? unArchivePrivateDialogueEffect(dialogueId)
-                      : archivePrivateDialogueEffect(dialogueId)
-            }
-            quad
-            styleType={ inArchive ? ButtonStyleType.PRIMARY
-                                  : ButtonStyleType.GHOST }
-        >
-            { inArchive ? <IoArchive/> : <IoArchiveOutline/> }
-        </ButtonWithLoading>
+        <PopOver popover={
+            t(inArchive ? 'unarchive_dialogue' : 'archive_dialogue')
+        }>
+            <ButtonWithLoading
+                { ...other }
+                aria-label={ t(inArchive ? 'unarchive_dialogue'
+                                         : 'archive_dialogue') }
+                className={ className }
+                onClick={
+                    () => inArchive
+                          ? unArchivePrivateDialogueEffect(dialogueId)
+                          : archivePrivateDialogueEffect(dialogueId)
+                }
+                quad
+                styleType={ inArchive ? ButtonStyleType.PRIMARY
+                                      : ButtonStyleType.GHOST }
+            >
+                { inArchive ? <IoArchive/> : <IoArchiveOutline/> }
+            </ButtonWithLoading>
+        </PopOver>
     );
 });

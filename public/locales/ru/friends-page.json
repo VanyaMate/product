@@ -1,5 +1,9 @@
 {
     "requests_in_list_title": "Входящие заявки",
     "requests_out_list_title": "Отправленные заявки",
-    "friends_list_title": "Список друзей"
+    "friends_list_title": "Список друзей",
+    "add_to_friends": "Добавить в друзья",
+    "remove_from_friends": "Удалить из друзей",
+    "accept_friend_request": "Принять заявку в друзья",
+    "cancel_friend_request": "Отменить заявку в друзья"
 }
