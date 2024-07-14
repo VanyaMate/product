@@ -62,7 +62,7 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
                 postsPending && !posts.length
                 ? <Loader className={ css.loader }/>
                 : posts.length ? (
-                    <div className={ css.posts } key="posts">
+                    <div className={ css.posts }>
                         {
                             posts.map((post) => (
                                 <Post
