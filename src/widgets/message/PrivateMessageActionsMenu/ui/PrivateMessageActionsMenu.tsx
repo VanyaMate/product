@@ -1,8 +1,7 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
-import {
-    RemoveMessageButton,
-} from '@/features/message/button/RemoveMessageButton/ui/RemoveMessageButton.tsx';
+import { IoShare } from 'react-icons/io5';
+import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 
 
 export type PrivateMessageActionsMenuProps =
@@ -12,11 +11,11 @@ export type PrivateMessageActionsMenuProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const PrivateMessageActionsMenu: FC<PrivateMessageActionsMenuProps> = memo(function PrivateMessageActionsMenu (props) {
-    const { messageId, ...other } = props;
+    const { ...other } = props;
 
     return (
         <Row { ...other }>
-            <RemoveMessageButton messageId={ messageId }/>
+            <Button quad><IoShare/></Button>
         </Row>
     );
 });

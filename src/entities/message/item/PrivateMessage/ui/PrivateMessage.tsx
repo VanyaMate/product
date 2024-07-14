@@ -16,6 +16,9 @@ import 'dayjs/locale/ru.js';
 import {
     PrivateMessageDropdownButton,
 } from '@/widgets/message/PrivateMessageDropdownButton/ui/PrivateMessageDropdownButton.tsx';
+import {
+    UserPrivateMessageDropdownButton,
+} from '@/widgets/message/UserPrivateMessageDropdownButton/ui/UserPrivateMessageDropdownButton.tsx';
 
 
 dayjs.extend(localizedFormat);
@@ -63,10 +66,17 @@ export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMess
                             ? <IoBuild className={ css.redacted }/>
                             : null
                         }
-                        <PrivateMessageDropdownButton
-                            key="dropdown-button"
-                            messageId={ message.id }
-                        />
+                        {
+                            message.author.id === userId
+                            ? <UserPrivateMessageDropdownButton
+                                key="dropdown-button"
+                                messageId={ message.id }
+                            />
+                            : <PrivateMessageDropdownButton
+                                key="dropdown-button"
+                                messageId={ message.id }
+                            />
+                        }
                     </div>
                 </header>
                 <div className={ css.message }>

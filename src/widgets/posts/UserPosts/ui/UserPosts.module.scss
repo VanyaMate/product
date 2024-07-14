@@ -30,7 +30,7 @@
         display        : flex;
         flex-direction : column;
         overflow       : auto;
-        gap            : var(--offset-medium);
+        gap            : var(--offset-small);
     }
 
     .loader {
