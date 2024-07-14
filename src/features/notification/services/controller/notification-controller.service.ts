@@ -75,6 +75,12 @@ export class NotificationController implements INotificationController {
         [DomainNotificationType.PRIVATE_DIALOGUE_ARCHIVED_OUT]  : [],
         [DomainNotificationType.PRIVATE_DIALOGUE_UNARCHIVED_IN] : [],
         [DomainNotificationType.PRIVATE_DIALOGUE_UNARCHIVED_OUT]: [],
+        [DomainNotificationType.POST_CREATED_IN]                : [],
+        [DomainNotificationType.POST_CREATED_OUT]               : [],
+        [DomainNotificationType.POST_UPDATED_IN]                : [],
+        [DomainNotificationType.POST_UPDATED_OUT]               : [],
+        [DomainNotificationType.POST_DELETED_IN]                : [],
+        [DomainNotificationType.POST_DELETED_OUT]               : [],
     };
 
     private _currentNotificationIndex: number = 0;

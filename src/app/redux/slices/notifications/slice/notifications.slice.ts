@@ -220,6 +220,30 @@ const initialState: NotificationsSchema = {
             sound: true,
             mark : true,
         },
+        [DomainNotificationType.POST_CREATED_IN]                : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.POST_CREATED_OUT]               : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.POST_DELETED_IN]                : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.POST_DELETED_OUT]               : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.POST_UPDATED_IN]                : {
+            sound: true,
+            mark : true,
+        },
+        [DomainNotificationType.POST_UPDATED_OUT]               : {
+            sound: true,
+            mark : true,
+        },
     },
     isPending    : false,
     error        : null,

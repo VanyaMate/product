@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => ({
         __API__   : JSON.stringify(
             mode === 'development'
             ? 'http://localhost:3000/api'
-            : 'https://product-backend-hxe8.onrender.com:4000/api',
+            : 'https://product-backend-hxe8.onrender.com/api',
         ),
     },
     publicDir: 'public',

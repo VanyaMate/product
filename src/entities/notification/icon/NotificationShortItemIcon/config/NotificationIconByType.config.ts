@@ -7,7 +7,7 @@ import {
     IoChatbox,
     IoCloud,
     IoCloudDone,
-    IoCloudOffline, IoMail, IoMailOpen, IoMailUnread,
+    IoCloudOffline, IoMail, IoMailOpen, IoMailUnread, IoNewspaper,
     IoNotifications, IoPersonAdd, IoPersonRemove,
     IoSad, IoSync, IoTrash,
 } from 'react-icons/io5';
@@ -228,6 +228,30 @@ export const NotificationIconByType: Record<DomainNotificationType, Notification
     },
     [DomainNotificationType.PRIVATE_DIALOGUE_UNARCHIVED_OUT]: {
         component: IoArchive,
+        className: css.neutral,
+    },
+    [DomainNotificationType.POST_CREATED_IN]                : {
+        component: IoNewspaper,
+        className: css.notification,
+    },
+    [DomainNotificationType.POST_CREATED_OUT]               : {
+        component: IoNewspaper,
+        className: css.positive,
+    },
+    [DomainNotificationType.POST_DELETED_IN]                : {
+        component: IoNewspaper,
+        className: css.notification,
+    },
+    [DomainNotificationType.POST_DELETED_OUT]               : {
+        component: IoNewspaper,
+        className: css.neutral,
+    },
+    [DomainNotificationType.POST_UPDATED_IN]                : {
+        component: IoNewspaper,
+        className: css.notification,
+    },
+    [DomainNotificationType.POST_UPDATED_OUT]               : {
+        component: IoNewspaper,
         className: css.neutral,
     },
 };

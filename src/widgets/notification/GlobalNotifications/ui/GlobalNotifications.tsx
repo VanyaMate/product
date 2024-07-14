@@ -1,8 +1,10 @@
 import {
     ComponentPropsWithoutRef,
     FC,
-    memo, Suspense,
-    useEffect, useRef,
+    memo,
+    Suspense,
+    useEffect,
+    useRef,
     useState,
 } from 'react';
 import classNames from 'classnames';
@@ -43,6 +45,7 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
 
     useEffect(() => {
         const onMessage: NotificationNotificatorCallback = (message) => {
+            console.log(message);
             setNotifications((prev) => [ ...message.reverse(), ...prev ]);
         };
 

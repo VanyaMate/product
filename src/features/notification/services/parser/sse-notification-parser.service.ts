@@ -32,7 +32,7 @@ export class SseNotificationParser implements INotificationParser {
 
     getClearNotification (type: DomainNotificationType): DomainNotification {
         return {
-            id          : '',
+            id          : Math.random().toString(),
             type        : type,
             data        : '',
             creationDate: new Date().toUTCString(),
@@ -42,7 +42,7 @@ export class SseNotificationParser implements INotificationParser {
 
     private _getUnknownNotification (message: string): DomainNotification {
         return {
-            id          : '',
+            id          : Math.random().toString(),
             type        : DomainNotificationType.UNKNOWN,
             data        : message,
             creationDate: new Date().toUTCString(),
