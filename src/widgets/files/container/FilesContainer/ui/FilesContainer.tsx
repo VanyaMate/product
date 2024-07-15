@@ -12,6 +12,9 @@ import {
 import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
+import {
+    FileUploadForm,
+} from '@/entities/file/form/FileUploadForm/ui/FileUploadForm.tsx';
 
 
 export type FilesContainerProps =
@@ -33,7 +36,7 @@ export const FilesContainer: FC<FilesContainerProps> = memo(function FilesContai
             {
                 // TODO: Continue
             }
-            <input type="file"/>
+            <FileUploadForm/>
             <div className={ css.list }>
                 {
                     filesPending ? <PageLoader/>

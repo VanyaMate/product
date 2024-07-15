@@ -1,0 +1,76 @@
+.container {
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);
+    height         : fit-content;
+
+    .form {
+        display : flex;
+        width   : 100%;
+        gap     : var(--offset-small);
+        height  : 80px;
+
+        .label {
+            border-radius   : var(--offset-medium);
+            padding         : var(--offset-medium);
+            background      : var(--bg-ghost-color);
+            display         : flex;
+            align-items     : center;
+            justify-content : center;
+            flex            : 1;
+            position        : relative;
+            transition      : var(--transition-fast);
+            height          : 100%;
+            border          : 1px solid var(--border-main-color);
+            box-shadow      : inset 0 0 0 2px var(--bg-main-color);
+
+            .text {
+                text-align : center;
+                width      : 100%;
+            }
+
+            .input {
+                position : absolute;
+                top      : 0;
+                left     : 0;
+                width    : 100%;
+                height   : 100%;
+                flex     : 1;
+                opacity  : 0;
+                cursor   : pointer;
+            }
+
+            &.dragOver,
+            &:hover,
+            &:focus-within {
+                background : var(--primary-color);
+                color      : var(--on-primary-text-color);
+                cursor     : pointer;
+                box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color);
+            }
+        }
+    }
+
+    .preload {
+        border-radius  : var(--offset-medium);
+        padding        : var(--offset-medium);
+        background     : var(--bg-ghost-color);
+        display        : flex;
+        flex-direction : column;
+        gap            : var(--offset-small);
+        border         : 1px solid var(--border-main-color);
+
+        .title {
+            font-size     : var(--font-size-l);
+            background    : var(--bg-second-color);
+            padding       : var(--offset-small);
+            border-radius : var(--offset-small);
+        }
+
+        .list {
+            display   : flex;
+            gap       : var(--offset-small);
+            flex-wrap : wrap;
+        }
+    }
+}

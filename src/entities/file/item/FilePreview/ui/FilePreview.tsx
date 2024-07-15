@@ -7,6 +7,9 @@ import { IoShieldCheckmark } from 'react-icons/io5';
 import {
     FilePreviewShortInfo,
 } from '@/entities/file/item/FilePreviewShortInfo/ui/FilePreviewShortInfo.tsx';
+import {
+    FilePreviewInfo,
+} from '@/entities/file/item/FilePreviewInfo/ui/FilePreviewInfo.tsx';
 
 
 export type FilePreviewProps =
@@ -23,7 +26,9 @@ export const FilePreview: FC<FilePreviewProps> = memo(function FilePreview (prop
             <article { ...other }
                      className={ classNames(css.container, {}, [ className ]) }>
                 <div className={ css.header }>
-                    <div className={ css.image }/>
+                    <div className={ css.image }>
+                        { file.fileOriginalName.split('.').slice(-1)[0] }
+                    </div>
                     {
                         file.private
                         ? <div className={ css.private }>
@@ -32,9 +37,11 @@ export const FilePreview: FC<FilePreviewProps> = memo(function FilePreview (prop
                         : null
                     }
                 </div>
-                <header className={ css.info }>
-                    <h3 className={ css.title }>{ file.fileName }</h3>
-                </header>
+                <FilePreviewInfo
+                    size={ file.fileWeight }
+                    title={ file.fileName }
+                    type={ file.fileType }
+                />
             </article>
         </PopOver>
     );

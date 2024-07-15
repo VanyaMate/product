@@ -1,0 +1,31 @@
+.container {
+    display        : flex;
+    flex-direction : column;
+    text-align     : left;
+    max-width      : 100%;
+    overflow       : hidden;
+    text-overflow  : ellipsis;
+
+    .title {
+        font-size     : var(--font-size-m);
+        width         : 100%;
+        overflow      : hidden;
+        text-overflow : ellipsis;
+    }
+
+    .type {
+        font-size     : var(--font-size-s);
+        color         : var(--text-second-color);
+        width         : 100%;
+        overflow      : hidden;
+        text-overflow : ellipsis;
+    }
+
+    .size {
+        font-size     : var(--font-size-s);
+        color         : var(--text-second-color);
+        width         : 100%;
+        overflow      : hidden;
+        text-overflow : ellipsis;
+    }
+}

@@ -137,7 +137,7 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
                 </main>
                 <div
                     className={ classNames(css.rightSideMenu, { [css.rightSideMenu_open]: rightMenuOpened && !leftMenuOpened }) }
-                    { ...inert(leftMenuOpened) }
+                    { ...inert(leftMenuOpened || !rightMenuOpened) }
                 >
                     <div className={ css.content }>
                         { rightSideMenu }

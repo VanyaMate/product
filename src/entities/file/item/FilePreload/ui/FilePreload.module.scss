@@ -1,0 +1,73 @@
+.container {
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);
+    padding        : var(--offset-small);
+    border-radius  : var(--offset-medium);
+    width          : clamp(140px, 140px, 140px);
+    border         : 1px solid var(--border-main-color);
+
+    .header {
+        position        : relative;
+        border-radius   : var(--offset-small);
+        overflow        : hidden;
+        padding         : var(--offset-small);
+        background      : var(--bg-second-color);
+        width           : clamp(128px, 128px, 128px);
+        height          : clamp(128px, 128px, 128px);
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+
+        .percent {
+            position      : absolute;
+            z-index       : 2;
+            top           : 0;
+            background    : var(--bg-ghost-color);
+            padding       : 0 var(--offset-medium) 2px;
+            border-radius : 0 0 var(--offset-small) var(--offset-small);
+            font-size     : var(--font-size-s);
+        }
+
+        .progress {
+            position   : absolute;
+            top        : 0;
+            left       : 0;
+            width      : 0;
+            height     : 100%;
+            background : var(--primary-color);
+            opacity    : .6;
+        }
+
+        .preview {
+            position        : relative;
+            z-index         : 2;
+            display         : flex;
+            align-items     : center;
+            justify-content : center;
+        }
+    }
+
+    .info {
+        display        : flex;
+        flex-direction : column;
+        text-align     : left;
+        max-width      : 100%;
+        overflow       : hidden;
+
+
+        .title {
+            font-size : var(--font-size-m);
+        }
+
+        .type {
+            font-size : var(--font-size-s);
+            color     : var(--text-second-color);
+        }
+
+        .size {
+            font-size : var(--font-size-s);
+            color     : var(--text-second-color);
+        }
+    }
+}
