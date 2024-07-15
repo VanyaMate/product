@@ -1,0 +1,8 @@
+{
+    "files_label_id": "id",
+    "files_label_upload_date": "Дата загрузки",
+    "files_label_original_name": "Оригинальное имя",
+    "files_label_weight": "Вес файла",
+    "files_label_owner": "Владелец файла",
+    "files_label_type": "Тип файла"
+}

@@ -18,7 +18,7 @@ import {
 } from '@/widgets/private-dialogue/PrivateDialogueWindow/ui/PrivateDialogueWindow.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    $privateDialogues, $privateDialoguesIsPending, $privateDialoguesStatus,
+    $privateDialogues, $privateDialoguesIsPending,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import { $authUser } from '@/app/model/auth/auth.model.ts';
 import {
@@ -33,7 +33,6 @@ export type DialoguesPageProps =
 export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage (props) {
     const { className, ...other }                  = props;
     const dialogues                                = useStore($privateDialogues);
-    const dialoguesStatus                          = useStore($privateDialoguesStatus);
     const dialoguesIsPending                       = useStore($privateDialoguesIsPending);
     const userData                                 = useStore($authUser);
     const { [SITE_ROUTE_DIALOGUE_ID]: dialogueId } = useParams<{
@@ -57,7 +56,6 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
                             lastMessage={ messages[dialogue.id]?.slice(-1)[0] }
                             login={ userData.login }
                             selected={ dialogueId === dialogue.id }
-                            status={ dialoguesStatus[dialogue.id] }
                         />
                     ))
                 }

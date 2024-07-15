@@ -7,9 +7,19 @@ import {
     IoChatbox,
     IoCloud,
     IoCloudDone,
-    IoCloudOffline, IoMail, IoMailOpen, IoMailUnread, IoNewspaper,
-    IoNotifications, IoPersonAdd, IoPersonRemove,
-    IoSad, IoSync, IoTrash,
+    IoCloudOffline,
+    IoDocument,
+    IoDownload,
+    IoMail,
+    IoMailOpen,
+    IoMailUnread,
+    IoNewspaper,
+    IoNotifications,
+    IoPersonAdd,
+    IoPersonRemove,
+    IoSad,
+    IoSync,
+    IoTrash,
 } from 'react-icons/io5';
 import css
     from '@/entities/notification/icon/NotificationShortItemIcon/ui/NotificationShortItemIcon.module.scss';
@@ -254,4 +264,29 @@ export const NotificationIconByType: Record<DomainNotificationType, Notification
         component: IoNewspaper,
         className: css.neutral,
     },
+    [DomainNotificationType.FILE_UPLOADED_IN]               : {
+        component: IoDownload,
+        className: css.notification,
+    },
+    [DomainNotificationType.FILE_UPLOADED_OUT]              : {
+        component: IoDownload,
+        className: css.neutral,
+    },
+    [DomainNotificationType.FILE_UPDATED_IN]                : {
+        component: IoDocument,
+        className: css.notification,
+    },
+    [DomainNotificationType.FILE_UPDATED_OUT]               : {
+        component: IoDocument,
+        className: css.neutral,
+    },
+    [DomainNotificationType.FILE_DELETED_IN]                : {
+        component: IoDocument,
+        className: css.notification,
+    },
+    [DomainNotificationType.FILE_DELETED_OUT]               : {
+        component: IoDocument,
+        className: css.neutral,
+    },
+
 };

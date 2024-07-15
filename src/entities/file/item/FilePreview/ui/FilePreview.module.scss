@@ -1,0 +1,46 @@
+.container {
+    width          : clamp(140px, 140px, 140px);
+    height         : fit-content;
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);
+    border-radius  : var(--offset-medium);
+    background     : var(--bg-ghost-color);
+    border         : 1px solid var(--border-main-color);
+    padding        : var(--offset-small);
+
+    .header {
+        position : relative;
+        width    : fit-content;
+        height   : fit-content;
+
+        .image {
+            width         : clamp(130px, 130px, 130px);
+            height        : clamp(130px, 130px, 130px);
+            background    : var(--bg-second-color);
+            border-radius : var(--offset-small);
+        }
+
+        .private {
+            position        : absolute;
+            top             : var(--offset-small);
+            right           : var(--offset-small);
+            background      : var(--primary-color);
+            color           : var(--on-primary-text-color);
+            width           : 26px;
+            height          : 26px;
+            border-radius   : 50%;
+            font-size       : var(--font-size-s);
+            display         : flex;
+            align-items     : center;
+            justify-content : center;
+        }
+    }
+
+    .info {
+        .title {
+            text-align : center;
+            font-size  : var(--font-size-m);
+        }
+    }
+}

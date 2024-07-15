@@ -1,0 +1,11 @@
+.container {
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-medium);
+    font-size      : var(--font-size-s);
+    text-align     : left;
+
+    .label {
+        color : var(--text-second-color);
+    }
+}

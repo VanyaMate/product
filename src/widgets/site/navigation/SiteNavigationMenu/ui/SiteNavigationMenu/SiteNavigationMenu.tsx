@@ -6,8 +6,10 @@ import {
 } from '@/widgets/site/navigation/SiteNavigationMenu/ui/SiteNavigationLink/SiteNavigationLink.tsx';
 import {
     IoDesktop,
+    IoDocuments,
     IoHome,
-    IoLogoVk, IoMail,
+    IoLogoVk,
+    IoMail,
     IoPeople,
     IoSearch,
 } from 'react-icons/io5';
@@ -86,6 +88,18 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                         to={ SiteAppRoutePath[SiteAppRoute.DIALOGUES] }
                     >
                         { t('dialogues_page') }
+                    </SiteNavigationLink>
+                    <SiteNavigationLink
+                        icon={ <IoDocuments/> }
+                        onClick={ onCompleteAction }
+                        styleType={
+                            pathname === SiteAppRoutePath[SiteAppRoute.FILES]
+                            ? LinkStyleType.PRIMARY
+                            : LinkStyleType.GHOST
+                        }
+                        to={ SiteAppRoutePath[SiteAppRoute.FILES] }
+                    >
+                        { t('files_page') }
                     </SiteNavigationLink>
                     <SiteNavigationLink
                         icon={ <IoDesktop/> }

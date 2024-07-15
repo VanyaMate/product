@@ -4,7 +4,6 @@ import css from './PrivateDialogue.module.scss';
 import {
     DomainPrivateDialogueFull,
 } from 'product-types/dist/private-dialogue/DomainPrivateDialogueFull';
-import { ThunkState } from '@/app/redux/types/thunkError.ts';
 import {
     PrivateDialogueIcon,
 } from '@/entities/private-dialogues/icon/PrivateDialogueIcon/ui/PrivateDialogueIcon.tsx';
@@ -20,7 +19,6 @@ export type PrivateDialogueProps =
     {
         dialogue: DomainPrivateDialogueFull;
         lastMessage: DomainMessage;
-        status: ThunkState;
         login: string;
         selected: boolean;
     }
@@ -31,13 +29,10 @@ export const PrivateDialogue: FC<PrivateDialogueProps> = memo(function PrivateDi
               className,
               dialogue,
               lastMessage,
-              status,
               selected,
               login,
               ...other
           } = props;
-
-    console.log(status);
 
     return (
         <article

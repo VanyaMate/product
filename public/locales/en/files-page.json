@@ -1,0 +1,8 @@
+{
+    "files_label_id": "id",
+    "files_label_upload_date": "Upload date",
+    "files_label_original_name": "Original name",
+    "files_label_weight": "File size",
+    "files_label_owner": "File owner",
+    "files_label_type": "File type"
+}
