@@ -1,7 +1,7 @@
 import {
     useNotification,
 } from '@/features/notification/hooks/useNotification.ts';
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import {
     NotificationNotificatorCallback,
 } from '@/features/notification/services/notificator/notification-notificator.interface.ts';
@@ -22,11 +22,11 @@ export const useDialoguesStoreUpdaterByNotifications = function () {
     const notification = useNotification('dialogues-store-updater');
     const dialogues    = useStore($privateDialogues);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         getListPrivateDialogueEffect({ limit: 1000, query: '', offset: 0 });
     }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (dialogues) {
             const onPrivateMessageIn: NotificationNotificatorCallback = function (notifications) {
                 notifications.forEach(({ data }) => sendPrivateMessageNotificationEffect(data));

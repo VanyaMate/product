@@ -1,7 +1,7 @@
 import {
     useNotification,
 } from '@/features/notification/hooks/useNotification.ts';
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import {
     NotificationNotificatorCallback,
 } from '@/features/notification/services/notificator/notification-notificator.interface.ts';
@@ -24,11 +24,11 @@ export const useFriendsStoreUpdaterByNotifications = function () {
     const notification = useNotification(`friends-store-updater`);
     const friends      = useStore($friendsList);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         getMyFriendsEffect();
     }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (friends) {
             const onFriendRequestIn: NotificationNotificatorCallback = (notifications) => {
                 notifications.forEach(({ data }) => createFriendRequestNotificationEffect(data));

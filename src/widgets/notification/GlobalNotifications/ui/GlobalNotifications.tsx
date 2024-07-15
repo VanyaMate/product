@@ -3,7 +3,7 @@ import {
     FC,
     memo,
     Suspense,
-    useEffect,
+    useLayoutEffect,
     useRef,
     useState,
 } from 'react';
@@ -43,9 +43,8 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
 
     useGlobalStoreUpdaterByNotifications();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const onMessage: NotificationNotificatorCallback = (message) => {
-            console.log(message);
             setNotifications((prev) => [ ...message.reverse(), ...prev ]);
         };
 
