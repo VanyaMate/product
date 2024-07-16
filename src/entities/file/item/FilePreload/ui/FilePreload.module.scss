@@ -1,10 +1,13 @@
+$size-container : 220px;
+$size-header    : calc($size-container - 12px);
+
 .container {
     display        : flex;
     flex-direction : column;
     gap            : var(--offset-small);
     padding        : var(--offset-small);
     border-radius  : var(--offset-medium);
-    width          : clamp(180px, 180px, 180px);
+    width          : clamp($size-container, $size-container, $size-container);
     border         : 1px solid var(--border-main-color);
     background     : var(--bg-ghost-color);
     height         : fit-content;
@@ -15,8 +18,8 @@
         overflow        : hidden;
         padding         : var(--offset-small);
         background      : var(--bg-second-color);
-        width           : clamp(168px, 168px, 168px);
-        height          : clamp(168px, 168px, 168px);
+        width           : clamp($size-header, $size-header, $size-header);
+        height          : clamp($size-header, $size-header, $size-header);
         display         : flex;
         align-items     : center;
         justify-content : center;

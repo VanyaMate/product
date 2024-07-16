@@ -1,5 +1,8 @@
+$size-container : 220px;
+$size-header    : calc($size-container - 12px);
+
 .container {
-    width          : clamp(180px, 180px, 180px);
+    width          : clamp($size-container, $size-container, $size-container);
     height         : fit-content;
     display        : flex;
     flex-direction : column;
@@ -16,8 +19,8 @@
         height   : fit-content;
 
         .image {
-            width           : clamp(168px, 168px, 168px);
-            height          : clamp(168px, 168px, 168px);
+            width           : clamp($size-header, $size-header, $size-header);
+            height          : clamp($size-header, $size-header, $size-header);
             background      : var(--bg-second-color);
             border-radius   : var(--offset-small);
             display         : flex;
