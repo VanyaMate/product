@@ -4,8 +4,10 @@
     gap            : var(--offset-small);
     padding        : var(--offset-small);
     border-radius  : var(--offset-medium);
-    width          : clamp(140px, 140px, 140px);
+    width          : clamp(180px, 180px, 180px);
     border         : 1px solid var(--border-main-color);
+    background     : var(--bg-ghost-color);
+    height         : fit-content;
 
     .header {
         position        : relative;
@@ -13,8 +15,8 @@
         overflow        : hidden;
         padding         : var(--offset-small);
         background      : var(--bg-second-color);
-        width           : clamp(128px, 128px, 128px);
-        height          : clamp(128px, 128px, 128px);
+        width           : clamp(168px, 168px, 168px);
+        height          : clamp(168px, 168px, 168px);
         display         : flex;
         align-items     : center;
         justify-content : center;

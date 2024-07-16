@@ -21,11 +21,6 @@ export const FilePreviewShortInfo: FC<FilePreviewShortInfoProps> = memo(function
              className={ classNames(css.container, {}, [ className ]) }>
             <Col>
                 <span
-                    className={ css.label }>{ t('files_label_upload_date') }</span>
-                <span>{ file.uploadDate }</span>
-            </Col>
-            <Col>
-                <span
                     className={ css.label }>{ t('files_label_original_name') }</span>
                 <span>{ file.fileOriginalName }</span>
             </Col>
@@ -40,6 +35,11 @@ export const FilePreviewShortInfo: FC<FilePreviewShortInfoProps> = memo(function
             <Col>
                 <span className={ css.label }>{ t('files_label_owner') }</span>
                 <span>{ file.owner.login }</span>
+            </Col>
+            <Col>
+                <span
+                    className={ css.label }>{ t('files_label_upload_date') }</span>
+                <span>{ file.uploadDate }</span>
             </Col>
         </div>
     );

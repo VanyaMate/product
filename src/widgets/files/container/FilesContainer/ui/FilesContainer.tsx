@@ -2,19 +2,17 @@ import { ComponentPropsWithoutRef, FC, memo, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import css from './FilesContainer.module.scss';
 import {
-    FilePreview,
-} from '@/entities/file/item/FilePreview/ui/FilePreview.tsx';
-import { useStore } from '@vanyamate/sec-react';
-import {
-    $filesList,
-    $filesPending, getMyFilesEffect,
+    getMyFilesEffect,
 } from '@/app/model/file-page/file-page.model.ts';
-import {
-    PageLoader,
-} from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
 import {
     FileUploadForm,
 } from '@/widgets/files/form/FileUploadForm/ui/FileUploadForm.tsx';
+import {
+    FilesUploadInsert,
+} from '@/widgets/files/insert/FilesUploadInsert/ui/FilesUploadInsert.tsx';
+import {
+    FilesInsert,
+} from '@/widgets/files/insert/FilesInsert/ui/FilesInsert.tsx';
 
 
 export type FilesContainerProps =
@@ -23,8 +21,6 @@ export type FilesContainerProps =
 
 export const FilesContainer: FC<FilesContainerProps> = memo(function FilesContainer (props) {
     const { className, ...other } = props;
-    const filesPending            = useStore($filesPending);
-    const filesList               = useStore($filesList);
 
     useLayoutEffect(() => {
         getMyFilesEffect({});
@@ -33,17 +29,10 @@ export const FilesContainer: FC<FilesContainerProps> = memo(function FilesContai
     return (
         <div { ...other }
              className={ classNames(css.container, {}, [ className ]) }>
-            {
-                // TODO: Continue
-            }
             <FileUploadForm/>
             <div className={ css.list }>
-                {
-                    filesPending ? <PageLoader/>
-                                 : filesList.map((file) => (
-                                     <FilePreview file={ file } key={ file.id }/>
-                                 ))
-                }
+                <FilesUploadInsert/>
+                <FilesInsert/>
             </div>
         </div>
     );

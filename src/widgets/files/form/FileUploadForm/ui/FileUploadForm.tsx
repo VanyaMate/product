@@ -9,15 +9,10 @@ import {
 } from 'react';
 import classNames from 'classnames';
 import css from './FileUploadForm.module.scss';
-import {
-    FilePreload,
-} from '@/entities/file/item/FilePreload/ui/FilePreload.tsx';
 import { useTranslation } from 'react-i18next';
 import {
-    $filesUploadList,
     uploadFileEffect, uploadFileProgressEffect,
 } from '@/app/model/file-page/file-page.model.ts';
-import { useStore } from '@vanyamate/sec-react';
 
 
 export type FileUploadFormProps =
@@ -28,27 +23,20 @@ export const FileUploadForm: FC<FileUploadFormProps> = memo(function FileUploadF
     const { className, ...other }               = props;
     const [ dragFileAmount, setDragFileAmount ] = useState<number>(0);
     const { t }                                 = useTranslation([ 'files-page' ]);
-    const files                                 = useStore($filesUploadList);
-
-    // TODO: Continue
 
     const onDropOver: DragEventHandler = useCallback((event) => {
-        console.log('onDropOver', event);
         setDragFileAmount(event.dataTransfer.items.length);
     }, []);
 
     const onDragEnter: DragEventHandler = useCallback((event) => {
-        console.log('onDragEnter', event);
         setDragFileAmount(event.dataTransfer.items.length);
     }, []);
 
-    const onDragExit: DragEventHandler = useCallback((event) => {
-        console.log('onDragExit', event);
+    const onDragExit: DragEventHandler = useCallback(() => {
         setDragFileAmount(0);
     }, []);
 
-    const onDragEnd: DragEventHandler = useCallback((event) => {
-        console.log('onDragEnd', event);
+    const onDragEnd: DragEventHandler = useCallback(() => {
         setDragFileAmount(0);
     }, []);
 
@@ -96,26 +84,6 @@ export const FileUploadForm: FC<FileUploadFormProps> = memo(function FileUploadF
                     />
                 </label>
             </form>
-            {
-                files.length
-                ? <section className={ css.preload }>
-                    <h2 className={ css.title }>{ t('files_preload_title') }</h2>
-                    <div className={ css.list }>
-                        {
-                            files.map(([ file, progress ], index) => (
-                                <FilePreload
-                                    key={ index }
-                                    progress={ progress }
-                                    size={ file.size }
-                                    title={ file.name }
-                                    type={ file.type }
-                                />
-                            ))
-                        }
-                    </div>
-                </section>
-                : null
-            }
         </div>
     );
 });
