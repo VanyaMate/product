@@ -14,7 +14,7 @@ import {
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
 import {
     FileUploadForm,
-} from '@/entities/file/form/FileUploadForm/ui/FileUploadForm.tsx';
+} from '@/widgets/files/form/FileUploadForm/ui/FileUploadForm.tsx';
 
 
 export type FilesContainerProps =

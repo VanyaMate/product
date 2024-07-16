@@ -3,4 +3,4 @@ import { isDomainFriends } from 'product-types/dist/friends/DomainFriends';
 
 
 export const getMyFriendsAction = () =>
-    request('v1/friends', {}, isDomainFriends);
+    request('v1/friends', { method: 'GET' }, isDomainFriends);

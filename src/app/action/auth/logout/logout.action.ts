@@ -7,7 +7,7 @@ import {
 
 
 export const logoutAction = () => {
-    return request(`v1/authentication/logout`, { method: 'post' }, isDomainUser).finally(() => {
+    return request(`v1/authentication/logout`, { method: 'POST' }, isDomainUser).finally(() => {
         localStorage.removeItem(LOCAL_STORAGE_USER_ACCESS_TOKEN);
         localStorage.removeItem(LOCAL_STORAGE_USER_REFRESH_TOKEN);
     });

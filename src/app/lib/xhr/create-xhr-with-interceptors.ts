@@ -43,7 +43,6 @@ export const createXhrWithInterceptors = function (
 
                     if (params.onUploadProgress) {
                         xhr.upload.addEventListener('progress', (event) => {
-                            console.log('event', event);
                             if (event.lengthComputable) {
                                 params.onUploadProgress(100 * (event.loaded / event.total));
                             }

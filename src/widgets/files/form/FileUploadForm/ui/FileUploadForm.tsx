@@ -14,8 +14,10 @@ import {
 } from '@/entities/file/item/FilePreload/ui/FilePreload.tsx';
 import { useTranslation } from 'react-i18next';
 import {
-    uploadFileAction,
-} from '@/app/action/file/uploadFile/uploadFile.action.ts';
+    $filesUploadList,
+    uploadFileEffect, uploadFileProgressEffect,
+} from '@/app/model/file-page/file-page.model.ts';
+import { useStore } from '@vanyamate/sec-react';
 
 
 export type FileUploadFormProps =
@@ -25,9 +27,8 @@ export type FileUploadFormProps =
 export const FileUploadForm: FC<FileUploadFormProps> = memo(function FileUploadForm (props) {
     const { className, ...other }               = props;
     const [ dragFileAmount, setDragFileAmount ] = useState<number>(0);
-    // TODO: Temp (перенести в модель)
-    const [ files, setFiles ]                   = useState<File[]>([]);
     const { t }                                 = useTranslation([ 'files-page' ]);
+    const files                                 = useStore($filesUploadList);
 
     // TODO: Continue
 
@@ -57,8 +58,9 @@ export const FileUploadForm: FC<FileUploadFormProps> = memo(function FileUploadF
 
     const onInputChange: ChangeEventHandler<HTMLInputElement> = useCallback(function (event) {
         const { files } = event.target;
-        uploadFileAction(files.item(0));
-        setFiles((prev) => [ ...Array.from(files), ...prev ]);
+        for (const file of files) {
+            uploadFileEffect(file, (progress) => uploadFileProgressEffect(file, progress));
+        }
     }, []);
 
     return (
@@ -100,10 +102,10 @@ export const FileUploadForm: FC<FileUploadFormProps> = memo(function FileUploadF
                     <h2 className={ css.title }>{ t('files_preload_title') }</h2>
                     <div className={ css.list }>
                         {
-                            files.map((file, index) => (
+                            files.map(([ file, progress ], index) => (
                                 <FilePreload
                                     key={ index }
-                                    progress={ index * 13 }
+                                    progress={ progress }
                                     size={ file.size }
                                     title={ file.name }
                                     type={ file.type }

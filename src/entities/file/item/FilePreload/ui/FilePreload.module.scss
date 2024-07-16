@@ -37,6 +37,7 @@
             height     : 100%;
             background : var(--primary-color);
             opacity    : .6;
+            transition : var(--transition-fast);
         }
 
         .preview {
