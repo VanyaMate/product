@@ -1,11 +1,11 @@
 import {
     isDomainResponse,
 } from 'product-types/dist/response/DomainResponse';
-import { api } from '@/app/lib/api/api.ts';
+import { apiFetch } from '@/app/lib/api/fetch/apiFetch.ts';
 
 
-export const createRequest = function (url: RequestInfo, init?: RequestInit) {
-    return api(url, init)
+export const createDomainFetchRequest = function (url: RequestInfo, init?: RequestInit) {
+    return apiFetch(url, init)
         .then((response) => response.json())
         .then((data: unknown) => {
             if (isDomainResponse(data)) {

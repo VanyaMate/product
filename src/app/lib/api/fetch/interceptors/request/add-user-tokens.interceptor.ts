@@ -2,7 +2,7 @@ import { RequestInterceptor } from '@vanyamate/fetch-with-interceptors';
 import {
     LOCAL_STORAGE_USER_ACCESS_TOKEN,
     LOCAL_STORAGE_USER_REFRESH_TOKEN,
-} from '@/app/model/auth/const';
+} from '@/app/model/auth/const.ts';
 
 
 export const addUserTokensInterceptor: RequestInterceptor = async (data, init) => {

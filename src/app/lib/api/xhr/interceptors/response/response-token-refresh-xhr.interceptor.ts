@@ -3,15 +3,19 @@ import { isDomainTokens } from 'product-types/dist/token/DomainTokens';
 import {
     LOCAL_STORAGE_USER_ACCESS_TOKEN,
     LOCAL_STORAGE_USER_REFRESH_TOKEN,
-} from '@/app/model/auth/const';
+} from '@/app/model/auth/const.ts';
 import {
     isDomainAuthResponse,
 } from 'product-types/dist/authorization/DomainAuthResponse';
-import { ResponseInterceptor } from '@vanyamate/fetch-with-interceptors';
+import {
+    ResponseXhrInterceptor,
+} from '@/app/lib/xhr/create-xhr-with-interceptors.ts';
+import { jsonParse } from '@/shared/lib/json/json-parse.ts';
 
 
-export const responseTokenRefreshedInterceptor: ResponseInterceptor = async (response) => {
-    const responsePayload: unknown = await response.clone().json();
+export const responseTokenRefreshXhrInterceptor: ResponseXhrInterceptor = async (xhr) => {
+    const responsePayload: unknown = jsonParse(xhr.response);
+
     if (responsePayload) {
         if (isDomainResponse(responsePayload)) {
             if (isDomainTokens(responsePayload.tokens)) {
@@ -24,5 +28,5 @@ export const responseTokenRefreshedInterceptor: ResponseInterceptor = async (res
         }
     }
 
-    return response;
+    return xhr;
 };
