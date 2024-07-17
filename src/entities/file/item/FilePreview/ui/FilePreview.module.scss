@@ -14,22 +14,40 @@ $size-header    : calc($size-container - 12px);
     overflow       : hidden;
 
     .header {
-        position : relative;
-        width    : fit-content;
-        height   : fit-content;
+        position      : relative;
+        width         : fit-content;
+        height        : fit-content;
+        border-radius : var(--offset-small);
+        overflow      : hidden;
 
-        .image {
-            width           : clamp($size-header, $size-header, $size-header);
-            height          : clamp($size-header, $size-header, $size-header);
-            background      : var(--bg-second-color);
-            border-radius   : var(--offset-small);
-            display         : flex;
-            align-items     : center;
-            justify-content : center;
+        .icon {
+            width  : clamp($size-header, $size-header, $size-header);
+            height : clamp($size-header, $size-header, $size-header);
+        }
+
+        .action {
+            position      : absolute;
+            z-index       : 2;
+            top           : 0;
+            left          : 0;
+            width         : 100%;
+            height        : 100%;
+            border-radius : var(--offset-medium);
+            opacity       : 0;
+            visibility    : hidden;
+            transition    : var(--transition-fast);
+        }
+
+        &:hover {
+            .action {
+                opacity    : 1;
+                visibility : visible;
+            }
         }
 
         .private {
             position        : absolute;
+            z-index         : 3;
             top             : var(--offset-small);
             right           : var(--offset-small);
             background      : var(--primary-color);

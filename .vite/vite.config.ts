@@ -29,6 +29,11 @@ export default defineConfig(({ mode }) => ({
             ? 'http://192.168.0.123:3000/api'
             : 'https://product-backend-hxe8.onrender.com/api',
         ),
+        __STATIC__: JSON.stringify(
+            mode === 'development'
+            ? 'http://localhost:3000'
+            : 'https://product-backend-hxe8.onrender.com',
+        ),
     },
     publicDir: 'public',
     build    : {

@@ -38,8 +38,8 @@
     }
 
     &.ghost:not(:disabled) {
-        background : var(--ghost-color);
-        color      : var(--on-ghost-text-color);
+        background : var(--bg-main-color);
+        color      : var(--bg-main-foreground-color);
 
         &:focus,
         &:hover {

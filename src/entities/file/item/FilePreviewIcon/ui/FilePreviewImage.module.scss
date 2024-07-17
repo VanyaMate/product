@@ -1,0 +1,26 @@
+.container {
+    width           : 100%;
+    height          : 0;
+    padding-bottom  : 100%;
+    background      : var(--bg-second-color);
+    border-radius   : var(--offset-small);
+    overflow        : hidden;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    font-size       : 70px;
+    color           : var(--text-second-color);
+    position        : relative;
+
+    .icon {
+        position  : absolute;
+        top       : 50%;
+        left      : 50%;
+        transform : translate(-50%, -50%);
+    }
+
+    .image {
+        max-width  : calc(100% - var(--offset-medium));
+        max-height : calc(100% - var(--offset-medium));
+    }
+}

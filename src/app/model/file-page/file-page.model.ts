@@ -9,11 +9,15 @@ import {
 import {
     uploadFileProgressAction,
 } from '@/app/action/file/uploadFileProgress/uploadFileProgress.action.ts';
+import {
+    removeFileAction,
+} from '@/app/action/file/removeFile/removeFile.action.ts';
 
 
 export const getMyFilesEffect         = effect(getMyFilesAction);
 export const uploadFileEffect         = effect(uploadFileAction);
 export const uploadFileProgressEffect = effect(uploadFileProgressAction);
+export const removeFileEffect         = effect(removeFileAction);
 
 export const $filesUploadList = store<Array<[ File, number ]>>([])
     .on(uploadFileProgressEffect, 'onSuccess', (state, { args: [ file, progress ] }) => {
@@ -34,4 +38,5 @@ export const $filesPending = store(false)
 
 export const $filesList = store<DomainFile[]>([])
     .on(getMyFilesEffect, 'onSuccess', (_, { result }) => result.list.filter(isDomainFile))
-    .on(uploadFileEffect, 'onSuccess', (state, { result }) => [ result.file, ...state ]);
+    .on(uploadFileEffect, 'onSuccess', (state, { result }) => [ result.file, ...state ])
+    .on(removeFileEffect, 'onSuccess', (state, { args: [ fileId ] }) => state.filter((file) => file.id !== fileId));
