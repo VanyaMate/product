@@ -24,7 +24,7 @@ export const FilePreviewAction: FC<FilePreviewActionProps> = memo(function FileP
         <div { ...other }
              className={ classNames(css.container, {}, [ className ]) }>
             <Button
-                className={ css.button }
+                className={ css.mainButton }
                 size={ ButtonSizeType.LARGE }
                 styleType={ ButtonStyleType.GHOST }
             >

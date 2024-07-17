@@ -5,12 +5,13 @@
     align-items     : center;
     justify-content : center;
     padding         : var(--offset-medium);
-    opacity         : .95;
+    flex-direction  : column;
 
-    .button {
+    .mainButton {
         width         : clamp(100px, 100px, 100px);
         height        : clamp(100px, 100px, 100px);
         border-radius : var(--offset-medium);
         font-size     : var(--font-size-xxxl);
+        opacity       : .6;
     }
 }
