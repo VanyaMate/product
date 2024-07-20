@@ -37,7 +37,7 @@ export const FilesSideMenuContainer: FC<FilesSideMenuContainerProps> = memo(func
             className={ classNames(css.container, {}, [ className ]) }
         >
             <h3 className={ css.title }>{ t('selected_files') }</h3>
-            <Details>
+            <Details open>
                 <DetailsTitle>Подробности</DetailsTitle>
                 <DetailsBody>
                     <Row className={ css.details }>
