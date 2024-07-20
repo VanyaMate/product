@@ -3,7 +3,9 @@ import {
     FC,
     memo,
     ReactNode,
-    useCallback, useEffect, useRef,
+    useCallback,
+    useEffect,
+    useRef,
     useState,
 } from 'react';
 import classNames from 'classnames';
@@ -40,6 +42,7 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
               children,
               ...other
           }                                       = props;
+    const [ openedByHover, setOpenedByHover ]     = useState(false);
     const [ leftMenuOpened, setLeftMenuOpened ]   = useState(false);
     const [ rightMenuOpened, setRightMenuOpened ] = useState<boolean>(
         localStorage.getItem(LOCAL_STORAGE_SITE_MAIN_LAYOUT_RIGHT_MENU_OPENED) === 'true',
@@ -61,6 +64,20 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
     useEffect(() => {
         return keyboardClose(leftMenuOpened, setLeftMenuOpened);
     }, [ leftMenuOpened ]);
+
+    const onMouseEnterLeftMenu = useCallback(() => {
+        if (!leftMenuOpened) {
+            setLeftMenuOpened(true);
+            setOpenedByHover(true);
+        }
+    }, [ leftMenuOpened ]);
+
+    const onMouseLeaveLeftMenu = useCallback(() => {
+        if (leftMenuOpened && openedByHover) {
+            setLeftMenuOpened(false);
+            setOpenedByHover(false);
+        }
+    }, [ leftMenuOpened, openedByHover ]);
 
     return (
         <SiteMainLayoutSideMenuProvider
@@ -118,7 +135,10 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
                     </PopOver>
                 </header>
                 <div
-                    className={ classNames(css.leftSideMenu, { [css.leftSideMenu_open]: leftMenuOpened }) }>
+                    className={ classNames(css.leftSideMenu, { [css.leftSideMenu_open]: leftMenuOpened }) }
+                    onMouseEnter={ onMouseEnterLeftMenu }
+                    onMouseLeave={ onMouseLeaveLeftMenu }
+                >
                     { leftSideMenu }
                 </div>
                 <main
