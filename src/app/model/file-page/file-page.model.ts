@@ -16,6 +16,9 @@ import {
     selectFileAction,
 } from '@/app/action/file/selectFile/selectFile.action.ts';
 import { logoutEffect } from '@/app/model/auth/auth.model.ts';
+import {
+    unselectFilesAction,
+} from '@/app/action/file/unselectFiles/unselectFiles.action.ts';
 
 
 export const getMyFilesEffect         = effect(getMyFilesAction);
@@ -23,6 +26,7 @@ export const uploadFileEffect         = effect(uploadFileAction);
 export const uploadFileProgressEffect = effect(uploadFileProgressAction);
 export const removeFileEffect         = effect(removeFileAction);
 export const selectFileEffect         = effect(selectFileAction);
+export const unselectFilesEffect      = effect(unselectFilesAction);
 
 export const $filesUploadList = store<Array<[ File, number ]>>([])
     .on(uploadFileProgressEffect, 'onSuccess', (state, { args: [ file, progress ] }) => {
@@ -48,6 +52,8 @@ export const $filesSelected = store<DomainFile[]>([])
         }
         return [ ...state, file ];
     })
+    .on(unselectFilesEffect, 'onBefore', () => [])
+    .on(removeFileEffect, 'onSuccess', (state, { args: [ fileId ] }) => state.filter(({ id }) => id !== fileId))
     .on(logoutEffect, 'onBefore', () => []);
 
 export const $filesPending = store(false)

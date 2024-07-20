@@ -10,6 +10,17 @@
         border-radius : var(--offset-small);
     }
 
+    .details {
+        .label {
+            font-size : var(--font-size-s);
+            color     : var(--text-second-color);
+        }
+
+        .value {
+            font-size : var(--font-size-m);
+        }
+    }
+
     .list {
         display        : flex;
         flex-direction : column;

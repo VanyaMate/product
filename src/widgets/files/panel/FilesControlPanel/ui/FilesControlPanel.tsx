@@ -15,7 +15,6 @@ import {
     IoArrowRedo,
     IoChevronDown, IoChevronUp,
     IoSearch,
-    IoTrash,
 } from 'react-icons/io5';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import { useStore } from '@vanyamate/sec-react';
@@ -29,6 +28,12 @@ import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import {
     ButtonWithFixes,
 } from '@/shared/ui-kit/buttons/ButtonWithFixes/ui/ButtonWithFixes.tsx';
+import {
+    RemoveFilesButton,
+} from '@/features/file/button/RemoveFilesButton/ui/RemoveFilesButton.tsx';
+import {
+    UnselectAllFilesButton,
+} from '@/features/file/button/UnselectAllFilesButton/ui/UnselectAllFilesButton.tsx';
 
 
 {/* eslint-disable i18next/no-literal-string */
@@ -78,12 +83,10 @@ export const FilesControlPanel: FC<FilesControlPanelProps> = memo(function Files
                     <Button quad>
                         <IoArrowRedo/>
                     </Button>
-                    <ButtonWithLoading
-                        quad
-                        styleType={ ButtonStyleType.DANGER }
-                    >
-                        <IoTrash/>
-                    </ButtonWithLoading>
+                    <UnselectAllFilesButton/>
+                    <RemoveFilesButton
+                        filesIds={ filesSelected.map(({ id }) => id) }
+                    />
                 </Row>
                 <Row key="sort">
                     <Dropdown
