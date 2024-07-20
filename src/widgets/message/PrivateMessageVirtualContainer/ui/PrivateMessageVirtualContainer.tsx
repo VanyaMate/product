@@ -28,10 +28,16 @@ export const PrivateMessagesVirtualContainer: FC<PrivateMessagesVirtualContainer
     if (messages[dialogueId]) {
         return (
             <SearchedPrivateMessagesVirtual
-                dialogueId={ dialogueId } { ...other }
+                { ...other }
+                dialogueId={ dialogueId }
             />
         );
     } else {
-        return <PrivateMessagesVirtual dialogueId={ dialogueId } { ...other }/>;
+        return (
+            <PrivateMessagesVirtual
+                { ...other }
+                dialogueId={ dialogueId }
+            />
+        );
     }
 });
