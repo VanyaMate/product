@@ -12,6 +12,17 @@ $size-header    : calc($size-container - 12px);
     border         : 1px solid var(--border-main-color);
     padding        : var(--offset-small);
     overflow       : hidden;
+    transition     : var(--transition-fast);
+    outline        : none;
+    cursor         : pointer;
+
+    &:focus {
+        box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color);
+    }
+
+    &.selected {
+        background : var(--bg-mark-color);
+    }
 
     .header {
         position      : relative;
@@ -36,6 +47,7 @@ $size-header    : calc($size-container - 12px);
             opacity       : 0;
             visibility    : hidden;
             transition    : var(--transition-fast);
+            cursor        : default;
         }
 
         .private {

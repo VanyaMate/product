@@ -1,0 +1,35 @@
+.container {
+    background      : var(--bg-ghost-color);
+    border          : 1px solid var(--border-main-color);
+    border-radius   : var(--offset-small);
+    padding         : var(--offset-small);
+    display         : flex;
+    justify-content : space-between;
+    gap             : var(--offset-medium);
+    align-items     : center;
+
+    .search {
+        flex : 1;
+    }
+
+    .control {
+        display : flex;
+        gap     : var(--offset-medium);
+
+        .selected {
+            visibility : hidden;
+            opacity    : 0;
+            transition : var(--transition-fast);
+
+            .counter {
+                font-size : var(--font-size-s);
+                color     : var(--text-second-color);
+            }
+
+            &.opened {
+                visibility : visible;
+                opacity    : 1;
+            }
+        }
+    }
+}

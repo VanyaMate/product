@@ -7,5 +7,6 @@
     "files_label_type": "Тип файла",
     "select_files": "Выбрать файлы",
     "upload_files": "Загрузить {{amount}}",
-    "files_preload_title": "Загрузка"
+    "files_preload_title": "Загрузка",
+    "selected_files": "Выбранные файлы"
 }

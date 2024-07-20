@@ -7,5 +7,6 @@
     "files_label_type": "File type",
     "select_files": "Select files",
     "upload_files": "Upload {{amount}}",
-    "files_preload_title": "Upload"
+    "files_preload_title": "Upload",
+    "selected_files": "Selected files"
 }

@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, memo, ReactNode } from 'react';
+import { ComponentPropsWithoutRef, FC, memo, ReactNode, useRef } from 'react';
 import { DomainFile } from 'product-types/dist/file/DomainFile';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
 import classNames from 'classnames';
@@ -22,16 +22,28 @@ export type FilePreviewProps =
     {
         file: DomainFile;
         extra?: ReactNode;
+        selected?: boolean;
+        onCardClick?: (file: DomainFile) => void;
     }
     & ComponentPropsWithoutRef<'div'>;
 
 export const FilePreview: FC<FilePreviewProps> = memo(function FilePreview (props) {
-    const { file, className, ...other } = props;
+    const { file, className, selected, onCardClick, ...other } = props;
+    const actionRef                                            = useRef<HTMLDivElement>(null);
 
     return (
         <PopOver popover={ <FilePreviewShortInfo file={ file }/> }>
-            <article { ...other }
-                     className={ classNames(css.container, {}, [ className ]) }>
+            <article
+                { ...other }
+                className={ classNames(css.container, { [css.selected]: selected }, [ className ]) }
+                onClick={ (event) => {
+                    if (!actionRef.current.contains(event.target as Node)) {
+                        onCardClick(file);
+                    }
+                } }
+                role="button"
+                tabIndex={ 0 }
+            >
                 <div className={ css.header }>
                     <div className={ css.icon }>
                         <FilePreviewImage
@@ -39,7 +51,7 @@ export const FilePreview: FC<FilePreviewProps> = memo(function FilePreview (prop
                             type={ file.fileType }
                         />
                     </div>
-                    <div className={ css.action }>
+                    <div className={ css.action } ref={ actionRef }>
                         <FilePreviewAction file={ file }/>
                     </div>
                     {

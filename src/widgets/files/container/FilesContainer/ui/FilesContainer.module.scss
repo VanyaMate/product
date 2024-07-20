@@ -1,12 +1,54 @@
 .container {
-    display        : flex;
-    flex-direction : column;
-    gap            : var(--offset-medium);
+    display  : flex;
+    gap      : var(--offset-small);
+    height   : 100%;
+    overflow : auto;
+    width    : 100%;
 
-    .list {
-        display   : flex;
-        max-width : 100%;
-        gap       : var(--offset-medium);
-        flex-wrap : wrap;
+    .files {
+        display        : flex;
+        flex-direction : column;
+        gap            : var(--offset-medium);
+        height         : fit-content;
+        width          : 100%;
+
+        .control {
+            position : sticky;
+            top      : 0;
+            z-index  : 5;
+        }
+
+        .list {
+            display   : flex;
+            max-width : 100%;
+            gap       : var(--offset-medium);
+            flex-wrap : wrap;
+        }
+    }
+
+    .sideMenu {
+        position   : sticky;
+        top        : 0;
+        min-width  : 0;
+        width      : 0;
+        height     : 100%;
+        transition : var(--transition-medium);
+        overflow   : hidden;
+
+        &_content {
+            width         : 100%;
+            padding       : var(--offset-medium);
+            background    : var(--bg-ghost-color);
+            border        : 1px solid var(--border-main-color);
+            border-radius : var(--offset-small);
+            height        : 100%;
+        }
+    }
+
+    &_opened {
+        .sideMenu {
+            min-width : 400px;
+            width     : 400px;
+        }
     }
 }

@@ -1,0 +1,19 @@
+.container {
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);
+    height         : 100%;
+
+    .title {
+        padding       : var(--offset-small);
+        background    : var(--bg-second-color);
+        border-radius : var(--offset-small);
+    }
+
+    .list {
+        display        : flex;
+        flex-direction : column;
+        gap            : var(--offset-small);
+        overflow       : auto;
+    }
+}
