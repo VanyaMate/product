@@ -44,11 +44,11 @@ export const PrivateDialogueWindowInput: FC<PrivateDialogueWindowInputProps> = m
         inputs  : [ inputController ],
         onSubmit: (data) => {
             if (data.message) {
+                resetInput();
                 return sendPrivateMessageEffect([ dialogueId, {
                     message    : data.message,
                     messageType: getMessageTypeByBody(data.message),
-                } ])
-                    .then(resetInput);
+                } ]).then();
             }
             return Promise.resolve();
         },

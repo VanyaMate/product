@@ -34,8 +34,6 @@ export const PrivateDialogue: FC<PrivateDialogueProps> = memo(function PrivateDi
               ...other
           } = props;
 
-    console.log('Private dialogue', dialogue.user);
-
     return (
         <article
             { ...other }

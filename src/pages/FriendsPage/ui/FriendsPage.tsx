@@ -20,7 +20,7 @@ import {
     $friendsIsPending,
     $friendsList, getMyFriendsEffect,
 } from '@/app/model/friends/friends.model.ts';
-
+/* eslint-disable */
 
 export type FriendsPageProps =
     {}
@@ -47,15 +47,10 @@ export const FriendsPage: FC<FriendsPageProps> = memo(function FriendsPage (prop
             { ...other }
             className={ className }
         >
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>pending: { isPending.toString() }</p>
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>error: { JSON.stringify(error) ?? 'null' }</p>
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>friends: { friends.length }</p>
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>requestsIn: { requestsReceived.length }</p>
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>requestsOut: { requestsSent.length }</p>
 
             <Col>

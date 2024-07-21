@@ -32,7 +32,7 @@ export const UserSearchItem: FC<UserSearchItemProps> = memo(function ProfileSear
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            <UserPreviewItem user={ user }/>
+            <UserPreviewItem showOnline user={ user }/>
             <Row>
                 <GoToPrivateDialogue
                     permissions={ permissions.privateDialogue }

@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, memo } from 'react';
+import { ComponentPropsWithoutRef, FC, memo, useLayoutEffect } from 'react';
 import {
     PrivateDialogue,
 } from '@/entities/private-dialogues/item/PrivateDialogue/ui/PrivateDialogue.tsx';
@@ -18,7 +18,7 @@ import {
 } from '@/widgets/private-dialogue/PrivateDialogueWindow/ui/PrivateDialogueWindow.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    $privateDialogues, $privateDialoguesIsPending,
+    $privateDialogues, $privateDialoguesIsPending, getListPrivateDialogueEffect,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import { $authUser } from '@/app/model/auth/auth.model.ts';
 import {
@@ -39,6 +39,10 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
         [SITE_ROUTE_DIALOGUE_ID]: string
     }>();
     const messages                                 = useStore($privateMessages);
+
+    useLayoutEffect(() => {
+        getListPrivateDialogueEffect({ limit: 1000, query: '', offset: 0 });
+    }, []);
 
     if (!dialogues || (dialoguesIsPending && !messages[dialogueId]) || (dialogueId && !messages[dialogueId])) {
         return <PageLoader/>;

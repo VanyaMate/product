@@ -13,6 +13,8 @@ import {
     $usersSearch, $usersSearchCount, $usersSearchError, $usersSearchIsPending,
 } from '@/app/model/search/user-search.model.ts';
 
+/* eslint-disable */
+// TODO
 
 export type UsersSearchListProps =
     {
@@ -42,19 +44,12 @@ export const UsersSearchList: FC<UsersSearchListProps> = memo(function UsersSear
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>query: { query }</p>
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>limit: { limit }</p>
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>offset: { offset }</p>
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>pending: { searchPending.toString() }</p>
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>error: { JSON.stringify(searchError) ?? 'null' }</p>
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>count: { searchCount }</p>
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
             <p>items: { searchUsers.length }</p>
             {
                 searchUsers.map((user) => (
