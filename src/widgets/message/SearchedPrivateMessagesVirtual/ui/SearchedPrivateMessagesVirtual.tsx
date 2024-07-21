@@ -49,7 +49,7 @@ export const SearchedPrivateMessagesVirtual: FC<PrivateMessagesVirtualProps> = m
             <BottomInfinityScroll
                 className={ css.scrollBox }
                 contentClassName={ css.content }
-                distanceToNext={ 200 }
+                distanceToNext={ 400 }
                 key={ dialogueId + 'search' }
                 showAmount={ 40 }
             >
