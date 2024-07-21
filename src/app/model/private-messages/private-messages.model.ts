@@ -40,17 +40,26 @@ import {
 import {
     sendPrivateMessageNotificationAction,
 } from '@/app/action/private-messages/sendPrivateMessage/sendPrivateMessageNotification.action.ts';
+import {
+    readAllPrivateMessageNotificationAction,
+} from '@/app/action/private-messages/readAllPrivateMessages/readAllPrivateMessageNotification.action.ts';
+import {
+    readPrivateMessageNotificationAction,
+} from '@/app/action/private-messages/readPrivateMessage/readPrivateMessageNotification.action.ts';
 
 
-export const getPrivateMessagesByCursorEffect     = effect(getPrivateMessageByCursorAction);
-export const getPrivateMessagesByQueryEffect      = effect(getPrivateMessageByQueryAction);
-export const readAllPrivateMessagesEffect         = effect(readAllPrivateMessageAction);
-export const readPrivateMessageEffect             = effect(readPrivateMessageAction);
-export const removePrivateMessageEffect           = effect(removePrivateMessageAction);
-export const sendPrivateMessageEffect             = effect(sendPrivateMessageAction);
-export const sendPrivateMessageNotificationEffect = effect(sendPrivateMessageNotificationAction);
-export const updatePrivateMessageEffect           = effect(updatePrivateMessageAction);
-export const resetPrivateMessagesSearchEffect     = effect(resetPrivateMessageSearchAction);
+export const getPrivateMessagesByCursorEffect            = effect(getPrivateMessageByCursorAction);
+export const getPrivateMessagesByQueryEffect             = effect(getPrivateMessageByQueryAction);
+export const readAllPrivateMessagesEffect                = effect(readAllPrivateMessageAction);
+export const readAllPrivateMessagesNotificationInEffect  = effect(readAllPrivateMessageNotificationAction);
+export const readAllPrivateMessagesNotificationOutEffect = effect(readAllPrivateMessageNotificationAction);
+export const readPrivateMessageEffect                    = effect(readPrivateMessageAction);
+export const readPrivateMessageNotificationEffect        = effect(readPrivateMessageNotificationAction);
+export const removePrivateMessageEffect                  = effect(removePrivateMessageAction);
+export const sendPrivateMessageEffect                    = effect(sendPrivateMessageAction);
+export const sendPrivateMessageNotificationEffect        = effect(sendPrivateMessageNotificationAction);
+export const updatePrivateMessageEffect                  = effect(updatePrivateMessageAction);
+export const resetPrivateMessagesSearchEffect            = effect(resetPrivateMessageSearchAction);
 
 
 export const $privateMessagesIsPending = store<Record<string, boolean>>({})
@@ -254,7 +263,64 @@ export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
         },
     )
     .on(
+        readAllPrivateMessagesNotificationInEffect,
+        'onSuccess',
+        (state, { result }) => {
+            const messages = (state[result.dialogue.id] ?? [])
+                .map((message) => {
+                    const companionId = result.dialogue.user.id;
+                    if (message.author.id === companionId) {
+                        return {
+                            ...message,
+                            read: true,
+                        };
+                    } else {
+                        return message;
+                    }
+                });
+            return {
+                ...state,
+                [result.dialogue.id]: messages,
+            };
+        },
+    )
+    .on(
+        readAllPrivateMessagesNotificationOutEffect,
+        'onSuccess',
+        (state, { result }) => {
+            const messages = (state[result.dialogue.id] ?? [])
+                .map((message) => {
+                    const companionId = result.dialogue.user.id;
+                    if (message.author.id !== companionId) {
+                        return {
+                            ...message,
+                            read: true,
+                        };
+                    } else {
+                        return message;
+                    }
+                });
+            return {
+                ...state,
+                [result.dialogue.id]: messages,
+            };
+        },
+    )
+    .on(
         readPrivateMessageEffect,
+        'onSuccess',
+        (state, { result }) => {
+            const messages = (state[result.dialogue.id] ?? [])
+                .map((message) => message.id === result.message.id
+                                  ? { ...message, read: true } : message);
+            return {
+                ...state,
+                [result.dialogue.id]: messages,
+            };
+        },
+    )
+    .on(
+        readPrivateMessageNotificationEffect,
         'onSuccess',
         (state, { result }) => {
             const messages = (state[result.dialogue.id] ?? [])
