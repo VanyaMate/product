@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, memo } from 'react';
+import { ComponentPropsWithoutRef, FC, memo, useLayoutEffect } from 'react';
 import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
@@ -14,8 +14,11 @@ import {
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    $friendRequestsReceived, $friendRequestsSent, $friendsError, $friendsIsPending,
-    $friendsList,
+    $friendRequestsReceived,
+    $friendRequestsSent,
+    $friendsError,
+    $friendsIsPending,
+    $friendsList, getMyFriendsEffect,
 } from '@/app/model/friends/friends.model.ts';
 
 
@@ -30,6 +33,10 @@ export const FriendsPage: FC<FriendsPageProps> = memo(function FriendsPage (prop
     const friends                 = useStore($friendsList);
     const requestsReceived        = useStore($friendRequestsReceived);
     const requestsSent            = useStore($friendRequestsSent);
+
+    useLayoutEffect(() => {
+        getMyFriendsEffect();
+    }, []);
 
     if (!friends) {
         return <PageLoader/>;

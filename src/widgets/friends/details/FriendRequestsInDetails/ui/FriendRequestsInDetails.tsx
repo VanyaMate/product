@@ -48,6 +48,7 @@ export const FriendRequestsInDetails: FC<FriendRequestsInDetailsProps> = memo(fu
                         friends.map((request) => (
                             <UserPreviewItem
                                 key={ request.requestId }
+                                showOnline
                                 user={ request.user }
                             >
                                 <Row>

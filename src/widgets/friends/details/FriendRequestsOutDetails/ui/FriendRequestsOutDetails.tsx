@@ -40,6 +40,7 @@ export const FriendRequestsOutDetails: FC = memo(function FriendRequestsOutDetai
                         friends.map((request) => (
                             <UserPreviewItem
                                 key={ request.requestId }
+                                showOnline
                                 user={ request.user }
                             >
                                 <CancelFriendRequestButton

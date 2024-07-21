@@ -36,6 +36,7 @@ export const FriendsDetails: FC = memo(function FriendsDetails () {
                         friends.map((friend) => (
                             <UserPreviewItem
                                 key={ friend.id }
+                                showOnline
                                 user={ friend }
                             >
                                 <RemoveFriendButton userId={ friend.id }/>

@@ -6,18 +6,37 @@
     container-name : container;
 
     .image {
-        position  : absolute;
-        top       : 50%;
-        left      : 50%;
-        transform : translate(-50%, -50%);
-        width     : 100%;
-        height    : 100%;
+        position      : absolute;
+        top           : 50%;
+        left          : 50%;
+        transform     : translate(-50%, -50%);
+        width         : 100%;
+        height        : 100%;
+        border-radius : var(--offset-medium);
 
-        @container container (min-width: 300px) {
+        @container container (min-width: 200px) {
+            &::after {
+                display : none;
+            }
+
             &::before {
                 visibility : visible !important;
                 opacity    : 1 !important;;
                 font-size  : var(--font-size-s) !important;;
+            }
+        }
+
+        @container container (max-width: 200px) {
+            &::after {
+                width  : 10px !important;
+                height : 10px !important;
+            }
+        }
+
+        @container container (max-width: 40px) {
+            &::after {
+                width  : 6px !important;
+                height : 6px !important;
             }
         }
 
@@ -27,8 +46,6 @@
             top           : -2px;
             left          : -2px;
             border-radius : 50%;
-            width         : 10px;
-            height        : 10px;
             z-index       : 2;
             border        : 2px solid var(--bg-main-color);
             background    : var(--bg-main-color);
@@ -38,26 +55,46 @@
         }
 
         &::before {
-            content     : attr(data-status) " ";
-            position    : absolute;
-            top         : -2px;
-            left        : 14px;
-            font-weight : bold;
-            opacity     : 0;
-            visibility  : hidden;
-            font-size   : 0;
+            content       : attr(data-status) " ";
+            position      : absolute;
+            top           : -7px;
+            left          : -7px;
+            font-weight   : bold;
+            opacity       : 0;
+            visibility    : hidden;
+            font-size     : 0;
+            padding       : var(--offset-small);
+            border-radius : var(--offset-small);
         }
     }
 
-    &.online .image::after {
-        background : var(--second-color);
-        opacity    : 1;
-        visibility : visible;
+    &.online {
+        .image {
+            &::after {
+                background : var(--second-color);
+                opacity    : 1;
+                visibility : visible;
+            }
+
+            &::before {
+                background : var(--second-color);
+                color      : var(--on-second-text-color);
+            }
+        }
     }
 
-    &.offline .image::after {
-        background : var(--ghost-color);
-        opacity    : 1;
-        visibility : visible;
+    &.offline {
+        .image {
+            &::after {
+                background : var(--ghost-color);
+                opacity    : 1;
+                visibility : visible;
+            }
+
+            &::before {
+                background : var(--ghost-color);
+                color      : var(--on-ghost-text-color);
+            }
+        }
     }
 }

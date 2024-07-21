@@ -25,7 +25,7 @@ export const UserHeader: FC<UserHeaderProps> = memo(function UserHeader (props) 
                 avatar={ user.avatar }
                 className={ css.avatar }
                 login={ user.login }
-                online={ true }
+                online={ user.online }
             />
             <h3 className={ css.login }>{ user.login }</h3>
         </section>

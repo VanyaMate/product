@@ -12,12 +12,13 @@ import {
 export type UserPreviewItemProps =
     {
         user: DomainUser;
+        showOnline?: boolean;
     }
     & ComponentPropsWithoutRef<'article'>;
 
 export const UserPreviewItem: FC<UserPreviewItemProps> = memo(function ProfilePreviewItem (props) {
-    const { className, user, children, ...other } = props;
-    const { t }                                   = useTranslation([ 'translation' ]);
+    const { className, user, children, showOnline, ...other } = props;
+    const { t }                                               = useTranslation([ 'translation' ]);
 
     return (
         <article
@@ -36,7 +37,7 @@ export const UserPreviewItem: FC<UserPreviewItemProps> = memo(function ProfilePr
                     avatar={ user.avatar }
                     className={ css.avatar }
                     login={ user.login }
-                    online={ user.online }
+                    online={ showOnline ? user.online : undefined }
                 />
                 <p>{ user.login }</p>
             </Link>
