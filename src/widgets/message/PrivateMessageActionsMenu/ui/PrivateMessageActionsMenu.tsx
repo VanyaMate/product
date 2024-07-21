@@ -11,7 +11,9 @@ export type PrivateMessageActionsMenuProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const PrivateMessageActionsMenu: FC<PrivateMessageActionsMenuProps> = memo(function PrivateMessageActionsMenu (props) {
-    const { ...other } = props;
+    const { messageId, ...other } = props;
+
+    console.log(messageId);
 
     return (
         <Row { ...other }>

@@ -9,7 +9,7 @@ import { useStore } from '@vanyamate/sec-react';
 import {
     $privateMessages, $privateMessagesHasMore,
     $privateMessagesIsPending,
-    getPrivateMessagesByCursorEffect,
+    getPrivateMessagesByCursorEffect, readPrivateMessageEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
 import { $authUser } from '@/app/model/auth/auth.model.ts';
 import { useLocation } from 'react-router-dom';
@@ -93,6 +93,7 @@ export const PrivateMessagesVirtual: FC<PrivateMessagesVirtualProps> = memo(func
                             hash={ hash }
                             key={ message.id }
                             message={ message }
+                            onShowMessage={ readPrivateMessageEffect }
                             userId={ authData.id }
                         />
                     ))

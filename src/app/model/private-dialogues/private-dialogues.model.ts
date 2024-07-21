@@ -105,7 +105,11 @@ export const $privateDialogues = store<Array<DomainPrivateDialogueFull>>([])
         (state, { args: [ dialogueId ] }) =>
             state.filter((dialogue) => dialogue.id !== dialogueId),
     )
-    .on(getListPrivateDialogueEffect, 'onSuccess', (_, { result }) => result)
+    .on(
+        getListPrivateDialogueEffect,
+        'onSuccess',
+        (state, { result }) => state.length ? state : result,
+    )
     .on(
         getOnePrivateDialogueEffect,
         'onSuccess',

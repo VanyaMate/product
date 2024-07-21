@@ -1,4 +1,10 @@
-import { ComponentPropsWithoutRef, FC, memo, useRef } from 'react';
+import {
+    ComponentPropsWithoutRef,
+    FC,
+    memo,
+    useLayoutEffect,
+    useRef,
+} from 'react';
 import classNames from 'classnames';
 import css from './PrivateMessage.module.scss';
 import dayjs from 'dayjs';
@@ -29,12 +35,29 @@ export type PrivateMessageProps =
         message: DomainMessage;
         userId: string;
         hash: string;
+        onShowMessage?: (messageId: string) => void;
     }
     & ComponentPropsWithoutRef<'article'>;
 
 export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMessage (props) {
-    const { className, message, hash, userId, ...other } = props;
-    const dayJs                                          = useRef(dayjs(message.creationDate));
+    const { className, message, hash, userId, onShowMessage, ...other } = props;
+    const dayJs                                                         = useRef(dayjs(message.creationDate));
+    const messageRef                                                    = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+        if (message.author.id !== userId && messageRef.current && !message.read) {
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(({ isIntersecting, target }) => {
+                    if (isIntersecting) {
+                        onShowMessage(message.id);
+                        observer.unobserve(target);
+                    }
+                });
+            });
+
+            observer.observe(messageRef.current);
+        }
+    }, [ message.author.id, message.id, message.read, onShowMessage, userId ]);
 
     return (
         <article
@@ -45,6 +68,7 @@ export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMess
                 [css.notRead]: !message.read,
             }, [ className ]) }
             id={ `m_${ message.id }` }
+            ref={ messageRef }
         >
             <UserAvatar
                 avatar={ message.author.avatar }

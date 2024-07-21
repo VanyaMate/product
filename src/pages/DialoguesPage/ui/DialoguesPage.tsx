@@ -24,6 +24,7 @@ import { $authUser } from '@/app/model/auth/auth.model.ts';
 import {
     $privateMessages,
 } from '@/app/model/private-messages/private-messages.model.ts';
+import { useTranslation } from 'react-i18next';
 
 
 export type DialoguesPageProps =
@@ -41,10 +42,14 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
     const messages                                 = useStore($privateMessages);
 
     useLayoutEffect(() => {
-        getListPrivateDialogueEffect({ limit: 1000, query: '', offset: 0 });
+        // TODO: Temp
+        getListPrivateDialogueEffect({ query: '', limit: 1000, offset: 0 });
     }, []);
 
-    if (!dialogues || (dialoguesIsPending && !messages[dialogueId]) || (dialogueId && !messages[dialogueId])) {
+    // Подгрузка для бандла
+    useTranslation([ 'dialogue', 'friends-page', 'posts' ]);
+
+    if (dialoguesIsPending && !dialogues.length) {
         return <PageLoader/>;
     }
 

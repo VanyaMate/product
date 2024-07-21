@@ -183,11 +183,16 @@ export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
     .on(
         getListPrivateDialogueEffect,
         'onSuccess',
-        (_, { result }) => {
-            return result.reduce((acc, dialogue) => ({
-                ...acc,
-                [dialogue.id]: dialogue.messages,
-            }), {});
+        (state, { result }) => {
+            return result.reduce((acc, dialogue) => {
+                const storeDialogue = acc[dialogue.id];
+                if (storeDialogue && storeDialogue.slice(-1)[0]?.id === dialogue.messages.slice(-1)[0]?.id) {
+                    return acc;
+                } else {
+                    acc[dialogue.id] = dialogue.messages;
+                    return acc;
+                }
+            }, { ...state });
         },
     )
     .on(
