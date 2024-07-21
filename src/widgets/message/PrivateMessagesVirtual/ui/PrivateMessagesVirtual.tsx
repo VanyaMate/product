@@ -82,7 +82,7 @@ export const PrivateMessagesVirtual: FC<PrivateMessagesVirtualProps> = memo(func
             <BottomInfinityScroll
                 className={ css.scrollBox }
                 contentClassName={ css.content }
-                distanceToNext={ 400 }
+                distanceToNext={ 200 }
                 key={ virtualKey }
                 onShowIndexChange={ OnShowIndexChange }
                 showAmount={ 40 }
