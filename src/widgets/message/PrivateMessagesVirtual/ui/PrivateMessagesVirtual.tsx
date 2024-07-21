@@ -22,6 +22,10 @@ import { BottomInfinityScroll } from '@vanyamate/react-infinity-virtual';
 import {
     EmptyDialogue,
 } from '@/entities/dialogue/EmptyDialogue/ui/EmptyDialogue.tsx';
+import {
+    NoMoreMessageDialogue,
+} from '@/entities/dialogue/NoMoreMessageDialogue/ui/NoMoreMessageDialogue.tsx';
+import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
 
 
 export type PrivateMessagesVirtualProps =
@@ -87,6 +91,11 @@ export const PrivateMessagesVirtual: FC<PrivateMessagesVirtualProps> = memo(func
                 onShowIndexChange={ OnShowIndexChange }
                 showAmount={ 40 }
             >
+                {
+                    messagesHasMore[dialogueId]
+                    ? <Loader/>
+                    : <NoMoreMessageDialogue/>
+                }
                 {
                     messages[dialogueId].map((message) => (
                         <PrivateMessage
