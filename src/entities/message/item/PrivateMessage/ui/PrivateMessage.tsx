@@ -57,7 +57,7 @@ export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMess
 
             observer.observe(messageRef.current);
         }
-    }, [ message.author.id, message.id, message.read, onShowMessage, userId ]);
+    }, [ message, onShowMessage, userId ]);
 
     return (
         <article
