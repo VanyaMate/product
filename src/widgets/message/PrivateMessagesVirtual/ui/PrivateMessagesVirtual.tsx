@@ -63,7 +63,7 @@ export const PrivateMessagesVirtual: FC<PrivateMessagesVirtualProps> = memo(func
             }
         }
         // eslint-disable-next-line
-    }, [ dialogueId, messagesIsLoading, messagesHasMore ]);
+    }, [ dialogueId ]);
 
     if (messages[dialogueId].length === 0) {
         return (

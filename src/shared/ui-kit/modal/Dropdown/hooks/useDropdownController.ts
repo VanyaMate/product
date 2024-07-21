@@ -16,9 +16,9 @@ export const useDropdownController = function (): UseDropdownController {
     const [ opened, setOpened ] = useState<boolean>(false);
 
     useLayoutEffect(() => {
-        keyboardClose(opened, setOpened);
-
         if (opened) {
+            keyboardClose(opened, setOpened);
+
             const body         = document.body;
             const main         = document.querySelector('main');
             const closeHandler = () => setOpened(false);

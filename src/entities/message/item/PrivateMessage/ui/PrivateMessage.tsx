@@ -81,13 +81,17 @@ export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMess
                         <h3 className={ css.login }>{ message.author.login }</h3>
                     </Link>
                     <div className={ css.info }>
-                        <time className={ css.date }
-                              dateTime={ message.creationDate }>
+                        <time
+                            className={ css.date }
+                            dateTime={ message.creationDate }
+                            key="time"
+                        >
                             { dayJs.current.format('LLL') }
                         </time>
                         {
                             message.redacted
-                            ? <IoBuild className={ css.redacted }/>
+                            ? <IoBuild className={ css.redacted }
+                                       key="redacted"/>
                             : null
                         }
                         {
