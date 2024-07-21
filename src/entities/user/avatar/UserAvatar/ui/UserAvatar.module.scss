@@ -1,8 +1,9 @@
 .container {
-    position      : relative;
-    overflow      : hidden;
-    border-radius : var(--offset-medium);
-    background    : var(--bg-ghost-color);
+    position       : relative;
+    border-radius  : var(--offset-medium);
+    background     : var(--bg-ghost-color);
+    container-type : inline-size;
+    container-name : container;
 
     .image {
         position  : absolute;
@@ -10,5 +11,53 @@
         left      : 50%;
         transform : translate(-50%, -50%);
         width     : 100%;
+        height    : 100%;
+
+        @container container (min-width: 300px) {
+            &::before {
+                visibility : visible !important;
+                opacity    : 1 !important;;
+                font-size  : var(--font-size-s) !important;;
+            }
+        }
+
+        &::after {
+            content       : '';
+            position      : absolute;
+            top           : -2px;
+            left          : -2px;
+            border-radius : 50%;
+            width         : 10px;
+            height        : 10px;
+            z-index       : 2;
+            border        : 2px solid var(--bg-main-color);
+            background    : var(--bg-main-color);
+            opacity       : 0;
+            visibility    : hidden;
+            transition    : var(--transition-fast);
+        }
+
+        &::before {
+            content     : attr(data-status) " ";
+            position    : absolute;
+            top         : -2px;
+            left        : 14px;
+            font-weight : bold;
+            opacity     : 0;
+            visibility  : hidden;
+            font-size   : 0;
+        }
+    }
+
+    &.online .image::after {
+        background : var(--second-color);
+        opacity    : 1;
+        visibility : visible;
+    }
+
+    &.offline .image::after {
+        background : var(--ghost-color);
+        opacity    : 1;
+        visibility : visible;
     }
 }

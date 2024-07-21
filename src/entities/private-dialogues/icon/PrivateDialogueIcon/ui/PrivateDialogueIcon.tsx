@@ -10,6 +10,7 @@ export type PrivateDialogueIconProps =
         userAvatar: string;
         dialogueTitle: string;
         userLogin: string;
+        online: boolean;
         className?: string;
     };
 
@@ -20,6 +21,7 @@ export const PrivateDialogueIcon: FC<PrivateDialogueIconProps> = memo(function P
               dialogueTitle,
               userAvatar,
               userLogin,
+              online,
           } = props;
 
     return (
@@ -27,6 +29,7 @@ export const PrivateDialogueIcon: FC<PrivateDialogueIconProps> = memo(function P
             avatar={ dialogueAvatar || userAvatar }
             className={ className }
             login={ dialogueTitle || userLogin }
+            online={ online }
         />
     );
 });

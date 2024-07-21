@@ -32,9 +32,12 @@ export const UserPreviewItem: FC<UserPreviewItemProps> = memo(function ProfilePr
                 className={ css.link }
                 to={ `/user/${ user.login }` }
             >
-                <UserAvatar avatar={ user.avatar }
-                            className={ css.avatar }
-                            login={ user.login }/>
+                <UserAvatar
+                    avatar={ user.avatar }
+                    className={ css.avatar }
+                    login={ user.login }
+                    online={ user.online }
+                />
                 <p>{ user.login }</p>
             </Link>
             {

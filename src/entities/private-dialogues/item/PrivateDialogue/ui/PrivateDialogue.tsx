@@ -34,6 +34,8 @@ export const PrivateDialogue: FC<PrivateDialogueProps> = memo(function PrivateDi
               ...other
           } = props;
 
+    console.log('Private dialogue', dialogue.user);
+
     return (
         <article
             { ...other }
@@ -44,6 +46,7 @@ export const PrivateDialogue: FC<PrivateDialogueProps> = memo(function PrivateDi
                     className={ css.image }
                     dialogueAvatar={ dialogue.avatar }
                     dialogueTitle={ dialogue.title }
+                    online={ dialogue.user.online }
                     userAvatar={ dialogue.user.avatar }
                     userLogin={ dialogue.user.login }
                 />

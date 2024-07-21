@@ -2,8 +2,8 @@
     display  : flex;
     gap      : var(--offset-small);
     height   : 100%;
-    overflow : auto;
     width    : 100%;
+    overflow : auto;
 
     .files {
         display        : flex;
