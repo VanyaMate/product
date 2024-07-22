@@ -34,15 +34,14 @@ export type PrivateMessageProps =
     {
         message: DomainMessage;
         userId: string;
-        hash: string;
         onShowMessage?: (messageId: string) => void;
     }
     & ComponentPropsWithoutRef<'article'>;
 
 export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMessage (props) {
-    const { className, message, hash, userId, onShowMessage, ...other } = props;
-    const dayJs                                                         = useRef(dayjs(message.creationDate));
-    const messageRef                                                    = useRef<HTMLDivElement>(null);
+    const { className, message, userId, onShowMessage, ...other } = props;
+    const dayJs                                                   = useRef(dayjs(message.creationDate));
+    const messageRef                                              = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
         if (message.author.id !== userId && messageRef.current && !message.read) {
@@ -63,7 +62,6 @@ export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMess
         <article
             { ...other }
             className={ classNames(css.container, {
-                [css.target] : hash === `#${ message.id }`,
                 [css.me]     : userId === message.author.id,
                 [css.notRead]: !message.read,
             }, [ className ]) }
