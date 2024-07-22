@@ -19,11 +19,11 @@ import { useStore } from '@vanyamate/sec-react';
 import {
     $privateDialoguesStatus,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
-import {
-    PrivateMessagesVirtualContainer,
-} from '@/widgets/message/PrivateMessageVirtualContainer/ui/PrivateMessageVirtualContainer.tsx';
 import { useTranslation } from 'react-i18next';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
+import {
+    PrivateMessagesInfinityVirtualContainer,
+} from '@/widgets/message/PrivateMessagesInfinityVirtualContainer/ui/PrivateMessagesInfinityVirtualContainer.tsx';
 
 
 export type PrivateDialogueWindowProps =
@@ -73,7 +73,7 @@ export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(functi
                         </Button>
                     </PopOver>
                 </PrivateDialogueWindowHeader>
-                <PrivateMessagesVirtualContainer
+                <PrivateMessagesInfinityVirtualContainer
                     className={ css.messages }
                     dialogueId={ dialogueId }
                 />

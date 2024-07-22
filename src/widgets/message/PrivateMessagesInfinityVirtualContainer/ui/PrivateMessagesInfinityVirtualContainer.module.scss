@@ -1,0 +1,7 @@
+.container {
+    .content {
+        display : flex;
+        gap     : var(--offset-medium);
+        padding : var(--offset-medium);
+    }
+}
