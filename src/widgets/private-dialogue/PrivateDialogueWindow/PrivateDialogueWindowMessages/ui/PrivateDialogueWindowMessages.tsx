@@ -123,7 +123,6 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
                     ? searchMessages[dialogueId]
                         .map((message) =>
                             <PrivateMessage
-                                hash={ hash }
                                 key={ message.id }
                                 message={ message }
                                 userId={ userData.id }
@@ -132,7 +131,6 @@ export const PrivateDialogueWindowMessages: FC<PrivateDialogueWindowMessagesProp
                     : messages[dialogueId]
                         .map((message) =>
                             <PrivateMessage
-                                hash={ hash }
                                 key={ message.id }
                                 message={ message }
                                 userId={ userData.id }

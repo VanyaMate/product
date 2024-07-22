@@ -12,7 +12,6 @@ import {
     getPrivateMessagesByCursorEffect, readPrivateMessageEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
 import { $authUser } from '@/app/model/auth/auth.model.ts';
-import { useLocation } from 'react-router-dom';
 import {
     PrivateMessage,
 } from '@/entities/message/item/PrivateMessage/ui/PrivateMessage.tsx';
@@ -32,7 +31,6 @@ export type PrivateMessagesVirtualProps =
 
 export const PrivateMessagesVirtual: FC<PrivateMessagesVirtualProps> = memo(function PrivateMessagesVirtual (props) {
     const { className, dialogueId, ...other } = props;
-    const { hash }                            = useLocation();
     const authData                            = useStore($authUser);
     const messages                            = useStore($privateMessages);
     const messagesIsLoading                   = useStore($privateMessagesIsPending);
@@ -90,7 +88,6 @@ export const PrivateMessagesVirtual: FC<PrivateMessagesVirtualProps> = memo(func
                 {
                     messages[dialogueId].map((message) => (
                         <PrivateMessage
-                            hash={ hash }
                             key={ message.id }
                             message={ message }
                             onShowMessage={ readPrivateMessageEffect }
