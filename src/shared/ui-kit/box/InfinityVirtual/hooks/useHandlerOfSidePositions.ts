@@ -2,12 +2,13 @@ import { useLayoutEffect, useRef } from 'react';
 
 
 export const useHandlerOfSidePositions = function (
-    triggerTop: () => void,
-    triggerBottom: () => void,
+    triggerTop: () => Promise<void>,
+    triggerBottom: () => Promise<void>,
     hasMoreTop: boolean,
     hasMoreBottom: boolean,
 ) {
-    const ref = useRef<HTMLDivElement>(null);
+    const ref            = useRef<HTMLDivElement>(null);
+    const disableTrigger = useRef<boolean>(false);
 
     useLayoutEffect(() => {
         if (ref.current) {
@@ -16,11 +17,11 @@ export const useHandlerOfSidePositions = function (
             const observers: Array<IntersectionObserver> = [];
 
             if (firstElement && hasMoreTop && triggerTop) {
-                console.log('Top init', firstElement);
                 const observer = new IntersectionObserver(([ { isIntersecting } ]) => {
-                    if (isIntersecting) {
-                        console.log('Trigger top');
-                        triggerTop();
+                    if (isIntersecting && !disableTrigger.current) {
+                        disableTrigger.current = true;
+                        ref.current.parentElement.scrollTo({ top: ref.current.parentElement.scrollTop + 1 });
+                        triggerTop().then(() => disableTrigger.current = false);
                     }
                 });
                 observers.push(observer);
@@ -28,11 +29,11 @@ export const useHandlerOfSidePositions = function (
             }
 
             if (lastElement && hasMoreBottom && triggerBottom) {
-                console.log('Bottom init');
                 const observer = new IntersectionObserver(([ { isIntersecting } ]) => {
-                    if (isIntersecting) {
-                        console.log('Trigger bottom');
-                        triggerBottom();
+                    if (isIntersecting && !disableTrigger.current) {
+                        disableTrigger.current = true;
+                        ref.current.parentElement.scrollTo({ top: ref.current.parentElement.scrollTop - 1 });
+                        triggerBottom().then(() => disableTrigger.current = false);
                     }
                 });
                 observers.push(observer);

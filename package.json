@@ -4,6 +4,7 @@
     "version": "0.0.0",
     "scripts": {
         "dev": "vite -c .vite/vite.config.ts --mode development",
+        "dev:prod": "vite -c .vite/vite.config.ts --mode production",
         "dev:host": "vite --host -c .vite/vite.config.ts --mode development",
         "build": "tsc && vite build -c .vite/vite.config.ts --mode development",
         "build:start": "npm run build & npm run preview",

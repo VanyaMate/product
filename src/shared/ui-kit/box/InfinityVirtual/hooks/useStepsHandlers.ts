@@ -9,21 +9,21 @@ export const useStepsHandlers = function (
     getPreviousElements: () => Promise<void>,
     getNextElements: () => Promise<void>,
 ) {
-    const stepPrevious = useCallback(() => {
+    const stepPrevious = useCallback(async () => {
         if (currentIndex === 0) {
-            getPreviousElements?.().then(() => setIndex((prev) => Math.max(prev - showAmount / 2, 0)));
+            return getPreviousElements?.().then(() => setIndex((prev) => Math.max(prev - showAmount / 2, 0)));
         } else {
-            setIndex((prev) => Math.max(prev - showAmount / 2, 0));
+            return setIndex((prev) => Math.max(prev - showAmount / 2, 0));
         }
     }, [ getPreviousElements, currentIndex, setIndex, showAmount ]);
 
-    const stepNext = useCallback(() => {
+    const stepNext = useCallback(async () => {
         const range   = elementsAmount - showAmount;
         const inRange = currentIndex > range;
         if (!inRange) {
-            setIndex((prev) => Math.min(prev + showAmount / 2, range));
+            return setIndex((prev) => Math.min(prev + showAmount / 2, range));
         } else {
-            getNextElements?.().then(() => setIndex((prev) => Math.min(prev + showAmount / 2, range)));
+            return getNextElements?.().then(() => setIndex((prev) => Math.min(prev + showAmount / 2, range)));
         }
     }, [ elementsAmount, getNextElements, currentIndex, setIndex, showAmount ]);
 

@@ -9,7 +9,10 @@ import {
 } from '@/shared/ui-kit/box/InfinityVirtual/ui/InfinityVirtual.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    $privateMessages, $privateMessagesHasMore, getPrivateMessagesByCursorEffect,
+    $privateMessages,
+    $privateMessagesHasMore,
+    getPrivateMessagesByCursorEffect,
+    readPrivateMessageEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
 import { DomainMessage } from 'product-types/dist/message/DomainMessage';
 import {
@@ -47,6 +50,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
         <PrivateMessage
             key={ message.id }
             message={ message }
+            onShowMessage={ readPrivateMessageEffect }
             userId={ user.id }
         />
     ), [ user.id ]);
@@ -61,6 +65,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             hasMorePrevious={ hasMoreMessages[dialogueId] }
             key={ dialogueId }
             render={ render }
+            showAmount={ 40 }
             side="bottom"
         />
     );
