@@ -61,6 +61,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             className={ classNames(css.container, {}, [ className ]) }
             contentClassName={ css.content }
             data={ messages[dialogueId] }
+            enableAutoScroll={ true }
             getPreviousElements={ loadPreviousMessages }
             hasMorePrevious={ hasMoreMessages[dialogueId] }
             key={ dialogueId }

@@ -47,7 +47,7 @@ export const useVisibleElementIndex = function (data: Array<unknown>, showAmount
         previousFirstElement.current = data[0];
         previousLastElement.current  = data.slice(-1)[0];
         previousDataLength.current   = data.length;
-    }, [ data, index, showAmount, side ]);
+    }, [ data, data.length, index, showAmount, side ]);
 
     return [ index, setIndex ];
 };

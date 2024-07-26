@@ -28,6 +28,8 @@ export const useHandlerOfSidePositions = function (
                 observer.observe(firstElement);
             }
 
+            console.log('has more bottom', hasMoreBottom);
+
             if (lastElement && hasMoreBottom && triggerBottom) {
                 const observer = new IntersectionObserver(([ { isIntersecting } ]) => {
                     if (isIntersecting && !disableTrigger.current) {

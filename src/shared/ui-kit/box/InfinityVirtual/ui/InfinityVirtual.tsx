@@ -18,12 +18,16 @@ import {
 import {
     useStepsHandlers,
 } from '@/shared/ui-kit/box/InfinityVirtual/hooks/useStepsHandlers.ts';
+import {
+    useAutoScroll,
+} from '@/shared/ui-kit/box/InfinityVirtual/hooks/useAutoScroll.ts';
 
 
 export type InfinityVirtualProps =
     {
         data: Array<unknown>;
         render: (item: unknown, index: number) => ReactNode;
+        enableAutoScroll?: boolean;
         showAmount?: number;
         side?: InfinityVirtualSide;
         reverse?: boolean;
@@ -39,13 +43,14 @@ export const InfinityVirtual: FC<InfinityVirtualProps> = memo(function InfinityV
     const {
               data,
               render,
-              showAmount      = 40,
-              side            = 'top',
-              reverse         = false,
+              showAmount       = 40,
+              side             = 'top',
+              reverse          = false,
+              enableAutoScroll = false,
               getPreviousElements,
               getNextElements,
-              hasMorePrevious = true,
-              hasMoreNext     = true,
+              hasMorePrevious  = true,
+              hasMoreNext      = true,
               className,
               contentClassName,
               ...other
@@ -53,6 +58,8 @@ export const InfinityVirtual: FC<InfinityVirtualProps> = memo(function InfinityV
     const [ index, setIndex ] = useVisibleElementIndex(data, showAmount, side);
     const [ previous, next ]  = useStepsHandlers(data.length, showAmount, index, setIndex, getPreviousElements, getNextElements);
     const contentRef          = useHandlerOfSidePositions(previous, next, hasMorePrevious, hasMoreNext);
+
+    useAutoScroll(data, showAmount, index, side, contentRef, enableAutoScroll);
 
     return (
         <div { ...other }
