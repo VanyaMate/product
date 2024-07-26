@@ -60,14 +60,14 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
             contentClassName={ css.content }
-            data={ messages[dialogueId] }
-            enableAutoScroll={ true }
-            getPreviousElements={ loadPreviousMessages }
-            hasMorePrevious={ hasMoreMessages[dialogueId] }
+            getTopItems={ loadPreviousMessages }
+            hasMoreTop={ hasMoreMessages[dialogueId] }
+            items={ messages[dialogueId] }
             key={ dialogueId }
             render={ render }
             showAmount={ 40 }
             side="bottom"
+            smoothScroll
         />
     );
 });
