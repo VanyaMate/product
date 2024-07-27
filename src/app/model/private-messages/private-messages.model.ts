@@ -367,14 +367,6 @@ export const $privateMessagesHasMore = store<Record<string, boolean>>({})
         }),
     )
     .on(
-        getPrivateMessagesByCursorEffect,
-        'onSuccess',
-        (state, { result, args: [ [ dialogueId, options ] ] }) => ({
-            ...state,
-            [dialogueId]: options.limit === result.list.length,
-        }),
-    )
-    .on(
         getOnePrivateDialogueEffect,
         'onSuccess',
         (state, { args: [ dialogueId ] }) => ({

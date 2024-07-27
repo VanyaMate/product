@@ -50,11 +50,10 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
 
     useLayoutEffect(() => {
         const messagesLength = messages[dialogueId].length;
-        if (messagesLength < 20) {
-            console.log('Load previous');
+        if (messagesLength < 20 && hasMoreMessages[dialogueId]) {
             loadPreviousMessages();
         }
-    }, [ dialogueId, loadPreviousMessages, messages ]);
+    }, [ dialogueId, hasMoreMessages, loadPreviousMessages, messages ]);
 
     const render = useCallback((message: DomainMessage) => (
         <PrivateMessage

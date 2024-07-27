@@ -10,6 +10,6 @@ export type GetScrollDirectionProps = {
 
 
 export const getScrollDirection = function (props: GetScrollDirectionProps): VirtualScrollDirection {
-    return props.previous > Math.abs(props.current)
+    return props.previous >= Math.abs(props.current)
            ? VirtualScrollDirection.NEXT : VirtualScrollDirection.PREVIOUS;
 };

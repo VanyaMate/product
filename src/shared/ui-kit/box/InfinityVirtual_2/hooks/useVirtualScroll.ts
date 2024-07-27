@@ -64,7 +64,8 @@ export const useVirtualScroll = function (props: UseVirtualScrollProps): UseVirt
                     items        : props.virtualItems,
                 })) {
                     containerRef.current.scrollTo({
-                        top: isTop(props.type) ? 1 : -1,
+                        top     : isTop(props.type) ? 1 : -1,
+                        behavior: props.smoothScroll ? 'smooth' : 'instant',
                     });
                 }
                 break;
@@ -111,7 +112,15 @@ export const useVirtualScroll = function (props: UseVirtualScrollProps): UseVirt
 
             const onScrollHandler = function () {
                 const { scrollTop, scrollHeight, offsetHeight } = ref;
-                scrollDirection.current                         = getScrollDirection({
+
+                if (Math.abs(ref.scrollTop) === 0) {
+                    ref.scrollTo({
+                        top: isTop(props.type) ? 1 : -1,
+                    });
+                    return;
+                }
+
+                scrollDirection.current = getScrollDirection({
                     previous: previousScrollTop.current,
                     current : scrollTop,
                 });
@@ -143,6 +152,8 @@ export const useVirtualScroll = function (props: UseVirtualScrollProps): UseVirt
 
                 previousScrollTop.current = Math.abs(scrollTop);
             };
+
+            onScrollHandler();
 
             ref.addEventListener('scroll', onScrollHandler);
             return () => ref.removeEventListener('scroll', onScrollHandler);

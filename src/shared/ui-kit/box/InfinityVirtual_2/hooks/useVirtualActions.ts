@@ -66,7 +66,7 @@ export type UseVirtualActionsProps = {
 }
 
 export const useVirtualActions = function (props: UseVirtualActionsProps): UseVirtualActions {
-    const dynamicActionType = useRef<VirtualAction>(VirtualAction.NONE);
+    const dynamicActionType = useRef<VirtualAction>(VirtualAction.AUTOSCROLL);
     const processActionType = useRef<VirtualAction>(VirtualAction.NONE);
     const previous          = useVirtualPreviousItems(props.items);
 
