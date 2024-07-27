@@ -7,68 +7,90 @@ import {
 import classNames from 'classnames';
 import css from './InfinityVirtual.module.scss';
 import {
-    useVisibleElementIndex,
-} from '@/shared/ui-kit/box/InfinityVirtual/hooks/useVisibleElementIndex.ts';
-import {
     InfinityVirtualSide,
 } from '@/shared/ui-kit/box/InfinityVirtual/types/InfinityVirtualSide.type.ts';
 import {
-    useHandlerOfSidePositions,
-} from '@/shared/ui-kit/box/InfinityVirtual/hooks/useHandlerOfSidePositions.ts';
+    useScrollHandler,
+} from '@/shared/ui-kit/box/InfinityVirtual/hooks/useScrollHandler/useScrollHandler.ts';
 import {
-    useStepsHandlers,
-} from '@/shared/ui-kit/box/InfinityVirtual/hooks/useStepsHandlers.ts';
+    useVirtualItems,
+} from '@/shared/ui-kit/box/InfinityVirtual/hooks/useVirtualItems/useVirtualItems.ts';
 import {
-    useAutoScroll,
-} from '@/shared/ui-kit/box/InfinityVirtual/hooks/useAutoScroll.ts';
+    useIndexChanger,
+} from '@/shared/ui-kit/box/InfinityVirtual/hooks/useIndexChanger/useIndexChanger.ts';
 
 
 export type InfinityVirtualProps =
     {
-        data: Array<unknown>;
+        items: Array<unknown>;
         render: (item: unknown, index: number) => ReactNode;
-        enableAutoScroll?: boolean;
+        smoothScroll?: boolean;
         showAmount?: number;
+        distanceToChange?: number;
         side?: InfinityVirtualSide;
         reverse?: boolean;
-        getPreviousElements?: () => Promise<any>;
-        getNextElements?: () => Promise<any>;
-        hasMorePrevious?: boolean;
-        hasMoreNext?: boolean;
+        getBottomItems?: () => Promise<any>;
+        getTopItems?: () => Promise<any>;
+        hasMoreBottom?: boolean;
+        hasMoreTop?: boolean;
         contentClassName?: string;
     }
     & ComponentPropsWithoutRef<'div'>;
 
 export const InfinityVirtual: FC<InfinityVirtualProps> = memo(function InfinityVirtual (props) {
     const {
-              data,
+              items,
               render,
               showAmount       = 40,
+              distanceToChange = 100,
               side             = 'top',
               reverse          = false,
-              enableAutoScroll = false,
-              getPreviousElements,
-              getNextElements,
-              hasMorePrevious  = true,
-              hasMoreNext      = true,
+              smoothScroll     = false,
+              getBottomItems,
+              getTopItems,
+              hasMoreBottom    = true,
+              hasMoreTop       = true,
               className,
               contentClassName,
               ...other
-          }                   = props;
-    const [ index, setIndex ] = useVisibleElementIndex(data, showAmount, side);
-    const [ previous, next ]  = useStepsHandlers(data.length, showAmount, index, setIndex, getPreviousElements, getNextElements);
-    const contentRef          = useHandlerOfSidePositions(previous, next, hasMorePrevious, hasMoreNext);
+          } = props;
 
-    useAutoScroll(data, showAmount, index, side, contentRef, enableAutoScroll);
+    const {
+              index,
+              setIndex,
+              virtualItems,
+              setVirtualItems,
+          }            = useVirtualItems({ side, items, showAmount });
+    const containerRef = useScrollHandler();
+
+    console.log(smoothScroll);
+
+    useIndexChanger({
+        setVirtualItems: setVirtualItems,
+        items,
+        index,
+        setIndex,
+        side,
+        getBottomItems,
+        getTopItems,
+        hasMoreBottom,
+        hasMoreTop,
+        showAmount,
+        distanceToChange,
+        ref            : containerRef,
+        virtualItems   : virtualItems,
+    });
 
     return (
-        <div { ...other }
-             className={ classNames(css.container, { [css.top]: side === 'top' }, [ className ]) }>
+        <div
+            { ...other }
+            className={ classNames(css.container, { [css.top]: side === 'top' }, [ className ]) }
+            ref={ containerRef }
+        >
             <div
                 className={ classNames(css.content, { [css.reverse]: reverse }, [ contentClassName ]) }
-                ref={ contentRef }
             >
-                { data.slice(index, index + showAmount).map(render) }
+                { virtualItems.map(render) }
             </div>
         </div>
     );
