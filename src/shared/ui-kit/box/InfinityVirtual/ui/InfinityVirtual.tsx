@@ -66,7 +66,7 @@ export const InfinityVirtual: FC<InfinityVirtualProps> = memo(function InfinityV
     console.log(smoothScroll);
 
     useIndexChanger({
-        setItems: setVirtualItems,
+        setVirtualItems: setVirtualItems,
         items,
         index,
         setIndex,
@@ -77,7 +77,8 @@ export const InfinityVirtual: FC<InfinityVirtualProps> = memo(function InfinityV
         hasMoreTop,
         showAmount,
         distanceToChange,
-        ref     : containerRef,
+        ref            : containerRef,
+        virtualItems   : virtualItems,
     });
 
     return (

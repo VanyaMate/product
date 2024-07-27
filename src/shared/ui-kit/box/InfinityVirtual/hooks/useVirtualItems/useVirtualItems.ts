@@ -1,16 +1,12 @@
 import {
     Dispatch,
-    SetStateAction,
-    useLayoutEffect,
-    useRef,
+    SetStateAction, useLayoutEffect, useRef,
     useState,
 } from 'react';
 import {
     InfinityVirtualSide,
 } from '@/shared/ui-kit/box/InfinityVirtual/types/InfinityVirtualSide.type.ts';
 import {
-    first,
-    getFullIndexOffset,
     getItemsByRange,
     getStartVirtualItemsIndex,
 } from '@/shared/ui-kit/box/InfinityVirtual/lib/lib.ts';
@@ -35,38 +31,21 @@ export const useVirtualItems = function (props: UseVirtualItemsProps): UseVirtua
     const [ virtualItems, setVirtualItems ] = useState<Array<unknown>>(getItemsByRange(props.items, index, props.showAmount));
 
     // Previous states
-    const previousFirstItems  = useRef<unknown>(first(props.items));
     const previousLengthItems = useRef<number>(props.items.length);
+    /*    const previousFirstItem   = useRef<unknown>(first(props.items));
+     const previousLastItem    = useRef<unknown>(last(props.items));*/
 
-    // Change index and items if items length is changed
+    // Fill virtual items when all-items changed and virtual items is not
+    // required
     useLayoutEffect(() => {
         const lengthOfItemsChanged: boolean = previousLengthItems.current !== props.items.length;
+        const virtualItemsFilled: boolean   = virtualItems.length === props.showAmount;
 
-        if (lengthOfItemsChanged) {
-            const currentFirstItem: unknown = first(props.items);
-            const firstItemChanged: boolean = previousFirstItems.current !== currentFirstItem;
-            let targetIndex: number         = index;
-
-            if (firstItemChanged) {
-                const needFullOffset = index !== 0;
-
-                if (needFullOffset) {
-                    const offset = getFullIndexOffset(
-                        virtualItems.length,
-                        props.showAmount,
-                        previousLengthItems.current,
-                        props.items.length,
-                    );
-                    targetIndex  = index + offset;
-                    setIndex(targetIndex);
-                }
-            }
-
-            setVirtualItems(getItemsByRange(props.items, targetIndex, props.showAmount));
+        if (lengthOfItemsChanged && !virtualItemsFilled) {
+            setVirtualItems(getItemsByRange(props.items, index, props.showAmount));
             previousLengthItems.current = props.items.length;
-            previousFirstItems.current  = currentFirstItem;
         }
-    }, [ props.items.length, index, virtualItems.length, props.items, props.showAmount ]);
+    }, [ index, props.items, props.showAmount, virtualItems.length ]);
 
     return { index, virtualItems, setIndex, setVirtualItems };
 };
