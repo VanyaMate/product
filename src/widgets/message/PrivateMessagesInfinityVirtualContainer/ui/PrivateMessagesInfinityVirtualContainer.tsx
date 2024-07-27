@@ -3,10 +3,8 @@ import {
     FC,
     memo,
     useCallback,
+    useLayoutEffect,
 } from 'react';
-import {
-    InfinityVirtual,
-} from '@/shared/ui-kit/box/InfinityVirtual/ui/InfinityVirtual.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
     $privateMessages,
@@ -21,6 +19,10 @@ import {
 import { $authUser } from '@/app/model/auth/auth.model.ts';
 import css from './PrivateMessagesInfinityVirtualContainer.module.scss';
 import classNames from 'classnames';
+import {
+    Virtual,
+    VirtualType,
+} from '@/shared/ui-kit/box/InfinityVirtual_2/ui/Virtual.tsx';
 
 
 export type PrivateMessagesInfinityVirtualContainerProps =
@@ -46,6 +48,14 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
         }
     }, [ dialogueId, messages ]);
 
+    useLayoutEffect(() => {
+        const messagesLength = messages[dialogueId].length;
+        if (messagesLength < 20) {
+            console.log('Load previous');
+            loadPreviousMessages();
+        }
+    }, [ dialogueId, loadPreviousMessages, messages ]);
+
     const render = useCallback((message: DomainMessage) => (
         <PrivateMessage
             key={ message.id }
@@ -56,18 +66,18 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
     ), [ user.id ]);
 
     return (
-        <InfinityVirtual
+        <Virtual
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
             contentClassName={ css.content }
-            getTopItems={ loadPreviousMessages }
-            hasMoreTop={ hasMoreMessages[dialogueId] }
+            hasMorePrevious={ hasMoreMessages[dialogueId] }
             items={ messages[dialogueId] }
             key={ dialogueId }
             render={ render }
             showAmount={ 40 }
-            side="bottom"
             smoothScroll
+            type={ VirtualType.BOTTOM }
+            uploadPrevious={ loadPreviousMessages }
         />
     );
 });
