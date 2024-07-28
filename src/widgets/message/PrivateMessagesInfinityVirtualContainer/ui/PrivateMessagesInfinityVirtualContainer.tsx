@@ -22,7 +22,7 @@ import classNames from 'classnames';
 import {
     Virtual,
     VirtualType,
-} from '@/shared/ui-kit/box/InfinityVirtual_2/ui/Virtual.tsx';
+} from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 
 
 export type PrivateMessagesInfinityVirtualContainerProps =

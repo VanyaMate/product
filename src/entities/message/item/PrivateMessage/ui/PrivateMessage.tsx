@@ -58,8 +58,6 @@ export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMess
         }
     }, [ message, onShowMessage, userId ]);
 
-    console.log('Private message rerender', message);
-
     return (
         <article
             { ...other }
