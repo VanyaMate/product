@@ -1,8 +1,13 @@
 # Virtual scroll
 
-TODO:
+### TODO:
 
-### Buglog
+- Добавить loader
+- Добавить no more
+
+### Check
 
 - Есть проблемы с prev в chrome (arc)
 - Возможны проблемы в момент изменения ширины, надо это потестить
+
+### Buglog
