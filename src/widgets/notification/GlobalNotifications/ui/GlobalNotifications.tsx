@@ -3,6 +3,7 @@ import {
     FC,
     memo,
     Suspense,
+    useCallback,
     useLayoutEffect,
     useRef,
     useState,
@@ -19,7 +20,6 @@ import {
 import {
     useNotification,
 } from '@/features/notification/hooks/useNotification.ts';
-import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import {
     NotificationItem,
 } from '@/widgets/notification/item/NotificationItem/ui/NotificationItem.tsx';
@@ -29,6 +29,10 @@ import {
 import {
     useGlobalStoreUpdaterByNotifications,
 } from '@/features/notification/hooks/useGlobalStoreUpdaterByNotifications.ts';
+import {
+    Virtual,
+    VirtualType,
+} from '@/shared/ui-kit/box/InfinityVirtual_2/ui/Virtual.tsx';
 
 
 export type GlobalNotificationsProps =
@@ -112,6 +116,13 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
         };
     }, [ notification ]);
 
+    const notificationRender = useCallback((notification: DomainNotification) => (
+        <NotificationItem
+            key={ notification.id + notification.type + notification.creationDate }
+            notification={ notification }
+        />
+    ), []);
+
     return (
         <section
             { ...other }
@@ -120,16 +131,16 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
             <audio ref={ audioRef }
                    src="/audio/notification/notification-sound.mp3"/>
             <Suspense fallback={ <PageLoader/> }>
-                <Col>
-                    {
-                        notifications.map((notification) => (
-                            <NotificationItem
-                                key={ notification.id + notification.type + notification.creationDate }
-                                notification={ notification }
-                            />
-                        ))
-                    }
-                </Col>
+                <Virtual
+                    contentClassName={ css.list }
+                    distanceToTrigger={ 100 }
+                    hasMoreNext={ false }
+                    hasMorePrevious={ false }
+                    items={ notifications }
+                    render={ notificationRender }
+                    showAmount={ 30 }
+                    type={ VirtualType.TOP }
+                />
             </Suspense>
         </section>
     );

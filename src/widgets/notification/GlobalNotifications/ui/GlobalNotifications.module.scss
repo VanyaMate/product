@@ -1,4 +1,8 @@
 .container {
     color    : inherit;
     position : relative;
+
+    .list {
+        gap : var(--offset-small);
+    }
 }
