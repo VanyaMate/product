@@ -55,10 +55,6 @@
         }
     }
 
-    &.notRead {
-        background : var(--bg-second-color);
-    }
-
     &:hover {
         cursor     : pointer;
         box-shadow : 0 0 0 3px var(--bg-main-color), 0 0 0 5px var(--primary-color);
@@ -75,6 +71,14 @@
         font-size       : var(--font-size-xl);
         font-weight     : 200;
         text-decoration : none;
+    }
+
+    &.notRead {
+        background : var(--bg-ghost-color);
+
+        .avatar {
+            background : var(--bg-second-color);
+        }
     }
 
     .body {

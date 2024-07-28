@@ -59,7 +59,7 @@
                 gap     : var(--offset-small);
 
                 .item {
-                    color : var(--ghost-color);
+                    color : var(--invisible-color);
 
                     &_me {
                         color : var(--primary-color);
@@ -67,7 +67,7 @@
 
                     &_message {
                         color     : var(--bg-main-foreground-color);
-                        filter    : drop-shadow(0 0 5px var(--primary-color));
+                        filter    : drop-shadow(0 0 8px var(--invisible-color));
                         animation : blink ease-in-out infinite 1s;
                     }
                 }
