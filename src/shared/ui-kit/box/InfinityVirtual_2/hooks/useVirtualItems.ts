@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import {
     VirtualType,
 } from '@/shared/ui-kit/box/InfinityVirtual_2/ui/Virtual.tsx';
@@ -31,8 +31,24 @@ export const useVirtualItems = function (props: UseVirtualItemsProps): UseVirtua
         items     : props.items,
         showAmount: props.showAmount,
     }));
+    const refIndex            = useRef<number>(index);
+    const previousLength      = useRef<number>(props.items.length);
+
+    useLayoutEffect(() => {
+        if (previousLength.current === props.items.length) {
+            const virtualItems = getVirtualItems({
+                index     : refIndex.current,
+                items     : props.items,
+                showAmount: props.showAmount,
+            });
+            setItems(virtualItems);
+        }
+        previousLength.current = props.items.length;
+    }, [ props.items, props.showAmount ]);
 
     const setCurrentIndexCallback = useCallback((value: number) => {
+        refIndex.current       = value;
+        previousLength.current = props.items.length;
         setIndex(value);
         setItems(getVirtualItems({
             index     : value,
@@ -40,7 +56,6 @@ export const useVirtualItems = function (props: UseVirtualItemsProps): UseVirtua
             showAmount: props.showAmount,
         }));
     }, [ props.items, props.showAmount ]);
-
 
     return {
         currentIndex   : index,

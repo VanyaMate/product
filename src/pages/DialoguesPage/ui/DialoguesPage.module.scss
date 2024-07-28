@@ -9,6 +9,11 @@
         position  : sticky;
         top       : 0;
         height    : 100%;
+        padding   : var(--offset-small);
+
+        .list {
+            gap : var(--offset-small);
+        }
     }
 
     .messages {

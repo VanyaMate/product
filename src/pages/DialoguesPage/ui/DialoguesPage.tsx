@@ -1,11 +1,16 @@
-import { ComponentPropsWithoutRef, FC, memo, useLayoutEffect } from 'react';
+import {
+    ComponentPropsWithoutRef,
+    FC,
+    memo,
+    useCallback,
+    useLayoutEffect,
+} from 'react';
 import {
     PrivateDialogue,
 } from '@/entities/private-dialogues/item/PrivateDialogue/ui/PrivateDialogue.tsx';
 import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
-import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import { useParams } from 'react-router-dom';
 import {
@@ -18,13 +23,22 @@ import {
 } from '@/widgets/private-dialogue/PrivateDialogueWindow/ui/PrivateDialogueWindow.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    $privateDialogues, $privateDialoguesIsPending, getListPrivateDialogueEffect,
+    $privateDialogues,
+    $privateDialoguesIsPending,
+    getListPrivateDialogueEffect,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import { $authUser } from '@/app/model/auth/auth.model.ts';
 import {
     $privateMessages,
 } from '@/app/model/private-messages/private-messages.model.ts';
 import { useTranslation } from 'react-i18next';
+import {
+    DomainPrivateDialogueFull,
+} from 'product-types/dist/private-dialogue/DomainPrivateDialogueFull';
+import {
+    Virtual,
+    VirtualType,
+} from '@/shared/ui-kit/box/InfinityVirtual_2/ui/Virtual.tsx';
 
 
 export type DialoguesPageProps =
@@ -49,6 +63,16 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
     // Подгрузка для бандла
     useTranslation([ 'dialogue', 'friends-page', 'posts' ]);
 
+    const dialoguesRender = useCallback((dialogue: DomainPrivateDialogueFull) => (
+        <PrivateDialogue
+            dialogue={ dialogue }
+            key={ dialogue.id }
+            lastMessage={ messages[dialogue.id]?.slice(-1)[0] }
+            login={ userData.login }
+            selected={ dialogueId === dialogue.id }
+        />
+    ), [ dialogueId, messages, userData.login ]);
+
     if (dialoguesIsPending && !dialogues.length) {
         return <PageLoader/>;
     }
@@ -56,19 +80,15 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
     return (
         <Row { ...other }
              className={ classNames(css.container, {}, className) }>
-            <Col className={ css.dialogues }>
-                {
-                    dialogues.map((dialogue) => (
-                        <PrivateDialogue
-                            dialogue={ dialogue }
-                            key={ dialogue.id }
-                            lastMessage={ messages[dialogue.id]?.slice(-1)[0] }
-                            login={ userData.login }
-                            selected={ dialogueId === dialogue.id }
-                        />
-                    ))
-                }
-            </Col>
+            <Virtual
+                className={ css.dialogues }
+                contentClassName={ css.list }
+                distanceToTrigger={ 100 }
+                items={ dialogues }
+                render={ dialoguesRender }
+                showAmount={ 20 }
+                type={ VirtualType.TOP }
+            />
             <PrivateDialogueWindow dialogueId={ dialogueId }/>
         </Row>
     );
