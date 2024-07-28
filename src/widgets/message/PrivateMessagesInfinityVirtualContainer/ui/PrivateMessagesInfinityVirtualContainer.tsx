@@ -23,6 +23,9 @@ import {
     Virtual,
     VirtualType,
 } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
+import {
+    EmptyDialogue,
+} from '@/entities/dialogue/EmptyDialogue/ui/EmptyDialogue.tsx';
 
 
 export type PrivateMessagesInfinityVirtualContainerProps =
@@ -63,6 +66,10 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             userId={ user.id }
         />
     ), [ user.id ]);
+
+    if (!messages[dialogueId].length) {
+        return <EmptyDialogue { ...other } className={ className }/>;
+    }
 
     return (
         <Virtual

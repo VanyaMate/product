@@ -7,7 +7,11 @@ import {
 import {
     PrivateDialogueIcon,
 } from '@/entities/private-dialogues/icon/PrivateDialogueIcon/ui/PrivateDialogueIcon.tsx';
-import { IoArchive, IoTrashBin } from 'react-icons/io5';
+import {
+    IoArchive,
+    IoMail,
+    IoTrashBin,
+} from 'react-icons/io5';
 import {
     PrivateDialogueMessagePreview,
 } from '@/entities/private-dialogues/item/PrivateDialogueMessagePreview/ui/PrivateDialogueMessagePreview.tsx';
@@ -58,6 +62,11 @@ export const PrivateDialogue: FC<PrivateDialogueProps> = memo(function PrivateDi
                               ? <IoTrashBin className={ css.item }/> : null }
                             { dialogue.meArchived
                               ? <IoArchive className={ css.item_me }/> : null }
+                            { lastMessage && !lastMessage.read && lastMessage.author.login !== login && !selected
+                              ? <IoMail
+                                  className={ css.item_message }
+                              /> : null
+                            }
                         </div>
                     </header>
                     <PrivateDialogueMessagePreview
