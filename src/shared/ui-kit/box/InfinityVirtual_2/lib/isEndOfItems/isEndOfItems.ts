@@ -6,17 +6,17 @@ import {
 } from '@/shared/ui-kit/box/InfinityVirtual_2/lib/isTop/isTop.ts';
 
 
-export type IsStartProps = {
+export type isEndOfItemsProps = {
     type: VirtualType;
     currentIndex: number;
     itemsLength: number;
     showAmount: number;
 }
 
-export const isStart = function (props: IsStartProps): boolean {
+export const isEndOfItems = function (props: isEndOfItemsProps): boolean {
     if (isTop(props.type)) {
-        return props.currentIndex === 0;
+        return props.itemsLength - props.currentIndex === props.showAmount;
     } else {
-        return props.itemsLength - props.currentIndex <= props.showAmount;
+        return props.currentIndex === 0;
     }
 };

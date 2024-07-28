@@ -15,11 +15,11 @@ import {
     getNextIndex,
 } from '@/shared/ui-kit/box/InfinityVirtual_2/lib/getNextIndex/getNextIndex.ts';
 import {
-    isStart,
-} from '@/shared/ui-kit/box/InfinityVirtual_2/lib/isStart/isStart.ts';
+    isStartOfItems,
+} from '@/shared/ui-kit/box/InfinityVirtual_2/lib/isStart/isStartOfItems.ts';
 import {
-    isEnd,
-} from '@/shared/ui-kit/box/InfinityVirtual_2/lib/isEnd/isEnd.ts';
+    isEndOfItems,
+} from '@/shared/ui-kit/box/InfinityVirtual_2/lib/isEndOfItems/isEndOfItems.ts';
 import {
     getLastIndex,
 } from '@/shared/ui-kit/box/InfinityVirtual_2/lib/getLastIndex/getLastIndex.ts';
@@ -134,7 +134,7 @@ export const useVirtualActions = function (props: UseVirtualActionsProps): UseVi
 
     const onNext = useCallback(() => {
         if (dynamicActionType.current === VirtualAction.NONE) {
-            if (isStart({
+            if (isStartOfItems({
                 type        : props.type,
                 showAmount  : props.showAmount,
                 currentIndex: props.currentIndex,
@@ -174,7 +174,7 @@ export const useVirtualActions = function (props: UseVirtualActionsProps): UseVi
 
     const onPrev = useCallback(() => {
         if (dynamicActionType.current === VirtualAction.NONE) {
-            if (isEnd({
+            if (isEndOfItems({
                 type        : props.type,
                 showAmount  : props.showAmount,
                 currentIndex: props.currentIndex,
