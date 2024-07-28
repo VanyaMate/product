@@ -29,7 +29,8 @@
 
     &.new {
         .header {
-            background : var(--bg-second-color);
+            padding    : var(--offset-small);
+            background : var(--bg-ghost-color);
 
             .title {
                 color : var(--text-main-color);

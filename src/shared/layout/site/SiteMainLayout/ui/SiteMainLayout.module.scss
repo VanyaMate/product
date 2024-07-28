@@ -16,7 +16,6 @@ $side-width-open : 400px;
         width       : 100%;
         height      : $header-height;
         padding     : var(--offset-small);
-        background  : var(--bg-second-color);
         display     : flex;
         gap         : var(--offset-medium);
         align-items : center;
@@ -34,20 +33,17 @@ $side-width-open : 400px;
         left       : 0;
         height     : calc(100% - $header-height);
         padding    : var(--offset-small);
-        background : var(--bg-main-color);
         width      : $side-width;
         transition : var(--transition-medium);
 
         &_open {
-            width      : $side-width-open;
-            background : var(--bg-second-color);
-            max-width  : 100%;
+            width     : $side-width-open;
+            max-width : 100%;
         }
     }
 
     .rightSideMenu {
         height     : calc(100dvh - $header-height);
-        background : var(--bg-second-color);
         width      : 0;
         min-width  : 0;
         overflow   : hidden;
@@ -98,7 +94,7 @@ $side-width-open : 400px;
         left       : 0;
         z-index    : 1;
         transition : var(--transition-medium);
-        opacity    : .8;
+        opacity    : .9;
         background : var(--bg-main-color);
         cursor     : pointer;
 

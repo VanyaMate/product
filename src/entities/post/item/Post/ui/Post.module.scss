@@ -1,52 +1,50 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--offset-small);
-    text-align: left;
-    padding: var(--offset-medium);
-    border-radius: var(--offset-medium);
-    background: var(--bg-ghost-color);
-    min-width: 300px;
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);
+    text-align     : left;
+    border-radius  : var(--offset-medium);
+    min-width      : 300px;
 
     .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: var(--offset-small);
-        padding: var(--offset-small);
-        border-radius: var(--offset-small);
-        background: var(--bg-second-color);
+        display         : flex;
+        justify-content : space-between;
+        align-items     : center;
+        gap             : var(--offset-small);
+        padding         : var(--offset-small);
+        border-radius   : var(--offset-small);
+        background      : var(--bg-second-color);
 
         .info {
-            display: flex;
-            align-items: center;
-            gap: var(--offset-small);
+            display     : flex;
+            align-items : center;
+            gap         : var(--offset-small);
 
             .avatar {
-                width: 60px;
-                min-width: 60px;
-                height: 60px;
-                min-height: 60px;
-                font-size: var(--font-size-xxl);
-                border-radius: var(--offset-small);
-                background: var(--bg-ghost-color);
+                width         : 60px;
+                min-width     : 60px;
+                height        : 60px;
+                min-height    : 60px;
+                font-size     : var(--font-size-xxl);
+                border-radius : var(--offset-small);
+                background    : var(--bg-ghost-color);
             }
 
             .details {
-                display: flex;
-                flex-direction: column;
-                gap: var(--offset-small);
-                justify-content: center;
+                display         : flex;
+                flex-direction  : column;
+                gap             : var(--offset-small);
+                justify-content : center;
 
                 .date {
-                    color: var(--text-second-color);
-                    font-size: var(--font-size-s);
+                    color     : var(--text-second-color);
+                    font-size : var(--font-size-s);
                 }
             }
         }
     }
 
     .content {
-        font-size: var(--font-size-m);
+        font-size : var(--font-size-m);
     }
 }
