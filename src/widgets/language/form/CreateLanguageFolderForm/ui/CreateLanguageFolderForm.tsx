@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, memo } from 'react';
+import { ComponentPropsWithoutRef, FC, memo, useCallback } from 'react';
 import classNames from 'classnames';
 import css from './CreateLanguageFolderForm.module.scss';
 import {
@@ -48,10 +48,16 @@ export const CreateLanguageFolderForm: FC<CreateLanguageFolderFormProps> = memo(
         inputs  : [ titleInputController ],
         onSubmit: async (data) => createLanguageFolderEffect(languageId, data)
             .then(onSubmitHandler)
+            .then(clearForm)
             .catch(onErrorHandler)
             .finally(onFinallyHandler),
     });
     const { t }                = useTranslation([ 'languages' ]);
+
+    const clearForm = useCallback(() => {
+        titleInputController.value.current          = '';
+        titleInputController.inputRef.current.value = '';
+    }, [ titleInputController.inputRef, titleInputController.value ]);
 
     return (
         <Form

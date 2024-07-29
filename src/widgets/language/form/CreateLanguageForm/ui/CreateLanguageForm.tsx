@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, memo } from 'react';
+import { ComponentPropsWithoutRef, FC, memo, useCallback } from 'react';
 import classNames from 'classnames';
 import css from './CreateLanguageForm.module.scss';
 import {
@@ -44,10 +44,16 @@ export const CreateLanguageForm: FC<CreateLanguageFormProps> = memo(function Cre
         inputs  : [ titleInputController ],
         onSubmit: async (data) => createLanguageEffect(data)
             .then(onSubmitHandler)
+            .then(clearForm)
             .catch(onErrorHandler)
             .finally(onFinallyHandler),
     });
     const { t }                = useTranslation([ 'languages' ]);
+
+    const clearForm = useCallback(() => {
+        titleInputController.value.current          = '';
+        titleInputController.inputRef.current.value = '';
+    }, [ titleInputController.inputRef, titleInputController.value ]);
 
     return (
         <Form
