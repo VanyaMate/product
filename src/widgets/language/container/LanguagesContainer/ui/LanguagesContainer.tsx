@@ -1,4 +1,9 @@
-import { ComponentPropsWithoutRef, FC, memo, useLayoutEffect } from 'react';
+import {
+    ComponentPropsWithoutRef,
+    FC,
+    memo,
+    useLayoutEffect,
+} from 'react';
 import classNames from 'classnames';
 import css from './LanguagesContainer.module.scss';
 import { useStore } from '@vanyamate/sec-react';
@@ -76,6 +81,7 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
                             <>
                                 <CreateLanguageWordForm
                                     folderId={ selectedFolderId }
+                                    className={ css.form }
                                 />
                                 {
                                     words.length

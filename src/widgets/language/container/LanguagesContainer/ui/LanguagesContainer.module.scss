@@ -2,18 +2,32 @@
     display        : flex;
     flex-direction : column;
     gap            : var(--offset-medium);
+    height         : 100%;
+    overflow       : hidden;
 
     .content {
         display     : flex;
         align-items : start;
+        height      : calc(100% - 30px - var(--offset-medium));
         gap         : var(--offset-medium);
 
         .folders {
-            width : 50%;
+            width    : 50%;
+            height   : 100%;
+            overflow : auto;
         }
 
         .words {
-            width : 50%;
+            width    : 50%;
+            height   : 100%;
+            overflow : auto;
+
+            .form {
+                position   : sticky;
+                top        : 0;
+                left       : 0;
+                background : var(--bg-main-color);
+            }
         }
     }
 }
