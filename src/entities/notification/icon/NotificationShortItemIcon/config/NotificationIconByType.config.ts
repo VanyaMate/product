@@ -9,7 +9,7 @@ import {
     IoCloudDone,
     IoCloudOffline,
     IoDocument,
-    IoDownload,
+    IoDownload, IoLanguage,
     IoMail,
     IoMailOpen,
     IoMailUnread,
@@ -288,5 +288,76 @@ export const NotificationIconByType: Record<DomainNotificationType, Notification
         component: IoDocument,
         className: css.neutral,
     },
-
+    [DomainNotificationType.LANGUAGE_CREATED_IN]            : {
+        component: IoLanguage,
+        className: css.notification,
+    },
+    [DomainNotificationType.LANGUAGE_CREATED_OUT]           : {
+        component: IoLanguage,
+        className: css.positive,
+    },
+    [DomainNotificationType.LANGUAGE_UPDATED_IN]            : {
+        component: IoLanguage,
+        className: css.notification,
+    },
+    [DomainNotificationType.LANGUAGE_UPDATED_OUT]           : {
+        component: IoLanguage,
+        className: css.neutral,
+    },
+    [DomainNotificationType.LANGUAGE_DELETED_IN]            : {
+        component: IoLanguage,
+        className: css.notification,
+    },
+    [DomainNotificationType.LANGUAGE_DELETED_OUT]           : {
+        component: IoLanguage,
+        className: css.neutral,
+    },
+    [DomainNotificationType.LANGUAGE_WORD_CREATED_IN]       : {
+        component: IoLanguage,
+        className: css.notification,
+    },
+    [DomainNotificationType.LANGUAGE_WORD_CREATED_OUT]      : {
+        component: IoLanguage,
+        className: css.positive,
+    },
+    [DomainNotificationType.LANGUAGE_WORD_UPDATED_IN]       : {
+        component: IoLanguage,
+        className: css.notification,
+    },
+    [DomainNotificationType.LANGUAGE_WORD_UPDATED_OUT]      : {
+        component: IoLanguage,
+        className: css.neutral,
+    },
+    [DomainNotificationType.LANGUAGE_WORD_DELETED_IN]       : {
+        component: IoLanguage,
+        className: css.notification,
+    },
+    [DomainNotificationType.LANGUAGE_WORD_DELETED_OUT]      : {
+        component: IoLanguage,
+        className: css.neutral,
+    },
+    [DomainNotificationType.LANGUAGE_FOLDER_CREATED_IN]     : {
+        component: IoLanguage,
+        className: css.notification,
+    },
+    [DomainNotificationType.LANGUAGE_FOLDER_CREATED_OUT]    : {
+        component: IoLanguage,
+        className: css.positive,
+    },
+    [DomainNotificationType.LANGUAGE_FOLDER_UPDATED_IN]     : {
+        component: IoLanguage,
+        className: css.notification,
+    },
+    [DomainNotificationType.LANGUAGE_FOLDER_UPDATED_OUT]    : {
+        component: IoLanguage,
+        className: css.neutral,
+    },
+    [DomainNotificationType.LANGUAGE_FOLDER_DELETED_IN]     : {
+        component: IoLanguage,
+        className: css.notification,
+    },
+    [DomainNotificationType.LANGUAGE_FOLDER_DELETED_OUT]    : {
+        component: IoLanguage,
+        className: css.neutral,
+    },
 };
