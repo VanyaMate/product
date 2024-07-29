@@ -83,16 +83,18 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
                                     folderId={ selectedFolderId }
                                     className={ css.form }
                                 />
-                                {
-                                    words.length
-                                    ? words.map((word) => (
-                                        <LanguageWordItem
-                                            key={ word.id }
-                                            word={ word }
-                                        />
-                                    ))
-                                    : t('words_not_exits')
-                                }
+                                <Col className={ css.list }>
+                                    {
+                                        words.length
+                                        ? words.map((word) => (
+                                            <LanguageWordItem
+                                                key={ word.id }
+                                                word={ word }
+                                            />
+                                        ))
+                                        : t('words_not_exits')
+                                    }
+                                </Col>
                             </>
                         )
                     }

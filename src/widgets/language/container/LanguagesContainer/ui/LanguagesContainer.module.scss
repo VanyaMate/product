@@ -28,6 +28,11 @@
                 left       : 0;
                 background : var(--bg-main-color);
             }
+
+            .list {
+                display        : flex;
+                flex-direction : column-reverse;
+            }
         }
     }
 }
