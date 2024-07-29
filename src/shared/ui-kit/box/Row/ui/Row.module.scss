@@ -2,4 +2,12 @@
     display     : flex;
     gap         : var(--offset-small);
     align-items : center;
+
+    .spaceBetween {
+        justify-content : space-between;
+    }
+
+    .fullWidth {
+        width : 100%;
+    }
 }

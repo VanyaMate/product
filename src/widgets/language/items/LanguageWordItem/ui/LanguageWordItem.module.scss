@@ -1,0 +1,11 @@
+.container {
+    .words {
+        .notice {
+            color : var(--text-second-color);
+        }
+
+        .list {
+            padding-left : var(--offset-large);
+        }
+    }
+}

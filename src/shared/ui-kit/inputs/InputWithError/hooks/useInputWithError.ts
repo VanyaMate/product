@@ -1,7 +1,7 @@
 import {
     ChangeEvent,
     ChangeEventHandler, MutableRefObject,
-    useCallback,
+    useCallback, useLayoutEffect,
     useMemo,
     useRef,
     useState,
@@ -31,9 +31,7 @@ export const useInputWithError = function (props: UseInputWithErrorProps): IUseI
     const [ validationAwait, setValidationAwait ] = useState<boolean>(false);
 
     // Сообщение об ошибке
-    const [ errorMessage, setErrorMessage ] = useState<string>(
-        props.validationMethod ? props.validationMethod('') : '',
-    );
+    const [ errorMessage, setErrorMessage ] = useState<string>('');
 
     // Состояние валидности (сокращение для errorMessage.length === 0)
     const isValid = useMemo<boolean>(() => errorMessage.length === 0, [ errorMessage ]);
@@ -53,8 +51,8 @@ export const useInputWithError = function (props: UseInputWithErrorProps): IUseI
             clearTimeout(debounceTimer.current);
 
             if (props.validationMethod) {
-                setValidationAwait(true);
                 if (props.debounce) {
+                    setValidationAwait(true);
                     setErrorMessage('');
                     debounceTimer.current = setTimeout(() => {
                         const validationResult: string = props.validationMethod!(value.current);
@@ -70,7 +68,6 @@ export const useInputWithError = function (props: UseInputWithErrorProps): IUseI
                 } else {
                     const validationResult: string = props.validationMethod!(value.current);
                     setErrorMessage(validationResult);
-                    setValidationAwait(false);
 
                     if (validationResult === '') {
                         resolve(value.current);
@@ -96,6 +93,17 @@ export const useInputWithError = function (props: UseInputWithErrorProps): IUseI
         value.current = event.target.value;
         validateCurrentValue().then(props.onChangeHandler);
     }, [ props.onChangeHandler, validateCurrentValue ]);
+
+    useLayoutEffect(() => {
+        if (inputRef.current) {
+            value.current = inputRef.current.value;
+
+            if (props.validationMethod) {
+                setErrorMessage(props.validationMethod(inputRef.current.value));
+            }
+        }
+        // eslint-disable-next-line
+    }, [ props.validationMethod ]);
 
     return {
         value,

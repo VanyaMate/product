@@ -1,0 +1,21 @@
+{
+    "language_page_title": "Languages",
+    "add_language": "Add language",
+    "add_folder": "Add folder",
+    "add_word": "Add word",
+    "update_language": "Update language",
+    "update_folder": "Update folder",
+    "update_word": "Update word",
+    "remove_language": "Remove language",
+    "remove_folder": "Remove folder",
+    "remove_word": "Remove word",
+    "add_item": "Add",
+    "check_word": "Check as remembered",
+    "uncheck_word": "Check as forgotten",
+    "language_title": "Language title",
+    "folder_title": "Folder title",
+    "word_original": "Word in original",
+    "word_translations": "Translations",
+    "word_notice": "Notice",
+    "no_folder_selected": "Folder not selected"
+}

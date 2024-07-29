@@ -1,0 +1,21 @@
+{
+    "language_page_title": "Языки",
+    "add_language": "Добавить язык",
+    "add_folder": "Добавить папку",
+    "add_word": "Добавить слово",
+    "update_language": "Изменить язык",
+    "update_folder": "Изменить папку",
+    "update_word": "Изменить слово",
+    "remove_language": "Удалить язык",
+    "remove_folder": "Удалить папку",
+    "remove_word": "Удалить слово",
+    "add_item": "Добавить",
+    "check_word": "Отметить как запомненное",
+    "uncheck_word": "Отметить как забытое",
+    "language_title": "Название языка",
+    "folder_title": "Название папки",
+    "word_original": "Слово в оригинале",
+    "word_translations": "Переводы",
+    "word_notice": "Заметка",
+    "no_folder_selected": "Папка не выбрана"
+}

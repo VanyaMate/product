@@ -5,13 +5,13 @@ import css from './DetailsBody.module.scss';
 
 export type DetailsBodyProps =
     {}
-    & ComponentPropsWithoutRef<'summary'>;
+    & ComponentPropsWithoutRef<'section'>;
 
 export const DetailsBody: FC<DetailsBodyProps> = memo(function DetailsBody (props) {
     const { className, ...other } = props;
 
     return (
-        <div
+        <section
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         />

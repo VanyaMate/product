@@ -1,0 +1,13 @@
+.title {
+    display : flex;
+
+    .marker {
+        transition : var(--transition-fast);
+    }
+
+    &.opened {
+        .marker {
+            transform : rotate(90deg);
+        }
+    }
+}

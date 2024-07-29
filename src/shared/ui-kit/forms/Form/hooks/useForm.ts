@@ -1,6 +1,12 @@
-import { FormEvent, FormEventHandler, useCallback, useMemo, useState } from 'react';
 import {
-    IUseInputWithError
+    FormEvent,
+    FormEventHandler,
+    useCallback,
+    useMemo,
+    useState,
+} from 'react';
+import {
+    IUseInputWithError,
 } from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
 
 
@@ -23,7 +29,9 @@ export const useForm = function <T extends FormReturnType> (props: UseFormProps<
     const [ pending, setPending ] = useState<boolean>(false);
     const [ error, setError ]     = useState<string>('');
     const canBeSubmitted          = useMemo<boolean>(() => {
-        return props.inputs.every((input) => input.isValid && !input.validationAwait);
+        return props.inputs.every((input) => {
+            return input.isValid && !input.validationAwait;
+        });
     }, [ props.inputs ]);
 
     const onSubmitHandler = useCallback<FormEventHandler<HTMLFormElement>>((event: FormEvent<HTMLFormElement>) => {

@@ -52,8 +52,8 @@ export const ButtonWithLoading: FC<ButtonWithLoadingProps> = memo(function Butto
             onClick={ onClickHandler }
             quad={ quad }
         >
-            { pending ? <IoSync className={ css.rotating }/> : null }
             { (quad && pending) ? null : children }
+            { pending ? <IoSync className={ css.rotating }/> : null }
         </Button>
     );
 });

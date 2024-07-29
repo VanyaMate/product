@@ -1,5 +1,19 @@
 .container {
-    li {
-        padding-left : 30px;
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-medium);
+
+    .content {
+        display     : flex;
+        align-items : start;
+        gap         : var(--offset-medium);
+
+        .folders {
+            width : 50%;
+        }
+
+        .words {
+            width : 50%;
+        }
     }
 }
