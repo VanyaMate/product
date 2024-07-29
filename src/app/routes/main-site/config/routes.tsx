@@ -9,6 +9,9 @@ import {
 import { FriendsPageAsync } from '@/pages/FriendsPage/ui/FriendsPage.async.tsx';
 import { SearchPageAsync } from '@/pages/SearchPage/ui/SearchPage.async.tsx';
 import { FilesPageAsync } from '@/pages/FilesPage/ui/FilesPage.async.tsx';
+import {
+    LanguagesPageAsync,
+} from '@/pages/LanguagesPage/ui/LanguagesPage.async.tsx';
 
 
 export const SITE_ROUTE_DIALOGUE_ID = 'dialogueId';
@@ -25,6 +28,7 @@ export enum SiteAppRoute {
     DIALOGUES = 'dialogues',
     FILE      = 'file',
     FILES     = 'files',
+    LANGUAGES = 'languages',
     NOT_FOUND = 'not_found',
 }
 
@@ -38,6 +42,7 @@ export const SiteAppRoutePath: Record<SiteAppRoute, string> = {
     [SiteAppRoute.USER]     : `/user/:${ SITE_ROUTE_USER_LOGIN }`,
     [SiteAppRoute.FILE]     : `/file/:${ SITE_ROUTE_FILE_ID }`,
     [SiteAppRoute.FILES]    : `/files`,
+    [SiteAppRoute.LANGUAGES]: `/languages`,
     [SiteAppRoute.NOT_FOUND]: '*',
 };
 
@@ -77,6 +82,10 @@ export const SiteAppRouteConfig: Record<SiteAppRoute, RouteProps> = {
     [SiteAppRoute.FILES]    : {
         path   : SiteAppRoutePath[SiteAppRoute.FILES],
         element: <FilesPageAsync/>,
+    },
+    [SiteAppRoute.LANGUAGES]: {
+        path   : SiteAppRoutePath[SiteAppRoute.LANGUAGES],
+        element: <LanguagesPageAsync/>,
     },
     [SiteAppRoute.NOT_FOUND]: {
         path   : SiteAppRoutePath[SiteAppRoute.NOT_FOUND],

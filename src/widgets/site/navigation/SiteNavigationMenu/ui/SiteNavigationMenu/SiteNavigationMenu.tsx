@@ -7,7 +7,7 @@ import {
 import {
     IoDesktop,
     IoDocuments,
-    IoHome,
+    IoHome, IoLanguage,
     IoLogoVk,
     IoMail,
     IoPeople,
@@ -100,6 +100,18 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                         to={ SiteAppRoutePath[SiteAppRoute.FILES] }
                     >
                         { t('files_page') }
+                    </SiteNavigationLink>
+                    <SiteNavigationLink
+                        icon={ <IoLanguage/> }
+                        onClick={ onCompleteAction }
+                        styleType={
+                            pathname === SiteAppRoutePath[SiteAppRoute.LANGUAGES]
+                            ? LinkStyleType.PRIMARY
+                            : LinkStyleType.GHOST
+                        }
+                        to={ SiteAppRoutePath[SiteAppRoute.LANGUAGES] }
+                    >
+                        { t('languages_page') }
                     </SiteNavigationLink>
                     <SiteNavigationLink
                         icon={ <IoDesktop/> }
