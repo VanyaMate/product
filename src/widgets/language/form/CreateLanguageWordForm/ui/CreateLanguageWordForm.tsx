@@ -76,7 +76,7 @@ export const CreateLanguageWordForm: FC<CreateLanguageWordFormProps> = memo(func
         translationsInputController.inputRef.current.value = '';
         noticeInputController.value.current                = '';
         noticeInputController.inputRef.current.value       = '';
-    }, [noticeInputController.inputRef, noticeInputController.value, originalInputController.inputRef, originalInputController.value, translationsInputController.inputRef, translationsInputController.value]);
+    }, [ noticeInputController.inputRef, noticeInputController.value, originalInputController.inputRef, originalInputController.value, translationsInputController.inputRef, translationsInputController.value ]);
 
     return (
         <Form
