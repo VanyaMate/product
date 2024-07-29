@@ -17,5 +17,6 @@
     "word_original": "Слово в оригинале",
     "word_translations": "Переводы",
     "word_notice": "Заметка",
-    "no_folder_selected": "Папка не выбрана"
+    "no_folder_selected": "Папка не выбрана",
+    "select_folder": "Выбрать папку"
 }

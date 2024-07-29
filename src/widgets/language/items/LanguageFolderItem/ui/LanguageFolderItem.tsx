@@ -23,6 +23,8 @@ import {
     RemoveLanguageFolderButton,
 } from '@/features/language/button/RemoveLanguageFolderButton/ui/RemoveLanguageFolderButton.tsx';
 import { useStore } from '@vanyamate/sec-react';
+import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
+import { useTranslation } from 'react-i18next';
 
 
 export type LanguageFolderItemProps =
@@ -34,19 +36,22 @@ export type LanguageFolderItemProps =
 export const LanguageFolderItem: FC<LanguageFolderItemProps> = memo(function LanguageFolderItem (props) {
     const { folder, className, ...other } = props;
     const selectedFolderId                = useStore($currentFolderId);
+    const { t }                           = useTranslation([ 'translations' ]);
 
     return (
         <section { ...other }
                  className={ classNames(css.container, {}, [ className ]) }>
             <Row>
-                <ButtonWithLoading
-                    onClick={ async () => getMyLanguageFolderWordsEffect(folder.id) }
-                    styleType={ selectedFolderId === folder.id
-                                ? ButtonStyleType.PRIMARY
-                                : ButtonStyleType.GHOST }
-                >
-                    { folder.title }
-                </ButtonWithLoading>
+                <PopOver popover={ t('select_folder') }>
+                    <ButtonWithLoading
+                        onClick={ async () => getMyLanguageFolderWordsEffect(folder.id) }
+                        styleType={ selectedFolderId === folder.id
+                                    ? ButtonStyleType.PRIMARY
+                                    : ButtonStyleType.GHOST }
+                    >
+                        { folder.title }
+                    </ButtonWithLoading>
+                </PopOver>
                 <CreateLanguageWordFormModalButton folderId={ folder.id }/>
             </Row>
             <Row>

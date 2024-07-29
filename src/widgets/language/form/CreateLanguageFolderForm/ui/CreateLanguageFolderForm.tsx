@@ -61,7 +61,7 @@ export const CreateLanguageFolderForm: FC<CreateLanguageFolderFormProps> = memo(
         >
             <InputWithError
                 controller={ titleInputController }
-                placeholder={ t('language_title') }
+                placeholder={ t('folder_title') }
             />
             <ButtonWithLoading
                 disabled={ !formController.canBeSubmitted }

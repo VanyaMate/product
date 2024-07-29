@@ -17,5 +17,6 @@
     "word_original": "Word in original",
     "word_translations": "Translations",
     "word_notice": "Notice",
-    "no_folder_selected": "Folder not selected"
+    "no_folder_selected": "Folder not selected",
+    "select_folder": "Select folder"
 }
