@@ -36,7 +36,7 @@ export type LanguageFolderItemProps =
 export const LanguageFolderItem: FC<LanguageFolderItemProps> = memo(function LanguageFolderItem (props) {
     const { folder, className, ...other } = props;
     const selectedFolderId                = useStore($currentFolderId);
-    const { t }                           = useTranslation([ 'translations' ]);
+    const { t }                           = useTranslation([ 'languages' ]);
 
     return (
         <section { ...other }
