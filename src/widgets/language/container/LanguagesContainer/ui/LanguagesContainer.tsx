@@ -57,13 +57,15 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
             <Row className={ css.content }>
                 <Col className={ css.folders }>
                     {
-                        languages.map((language) => (
+                        languages.length
+                        ? languages.map((language) => (
                             <LanguageItem
                                 open
                                 key={ language.id }
                                 language={ language }
                             />
                         ))
+                        : t('languages_not_exist')
                     }
                 </Col>
                 <Col className={ css.words }>
@@ -76,12 +78,14 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
                                     folderId={ selectedFolderId }
                                 />
                                 {
-                                    words.map((word) => (
+                                    words.length
+                                    ? words.map((word) => (
                                         <LanguageWordItem
                                             key={ word.id }
                                             word={ word }
                                         />
                                     ))
+                                    : t('words_not_exits')
                                 }
                             </>
                         )

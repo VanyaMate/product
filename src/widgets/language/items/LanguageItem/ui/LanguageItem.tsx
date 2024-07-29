@@ -25,6 +25,7 @@ import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import {
     ControlDetails,
 } from '@/shared/ui-kit/details/ControlDetails/ui/ControlDetails.tsx';
+import { useTranslation } from 'react-i18next';
 
 
 export type LanguageItemProps =
@@ -35,6 +36,7 @@ export type LanguageItemProps =
 
 export const LanguageItem: FC<LanguageItemProps> = memo(function LanguageItem (props) {
     const { language, ...other } = props;
+    const { t }                  = useTranslation([ 'languages' ]);
 
     return (
         <ControlDetails
@@ -58,12 +60,14 @@ export const LanguageItem: FC<LanguageItemProps> = memo(function LanguageItem (p
         >
             <Col>
                 {
-                    language.folders.map((folder) => (
+                    language.folders.length
+                    ? language.folders.map((folder) => (
                         <LanguageFolderItem
                             folder={ folder }
                             key={ folder.id }
                         />
                     ))
+                    : t('folders_not_exist')
                 }
             </Col>
         </ControlDetails>
