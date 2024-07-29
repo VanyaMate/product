@@ -50,10 +50,11 @@ export const LanguageWordItem: FC<LanguageWordItemProps> = memo(function Languag
                         }>
                             <ButtonWithLoading
                                 onClick={ () => updateLanguageWordEffect(word.id, { checked: !word.checked }) }
-                                quad
-                                styleType={ word.checked
-                                            ? ButtonStyleType.SECOND
-                                            : ButtonStyleType.GHOST }
+                                styleType={
+                                    word.checked
+                                    ? ButtonStyleType.SECOND
+                                    : ButtonStyleType.GHOST
+                                }
                             >
                                 {
                                     word.checked ? <IoCheckmark/> : <IoClose/>

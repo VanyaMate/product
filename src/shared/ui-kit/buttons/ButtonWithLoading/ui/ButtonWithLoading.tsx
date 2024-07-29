@@ -47,13 +47,13 @@ export const ButtonWithLoading: FC<ButtonWithLoadingProps> = memo(function Butto
     return (
         <Button
             { ...other }
-            className={ classNames(css.container, {}, [ className ]) }
+            className={ classNames(css.container, { [css.pending]: pending }, [ className ]) }
             disabled={ disabled || pending }
             onClick={ onClickHandler }
             quad={ quad }
         >
-            { (quad && pending) ? null : children }
-            { pending ? <IoSync className={ css.rotating }/> : null }
+            <span className={ css.children }>{ children }</span>
+            <IoSync className={ css.rotating }/>
         </Button>
     );
 });

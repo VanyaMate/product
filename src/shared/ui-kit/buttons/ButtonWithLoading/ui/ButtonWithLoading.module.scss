@@ -1,9 +1,29 @@
 @import "src/app/styles/animations/animations";
 
 .container {
+    .children {
+        width      : fit-content;
+        opacity    : 1;
+        visibility : visible;
+        transition : var(--transition-fast);
+    }
+
     .rotating {
-        animation : loading .4s infinite ease-in-out;
-        width     : 20px;
-        height    : 20px;
+        margin-left : 0;
+        animation   : loading .4s infinite ease-in-out;
+        width       : 0;
+        height      : 20px;
+        opacity     : 0;
+        visibility  : hidden;
+        transition  : var(--transition-fast);
+    }
+
+    &.pending {
+        .rotating {
+            margin-left : var(--offset-small);
+            opacity     : 1;
+            visibility  : visible;
+            width       : 20px;
+        }
     }
 }

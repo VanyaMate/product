@@ -21,5 +21,6 @@
     "select_folder": "Выбрать папку",
     "languages_not_exist": "Языки не добавлены",
     "folders_not_exist": "Папки не добавлены",
-    "words_not_exits": "Слова не добавлены"
+    "words_not_exits": "Слова не добавлены",
+    "words_checked": "Запомнено {{remember}} из {{all}}"
 }

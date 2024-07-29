@@ -21,5 +21,6 @@
     "select_folder": "Select folder",
     "languages_not_exist": "Languages not exist",
     "folders_not_exist": "Folders not exist",
-    "words_not_exits": "Words not exist"
+    "words_not_exits": "Words not exist",
+    "words_checked": "Remembered {{remember}} from {{all}}"
 }

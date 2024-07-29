@@ -3,6 +3,7 @@ import {
     FC,
     memo,
     useLayoutEffect,
+    useState,
 } from 'react';
 import classNames from 'classnames';
 import css from './LanguagesContainer.module.scss';
@@ -28,6 +29,13 @@ import { useTranslation } from 'react-i18next';
 import {
     CreateLanguageWordForm,
 } from '@/widgets/language/form/CreateLanguageWordForm/ui/CreateLanguageWordForm.tsx';
+import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import { IoClose, IoReorderFour } from 'react-icons/io5';
+import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import { Dropdown } from '@/shared/ui-kit/modal/Dropdown/ui/Dropdown.tsx';
+import {
+    useDropdownController,
+} from '@/shared/ui-kit/modal/Dropdown/hooks/useDropdownController.ts';
 
 // TODO: TEmp
 /* eslint-disable */
@@ -43,7 +51,9 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
     const languages                       = useStore($languagesList);
     const selectedFolderId                = useStore($currentFolderId);
     const words                           = useStore($languageFolderWordsList);
-    const { t }                           = useTranslation([ 'languages' ]);
+    const [ revert, setRevert ]           = useState<boolean>(false);
+    const { t }                           = useTranslation([ 'languages', 'buttons' ]);
+    const dropdownController              = useDropdownController();
 
     useLayoutEffect(() => {
         // Tempo
@@ -83,7 +93,56 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
                                     folderId={ selectedFolderId }
                                     className={ css.form }
                                 />
-                                <Col className={ css.list }>
+                                <Row spaceBetween fullWidth>
+                                    <span>
+                                        {
+                                            t('words_checked', {
+                                                remember: words.reduce((acc, item) => acc + Number(item.checked), 0),
+                                                all     : words.length,
+                                            })
+                                        }
+                                    </span>
+                                    <Dropdown
+                                        controller={ dropdownController }
+                                        dropdownContent={
+                                            <Col>
+                                                <Button
+                                                    onClick={ () => setRevert(false) }
+                                                    styleType={
+                                                        revert
+                                                        ? ButtonStyleType.GHOST
+                                                        : ButtonStyleType.PRIMARY
+                                                    }
+                                                >
+                                                    { t('order_new_to_old', { ns: 'buttons' }) }
+                                                </Button>
+                                                <Button
+                                                    onClick={ () => setRevert(true) }
+                                                    styleType={
+                                                        revert
+                                                        ? ButtonStyleType.PRIMARY
+                                                        : ButtonStyleType.GHOST
+                                                    }
+                                                >
+                                                    { t('order_old_to_new', { ns: 'buttons' }) }
+                                                </Button>
+                                            </Col>
+                                        }
+                                    >
+                                        <Button
+                                            styleType={ ButtonStyleType.GHOST }
+                                            quad
+                                        >
+                                            {
+                                                dropdownController.opened
+                                                ? <IoClose/>
+                                                : <IoReorderFour/>
+                                            }
+                                        </Button>
+                                    </Dropdown>
+                                </Row>
+                                <Col
+                                    className={ classNames(css.list, { [css.revert]: revert }) }>
                                     {
                                         words.length
                                         ? words.map((word) => (
