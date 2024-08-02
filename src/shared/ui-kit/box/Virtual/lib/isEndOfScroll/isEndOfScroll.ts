@@ -5,5 +5,5 @@ export type IsEndOfScrollProps = {
 }
 
 export const isEndOfScroll = function (props: IsEndOfScrollProps): boolean {
-    return props.scrollHeight - props.offsetHeight - Math.abs(props.scrollTop) === 0;
+    return props.scrollHeight - props.offsetHeight - Math.abs(props.scrollTop) <= 1;
 };

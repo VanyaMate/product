@@ -18,7 +18,7 @@ export const getPreviousIndex = function (props: GetPreviousIndexProps) {
 
     if (isTop(props.type)) {
         const maxIndex: number = props.itemsLength - props.showAmount;
-        return Math.min(maxIndex, props.currentIndex + offset);
+        return Math.max(Math.min(maxIndex, props.currentIndex + offset), 0);
     } else {
         return Math.max(0, props.currentIndex - offset);
     }

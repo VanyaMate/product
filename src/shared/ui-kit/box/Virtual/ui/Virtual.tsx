@@ -30,7 +30,6 @@ export type VirtualProps =
         showAmount?: number;
         distanceToTrigger?: number;
         type?: VirtualType;
-        reverseItems?: boolean;
         uploadNext?: VirtualUploadMethod;
         uploadPrevious?: VirtualUploadMethod;
         hasMoreNext?: boolean;
@@ -48,7 +47,6 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
               showAmount        = 40,
               distanceToTrigger = 200,
               type              = VirtualType.TOP,
-              reverseItems      = false,
               uploadNext,
               uploadPrevious,
               hasMoreNext       = true,
@@ -93,6 +91,11 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
         prevHandler  : onPrev,
     });
 
+    console.log('****** VIRTUAL RERENDER ******');
+    console.log('Index: ', currentIndex);
+    console.log('Virtual action: ', actionType.current);
+    console.log('******************************');
+
     return (
         <div
             { ...other }
@@ -100,7 +103,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
             ref={ ref }
         >
             <div
-                className={ classNames(css.content, { [css.reverse]: reverseItems }, [ contentClassName ]) }
+                className={ classNames(css.content, {}, [ contentClassName ]) }
             >
                 { virtualItems.map(render) }
             </div>

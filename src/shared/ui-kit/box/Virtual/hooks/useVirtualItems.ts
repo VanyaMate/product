@@ -35,7 +35,10 @@ export const useVirtualItems = function (props: UseVirtualItemsProps): UseVirtua
     const previousLength      = useRef<number>(props.items.length);
 
     useLayoutEffect(() => {
-        if (previousLength.current === props.items.length) {
+        const itemsLengthNotChanged: boolean = previousLength.current === props.items.length;
+        const itemsLengthDecreased: boolean  = previousLength.current > props.items.length;
+
+        if (itemsLengthNotChanged || itemsLengthDecreased) {
             const virtualItems = getVirtualItems({
                 index     : refIndex.current,
                 items     : props.items,

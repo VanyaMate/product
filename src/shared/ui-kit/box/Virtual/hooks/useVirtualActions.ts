@@ -72,9 +72,13 @@ export const useVirtualActions = function (props: UseVirtualActionsProps): UseVi
 
     // Change index
     useLayoutEffect(() => {
-        const itemsLengthChanged: boolean = previous.length.current !== props.items.length;
+        const itemsLengthNotChanged: boolean = previous.length.current === props.items.length;
+        if (itemsLengthNotChanged) {
+            return;
+        }
 
-        if (!itemsLengthChanged) {
+        const itemsLengthDecreased: boolean = previous.length.current > props.items.length;
+        if (itemsLengthDecreased) {
             return;
         }
 
@@ -86,6 +90,7 @@ export const useVirtualActions = function (props: UseVirtualActionsProps): UseVi
                     previousLast : previous.last.current,
                     items        : props.items,
                 })) {
+                    console.log('Autoscroll', dynamicActionType.current);
                     props.setIndex(getLastIndex({
                         type       : props.type,
                         itemsLength: props.items.length,
@@ -101,6 +106,7 @@ export const useVirtualActions = function (props: UseVirtualActionsProps): UseVi
                     previousLast : previous.last.current,
                     items        : props.items,
                 })) {
+                    console.log('Toggle NEXT, Loading NEXT', dynamicActionType.current);
                     props.setIndex(getNextIndex({
                         type        : props.type,
                         itemsLength : props.items.length,
@@ -111,6 +117,7 @@ export const useVirtualActions = function (props: UseVirtualActionsProps): UseVi
                 break;
             case VirtualAction.TOGGLE_PREVIOUS:
             case VirtualAction.LOADING_PREVIOUS:
+                console.log('Toggle PREVIOUS, Loading PREVIOUS', dynamicActionType.current);
                 if (isPreviousChanges({
                     type         : props.type,
                     previousFirst: previous.first.current,
@@ -160,6 +167,7 @@ export const useVirtualActions = function (props: UseVirtualActionsProps): UseVi
                     processActionType.current = VirtualAction.NONE;
                 }
             } else {
+                dynamicActionType.current = VirtualAction.NONE;
                 props.setIndex(
                     getNextIndex({
                         type        : props.type,
@@ -200,6 +208,7 @@ export const useVirtualActions = function (props: UseVirtualActionsProps): UseVi
                     processActionType.current = VirtualAction.NONE;
                 }
             } else {
+                dynamicActionType.current = VirtualAction.NONE;
                 props.setIndex(
                     getPreviousIndex({
                         type        : props.type,

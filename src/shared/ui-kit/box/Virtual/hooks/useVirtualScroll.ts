@@ -1,7 +1,5 @@
 import { MutableRefObject, useLayoutEffect, useRef } from 'react';
-import {
-    VirtualType,
-} from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
+import { VirtualType } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 import {
     getScrollDirection,
 } from '@/shared/ui-kit/box/Virtual/lib/getScrollDirection/getScrollDirection.ts';
@@ -68,14 +66,18 @@ export const useVirtualScroll = function (props: UseVirtualScrollProps): UseVirt
 
     // Update scroll when virtualItems is changed
     useLayoutEffect(() => {
+        console.log('---- Use Scroll', props.virtualAction.current);
+
         switch (props.virtualAction.current) {
             case VirtualAction.AUTOSCROLL:
+                console.log('Autoscroll');
                 if (isNextChanges({
                     type         : props.type,
                     previousLast : previous.last.current,
                     previousFirst: previous.first.current,
                     items        : props.virtualItems,
                 })) {
+                    console.log('Scrolling...');
                     containerRef.current.scrollTo({
                         top     : getMaxNextScrollPosition(props.type),
                         behavior: props.smoothScroll ? 'smooth' : 'instant',
@@ -84,12 +86,14 @@ export const useVirtualScroll = function (props: UseVirtualScrollProps): UseVirt
                 break;
             case VirtualAction.TOGGLE_NEXT:
             case VirtualAction.LOADING_NEXT:
+                console.log('Next');
                 if (isNextChanges({
                     type         : props.type,
                     previousLast : previous.last.current,
                     previousFirst: previous.first.current,
                     items        : props.virtualItems,
                 })) {
+                    console.log('Scroll..');
                     containerRef.current.scrollTo({
                         top: getMaxNextScrollPosition(props.type),
                     });
@@ -97,12 +101,14 @@ export const useVirtualScroll = function (props: UseVirtualScrollProps): UseVirt
                 break;
             case VirtualAction.TOGGLE_PREVIOUS:
             case VirtualAction.LOADING_PREVIOUS:
+                console.log('Previous');
                 if (isPreviousChanges({
                     type         : props.type,
                     previousLast : previous.last.current,
                     previousFirst: previous.first.current,
                     items        : props.virtualItems,
                 })) {
+                    console.log('Scroll..');
                     containerRef.current.scrollTo({
                         top: getMaxPrevScrollPosition({
                             type     : props.type,
@@ -128,6 +134,11 @@ export const useVirtualScroll = function (props: UseVirtualScrollProps): UseVirt
             previousOffsetWidth.current = ref.offsetWidth;
 
             const onScrollHandler = function () {
+                console.log('On scroll handler with:');
+                console.log('ScrollDirection:', scrollDirection.current);
+                console.log('LastHandler:', lastHandler.current);
+                console.log('ActionType:', props.virtualAction.current);
+
                 const {
                           scrollTop,
                           scrollHeight,
@@ -136,45 +147,55 @@ export const useVirtualScroll = function (props: UseVirtualScrollProps): UseVirt
                       } = ref;
 
                 if (previousOffsetWidth.current !== offsetWidth) {
+                    console.log('Offset change', previousOffsetWidth.current, offsetWidth);
                     previousOffsetWidth.current = offsetWidth;
 
                     if (props.virtualAction.current === VirtualAction.AUTOSCROLL) {
-                        ref.scrollTo({
-                            top: getMaxNextScrollPosition(props.type),
-                        });
+                        console.log('Autoscroll, scrolling...');
+                        const scrollPosition: number = getMaxNextScrollPosition(props.type);
+                        previousScrollTop.current    = scrollPosition;
+                        ref.scrollTo({ top: scrollPosition });
                     }
                     return;
                 }
 
                 if (isStartOfScroll(scrollTop)) {
-                    ref.scrollTo({
-                        top: getMaxNextScrollPosition(props.type),
-                    });
+                    console.log('IsStartOfScroll');
+                    const scrollPosition: number = getMaxNextScrollPosition(props.type);
+                    previousScrollTop.current    = scrollPosition;
+                    ref.scrollTo({ top: scrollPosition });
                     return;
                 }
 
                 if (isEndOfScroll({ scrollHeight, offsetHeight, scrollTop })) {
-                    ref.scrollTo({
-                        top: getMaxPrevScrollPosition({
-                            type: props.type,
-                            scrollTop,
-                        }),
+                    console.log('IsEndOfScroll');
+                    const scrollPosition: number = getMaxPrevScrollPosition({
+                        type: props.type,
+                        scrollTop,
                     });
+                    previousScrollTop.current    = scrollPosition;
+                    ref.scrollTo({ top: scrollPosition });
                     return;
                 }
+
+                console.log('Previous scroll direction:', scrollDirection.current);
 
                 scrollDirection.current = getScrollDirection({
                     previous: previousScrollTop.current,
                     current : scrollTop,
                 });
 
+                console.log('Current scroll direction:', scrollDirection.current);
+
                 if (isNextScrollTrigger({
                     scrollDirection  : scrollDirection.current,
                     scrollTop,
                     distanceToTrigger: props.distanceToTrigger,
                 })) {
+                    console.log('IsNextScrollTrigger', lastHandler.current);
                     if (lastHandler.current !== VirtualScrollDirection.NEXT) {
                         lastHandler.current = VirtualScrollDirection.NEXT;
+                        console.log('!!!!! Execute nextHandler');
                         props.nextHandler();
                     }
                 } else if (isPreviousScrollTrigger({
@@ -184,12 +205,16 @@ export const useVirtualScroll = function (props: UseVirtualScrollProps): UseVirt
                     offsetHeight,
                     scrollHeight,
                 })) {
+                    console.log('IsPreviousScrollTrigger', lastHandler.current);
                     if (lastHandler.current !== VirtualScrollDirection.PREVIOUS) {
                         lastHandler.current = VirtualScrollDirection.PREVIOUS;
+                        console.log('!!!!! Execute prevHandler');
                         props.prevHandler();
                     }
                 } else if (previousScrollTop.current !== Math.abs(scrollTop)) {
+                    console.log('IsOtherTrigger');
                     lastHandler.current = VirtualScrollDirection.NONE;
+                    console.log('!!!!! Execute otherHandler');
                     props.otherHandler();
                 }
 
