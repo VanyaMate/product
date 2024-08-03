@@ -1,31 +1,20 @@
 import {
     ComponentPropsWithoutRef,
     FC,
-    memo,
-    useCallback,
+    memo, useCallback,
     useLayoutEffect,
 } from 'react';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    $privateMessages,
-    $privateMessagesHasMore,
-    getPrivateMessagesByCursorEffect,
-    readPrivateMessageEffect,
+    $privateMessages, getPrivateMessagesByCursorEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
-import { DomainMessage } from 'product-types/dist/message/DomainMessage';
+import { $authUser } from '@/app/model/auth/auth.model.ts';
 import {
     PrivateMessage,
 } from '@/entities/message/item/PrivateMessage/ui/PrivateMessage.tsx';
-import { $authUser } from '@/app/model/auth/auth.model.ts';
-import css from './PrivateMessagesInfinityVirtualContainer.module.scss';
-import classNames from 'classnames';
-import {
-    Virtual,
-    VirtualType,
-} from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
-import {
-    EmptyDialogue,
-} from '@/entities/dialogue/EmptyDialogue/ui/EmptyDialogue.tsx';
+import { Virtual } from '@/shared/ui-tanstack/box/Virtual/ui/Virtual.tsx';
+import { DomainMessage } from 'product-types/dist/message/DomainMessage';
+import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
 
 
 export type PrivateMessagesInfinityVirtualContainerProps =
@@ -35,55 +24,39 @@ export type PrivateMessagesInfinityVirtualContainerProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinityVirtualContainerProps> = memo(function PrivateMessagesInfinityVirtualContainer (props) {
-    const { dialogueId, className, ...other } = props;
-    const messages                            = useStore($privateMessages);
-    const hasMoreMessages                     = useStore($privateMessagesHasMore);
-    const user                                = useStore($authUser);
+    const { dialogueId, ...other } = props;
+    const messages                 = useStore($privateMessages);
+    const user                     = useStore($authUser);
 
-    const loadPreviousMessages = useCallback(async () => {
-        const messageId = messages[dialogueId][0]?.id;
-        if (messageId) {
-            return getPrivateMessagesByCursorEffect([ dialogueId, {
-                cursor: messageId,
-                limit : 20,
+    useLayoutEffect(() => {
+        if (messages[dialogueId].length === 1) {
+            getPrivateMessagesByCursorEffect([ dialogueId, {
+                cursor: messages[dialogueId][0].id,
+                limit : 30,
                 query : '',
             } ]);
         }
     }, [ dialogueId, messages ]);
 
-    useLayoutEffect(() => {
-        const messagesLength = messages[dialogueId].length;
-        if (messagesLength < 20 && hasMoreMessages[dialogueId]) {
-            loadPreviousMessages();
-        }
-    }, [ dialogueId, hasMoreMessages, loadPreviousMessages, messages ]);
-
     const render = useCallback((message: DomainMessage) => (
-        <PrivateMessage
-            key={ message.id }
-            message={ message }
-            onShowMessage={ readPrivateMessageEffect }
-            userId={ user.id }
-        />
+        <PrivateMessage message={ message } userId={ user.id }/>
     ), [ user.id ]);
-
-    if (!messages[dialogueId].length) {
-        return <EmptyDialogue { ...other } className={ className }/>;
-    }
 
     return (
         <Virtual
             { ...other }
-            className={ classNames(css.container, {}, [ className ]) }
-            contentClassName={ css.content }
-            hasMorePrevious={ hasMoreMessages[dialogueId] }
-            items={ messages[dialogueId] }
-            key={ dialogueId }
+            estimateSize={ 60 }
+            gap={ 10 }
+            hasPrev={ true }
+            list={ messages[dialogueId] }
+            loader={ <Loader/> }
             render={ render }
-            showAmount={ 40 }
-            smoothScroll
-            type={ VirtualType.BOTTOM }
-            uploadPrevious={ loadPreviousMessages }
+            side="BOTTOM"
+            uploadPrev={ () => getPrivateMessagesByCursorEffect([ dialogueId, {
+                cursor: messages[dialogueId][0].id,
+                limit : 30,
+                query : '',
+            } ]) }
         />
     );
 });

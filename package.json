@@ -42,6 +42,7 @@
     },
     "dependencies": {
         "@radix-ui/react-icons": "^1.3.0",
+        "@tanstack/react-virtual": "^3.8.4",
         "@vanyamate/fetch-with-interceptors": "^0.0.1",
         "@vanyamate/helpers": "^0.0.5",
         "@vanyamate/react-infinity-virtual": "^0.1.3",
