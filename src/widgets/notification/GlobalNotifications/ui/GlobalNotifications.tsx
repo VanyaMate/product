@@ -30,7 +30,7 @@ import {
     useGlobalStoreUpdaterByNotifications,
 } from '@/features/notification/hooks/useGlobalStoreUpdaterByNotifications.ts';
 import {
-    Virtual,
+    Virtual, VirtualRenderMethod,
     VirtualType,
 } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 
@@ -116,7 +116,7 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
         };
     }, [ notification ]);
 
-    const notificationRender = useCallback((notification: DomainNotification) => (
+    const notificationRender = useCallback<VirtualRenderMethod>((notification: DomainNotification) => (
         <NotificationItem
             key={ notification.id + notification.type + notification.creationDate }
             notification={ notification }
@@ -136,7 +136,7 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
                     distanceToTrigger={ 100 }
                     hasMoreNext={ false }
                     hasMorePrevious={ false }
-                    items={ notifications }
+                    list={ notifications }
                     render={ notificationRender }
                     showAmount={ 30 }
                     type={ VirtualType.TOP }

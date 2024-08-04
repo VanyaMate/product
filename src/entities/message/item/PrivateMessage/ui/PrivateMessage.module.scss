@@ -115,7 +115,8 @@
         }
 
         .message {
-            color : var(--text-main-color);
+            color      : var(--text-main-color);
+            word-break : break-all;
 
             &_content {
                 width      : 100%;

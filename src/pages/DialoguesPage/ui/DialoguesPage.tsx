@@ -36,7 +36,7 @@ import {
     DomainPrivateDialogueFull,
 } from 'product-types/dist/private-dialogue/DomainPrivateDialogueFull';
 import {
-    Virtual,
+    Virtual, VirtualRenderMethod,
     VirtualType,
 } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 
@@ -63,7 +63,7 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
     // Подгрузка для бандла
     useTranslation([ 'dialogue', 'friends-page', 'posts' ]);
 
-    const dialoguesRender = useCallback((dialogue: DomainPrivateDialogueFull) => (
+    const dialoguesRender = useCallback<VirtualRenderMethod>((dialogue: DomainPrivateDialogueFull) => (
         <PrivateDialogue
             dialogue={ dialogue }
             key={ dialogue.id }
@@ -84,7 +84,7 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
                 className={ css.dialogues }
                 contentClassName={ css.list }
                 distanceToTrigger={ 100 }
-                items={ dialogues }
+                list={ dialogues }
                 render={ dialoguesRender }
                 showAmount={ 20 }
                 type={ VirtualType.TOP }

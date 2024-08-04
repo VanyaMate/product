@@ -1,18 +1,9 @@
+/* eslint-disable */
+
 import { ComponentPropsWithoutRef, FC, memo, ReactNode } from 'react';
 import classNames from 'classnames';
 import css from './Virtual.module.scss';
-import {
-    useVirtualItems,
-} from '@/shared/ui-kit/box/Virtual/hooks/useVirtualItems.ts';
-import {
-    useVirtualActions,
-} from '@/shared/ui-kit/box/Virtual/hooks/useVirtualActions.ts';
-import {
-    useVirtualScroll,
-} from '@/shared/ui-kit/box/Virtual/hooks/useVirtualScroll.ts';
-import {
-    useVirtualFiller,
-} from '@/shared/ui-kit/box/Virtual/hooks/useVirtualFiller.ts';
+import { isTop } from '@/shared/ui-kit/box/Virtual/lib/isTop/isTop.ts';
 
 
 export enum VirtualType {
@@ -20,20 +11,30 @@ export enum VirtualType {
     BOTTOM
 }
 
+export type VirtualList = Array<unknown>;
 export type VirtualUploadMethod = () => Promise<unknown>;
+export type VirtualRenderMethod = (item: unknown, index: number) => ReactNode;
 
 export type VirtualProps =
     {
-        items: Array<unknown>;
-        render: (item: unknown, index: number) => ReactNode;
-        smoothScroll?: boolean;
+        list: VirtualList;
+        render: VirtualRenderMethod;
+        type?: VirtualType;
+        smoothAutoscroll?: boolean;
         showAmount?: number;
         distanceToTrigger?: number;
-        type?: VirtualType;
+        autoscrollNext?: boolean;
+        autoscrollPrevious?: boolean;
+        loadingNext?: boolean;
+        loadingPrevious?: boolean;
         uploadNext?: VirtualUploadMethod;
         uploadPrevious?: VirtualUploadMethod;
         hasMoreNext?: boolean;
         hasMorePrevious?: boolean;
+        loaderNextElement?: ReactNode;
+        loaderPreviousElement?: ReactNode;
+        noMoreNextElement?: ReactNode;
+        noMorePreviousElement?: ReactNode;
         contentClassName?: string;
     }
     & ComponentPropsWithoutRef<'div'>;
@@ -41,71 +42,37 @@ export type VirtualProps =
 export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
     const {
               className,
-              items,
+              contentClassName,
+              list,
               render,
-              smoothScroll      = true,
-              showAmount        = 40,
-              distanceToTrigger = 200,
-              type              = VirtualType.TOP,
+              type               = VirtualType.TOP,
+              smoothAutoscroll   = true,
+              showAmount         = 20,
+              distanceToTrigger  = 100,
+              autoscrollNext     = true,
+              autoscrollPrevious = false,
+              loadingNext        = false,
+              loadingPrevious    = false,
               uploadNext,
               uploadPrevious,
-              hasMoreNext       = true,
-              hasMorePrevious   = true,
-              contentClassName,
+              hasMoreNext        = false,
+              hasMorePrevious    = false,
+              loaderNextElement,
+              loaderPreviousElement,
+              noMoreNextElement,
+              noMorePreviousElement,
               ...other
           } = props;
-
-    const { virtualItems, setCurrentIndex, currentIndex } = useVirtualItems({
-        items,
-        showAmount,
-        type,
-    });
-
-    useVirtualFiller({
-        type,
-        setIndex          : setCurrentIndex,
-        showAmount,
-        virtualItemsLength: virtualItems.length,
-        itemsLength       : items.length,
-    });
-
-    const { onOther, onNext, onPrev, actionType } = useVirtualActions({
-        items,
-        type,
-        showAmount,
-        setIndex   : setCurrentIndex,
-        currentIndex,
-        uploadNext,
-        uploadPrev : uploadPrevious,
-        hasMoreNext,
-        hasMorePrev: hasMorePrevious,
-    });
-    const { ref }                                 = useVirtualScroll({
-        virtualAction: actionType,
-        virtualItems,
-        type,
-        distanceToTrigger,
-        smoothScroll,
-        otherHandler : onOther,
-        nextHandler  : onNext,
-        prevHandler  : onPrev,
-    });
-
-    console.log('****** VIRTUAL RERENDER ******');
-    console.log('Index: ', currentIndex);
-    console.log('Virtual action: ', actionType.current);
-    console.log('******************************');
 
     return (
         <div
             { ...other }
-            className={ classNames(css.container, { [css.top]: type === VirtualType.TOP }, [ className ]) }
-            ref={ ref }
+            className={ classNames(css.container, { [css.top]: isTop(type) }, [ className ]) }
         >
             <div
                 className={ classNames(css.content, {}, [ contentClassName ]) }
             >
-                { virtualItems.map(render) }
+                //
             </div>
         </div>
     );

@@ -20,7 +20,7 @@ import { $authUser } from '@/app/model/auth/auth.model.ts';
 import css from './PrivateMessagesInfinityVirtualContainer.module.scss';
 import classNames from 'classnames';
 import {
-    Virtual,
+    Virtual, VirtualRenderMethod,
     VirtualType,
 } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 import {
@@ -58,7 +58,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
         }
     }, [ dialogueId, hasMoreMessages, loadPreviousMessages, messages ]);
 
-    const render = useCallback((message: DomainMessage) => (
+    const render = useCallback<VirtualRenderMethod>((message: DomainMessage) => (
         <PrivateMessage
             key={ message.id }
             message={ message }
@@ -76,12 +76,13 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
             contentClassName={ css.content }
+            distanceToTrigger={ 600 }
             hasMorePrevious={ hasMoreMessages[dialogueId] }
-            items={ messages[dialogueId] }
             key={ dialogueId }
+            list={ messages[dialogueId] }
             render={ render }
-            showAmount={ 40 }
-            smoothScroll
+            showAmount={ 100 }
+            smoothAutoscroll
             type={ VirtualType.BOTTOM }
             uploadPrevious={ loadPreviousMessages }
         />
