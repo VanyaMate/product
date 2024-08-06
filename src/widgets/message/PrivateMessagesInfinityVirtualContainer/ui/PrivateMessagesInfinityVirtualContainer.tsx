@@ -8,7 +8,7 @@ import {
 import { useStore } from '@vanyamate/sec-react';
 import {
     $privateMessages,
-    $privateMessagesHasMore,
+    $privateMessagesHasMore, $privateMessagesIsPending,
     getPrivateMessagesByCursorEffect,
     readPrivateMessageEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
@@ -20,12 +20,13 @@ import { $authUser } from '@/app/model/auth/auth.model.ts';
 import css from './PrivateMessagesInfinityVirtualContainer.module.scss';
 import classNames from 'classnames';
 import {
-    Virtual, VirtualRenderMethod,
-    VirtualType,
-} from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
-import {
     EmptyDialogue,
 } from '@/entities/dialogue/EmptyDialogue/ui/EmptyDialogue.tsx';
+import {
+    VirtualRenderMethod,
+    VirtualType,
+} from '@/shared/ui-kit/box/Virtual/types/types.ts';
+import { Virtual } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 
 
 export type PrivateMessagesInfinityVirtualContainerProps =
@@ -38,6 +39,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
     const { dialogueId, className, ...other } = props;
     const messages                            = useStore($privateMessages);
     const hasMoreMessages                     = useStore($privateMessagesHasMore);
+    const messagesPending                     = useStore($privateMessagesIsPending);
     const user                                = useStore($authUser);
 
     const loadPreviousMessages = useCallback(async () => {
@@ -45,7 +47,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
         if (messageId) {
             return getPrivateMessagesByCursorEffect([ dialogueId, {
                 cursor: messageId,
-                limit : 20,
+                limit : 140,
                 query : '',
             } ]);
         }
@@ -74,14 +76,16 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
     return (
         <Virtual
             { ...other }
+            autoscrollNext
             className={ classNames(css.container, {}, [ className ]) }
             contentClassName={ css.content }
-            distanceToTrigger={ 600 }
+            distanceToTrigger={ 200 }
             hasMorePrevious={ hasMoreMessages[dialogueId] }
             key={ dialogueId }
             list={ messages[dialogueId] }
+            loadingPrevious={ messagesPending[dialogueId] }
             render={ render }
-            showAmount={ 100 }
+            showAmount={ 40 }
             smoothAutoscroll
             type={ VirtualType.BOTTOM }
             uploadPrevious={ loadPreviousMessages }

@@ -36,9 +36,9 @@ import {
     DomainPrivateDialogueFull,
 } from 'product-types/dist/private-dialogue/DomainPrivateDialogueFull';
 import {
-    Virtual, VirtualRenderMethod,
-    VirtualType,
-} from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
+    VirtualRenderMethod, VirtualType,
+} from '@/shared/ui-kit/box/Virtual/types/types.ts';
+import { Virtual } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 
 
 export type DialoguesPageProps =

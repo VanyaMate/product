@@ -30,9 +30,9 @@ import {
     useGlobalStoreUpdaterByNotifications,
 } from '@/features/notification/hooks/useGlobalStoreUpdaterByNotifications.ts';
 import {
-    Virtual, VirtualRenderMethod,
-    VirtualType,
-} from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
+    VirtualRenderMethod, VirtualType,
+} from '@/shared/ui-kit/box/Virtual/types/types.ts';
+import { Virtual } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 
 
 export type GlobalNotificationsProps =
