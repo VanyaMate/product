@@ -27,12 +27,12 @@ export const useVirtualList = function (props: UseVirtualListProps) {
         getVirtualList({ index: currentIndex.current, list, showAmount }),
     );
 
-    const setIndex = useCallback<VirtualIndexSetter>((index: number) => {
+    const setIndex = useCallback<VirtualIndexSetter>((index: number, list: VirtualList, showAmount: number) => {
         currentIndex.current = index;
         setVirtualList(
             getVirtualList({ index, list, showAmount }),
         );
-    }, [ list, showAmount ]);
+    }, []);
 
     return { currentIndex, virtualList, setIndex };
 };

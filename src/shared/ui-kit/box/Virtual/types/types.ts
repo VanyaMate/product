@@ -25,7 +25,7 @@ export enum VirtualScrollDirection {
 }
 
 
-export type VirtualIndexSetter = (index: number) => void;
+export type VirtualIndexSetter = (index: number, list: VirtualList, showAmount: number) => void;
 
 export enum VirtualType {
     TOP,
@@ -35,3 +35,10 @@ export enum VirtualType {
 export type VirtualList = Array<unknown>;
 export type VirtualUploadMethod = () => Promise<unknown>;
 export type VirtualRenderMethod = (item: unknown, index: number) => ReactNode;
+export type VirtualScrollTo = (target: number, smooth: boolean, animationMs: number) => void;
+
+export type VirtualElementProps = {
+    currentIndex: MutableRefObject<number>;
+    toFirstItem: () => void;
+}
+export type VirtualElement = (props: VirtualElementProps) => ReactNode;

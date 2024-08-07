@@ -32,6 +32,10 @@ import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
 import {
     NoMoreMessageDialogue,
 } from '@/entities/dialogue/NoMoreMessageDialogue/ui/NoMoreMessageDialogue.tsx';
+import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
+import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import { IoArrowDown } from 'react-icons/io5';
+import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 
 
 export type PrivateMessagesInfinityVirtualContainerProps =
@@ -81,6 +85,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
     return (
         <Virtual
             { ...other }
+            animationMs={ 100 }
             autoscrollNext
             className={ classNames(css.container, {}, [ className ]) }
             contentClassName={ css.content }
@@ -95,7 +100,17 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             loadingPrevious={ messagesPending[dialogueId] }
             noMoreNextElement="..."
             noMorePreviousElement={ <NoMoreMessageDialogue/> }
+            permanentNextElement={ ({ toFirstItem }) => (
+                <Row fullWidth spaceBetween style={ { padding: 5 } }>
+                    <p>{ '[USER] набирает сообщение...' + '' }</p>
+                    <Button onClick={ toFirstItem }
+                            styleType={ ButtonStyleType.GHOST }>
+                        <IoArrowDown/>
+                    </Button>
+                </Row>
+            ) }
             render={ render }
+            scrollDistance={ 100 }
             showAmount={ 40 }
             smoothAutoscroll={ true }
             type={ VirtualType.BOTTOM }

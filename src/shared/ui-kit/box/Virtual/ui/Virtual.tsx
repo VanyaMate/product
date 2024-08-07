@@ -2,10 +2,13 @@ import {
     ComponentPropsWithoutRef,
     FC,
     memo,
-    ReactNode, useCallback,
+    ReactNode,
+    useCallback,
     useEffect,
-    useLayoutEffect, useMemo,
-    useRef, useState,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+    useState,
 } from 'react';
 import classNames from 'classnames';
 import css from './Virtual.module.scss';
@@ -15,8 +18,11 @@ import {
 } from '@/shared/ui-kit/box/Virtual/hooks/useVirtualList/useVirtualList.ts';
 import {
     VirtualAction,
+    VirtualElement,
+    VirtualIndexSetter,
     VirtualList,
     VirtualRenderMethod,
+    VirtualScrollTo,
     VirtualType,
     VirtualUploadMethod,
 } from '@/shared/ui-kit/box/Virtual/types/types.ts';
@@ -56,6 +62,9 @@ export type VirtualProps =
         loaderPreviousElement?: ReactNode;
         noMoreNextElement?: ReactNode;
         noMorePreviousElement?: ReactNode;
+        permanentNextElement?: VirtualElement;
+        permanentPreviousElement?: VirtualElement;
+        additionalElements?: Array<VirtualElement>;
         contentClassName?: string;
     }
     & ComponentPropsWithoutRef<'div'>;
@@ -66,24 +75,27 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
               contentClassName,
               list,
               render,
-              type               = VirtualType.TOP,
-              smoothAutoscroll   = true,
-              animationMs        = 100,
-              scrollDistance     = 100,
-              showAmount         = 20,
-              distanceToTrigger  = 100,
-              autoscrollNext     = true,
-              autoscrollPrevious = false,
-              loadingNext        = false,
-              loadingPrevious    = false,
-              uploadNext,
-              uploadPrevious,
-              hasMoreNext        = false,
-              hasMorePrevious    = false,
-              loaderNextElement,
-              loaderPreviousElement,
-              noMoreNextElement,
-              noMorePreviousElement,
+              type                     = VirtualType.TOP,
+              smoothAutoscroll         = true,
+              animationMs              = 100,
+              scrollDistance           = 100,
+              showAmount               = 20,
+              distanceToTrigger        = 100,
+              autoscrollNext           = true,
+              autoscrollPrevious       = false,
+              loadingNext              = false,
+              loadingPrevious          = false,
+              uploadNext               = null,
+              uploadPrevious           = null,
+              hasMoreNext              = false,
+              hasMorePrevious          = false,
+              loaderNextElement        = null,
+              loaderPreviousElement    = null,
+              permanentNextElement     = null,
+              permanentPreviousElement = null,
+              noMoreNextElement        = null,
+              noMorePreviousElement    = null,
+              additionalElements       = [],
               ...other
           } = props;
 
@@ -91,7 +103,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
      * Variables
      ******************************************************************/
 
-    const toggleDistance = useMemo(() => Math.ceil(showAmount / 4), [ showAmount ]);
+    const toggleDistance = Math.ceil(showAmount / 4);
 
 
     /*******************************************************************
@@ -115,7 +127,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
     const startAnimationPosition = useRef<number>(0);
     const requestAnimation       = useRef<number>(0);
 
-    const scrollAnimation = useCallback((ref: HTMLDivElement, timestamp: number) => {
+    const scrollAnimation = useCallback((ref: HTMLDivElement, timestamp: number, animationMs: number) => {
         if (startAnimationTime.current === 0) {
             startAnimationTime.current = timestamp;
         }
@@ -131,19 +143,20 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
         ref.scrollTop = scrollPosition;
 
         if (scrollPosition !== targetScrollPosition.current) {
-            requestAnimation.current = requestAnimationFrame((t) => scrollAnimation(ref, t));
+            requestAnimation.current = requestAnimationFrame((t) => scrollAnimation(ref, t, animationMs));
         }
-    }, [ animationMs ]);
+    }, []);
 
-    const scrollTo = useCallback((target: number, smooth: boolean) => {
+    const scrollTo = useCallback<VirtualScrollTo>((target: number, smooth: boolean, animationMs: number) => {
         const ref = containerRef.current;
         if (ref) {
             if (smooth) {
                 targetScrollPosition.current   = target;
                 startAnimationPosition.current = ref.scrollTop;
                 startAnimationTime.current     = 0;
-                requestAnimation.current       = requestAnimationFrame((t) => scrollAnimation(ref, t));
+                requestAnimation.current       = requestAnimationFrame((t) => scrollAnimation(ref, t, animationMs));
             } else {
+                targetScrollPosition.current = target;
                 cancelAnimationFrame(requestAnimation.current);
                 ref.scrollTop = target;
             }
@@ -167,7 +180,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                 });
 
                 if (targetPosition !== null) {
-                    scrollTo(targetPosition, true);
+                    scrollTo(targetPosition, true, animationMs);
                 }
             };
 
@@ -176,7 +189,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                 ref.removeEventListener('wheel', onWheelHandler);
             };
         }
-    }, [ scrollDistance, scrollTo, type ]);
+    }, [ animationMs, scrollDistance, scrollTo, type ]);
 
 
     /*******************************************************************
@@ -207,31 +220,33 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
         }
     }, []);
 
-    const toggleNext = useCallback((content: HTMLDivElement) => {
+    const toggleNext = useCallback((content: HTMLDivElement, setIndex: VirtualIndexSetter, list: VirtualList, type: VirtualType, showAmount: number, toggleDistance: number) => {
         previousScrollAction.current  = VirtualAction.TOGGLE_NEXT;
         previousContentHeight.current = content.scrollHeight;
 
         if (isTop(type)) {
             saveCurrentFirstElement(content);
-            setIndex(Math.max(0, currentIndex.current - toggleDistance));
+            setIndex(Math.max(0, currentIndex.current - toggleDistance), list, showAmount);
         } else {
             saveCurrentLastElement(content);
-            setIndex(Math.min(Math.max(0, list.length - showAmount), currentIndex.current + toggleDistance));
+            setIndex(Math.min(Math.max(0, list.length - showAmount), currentIndex.current + toggleDistance), list, showAmount);
         }
-    }, [ type, saveCurrentFirstElement, setIndex, currentIndex, toggleDistance, saveCurrentLastElement, list.length, showAmount ]);
+        // eslint-disable-next-line
+    }, []);
 
-    const togglePrevious = useCallback((content: HTMLDivElement) => {
+    const togglePrevious = useCallback((content: HTMLDivElement, setIndex: VirtualIndexSetter, list: VirtualList, type: VirtualType, showAmount: number, toggleDistance: number) => {
         previousScrollAction.current  = VirtualAction.TOGGLE_PREVIOUS;
         previousContentHeight.current = content.scrollHeight;
 
         if (isTop(type)) {
             saveCurrentLastElement(content);
-            setIndex(Math.min(Math.max(0, list.length - showAmount), currentIndex.current + toggleDistance));
+            setIndex(Math.min(Math.max(0, list.length - showAmount), currentIndex.current + toggleDistance), list, showAmount);
         } else {
             saveCurrentFirstElement(content);
-            setIndex(Math.max(0, currentIndex.current - toggleDistance));
+            setIndex(Math.max(0, currentIndex.current - toggleDistance), list, showAmount);
         }
-    }, [ type, saveCurrentLastElement, setIndex, list.length, showAmount, currentIndex, toggleDistance, saveCurrentFirstElement ]);
+        // eslint-disable-next-line
+    }, []);
 
     useLayoutEffect(() => {
         const ref     = containerRef.current;
@@ -242,6 +257,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                 const { scrollTop, scrollHeight, offsetHeight } = ref;
 
                 if (disableScrollHandler.current) {
+                    previousScrollTop.current = scrollTop;
                     return;
                 }
 
@@ -254,11 +270,9 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                     let isNotStartList: boolean;
 
                     switch (previousScrollAction.current) {
-                        case VirtualAction.AUTOSCROLL_NEXT:
                         case VirtualAction.TOGGLE_NEXT:
                             break;
                         default:
-
                             if (isTop(type)) {
                                 isNotStartList = currentIndex.current !== 0;
                             } else {
@@ -266,7 +280,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                             }
 
                             if (isNotStartList) {
-                                toggleNext(content);
+                                toggleNext(content, setIndex, list, type, showAmount, toggleDistance);
                                 break;
                             }
 
@@ -294,11 +308,9 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                     let isNotEndList: boolean;
 
                     switch (previousScrollAction.current) {
-                        case VirtualAction.AUTOSCROLL_PREVIOUS:
                         case VirtualAction.TOGGLE_PREVIOUS:
                             break;
                         default:
-
                             if (isTop(type)) {
                                 isNotEndList = currentIndex.current < list.length - showAmount;
                             } else {
@@ -306,7 +318,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                             }
 
                             if (isNotEndList) {
-                                togglePrevious(content);
+                                togglePrevious(content, setIndex, list, type, showAmount, toggleDistance);
                                 break;
                             }
 
@@ -337,7 +349,8 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                 ref.removeEventListener('scroll', onScrollHandler);
             };
         }
-    }, [ setIndex, list, distanceToTrigger, type, hasMoreNext, uploadNext, currentIndex, showAmount, toggleNext, loadingNext, hasMorePrevious, uploadPrevious, togglePrevious, loadingPrevious ]);
+        // eslint-disable-next-line
+    }, [ distanceToTrigger, hasMoreNext, hasMorePrevious, list, loadingNext, loadingPrevious, showAmount, type, uploadNext, uploadPrevious ]);
 
 
     /*******************************************************************
@@ -350,6 +363,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
     const previousLastElement          = useRef<HTMLElement>(null);
     const previousLastElementPosition  = useRef<number>(0);
     const previousContentHeight        = useRef<number>(null);
+    const userScroll                   = useRef<boolean>(true);
 
     const applyOffsetToCurrentScrollPosition = useCallback((ref: HTMLDivElement, offset: number) => {
         ref.scrollTop                  = previousScrollTop.current + offset;
@@ -361,23 +375,25 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
         const firstElement    = content.firstElementChild as HTMLElement;
         const previousElement = previousFirstElement.current;
 
-        if (firstElement !== previousElement && previousElement !== null) {
-            const currentPosition = previousElement?.offsetTop;
+        if (firstElement !== previousElement && previousElement !== null && previousElement.parentNode) {
+            const currentPosition = previousElement.offsetTop;
             const positionDelta   = currentPosition - previousFirstElementPosition.current;
             applyOffsetToCurrentScrollPosition(ref, positionDelta);
         }
-    }, [ applyOffsetToCurrentScrollPosition ]);
+        // eslint-disable-next-line
+    }, []);
 
     const scrollByLastElement = useCallback((content: HTMLDivElement, ref: HTMLDivElement) => {
         const lastElement     = content.lastElementChild as HTMLElement;
         const previousElement = previousLastElement.current;
 
-        if (lastElement !== previousElement && previousElement !== null) {
-            const currentPosition = previousElement?.offsetTop;
+        if (lastElement !== previousElement && previousElement !== null && previousElement.parentNode) {
+            const currentPosition = previousElement.offsetTop;
             const positionDelta   = currentPosition - previousLastElementPosition.current;
             applyOffsetToCurrentScrollPosition(ref, positionDelta);
         }
-    }, [ applyOffsetToCurrentScrollPosition ]);
+        // eslint-disable-next-line
+    }, []);
 
     const updatePreviousFirstElement = useCallback(() => {
         const content = contentRef.current;
@@ -424,40 +440,69 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                     disableScrollHandler.current = false;
                     break;
                 case VirtualAction.AUTOSCROLL_NEXT:
-                    if (!autoscrollNext) {
+                    if (!autoscrollNext && userScroll.current) {
                         break;
                     }
 
                     if (isTop(type)) {
-                        scrollByFirstElement(content, ref);
-                        setTimeout(() => {
-                            scrollTo(0, smoothAutoscroll);
+                        if (userScroll.current && smoothAutoscroll) {
+                            scrollByFirstElement(content, ref);
+                            setTimeout(() => {
+                                scrollTo(0, true, animationMs);
+                                userScroll.current           = true;
+                                disableScrollHandler.current = false;
+                            });
+                        } else {
+                            scrollTo(0, false, animationMs);
+                            userScroll.current           = true;
                             disableScrollHandler.current = false;
-                        });
+                        }
                     } else {
-                        scrollByLastElement(content, ref);
-                        setTimeout(() => {
-                            scrollTo(0, smoothAutoscroll);
+                        if (userScroll.current && smoothAutoscroll) {
+                            scrollByLastElement(content, ref);
+                            setTimeout(() => {
+                                scrollTo(0, true, animationMs);
+                                userScroll.current           = true;
+                                disableScrollHandler.current = false;
+                            });
+                        } else {
+                            scrollTo(0, false, animationMs);
+                            userScroll.current           = true;
                             disableScrollHandler.current = false;
-                        });
+                        }
                     }
                     break;
                 case VirtualAction.AUTOSCROLL_PREVIOUS:
-                    if (!autoscrollPrevious) {
+                    if (!autoscrollPrevious && userScroll.current) {
                         break;
                     }
 
                     if (isTop(type)) {
-                        scrollByLastElement(content, ref);
-                        setTimeout(() => {
-                            scrollTo(ref.scrollHeight - ref.offsetHeight, smoothAutoscroll);
+                        if (userScroll.current && smoothAutoscroll) {
+                            scrollByLastElement(content, ref);
+                            setTimeout(() => {
+                                scrollTo(ref.scrollHeight - ref.offsetHeight, true, animationMs);
+                                userScroll.current           = true;
+                                disableScrollHandler.current = false;
+                            });
+                        } else {
+                            scrollTo(ref.scrollHeight - ref.offsetHeight, false, animationMs);
+                            userScroll.current           = true;
                             disableScrollHandler.current = false;
-                        });
+                        }
                     } else {
-                        setTimeout(() => {
-                            scrollTo(-(ref.scrollHeight - ref.offsetHeight), smoothAutoscroll);
+                        if (userScroll.current && smoothAutoscroll) {
+                            scrollByFirstElement(content, ref);
+                            setTimeout(() => {
+                                scrollTo(-(ref.scrollHeight - ref.offsetHeight), true, animationMs);
+                                userScroll.current           = true;
+                                disableScrollHandler.current = false;
+                            });
+                        } else {
+                            userScroll.current           = true;
                             disableScrollHandler.current = false;
-                        });
+                            scrollTo(-(ref.scrollHeight - ref.offsetHeight), false, animationMs);
+                        }
                     }
                     break;
                 default:
@@ -469,7 +514,8 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
             updatePreviousFirstElement();
             updatePreviousLastElement();
         }
-    }, [ autoscrollNext, autoscrollPrevious, scrollByFirstElement, scrollByLastElement, scrollTo, smoothAutoscroll, type, updatePreviousFirstElement, updatePreviousLastElement, virtualList ]);
+        // eslint-disable-next-line
+    }, [ animationMs, autoscrollNext, autoscrollPrevious, smoothAutoscroll, type, virtualList ]);
 
 
     /*******************************************************************
@@ -525,42 +571,63 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
     const previousFirstListItem = useRef<unknown>(list[0]);
     const previousLastListItem  = useRef<unknown>(list.slice(-1)[0]);
 
+    const toggleToFirstItem = useCallback((type: VirtualType, list: VirtualList, showAmount: number) => {
+        if (isTop(type)) {
+            disableScrollHandler.current = true;
+            setIndex(0, list, showAmount);
+        } else {
+            disableScrollHandler.current = true;
+            setIndex(Math.max(0, list.length - showAmount), list, showAmount);
+        }
+        // eslint-disable-next-line
+    }, []);
+
+    const toggleToLastItem = useCallback((type: VirtualType, list: VirtualList, showAmount: number) => {
+        if (isTop(type)) {
+            disableScrollHandler.current = true;
+            setIndex(Math.max(0, list.length - showAmount), list, showAmount);
+        } else {
+            disableScrollHandler.current = true;
+            setIndex(0, list, showAmount);
+        }
+        // eslint-disable-next-line
+    }, []);
+
     useLayoutEffect(() => {
         const content = contentRef.current;
 
         if (content) {
             const lengthDelta: number = list.length - previousListLength.current;
             const justRefresh         = lengthDelta <= 0;
+            const firstItem           = list[0];
+            const lastItem            = list.slice(-1)[0];
 
             if (justRefresh) {
-                setIndex(currentIndex.current);
+                setIndex(currentIndex.current, list, showAmount);
+                previousListLength.current    = list.length;
+                previousLastListItem.current  = lastItem;
+                previousFirstListItem.current = firstItem;
+                return;
             }
 
-            const firstItem = list[0];
-            const lastItem  = list.slice(-1)[0];
 
             switch (previousScrollAction.current) {
                 case VirtualAction.AUTOSCROLL_NEXT:
-                    if (isTop(type)) {
-                        disableScrollHandler.current = true;
-                        setIndex(0);
-                    } else {
-                        disableScrollHandler.current = true;
-                        setIndex(Math.max(0, list.length - showAmount));
-                    }
+                    toggleToFirstItem(type, list, showAmount);
                     break;
                 case VirtualAction.AUTOSCROLL_PREVIOUS:
+                    toggleToLastItem(type, list, showAmount);
                     break;
                 case VirtualAction.TOGGLE_PREVIOUS:
                     if (isTop(type)) {
                         if (lastItem !== previousLastListItem.current) {
                             disableScrollHandler.current = true;
-                            setIndex(Math.max(list.length - showAmount, currentIndex.current + toggleDistance));
+                            setIndex(Math.max(list.length - showAmount, currentIndex.current + toggleDistance), list, showAmount);
                         }
                     } else {
                         if (firstItem !== previousFirstListItem.current) {
                             disableScrollHandler.current = true;
-                            setIndex(Math.min(Math.max(0, list.length - showAmount), currentIndex.current + lengthDelta - toggleDistance));
+                            setIndex(Math.min(Math.max(0, list.length - showAmount), currentIndex.current + lengthDelta - toggleDistance), list, showAmount);
                         }
                     }
                     break;
@@ -568,12 +635,12 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                     if (isTop(type)) {
                         if (firstItem !== previousFirstListItem.current) {
                             disableScrollHandler.current = true;
-                            setIndex(Math.max(list.length - showAmount, currentIndex.current + toggleDistance));
+                            setIndex(Math.max(list.length - showAmount, currentIndex.current + toggleDistance), list, showAmount);
                         }
                     } else {
                         if (lastItem !== previousLastListItem.current) {
                             disableScrollHandler.current = true;
-                            setIndex(Math.min(Math.max(0, list.length - showAmount), currentIndex.current + lengthDelta - toggleDistance));
+                            setIndex(Math.min(Math.max(0, list.length - showAmount), currentIndex.current + lengthDelta - toggleDistance), list, showAmount);
                         }
                     }
                     break;
@@ -585,7 +652,50 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
             previousLastListItem.current  = lastItem;
             previousFirstListItem.current = firstItem;
         }
-    }, [ currentIndex, list, setIndex, showAmount, toggleDistance, type ]);
+        // eslint-disable-next-line
+    }, [ list, showAmount, type ]);
+
+
+    /*******************************************************************
+     * Virtual actions
+     ******************************************************************/
+
+    const toFirstItem = useCallback(() => {
+        previousScrollAction.current = VirtualAction.AUTOSCROLL_NEXT;
+        userScroll.current           = false;
+        toggleToFirstItem(type, list, showAmount);
+    }, [ list, showAmount, toggleToFirstItem, type ]);
+
+
+    /*******************************************************************
+     * Permanent and virtual elements
+     ******************************************************************/
+
+    const nextPermanent = useMemo(() => {
+        if (!permanentNextElement) {
+            return null;
+        }
+
+        return permanentNextElement({ toFirstItem, currentIndex });
+    }, [ currentIndex, permanentNextElement, toFirstItem ]);
+
+    const previousPermanent = useMemo(() => {
+        if (!permanentPreviousElement) {
+            return null;
+        }
+
+        return permanentPreviousElement({
+            toFirstItem,
+            currentIndex,
+        });
+    }, [ currentIndex, permanentPreviousElement, toFirstItem ]);
+
+    const additional = useMemo(() => {
+        return additionalElements.map((callback) => callback({
+            toFirstItem,
+            currentIndex,
+        }));
+    }, [ additionalElements, currentIndex, toFirstItem ]);
 
     return (
         <div
@@ -593,15 +703,14 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                 [css.top]       : isTop(type),
                 [css.scrollable]: scrollable,
             }, [ className ]) }>
+            <div className={ css.permanent }>
+                { nextPermanent }
+            </div>
             <div
                 { ...other }
                 className={ css.scrollContainer }
                 ref={ containerRef }
             >
-                <div
-                    className={ classNames(css.loader, { [css.loading]: loadingNext }) }>
-                    { loaderNextElement }
-                </div>
                 { !hasMoreNext ? noMoreNextElement : null }
                 <div
                     className={ classNames(css.content, {}, [ contentClassName ]) }
@@ -609,12 +718,32 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                 >
                     { virtualList.map(render) }
                 </div>
-                <div
-                    className={ classNames(css.loader, { [css.loading]: loadingPrevious }) }>
-                    { loaderPreviousElement }
-                </div>
                 { !hasMorePrevious ? noMorePreviousElement : null }
             </div>
+            <div className={ css.permanent }>
+                { previousPermanent }
+            </div>
+            <div
+                className={
+                    classNames(css.loader, {
+                        [css.loading]: loadingNext,
+                        [css.bottom] : !isTop(type),
+                    })
+                }
+            >
+                { loaderNextElement }
+            </div>
+            <div
+                className={
+                    classNames(css.loader, {
+                        [css.loading]: loadingPrevious,
+                        [css.bottom] : isTop(type),
+                    })
+                }
+            >
+                { loaderPreviousElement }
+            </div>
+            { additional }
             <div className={ css.scrollBar } ref={ scrollBarRef }>
                 <div className={ css.marker } ref={ scrollMarkerRef }/>
             </div>
