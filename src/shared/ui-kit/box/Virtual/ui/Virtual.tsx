@@ -7,7 +7,7 @@ import {
     ReactNode,
     useEffect,
     useLayoutEffect,
-    useRef,
+    useRef, useState,
 } from 'react';
 import classNames from 'classnames';
 import css from './Virtual.module.scss';
@@ -145,7 +145,6 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                     offset       : event.deltaY,
                 });
 
-
                 if (targetPosition !== null) {
                     targetScrollPosition.current   = targetPosition;
                     startAnimationPosition.current = scrollTop;
@@ -266,8 +265,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                         if (firstElement !== previousElement) {
                             const currentPosition          = previousElement.offsetTop;
                             const positionDelta            = currentPosition - previousFirstElementPosition.current;
-                            const heightDelta              = content.scrollHeight - previousContentHeight.current;
-                            ref.scrollTop                  = previousScrollTop.current + positionDelta - heightDelta;
+                            ref.scrollTop                  = previousScrollTop.current + positionDelta;
                             targetScrollPosition.current   = targetScrollPosition.current + positionDelta;
                             startAnimationPosition.current = startAnimationPosition.current + positionDelta;
                         }
@@ -283,7 +281,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                             startAnimationPosition.current = startAnimationPosition.current + positionDelta;
                         }
                     }
-                    disableScrollHandler.current   = false;
+                    disableScrollHandler.current = false;
                     break;
                 case VirtualAction.TOGGLE_PREVIOUS:
                     if (isTop(type)) {
@@ -293,8 +291,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                         if (lastElement !== previousElement) {
                             const currentPosition          = previousElement.offsetTop;
                             const positionDelta            = currentPosition - previousLastElementPosition.current;
-                            const heightDelta              = content.scrollHeight - previousContentHeight.current;
-                            ref.scrollTop                  = previousScrollTop.current + positionDelta - heightDelta;
+                            ref.scrollTop                  = previousScrollTop.current + positionDelta;
                             targetScrollPosition.current   = targetScrollPosition.current + positionDelta;
                             startAnimationPosition.current = startAnimationPosition.current + positionDelta;
                         }
@@ -310,7 +307,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                             startAnimationPosition.current = startAnimationPosition.current + positionDelta;
                         }
                     }
-                    disableScrollHandler.current   = false;
+                    disableScrollHandler.current = false;
                     break;
                 case VirtualAction.AUTOSCROLL_NEXT:
                     break;
@@ -324,17 +321,67 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
         }
     }, [ virtualList ]);
 
+
+    /*******************************************************************
+     * Scroll-bar
+     ******************************************************************/
+
+    const scrollBarRef                  = useRef<HTMLDivElement>(null);
+    const scrollMarketRef               = useRef<HTMLDivElement>(null);
+    const [ scrollable, setScrollable ] = useState<boolean>(false);
+
+    useLayoutEffect(() => {
+        const ref    = containerRef.current;
+        const bar    = scrollBarRef.current;
+        const marker = scrollMarketRef.current;
+
+        if (ref && bar && marker) {
+            if (ref.scrollHeight === ref.offsetHeight && scrollable === true) {
+                setScrollable(false);
+            } else if (ref.scrollHeight !== ref.offsetHeight && scrollable === false) {
+                setScrollable(true);
+            }
+
+            const onScrollHandler = function () {
+                const { scrollTop, scrollHeight, offsetHeight } = ref;
+                const barHeight                                 = bar.offsetHeight;
+                const markerHeight                              = marker.offsetHeight;
+
+                const percentOfScroll = 100 / (scrollHeight - offsetHeight) * scrollTop;
+                const markerOffset    = (barHeight - markerHeight) / 100 * percentOfScroll;
+
+                marker.style.transform = `translateY(${ markerOffset }px)`;
+                // get position of marker
+                // set position to marker
+            };
+
+            ref.addEventListener('scroll', onScrollHandler);
+            return () => {
+                ref.removeEventListener('scroll', onScrollHandler);
+            };
+        }
+    }, []);
+
     return (
         <div
-            { ...other }
-            className={ classNames(css.container, { [css.top]: isTop(type) }, [ className ]) }
-            ref={ containerRef }
-        >
+            className={ classNames(css.container, {
+                [css.top]       : isTop(type),
+                [css.scrollable]: scrollable,
+            }, [ className ]) }>
             <div
-                ref={ contentRef }
-                className={ classNames(css.content, {}, [ contentClassName ]) }
+                { ...other }
+                className={ css.scrollContainer }
+                ref={ containerRef }
             >
-                { virtualList.map(render) }
+                <div
+                    ref={ contentRef }
+                    className={ classNames(css.content, {}, [ contentClassName ]) }
+                >
+                    { virtualList.map(render) }
+                </div>
+            </div>
+            <div className={ css.scrollBar } ref={ scrollBarRef }>
+                <div className={ css.marker } ref={ scrollMarketRef }/>
             </div>
         </div>
     );

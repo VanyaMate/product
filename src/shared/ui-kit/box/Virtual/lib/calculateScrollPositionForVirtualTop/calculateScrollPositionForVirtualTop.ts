@@ -18,7 +18,7 @@ export const calculateScrollPositionForVirtualTop = function (props: CalculateSc
     const isScrollToTop = offset < 0;
 
     if (isScrollToTop) {
-        return Math.max(0, currentTarget + scrollDistance);
+        return Math.max(0, currentTarget - scrollDistance);
     }
 
     const isScrollToBottom = offset > 0;
