@@ -28,6 +28,9 @@ import {
 } from '@/shared/ui-kit/box/Virtual/types/types.ts';
 import { Virtual } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
+import {
+    NoMoreMessageDialogue,
+} from '@/entities/dialogue/NoMoreMessageDialogue/ui/NoMoreMessageDialogue.tsx';
 
 
 export type PrivateMessagesInfinityVirtualContainerProps =
@@ -81,6 +84,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             className={ classNames(css.container, {}, [ className ]) }
             contentClassName={ css.content }
             distanceToTrigger={ 200 }
+            hasMoreNext={ false }
             hasMorePrevious={ hasMoreMessages[dialogueId] }
             key={ dialogueId }
             list={ [ ...messages[dialogueId] ] }
@@ -88,11 +92,11 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             loaderPreviousElement={ <Loader/> }
             loadingNext={ false }
             loadingPrevious={ messagesPending[dialogueId] }
-            noMoreNextElement="[Пользователь] набирает сообщение..."
-            noMorePreviousElement="Сообщений больше нет :("
+            noMoreNextElement="..."
+            noMorePreviousElement={ <NoMoreMessageDialogue/> }
             render={ render }
             showAmount={ 40 }
-            smoothAutoscroll
+            smoothAutoscroll={ true }
             type={ VirtualType.BOTTOM }
             uploadPrevious={ loadPreviousMessages }
         />
