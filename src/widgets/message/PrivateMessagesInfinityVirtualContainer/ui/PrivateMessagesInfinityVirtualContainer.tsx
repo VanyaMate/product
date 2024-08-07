@@ -82,7 +82,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             distanceToTrigger={ 200 }
             hasMorePrevious={ hasMoreMessages[dialogueId] }
             key={ dialogueId }
-            list={ messages[dialogueId] }
+            list={ [ ...messages[dialogueId] ] }
             loadingPrevious={ messagesPending[dialogueId] }
             render={ render }
             showAmount={ 40 }

@@ -4,7 +4,7 @@ import {
     ComponentPropsWithoutRef,
     FC,
     memo,
-    ReactNode,
+    ReactNode, useCallback,
     useEffect,
     useLayoutEffect,
     useRef, useState,
@@ -109,30 +109,30 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
     const startAnimationTime     = useRef<number>(0);
     const startAnimationPosition = useRef<number>(0);
 
+    const scrollAnimation = useCallback((timestamp: number) => {
+        if (startAnimationTime.current === 0) {
+            startAnimationTime.current = timestamp;
+        }
+
+        const scrollPosition = calculateAnimationScrollPosition({
+            animationMs,
+            timestamp,
+            startAnimationPosition: startAnimationPosition.current,
+            targetScrollPosition  : targetScrollPosition.current,
+            startAnimationTime    : startAnimationTime.current,
+        });
+
+        containerRef.current.scrollTop = scrollPosition;
+
+        if (scrollPosition !== targetScrollPosition.current) {
+            requestAnimationFrame(scrollAnimation);
+        }
+    }, []);
+
     useLayoutEffect(() => {
         const ref = containerRef.current;
 
         if (ref) {
-            const scrollAnimation = function (timestamp: number) {
-                if (startAnimationTime.current === 0) {
-                    startAnimationTime.current = timestamp;
-                }
-
-                const scrollPosition = calculateAnimationScrollPosition({
-                    animationMs,
-                    timestamp,
-                    startAnimationPosition: startAnimationPosition.current,
-                    targetScrollPosition  : targetScrollPosition.current,
-                    startAnimationTime    : startAnimationTime.current,
-                });
-
-                ref.scrollTop = scrollPosition;
-
-                if (scrollPosition !== targetScrollPosition.current) {
-                    requestAnimationFrame(scrollAnimation);
-                }
-            };
-
             const onWheelHandler = function (event: WheelEvent) {
                 const { scrollTop, scrollHeight, offsetHeight } = ref;
 
@@ -186,21 +186,46 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                     previousScrollTop: previousScrollTop.current,
                     distanceToTrigger,
                     type,
-                }) && previousScrollAction.current !== VirtualAction.TOGGLE_NEXT) {
-                    previousScrollAction.current  = VirtualAction.TOGGLE_NEXT;
-                    previousContentHeight.current = content.scrollHeight;
+                }) && previousScrollAction.current === VirtualAction.NONE) {
                     if (isTop(type)) {
-                        const firstElement                   = content.firstElementChild as HTMLElement;
-                        previousFirstElementPosition.current = firstElement.offsetTop;
-                        previousFirstElement.current         = firstElement;
-                        disableScrollHandler.current         = true;
-                        setIndex(Math.max(0, currentIndex.current - 10));
+                        if (currentIndex.current !== 0) {
+                            previousScrollAction.current         = VirtualAction.TOGGLE_NEXT;
+                            previousContentHeight.current        = content.scrollHeight;
+                            const firstElement                   = content.firstElementChild as HTMLElement;
+                            previousFirstElementPosition.current = firstElement.offsetTop;
+                            previousFirstElement.current         = firstElement;
+                            disableScrollHandler.current         = true;
+                            setIndex(Math.max(0, currentIndex.current - 10));
+                        } else if (uploadNext && hasMoreNext) {
+                            if (!loadingNext) {
+                                previousContentHeight.current = content.scrollHeight;
+                                previousScrollAction.current  = VirtualAction.TOGGLE_NEXT;
+                                uploadNext();
+                            }
+                        } else {
+                            previousContentHeight.current = content.scrollHeight;
+                            previousScrollAction.current  = VirtualAction.AUTOSCROLL_NEXT;
+                        }
                     } else {
-                        const lastElement                   = content.lastElementChild as HTMLElement;
-                        previousLastElementPosition.current = lastElement.offsetTop;
-                        previousLastElement.current         = lastElement;
-                        disableScrollHandler.current        = true;
-                        setIndex(Math.min(Math.max(0, list.length - showAmount), currentIndex.current + 10));
+                        if (currentIndex.current < list.length - showAmount) {
+                            previousScrollAction.current        = VirtualAction.TOGGLE_NEXT;
+                            previousContentHeight.current       = content.scrollHeight;
+                            const lastElement                   = content.lastElementChild as HTMLElement;
+                            previousLastElementPosition.current = lastElement.offsetTop;
+                            previousLastElement.current         = lastElement;
+                            disableScrollHandler.current        = true;
+                            setIndex(Math.min(Math.max(0, list.length - showAmount), currentIndex.current + 10));
+                        } else if (uploadNext && hasMoreNext) {
+                            if (!loadingNext) {
+                                previousContentHeight.current = content.scrollHeight;
+                                previousScrollAction.current  = VirtualAction.TOGGLE_NEXT;
+                                uploadNext();
+                            }
+                        } else {
+                            console.log('SET AUTOSCROLL NEXT', content);
+                            previousContentHeight.current = content.scrollHeight;
+                            previousScrollAction.current  = VirtualAction.AUTOSCROLL_NEXT;
+                        }
                     }
                 } else if (isPreviousScrollPosition({
                     scrollTop,
@@ -225,12 +250,15 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                         disableScrollHandler.current         = true;
                         setIndex(Math.max(0, currentIndex.current - 10));
                     }
-                } else {
+                } else if (previousScrollTop.current !== scrollTop) {
+                    console.log('SET AUTOSCROLL NONE');
                     previousScrollAction.current = VirtualAction.NONE;
                 }
 
                 previousScrollTop.current = scrollTop;
             };
+
+            onScrollHandler();
 
             ref.addEventListener('scroll', onScrollHandler);
             return () => {
@@ -288,7 +316,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                         const lastElement     = content.lastElementChild as HTMLElement;
                         const previousElement = previousLastElement.current;
 
-                        if (lastElement !== previousElement) {
+                        if (lastElement !== previousElement && previousElement !== null) {
                             const currentPosition          = previousElement.offsetTop;
                             const positionDelta            = currentPosition - previousLastElementPosition.current;
                             ref.scrollTop                  = previousScrollTop.current + positionDelta;
@@ -299,7 +327,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                         const firstElement    = content.firstElementChild as HTMLElement;
                         const previousElement = previousFirstElement.current;
 
-                        if (firstElement !== previousElement) {
+                        if (firstElement !== previousElement && previousElement !== null) {
                             const currentPosition          = previousElement.offsetTop;
                             const positionDelta            = currentPosition - previousFirstElementPosition.current;
                             ref.scrollTop                  = previousScrollTop.current + positionDelta;
@@ -310,6 +338,38 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                     disableScrollHandler.current = false;
                     break;
                 case VirtualAction.AUTOSCROLL_NEXT:
+                    console.log('AUTOSCROLL NEXT');
+                    if (isTop(type)) {
+                        const firstElement    = content.firstElementChild as HTMLElement;
+                        const previousElement = previousFirstElement.current;
+
+                        if (firstElement !== previousElement && previousElement !== null) {
+                            const currentPosition = previousElement.offsetTop;
+                            const positionDelta   = currentPosition - previousFirstElementPosition.current;
+                            ref.scrollTop         = previousScrollTop.current + positionDelta;
+                        }
+                    } else {
+                        const lastElement     = content.lastElementChild as HTMLElement;
+                        const previousElement = previousLastElement.current;
+
+                        console.log('Last element', lastElement);
+                        console.log('PreviousElement', previousElement);
+
+                        if (lastElement !== previousElement && previousElement !== null) {
+                            const currentPosition = previousElement.offsetTop;
+                            const positionDelta   = currentPosition - previousLastElementPosition.current;
+                            ref.scrollTop         = previousScrollTop.current + positionDelta;
+                            console.log('scroll top ->', ref.scrollTop);
+                            setTimeout(() => {
+                                console.log('scroll');
+                                targetScrollPosition.current   = 0;
+                                startAnimationPosition.current = ref.scrollTop;
+                                startAnimationTime.current     = 0;
+                                requestAnimationFrame(scrollAnimation);
+                            });
+                        }
+                    }
+                    disableScrollHandler.current = false;
                     break;
                 case VirtualAction.AUTOSCROLL_PREVIOUS:
                     break;
@@ -361,6 +421,65 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
             };
         }
     }, []);
+
+
+    /*******************************************************************
+     * On main list change
+     ******************************************************************/
+
+    const previousListLength    = useRef<number>(list.length);
+    const previousFirstListItem = useRef<unknown>(list[0]);
+    const previousLastListItem  = useRef<unknown>(list.slice(-1)[0]);
+
+    useLayoutEffect(() => {
+        const content = contentRef.current;
+
+        if (content) {
+            const listLengthChanged = previousListLength.current !== list.length;
+
+            console.log('UPDATOR:', previousScrollAction.current, list);
+
+            if (!listLengthChanged) {
+                // Just refresh
+                setIndex(currentIndex.current);
+            }
+
+            const firstItem = list[0];
+            const lastItem  = list.slice(-1)[0];
+
+            switch (previousScrollAction.current) {
+                case VirtualAction.AUTOSCROLL_NEXT:
+                    if (isTop(type)) {
+                        console.log('firs titem', firstItem);
+                        if (firstItem !== previousFirstListItem.current) {
+                            const firstElement                   = content.firstElementChild as HTMLElement;
+                            previousFirstElementPosition.current = firstElement.offsetTop;
+                            previousFirstElement.current         = firstElement;
+                            disableScrollHandler.current         = true;
+                            setIndex(0);
+                        }
+                    } else {
+                        console.log('last item', lastItem);
+                        if (lastItem !== previousLastListItem.current) {
+                            const lastElement                   = content.lastElementChild as HTMLElement;
+                            previousLastElementPosition.current = lastElement.offsetTop;
+                            previousLastElement.current         = lastElement;
+                            disableScrollHandler.current        = true;
+                            setIndex(Math.max(0, list.length - showAmount));
+                        }
+                    }
+                    break;
+                case VirtualAction.AUTOSCROLL_PREVIOUS:
+                    break;
+                default:
+                    break;
+            }
+
+            previousLastListItem.current  = lastItem;
+            previousFirstListItem.current = firstItem;
+        }
+    }, [ list ]);
+
 
     return (
         <div
