@@ -28,6 +28,7 @@ export const useVirtualList = function (props: UseVirtualListProps) {
     );
 
     const setIndex = useCallback<VirtualIndexSetter>((index: number) => {
+        console.log('set index', index);
         currentIndex.current = index;
         setVirtualList(
             getVirtualList({ index, list, showAmount }),

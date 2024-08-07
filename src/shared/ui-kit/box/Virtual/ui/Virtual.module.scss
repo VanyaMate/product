@@ -40,6 +40,19 @@
         }
     }
 
+    .loader {
+        visibility : hidden;
+        opacity    : 0;
+        height     : 0;
+
+        &.loading {
+            opacity    : 1;
+            visibility : visible;
+            height     : fit-content;
+            width      : fit-content;
+        }
+    }
+
     &.top {
         .scrollContainer,
         .scrollBar {

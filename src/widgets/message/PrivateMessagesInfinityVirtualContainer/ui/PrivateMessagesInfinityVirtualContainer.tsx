@@ -27,6 +27,7 @@ import {
     VirtualType,
 } from '@/shared/ui-kit/box/Virtual/types/types.ts';
 import { Virtual } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
+import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
 
 
 export type PrivateMessagesInfinityVirtualContainerProps =
@@ -47,7 +48,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
         if (messageId) {
             return getPrivateMessagesByCursorEffect([ dialogueId, {
                 cursor: messageId,
-                limit : 140,
+                limit : 40,
                 query : '',
             } ]);
         }
@@ -83,7 +84,12 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             hasMorePrevious={ hasMoreMessages[dialogueId] }
             key={ dialogueId }
             list={ [ ...messages[dialogueId] ] }
+            loaderNextElement={ <Loader/> }
+            loaderPreviousElement={ <Loader/> }
+            loadingNext={ false }
             loadingPrevious={ messagesPending[dialogueId] }
+            noMoreNextElement="[Пользователь] набирает сообщение..."
+            noMorePreviousElement="Сообщений больше нет :("
             render={ render }
             showAmount={ 40 }
             smoothAutoscroll
