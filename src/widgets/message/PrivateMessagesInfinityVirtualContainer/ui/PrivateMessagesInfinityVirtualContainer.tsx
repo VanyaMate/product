@@ -8,7 +8,8 @@ import {
 import { useStore } from '@vanyamate/sec-react';
 import {
     $privateMessages,
-    $privateMessagesHasMore, $privateMessagesIsPending,
+    $privateMessagesHasMore,
+    $privateMessagesIsPending,
     getPrivateMessagesByCursorEffect,
     readPrivateMessageEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';

@@ -117,11 +117,6 @@
         .message {
             color      : var(--text-main-color);
             word-break : break-all;
-
-            &_content {
-                width      : 100%;
-                word-break : break-word;
-            }
         }
     }
 }
