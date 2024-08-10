@@ -16,10 +16,10 @@ export const getModalPosition = function (containerRef: MutableRefObject<HTMLDiv
               width,
               height,
           }           = containerRef.current.getBoundingClientRect();
-    const modalHeight = modalRef.current.clientHeight;
-    const modalWidth  = modalRef.current.clientWidth;
-    const bodyWidth   = document.body.clientWidth;
-    const bodyHeight  = document.body.clientHeight;
+    const modalHeight = modalRef.current.offsetHeight;
+    const modalWidth  = modalRef.current.offsetWidth;
+    const bodyWidth   = document.body.offsetWidth;
+    const bodyHeight  = document.body.offsetHeight;
 
     // calculate popover position
     let topPosition: number  = 0;

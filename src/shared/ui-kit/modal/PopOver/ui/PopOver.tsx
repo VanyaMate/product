@@ -2,7 +2,7 @@ import {
     ComponentPropsWithoutRef,
     FC,
     memo,
-    ReactNode,
+    ReactNode, useEffect,
     useLayoutEffect,
     useRef,
     useState,
@@ -50,11 +50,14 @@ export const PopOver: FC<PopOverProps> = memo(function PopOver (props) {
         }
     }, []);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         keyboardClose(opened, setOpened);
 
         if (opened && containerRef.current && popoverRef.current) {
-            const { top, left }           = getModalPosition(containerRef, popoverRef);
+            const {
+                      top,
+                      left,
+                  }                       = getModalPosition(containerRef, popoverRef);
             popoverRef.current.style.top  = `${ top }px`;
             popoverRef.current.style.left = `${ left }px`;
         }

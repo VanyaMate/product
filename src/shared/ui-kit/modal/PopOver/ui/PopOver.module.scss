@@ -6,11 +6,15 @@
 .popover {
     position        : fixed;
     z-index         : 2;
+    top             : 0;
+    left            : 0;
     background      : var(--bg-main-color);
     border-radius   : var(--offset-medium);
     padding         : var(--offset-small);
     border          : 1px solid var(--border-main-color);
-    max-width       : 400px;
+    width           : fit-content;
+    height          : fit-content;
+    max-width       : 300px;
     box-shadow      : 0 0 15px -5px var(--bg-main-color), 0 0 10px -5px var(--bg-second-color);
     align-items     : center;
     justify-content : center;
