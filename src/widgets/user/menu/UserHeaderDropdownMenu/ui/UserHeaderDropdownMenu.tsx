@@ -22,6 +22,10 @@ import { useTranslation } from 'react-i18next';
 import {
     SiteNavigationLink,
 } from '@/widgets/site/navigation/SiteNavigationMenu/ui/SiteNavigationLink/SiteNavigationLink.tsx';
+import {
+    SiteAppRoute,
+    SiteAppRoutePath,
+} from '@/app/routes/main-site/config/routes.tsx';
 
 
 export type UserHeaderDropdownMenuProps =
@@ -31,7 +35,7 @@ export type UserHeaderDropdownMenuProps =
 export const UserHeaderDropdownMenu: FC<UserHeaderDropdownMenuProps> = memo(function UserHeaderDropdownMenu (props) {
     const { className, ...other } = props;
     const userData                = useStore($authUser);
-    const { t }                   = useTranslation();
+    const { t }                   = useTranslation([ 'translation', 'site-app' ]);
 
     return (
         <Col
@@ -43,15 +47,17 @@ export const UserHeaderDropdownMenu: FC<UserHeaderDropdownMenuProps> = memo(func
                 className={ css.avatar }
                 login={ userData.login }
             />
-            <Link to="/">{ userData.login }</Link>
+            <Link
+                to={ SiteAppRoutePath[SiteAppRoute.HOME] }
+            >{ userData.login }</Link>
             <Divider className={ css.divider } type={ DividerType.HORIZONTAL }/>
             <SiteNavigationLink
                 className={ css.link }
                 icon={ <IoSettings/> }
                 styleType={ LinkStyleType.GHOST }
-                to="/settings"
+                to={ SiteAppRoutePath[SiteAppRoute.SETTINGS] }
             >
-                { t('user_settings_page') }
+                { t('settings_page', { ns: 'site-app' }) }
             </SiteNavigationLink>
             <Divider className={ css.divider } type={ DividerType.HORIZONTAL }/>
             <ButtonWithFixes
@@ -60,7 +66,7 @@ export const UserHeaderDropdownMenu: FC<UserHeaderDropdownMenuProps> = memo(func
                 pref={ <IoLogOut/> }
                 styleType={ ButtonStyleType.DANGER }
             >
-                { t('logout_button') }
+                { t('logout_button', { ns: 'translation' }) }
             </ButtonWithFixes>
         </Col>
     );

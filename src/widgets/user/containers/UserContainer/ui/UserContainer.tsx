@@ -1,9 +1,4 @@
-import {
-    ComponentPropsWithoutRef,
-    FC,
-    memo,
-    useLayoutEffect,
-} from 'react';
+import { ComponentPropsWithoutRef, FC, memo, useLayoutEffect } from 'react';
 import classNames from 'classnames';
 import css from './UserContainer.module.scss';
 import {
@@ -18,15 +13,25 @@ import {
     GoToPrivateDialogue,
 } from '@/features/private-dialogue/button/GoToPrivateDialogue/ui/GoToPrivateDialogue.tsx';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
-import { IoBan } from 'react-icons/io5';
+import { IoBan, IoEllipsisHorizontal } from 'react-icons/io5';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    getUserPageDataEffect,
     $userPageData,
     $userPageIsPending,
+    getUserPageDataEffect,
 } from '@/app/model/user-page/user-page.model.ts';
 import { UserPosts } from '@/widgets/posts/UserPosts/ui/UserPosts.tsx';
+import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
+import {
+    Divider,
+    DividerType,
+} from '@/shared/ui-kit/divider/Divider/ui/Divider.tsx';
+import { useTranslation } from 'react-i18next';
+import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
+import {
+    WorkInProgress,
+} from '@/entities/site/WorkInProgress/ui/WorkInProgress.tsx';
 
 
 export type UserContainerProps =
@@ -39,6 +44,7 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
     const { className, login, ...other } = props;
     const userPagePending                = useStore($userPageIsPending);
     const user                           = useStore($userPageData);
+    const { t }                          = useTranslation([ 'site-app' ]);
 
     useLayoutEffect(() => {
         if (user?.login !== login) {
@@ -69,8 +75,42 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
                         </Button>
                     </Row>
                 </section>
-                <UserPosts className={ css.right } userId={ user.id }/>
+                <Col className={ css.right }>
+                    <Row fullWidth spaceBetween>
+                        <Button>{ t('posts_page') }</Button>
+                        <PopOver popover={ <WorkInProgress/> }>
+                            <Button
+                                styleType={ ButtonStyleType.GHOST }>
+                                { t('friends_page') }
+                            </Button>
+                        </PopOver>
+                        <PopOver popover={ <WorkInProgress/> }>
+                            <Button
+                                styleType={ ButtonStyleType.GHOST }>
+                                { t('music_page') }
+                            </Button>
+                        </PopOver>
+                        <PopOver popover={ <WorkInProgress/> }>
+                            <Button
+                                styleType={ ButtonStyleType.GHOST }>
+                                { t('photos_page') }
+                            </Button>
+                        </PopOver>
+                        <PopOver popover={ <WorkInProgress/> }>
+                            <Button
+                                quad
+                                styleType={ ButtonStyleType.GHOST }
+                            >
+                                {/* eslint-disable-next-line react/jsx-max-depth */ }
+                                <IoEllipsisHorizontal/>
+                            </Button>
+                        </PopOver>
+                    </Row>
+                    <Divider type={ DividerType.HORIZONTAL }/>
+                    <UserPosts className={ css.content } userId={ user.id }/>
+                </Col>
             </div>
         </section>
-    );
+    )
+        ;
 });

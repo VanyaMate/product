@@ -20,5 +20,6 @@
     "auth_success_title": "Welcome back",
     "logout_button": "LogOut",
     "go_to_user_page_of": "Go to the {{login}} user page",
-    "request_error": "Request error"
+    "request_error": "Request error",
+    "work_in_progress": "Work in progress"
 }

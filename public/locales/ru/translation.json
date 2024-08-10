@@ -20,5 +20,6 @@
     "auth_success_title": "Добро пожаловать",
     "logout_button": "Выйти",
     "go_to_user_page_of": "Перейти на страницу пользователя {{login}}",
-    "request_error": "Ошибка запроса"
+    "request_error": "Ошибка запроса",
+    "work_in_progress": "В разработке"
 }

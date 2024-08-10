@@ -68,9 +68,6 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
             { ...other }
             className={ classNames(css.container, { [css.loader]: postsPending }, [ className ]) }
         >
-            <header className={ css.header } key="header">
-                <h3>{ t('posts_title') }</h3>
-            </header>
             {
                 userId === authData.id
                 ? <CreatePostForm key="form"/>
