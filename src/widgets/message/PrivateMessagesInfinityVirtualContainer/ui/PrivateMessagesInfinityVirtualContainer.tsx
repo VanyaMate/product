@@ -57,7 +57,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
     const dialogue                            = useMemo(() => dialogues.find((dialogue) => dialogue.id === dialogueId), [ dialogueId, dialogues ]);
 
     const loadPreviousMessages = useCallback(async () => {
-        const messageId = messages[dialogueId][0]?.id;
+        const messageId = messages[dialogueId]?.[0]?.id;
         if (messageId) {
             return getPrivateMessagesByCursorEffect([ dialogueId, {
                 cursor: messageId,
@@ -68,7 +68,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
     }, [ dialogueId, messages ]);
 
     useLayoutEffect(() => {
-        const messagesLength = messages[dialogueId].length;
+        const messagesLength = messages[dialogueId]?.length;
         if (messagesLength < 20 && hasMoreMessages[dialogueId]) {
             loadPreviousMessages();
         }
@@ -83,7 +83,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
         />
     ), [ user.id ]);
 
-    if (!messages[dialogueId].length) {
+    if (!messages[dialogueId]?.length) {
         return <EmptyDialogue { ...other } className={ className }/>;
     }
 
@@ -96,13 +96,13 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             contentClassName={ css.content }
             distanceToTrigger={ 200 }
             hasMoreNext={ false }
-            hasMorePrevious={ hasMoreMessages[dialogueId] }
+            hasMorePrevious={ hasMoreMessages[dialogueId] ?? false }
             key={ dialogueId }
-            list={ messages[dialogueId] }
+            list={ messages[dialogueId] ?? [] }
             loaderNextElement={ <Loader/> }
             loaderPreviousElement={ <Loader/> }
             loadingNext={ false }
-            loadingPrevious={ messagesPending[dialogueId] }
+            loadingPrevious={ messagesPending[dialogueId] ?? false }
             noMorePreviousElement={ <NoMoreMessageDialogue/> }
             permanentNextElement={ ({ toFirstItem }) => (
                 <Row className={ css.panel }

@@ -14,6 +14,7 @@ import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import {
     UserHeaderDropdownMenu,
 } from '@/widgets/user/menu/UserHeaderDropdownMenu/ui/UserHeaderDropdownMenu.tsx';
+import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 
 
 export type UserHeaderProfileButtonProps = {};
@@ -34,14 +35,16 @@ export const UserHeaderControlMenu: FC<UserHeaderProfileButtonProps> = memo(func
                 className={ css.button }
                 styleType={ ButtonStyleType.GHOST }
             >
-                <UserAvatar
-                    avatar={ userData.avatar }
-                    className={ css.avatar }
-                    login={ userData.login }
-                />
-                <span>
+                <Row>
+                    <UserAvatar
+                        avatar={ userData.avatar }
+                        className={ css.avatar }
+                        login={ userData.login }
+                    />
+                    <span>
                     { userData.login }
                 </span>
+                </Row>
             </Button>
         </Dropdown>
     );

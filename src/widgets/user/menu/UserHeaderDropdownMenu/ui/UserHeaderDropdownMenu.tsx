@@ -6,7 +6,7 @@ import {
     UserAvatar,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 import { useStore } from '@vanyamate/sec-react';
-import { $authUser } from '@/app/model/auth/auth.model.ts';
+import { $authUser, logoutEffect } from '@/app/model/auth/auth.model.ts';
 import {
     Divider,
     DividerType,
@@ -56,6 +56,7 @@ export const UserHeaderDropdownMenu: FC<UserHeaderDropdownMenuProps> = memo(func
             <Divider className={ css.divider } type={ DividerType.HORIZONTAL }/>
             <ButtonWithFixes
                 className={ css.button }
+                onClick={ logoutEffect }
                 pref={ <IoLogOut/> }
                 styleType={ ButtonStyleType.DANGER }
             >

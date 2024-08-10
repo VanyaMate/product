@@ -320,6 +320,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                             if (isNotEndList) {
                                 togglePrevious(content, setIndex, list, type, showAmount, toggleDistance);
                                 break;
+
                             }
 
                             if (hasMorePrevious && uploadPrevious) {
@@ -429,6 +430,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                     } else {
                         scrollByLastElement(content, ref);
                     }
+                    previousScrollAction.current = VirtualAction.NONE;
                     disableScrollHandler.current = false;
                     break;
                 case VirtualAction.TOGGLE_PREVIOUS:
@@ -437,9 +439,8 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                     } else {
                         scrollByFirstElement(content, ref);
                     }
-                    setTimeout(() => {
-                        disableScrollHandler.current = false;
-                    });
+                    previousScrollAction.current = VirtualAction.NONE;
+                    disableScrollHandler.current = false;
                     break;
                 case VirtualAction.AUTOSCROLL_NEXT:
                     if (!autoscrollNext && userScroll.current) {
@@ -611,7 +612,6 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                 previousFirstListItem.current = firstItem;
                 return;
             }
-
 
             switch (previousScrollAction.current) {
                 case VirtualAction.AUTOSCROLL_NEXT:

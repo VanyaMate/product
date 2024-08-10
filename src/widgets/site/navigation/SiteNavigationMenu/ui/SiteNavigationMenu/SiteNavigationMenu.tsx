@@ -24,6 +24,7 @@ import {
     SiteAppRoute,
     SiteAppRoutePath,
 } from '@/app/routes/main-site/config/routes.tsx';
+import { isRouteOf } from '@/app/routes/lib/isRouteOf.ts';
 
 
 export type SiteNavigationMenuProps =
@@ -46,7 +47,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             icon={ <IoHome/> }
                             onClick={ onCompleteAction }
                             styleType={
-                                pathname === SiteAppRoutePath[SiteAppRoute.HOME]
+                                isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.HOME])
                                 ? LinkStyleType.PRIMARY
                                 : LinkStyleType.GHOST
                             }
@@ -60,7 +61,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             icon={ <IoSearch/> }
                             onClick={ onCompleteAction }
                             styleType={
-                                pathname === SiteAppRoutePath[SiteAppRoute.SEARCH]
+                                isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.SEARCH])
                                 ? LinkStyleType.PRIMARY
                                 : LinkStyleType.GHOST
                             }
@@ -74,7 +75,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             icon={ <IoPeople/> }
                             onClick={ onCompleteAction }
                             styleType={
-                                pathname === SiteAppRoutePath[SiteAppRoute.FRIENDS]
+                                isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.FRIENDS])
                                 ? LinkStyleType.PRIMARY
                                 : LinkStyleType.GHOST
                             }
@@ -88,7 +89,8 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             icon={ <IoMail/> }
                             onClick={ onCompleteAction }
                             styleType={
-                                pathname === SiteAppRoutePath[SiteAppRoute.DIALOGUES]
+                                isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.DIALOGUES]) ||
+                                isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.DIALOGUE])
                                 ? LinkStyleType.PRIMARY
                                 : LinkStyleType.GHOST
                             }
@@ -101,7 +103,8 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                         icon={ <IoDocuments/> }
                         onClick={ onCompleteAction }
                         styleType={
-                            pathname === SiteAppRoutePath[SiteAppRoute.FILES]
+                            isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.FILES]) ||
+                            isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.FILE])
                             ? LinkStyleType.PRIMARY
                             : LinkStyleType.GHOST
                         }
@@ -114,7 +117,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             icon={ <IoLanguage/> }
                             onClick={ onCompleteAction }
                             styleType={
-                                pathname === SiteAppRoutePath[SiteAppRoute.LANGUAGES]
+                                isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.LANGUAGES])
                                 ? LinkStyleType.PRIMARY
                                 : LinkStyleType.GHOST
                             }
@@ -128,7 +131,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             icon={ <IoDesktop/> }
                             onClick={ onCompleteAction }
                             styleType={
-                                pathname === SiteAppRoutePath[SiteAppRoute.ABOUT]
+                                isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.ABOUT])
                                 ? LinkStyleType.PRIMARY
                                 : LinkStyleType.GHOST
                             }
