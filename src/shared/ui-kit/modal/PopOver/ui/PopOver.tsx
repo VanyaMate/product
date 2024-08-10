@@ -68,15 +68,15 @@ export const PopOver: FC<PopOverProps> = memo(function PopOver (props) {
         >
             { children }
             {
-                createPortal(
+                opened ? createPortal(
                     <div
-                        className={ classNames(css.popover, { [css.opened]: opened }) }
+                        className={ css.popover }
                         ref={ popoverRef }
                     >
                         { popover }
                     </div>,
                     document.body,
-                )
+                ) : null
             }
         </div>
     );

@@ -3,7 +3,7 @@ import {
     FC,
     memo,
     useCallback,
-    useLayoutEffect,
+    useLayoutEffect, useMemo,
 } from 'react';
 import { useStore } from '@vanyamate/sec-react';
 import {
@@ -36,6 +36,9 @@ import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { IoArrowDown } from 'react-icons/io5';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import {
+    $privateDialogues,
+} from '@/app/model/private-dialogues/private-dialogues.model.ts';
 
 
 export type PrivateMessagesInfinityVirtualContainerProps =
@@ -49,7 +52,9 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
     const messages                            = useStore($privateMessages);
     const hasMoreMessages                     = useStore($privateMessagesHasMore);
     const messagesPending                     = useStore($privateMessagesIsPending);
+    const dialogues                           = useStore($privateDialogues);
     const user                                = useStore($authUser);
+    const dialogue                            = useMemo(() => dialogues.find((dialogue) => dialogue.id === dialogueId), [ dialogueId, dialogues ]);
 
     const loadPreviousMessages = useCallback(async () => {
         const messageId = messages[dialogueId][0]?.id;
@@ -93,16 +98,29 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             hasMoreNext={ false }
             hasMorePrevious={ hasMoreMessages[dialogueId] }
             key={ dialogueId }
-            list={ [ ...messages[dialogueId] ] }
+            list={ messages[dialogueId] }
             loaderNextElement={ <Loader/> }
             loaderPreviousElement={ <Loader/> }
             loadingNext={ false }
             loadingPrevious={ messagesPending[dialogueId] }
-            noMoreNextElement="..."
             noMorePreviousElement={ <NoMoreMessageDialogue/> }
             permanentNextElement={ ({ toFirstItem }) => (
-                <Row fullWidth spaceBetween style={ { padding: 5 } }>
-                    <p>{ '[USER] набирает сообщение...' + '' }</p>
+                <Row className={ css.panel } fullWidth spaceBetween>
+                    <Row
+                        className={ classNames(css.info, { [css.online]: dialogue.user.online }) }>
+                        <span
+                            className={ css.status }
+                            key="status"
+                        />
+                        <span
+                            className={ css.title }
+                            key="title">{ dialogue.title || dialogue.user.login }</span>
+                        <span/>
+                        <span className={ css.action } key="action">
+                            { dialogue.user.online ? 'набирает сообщение...'
+                                                   : `был в сети 35 минут назад` + '' }
+                        </span>
+                    </Row>
                     <Button onClick={ toFirstItem }
                             styleType={ ButtonStyleType.GHOST }>
                         <IoArrowDown/>
@@ -110,7 +128,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
                 </Row>
             ) }
             render={ render }
-            scrollDistance={ 100 }
+            scrollDistance={ 150 }
             showAmount={ 40 }
             smoothAutoscroll={ true }
             type={ VirtualType.BOTTOM }

@@ -2,5 +2,6 @@
     "posts_title": "Посты",
     "empty_posts_list": "Постов пока нет",
     "write_new_post": "Введите новый пост",
-    "delete_post": "Удалить пост"
+    "delete_post": "Удалить пост",
+    "no_more_posts": "Постов больше нет"
 }

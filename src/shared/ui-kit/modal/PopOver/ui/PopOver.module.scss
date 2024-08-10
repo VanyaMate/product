@@ -6,21 +6,14 @@
 .popover {
     position        : fixed;
     z-index         : 2;
-    visibility      : hidden;
-    opacity         : 0;
     background      : var(--bg-main-color);
     border-radius   : var(--offset-medium);
     padding         : var(--offset-small);
     border          : 1px solid var(--border-main-color);
     max-width       : 400px;
     box-shadow      : 0 0 15px -5px var(--bg-main-color), 0 0 10px -5px var(--bg-second-color);
-    display         : flex;
     align-items     : center;
     justify-content : center;
     text-align      : center;
-
-    &.opened {
-        visibility : visible;
-        opacity    : 1;
-    }
+    display         : flex;
 }

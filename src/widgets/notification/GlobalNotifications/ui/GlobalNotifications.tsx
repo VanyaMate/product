@@ -33,6 +33,9 @@ import {
     VirtualRenderMethod, VirtualType,
 } from '@/shared/ui-kit/box/Virtual/types/types.ts';
 import { Virtual } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
+import {
+    NoMoreNotifications,
+} from '@/entities/notification/NoMoreNotifications/ui/NoMoreNotifications.tsx';
 
 
 export type GlobalNotificationsProps =
@@ -137,6 +140,7 @@ export const GlobalNotifications: FC<GlobalNotificationsProps> = memo(function G
                     hasMoreNext={ false }
                     hasMorePrevious={ false }
                     list={ notifications }
+                    noMorePreviousElement={ <NoMoreNotifications/> }
                     render={ notificationRender }
                     showAmount={ 30 }
                     type={ VirtualType.TOP }

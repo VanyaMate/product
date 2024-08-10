@@ -39,8 +39,8 @@ export const Dropdown: FC<DropdownProps> = memo(function Dropdown (props) {
         const ref     = containerRef.current;
         const dropRef = dropdownRef.current;
 
-        if (ref && dropRef) {
-            if (controller.opened) {
+        if (ref) {
+            if (controller.opened && dropRef) {
                 const closeHandler   = (event: Event) => {
                     if (!dropRef.contains(event.target as Node) && !ref.contains(event.target as Node)) {
                         controller.setOpened(false);
@@ -61,7 +61,7 @@ export const Dropdown: FC<DropdownProps> = memo(function Dropdown (props) {
             } else {
                 const onClickHandler = (event: Event) => {
                     if (ref.contains(event.target as Node)) {
-                        controller.setOpened((prev) => !prev);
+                        controller.setOpened(true);
                     }
                 };
 
@@ -92,15 +92,15 @@ export const Dropdown: FC<DropdownProps> = memo(function Dropdown (props) {
         >
             { children }
             {
-                createPortal(
+                controller.opened ? createPortal(
                     <div
-                        className={ classNames(css.dropdown, { [css.opened]: controller.opened }) }
+                        className={ css.dropdown }
                         ref={ dropdownRef }
                     >
                         { dropdownContent }
                     </div>,
                     document.body,
-                )
+                ) : null
             }
         </div>
     );

@@ -4,4 +4,37 @@
         gap     : var(--offset-medium);
         padding : var(--offset-medium);
     }
+
+    .panel {
+        padding : var(--offset-small);
+    }
+
+    .info {
+        .status {
+            height        : 10px;
+            width         : 10px;
+            background    : var(--ghost-color);
+            border-radius : 50%;
+        }
+
+        .title {
+            font-size : var(--font-size-m);
+            color     : var(--text-second-color);
+        }
+
+        .action {
+            font-size : var(--font-size-m);
+            color     : var(--text-second-color);
+        }
+
+        &.online {
+            .status {
+                background : var(--second-color);
+            }
+
+            .title {
+                color : var(--text-main-color);
+            }
+        }
+    }
 }

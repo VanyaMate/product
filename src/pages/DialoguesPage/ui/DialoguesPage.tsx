@@ -39,6 +39,9 @@ import {
     VirtualRenderMethod, VirtualType,
 } from '@/shared/ui-kit/box/Virtual/types/types.ts';
 import { Virtual } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
+import {
+    NoMoreDialogues,
+} from '@/entities/dialogue/NoMoreDialogues/ui/NoMoreDialogues.tsx';
 
 
 export type DialoguesPageProps =
@@ -85,8 +88,9 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
                 contentClassName={ css.list }
                 distanceToTrigger={ 100 }
                 list={ dialogues }
+                noMorePreviousElement={ <NoMoreDialogues/> }
                 render={ dialoguesRender }
-                showAmount={ 20 }
+                showAmount={ 30 }
                 type={ VirtualType.TOP }
             />
             <PrivateDialogueWindow dialogueId={ dialogueId }/>

@@ -1,7 +1,7 @@
 import {
     ComponentPropsWithoutRef,
     FC,
-    memo,
+    memo, useCallback,
     useLayoutEffect,
 } from 'react';
 import classNames from 'classnames';
@@ -23,6 +23,12 @@ import { useTranslation } from 'react-i18next';
 import {
     PostDropdownButton,
 } from '@/features/post/button/PostDropdownButton/ui/PostDropdownButton.tsx';
+import {
+    VirtualRenderMethod,
+} from '@/shared/ui-kit/box/Virtual/types/types.ts';
+import { DomainPost } from 'product-types/dist/post/DomainPost';
+import { Virtual } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
+import { NoMorePosts } from '@/entities/post/NoMorePosts/ui/NoMorePosts.tsx';
 
 
 export type UserPostsProps =
@@ -45,6 +51,18 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
         }
     }, [ currentPostsUserId, userId ]);
 
+    const render = useCallback<VirtualRenderMethod>((post: DomainPost) => {
+        return (
+            <Post
+                extra={
+                    <PostDropdownButton postId={ post.id }/>
+                }
+                key={ post.id }
+                post={ post }
+            />
+        );
+    }, []);
+
     return (
         <section
             { ...other }
@@ -59,23 +77,16 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
                 : null
             }
             {
-                postsPending && !posts.length
-                ? <Loader className={ css.loader }/>
-                : posts.length ? (
-                    <div className={ css.posts }>
-                        {
-                            posts.map((post) => (
-                                <Post
-                                    extra={
-                                        <PostDropdownButton postId={ post.id }/>
-                                    }
-                                    key={ post.id }
-                                    post={ post }
-                                />
-                            ))
-                        }
-                    </div>
-                ) : t('empty_posts_list')
+                posts.length
+                ? <Virtual
+                    contentClassName={ css.posts }
+                    list={ posts }
+                    loaderPreviousElement={ <Loader/> }
+                    loadingPrevious={ postsPending }
+                    noMorePreviousElement={ <NoMorePosts/> }
+                    render={ render }
+                />
+                : t('empty_posts_list')
             }
         </section>
     );

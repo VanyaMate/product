@@ -241,12 +241,54 @@ export const $privateMessages = store<PrivateMessagesStore>({})
         sendPrivateMessageEffect,
         'onSuccess',
         (state, { result }) => {
-            const messages = state[result.dialogue.id] ?? [];
-            messages.push(result.message);
-            return {
-                ...state,
-                [result.dialogue.id]: [ ...messages ],
-            };
+            const dialogueId       = result.dialogue.id;
+            const dialogueMessages = state[dialogueId];
+
+            if (dialogueMessages) {
+                const lastMessage                = dialogueMessages[dialogueMessages.length - 1];
+                const isEqualMessages            = lastMessage.id === result.message.id;
+                const currentLastMessageIsNewest = new Date(lastMessage.creationDate) > new Date(result.message.creationDate);
+
+                // TODO: Не учитывается то, что возможно "новое", но более
+                //  старое сообщение пришло первым. Тогда действительно
+                //  новое сообщение не добавится.
+
+                if (isEqualMessages || currentLastMessageIsNewest) {
+                    return state;
+                }
+
+                return {
+                    ...state,
+                    [dialogueId]: [ ...dialogueMessages, result.message ],
+                };
+            }
+        },
+    )
+    .on(
+        sendPrivateMessageNotificationEffect,
+        'onSuccess',
+        (state, { result }) => {
+            const dialogueId       = result.dialogue.id;
+            const dialogueMessages = state[dialogueId];
+
+            if (dialogueMessages) {
+                const lastMessage                = dialogueMessages[dialogueMessages.length - 1];
+                const isEqualMessages            = lastMessage.id === result.message.id;
+                const currentLastMessageIsNewest = new Date(lastMessage.creationDate) > new Date(result.message.creationDate);
+
+                // TODO: Не учитывается то, что возможно "новое", но более
+                //  старое сообщение пришло первым. Тогда действительно
+                //  новое сообщение не добавится.
+
+                if (isEqualMessages || currentLastMessageIsNewest) {
+                    return state;
+                }
+
+                return {
+                    ...state,
+                    [dialogueId]: [ ...dialogueMessages, result.message ],
+                };
+            }
         },
     )
     .on(
@@ -352,33 +394,6 @@ export const $privateMessages = store<PrivateMessagesStore>({})
                 ...state,
                 [result.dialogue.id]: messages,
             };
-        },
-    )
-    .on(
-        sendPrivateMessageNotificationEffect,
-        'onSuccess',
-        (state, { result }) => {
-            const dialogueId       = result.dialogue.id;
-            const dialogueMessages = state[dialogueId];
-
-            if (dialogueMessages) {
-                const lastMessage                = dialogueMessages[dialogueMessages.length - 1];
-                const isEqualMessages            = lastMessage.id !== result.message.id;
-                const currentLastMessageIsNewest = new Date(lastMessage.creationDate) > new Date(result.message.creationDate);
-
-                // TODO: Не учитывается то, что возможно "новое", но более
-                //  старое сообщение пришло первым. Тогда действительно
-                //  новое сообщение не добавится.
-
-                if (isEqualMessages || currentLastMessageIsNewest) {
-                    return state;
-                }
-
-                return {
-                    ...state,
-                    [dialogueId]: [ ...dialogueMessages, result.message ],
-                };
-            }
         },
     )
     .on(
