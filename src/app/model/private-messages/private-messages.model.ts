@@ -219,11 +219,22 @@ export const $privateMessages = store<PrivateMessagesStore>({})
         removePrivateMessageEffect,
         'onSuccess',
         (state, { result }) => {
-            const messages = state[result.dialogue.id]?.filter(({ id }) => id !== result.message.id) ?? [];
-            return {
-                ...state,
-                [result.dialogue.id]: messages,
-            };
+            const dialogueId: string = result.dialogue.id;
+            const dialogueMessages   = state[dialogueId];
+
+            if (dialogueMessages) {
+                const messages = dialogueMessages.filter((message) => message.id !== result.message.id);
+                if (messages.length !== dialogueMessages.length) {
+                    return {
+                        ...state,
+                        [dialogueId]: messages,
+                    };
+                }
+
+                return state;
+            }
+
+            return state;
         },
     )
     .on(
