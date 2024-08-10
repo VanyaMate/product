@@ -1,5 +1,5 @@
-import { VirtualType } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 import { isTop } from '@/shared/ui-kit/box/Virtual/lib/isTop/isTop.ts';
+import { VirtualType } from '@/shared/ui-kit/box/Virtual/types/types.ts';
 
 
 export type GetInitialIndexProps = {

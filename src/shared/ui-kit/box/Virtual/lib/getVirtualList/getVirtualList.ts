@@ -1,4 +1,4 @@
-import { VirtualList } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
+import { VirtualList } from '@/shared/ui-kit/box/Virtual/types/types.ts';
 
 
 export type GetVirtualItemsProps = {

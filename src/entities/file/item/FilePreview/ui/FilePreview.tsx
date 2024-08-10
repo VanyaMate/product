@@ -52,7 +52,12 @@ export const FilePreview: FC<FilePreviewProps> = memo(function FilePreview (prop
                         />
                     </div>
                     <div className={ css.action } ref={ actionRef }>
-                        <FilePreviewAction file={ file }/>
+                        {
+                            // TODO: Tempo
+                        }
+                        <a download href={ __STATIC__ + '/' + file.filePath }>
+                            <FilePreviewAction file={ file }/>
+                        </a>
                     </div>
                     {
                         file.private

@@ -46,6 +46,9 @@ import {
 import {
     readPrivateMessageNotificationAction,
 } from '@/app/action/private-messages/readPrivateMessage/readPrivateMessageNotification.action.ts';
+import {
+    addMessagesToStartOfList,
+} from '@/app/model/private-messages/handlers/addMessagesToStartOfList.ts';
 
 
 export const getPrivateMessagesByCursorEffect            = effect(getPrivateMessageByCursorAction);
@@ -165,17 +168,25 @@ export const $privateMessagesError = store<Record<string, DomainServiceResponseE
     .on(logoutEffect, 'onBefore', () => ({}));
 
 
-export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
+export type PrivateMessagesStore = Record<string, Array<DomainMessage>>;
+export const $privateMessages = store<PrivateMessagesStore>({})
     .on(
         getPrivateMessagesByCursorEffect,
         'onSuccess',
-        (state, { args: [ [ dialogueId ] ], result }) => {
-            const messages       = result.list.filter(isDomainMessage);
-            const uniqueMessages = messages.filter((message) => !state[dialogueId].find(({ id }) => message.id === id));
-            return {
-                ...state,
-                [dialogueId]: [ ...uniqueMessages, ...(state[dialogueId] ?? []) ],
-            };
+        (state, payload) => {
+            const dialogueId: string = payload.args[0][0];
+            const newMessages        = payload.result.list.filter(isDomainMessage);
+
+            if (state[dialogueId]) {
+                const messages = addMessagesToStartOfList(state[dialogueId], newMessages);
+                if (messages) {
+                    return { ...state, [dialogueId]: messages };
+                }
+            } else {
+                return { ...state, [dialogueId]: newMessages };
+            }
+
+            return state;
         },
     )
     .on(
@@ -223,7 +234,7 @@ export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
             messages.push(result.message);
             return {
                 ...state,
-                [result.dialogue.id]: messages,
+                [result.dialogue.id]: [ ...messages ],
             };
         },
     )
@@ -335,16 +346,29 @@ export const $privateMessages = store<Record<string, Array<DomainMessage>>>({})
     .on(
         sendPrivateMessageNotificationEffect,
         'onSuccess',
-        (state, { result }) =>
-            state[result.dialogue.id]?.some((message) => message.id === result.message.id)
-            ? state
-            : {
+        (state, { result }) => {
+            const dialogueId       = result.dialogue.id;
+            const dialogueMessages = state[dialogueId];
+
+            if (dialogueMessages) {
+                const lastMessage                = dialogueMessages[dialogueMessages.length - 1];
+                const isEqualMessages            = lastMessage.id !== result.message.id;
+                const currentLastMessageIsNewest = new Date(lastMessage.creationDate) > new Date(result.message.creationDate);
+
+                // TODO: Не учитывается то, что возможно "новое", но более
+                //  старое сообщение пришло первым. Тогда действительно
+                //  новое сообщение не добавится.
+
+                if (isEqualMessages || currentLastMessageIsNewest) {
+                    return state;
+                }
+
+                return {
                     ...state,
-                    [result.dialogue.id]: [
-                        ...(state[result.dialogue.id] ?? []),
-                        result.message,
-                    ],
-                },
+                    [dialogueId]: [ ...dialogueMessages, result.message ],
+                };
+            }
+        },
     )
     .on(
         createPrivateDialogueEffect,
