@@ -3,6 +3,7 @@
     position : relative;
 
     .list {
-        gap : var(--offset-small);
+        padding : var(--offset-small);
+        gap     : var(--offset-small);
     }
 }

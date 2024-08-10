@@ -1,0 +1,25 @@
+.container {
+    width       : 250px;
+    max-width   : 100%;
+    align-items : center;
+
+    .divider {
+        margin : var(--offset-small)
+    }
+
+    .avatar {
+        width         : 100px;
+        height        : 100px;
+        border-radius : 50%;
+        overflow      : hidden;
+    }
+
+    .link {
+        width  : 100%;
+        height : fit-content;
+    }
+
+    .button {
+        width : 100%;
+    }
+}

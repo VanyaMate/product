@@ -1,3 +1,5 @@
+$scroll-width : 10px;
+
 .container {
     overflow       : hidden;
     width          : 100%;
@@ -26,7 +28,7 @@
         position       : absolute;
         overflow       : hidden;
         top            : 0;
-        right          : 1px;
+        right          : 0;
         width          : 0;
         height         : 100%;
         background     : var(--bg-ghost-color);
@@ -85,11 +87,11 @@
         .scrollContainer,
         .permanent,
         .loader {
-            padding-right : 12px;
+            padding-right : calc($scroll-width + var(--offset-small));
         }
 
         .scrollBar {
-            width : 10px;
+            width : $scroll-width;
         }
     }
 }

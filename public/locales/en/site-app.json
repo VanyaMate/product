@@ -13,5 +13,7 @@
     "open_navigation_menu": "Open menu",
     "close_navigation_menu": "Close menu",
     "open_user_menu": "Open user menu",
-    "close_user_menu": "Close user menu"
+    "close_user_menu": "Close user menu",
+    "open_user_notifications": "Open notifications",
+    "close_user_notifications": "Close notifications"
 }

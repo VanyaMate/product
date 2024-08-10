@@ -1,7 +1,3 @@
-.li {
-    width : 30px;
-}
-
 .container {
     width       : 100%;
     white-space : nowrap;
@@ -41,13 +37,26 @@
         }
 
         &.ghost {
-            background : var(--bg-second-color);
+            background : var(--bg-ghost-color);
             color      : var(--text-second-color);
 
             &:focus,
             &:hover {
+                color      : var(--text-main-color);
                 box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--ghost-color);
             }
+        }
+    }
+
+    &:hover {
+        width         : 100%;
+        height        : fit-content;
+        background    : var(--bg-ghost-color);
+        border-radius : var(--offset-small);
+        transition    : var(--transition-fast);
+
+        .icon {
+            box-shadow : none !important;
         }
     }
 }

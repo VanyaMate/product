@@ -13,5 +13,7 @@
     "open_navigation_menu": "Открыть меню",
     "close_navigation_menu": "Закрыть меню",
     "open_user_menu": "Открыть меню пользователя",
-    "close_user_menu": "Закрыть меню пользователя"
+    "close_user_menu": "Закрыть меню пользователя",
+    "open_user_notifications": "Открыть уведомления",
+    "close_user_notifications": "Закрыть уведомления"
 }

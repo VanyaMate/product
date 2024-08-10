@@ -1,5 +1,10 @@
 .container {
-    display     : flex;
-    gap         : var(--offset-small);
-    align-items : center;
+    .button {
+        padding : 0 var(--offset-small);
+
+        .avatar {
+            width  : 26px;
+            height : 26px;
+        }
+    }
 }

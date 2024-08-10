@@ -7,8 +7,7 @@
     transition      : var(--transition-medium);
 
     &:hover {
-        cursor          : pointer;
-        text-decoration : underline;
+        cursor : pointer;
     }
 
     &.primary {
@@ -19,7 +18,8 @@
             color      : var(--on-primary-text-color);
         }
 
-        &:focus {
+        &:focus,
+        &:hover {
             box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color);
             background : var(--bg-main-color);
         }
@@ -33,7 +33,8 @@
             color      : var(--on-second-text-color);
         }
 
-        &:focus {
+        &:focus,
+        &:hover {
             box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--second-color);
             background : var(--bg-main-color);
         }
@@ -47,7 +48,9 @@
             color      : var(--on-ghost-text-color);
         }
 
-        &:focus {
+        &:focus,
+        &:hover {
+            color      : var(--text-main-color);
             box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--ghost-color);
             background : var(--bg-main-color);
         }

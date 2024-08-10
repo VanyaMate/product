@@ -48,6 +48,7 @@
         transition    : var(--transition-medium);
         color         : var(--bg-main-foreground-color);
         box-shadow    : 0 0 0 0 transparent;
+        height        : 30px;
 
         &:focus {
             box-shadow : 0 0 0 1px var(--primary-color), 0 5px 25px -5px var(--primary-color);

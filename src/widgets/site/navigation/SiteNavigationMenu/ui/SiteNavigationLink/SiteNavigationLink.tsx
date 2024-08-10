@@ -14,18 +14,16 @@ export const SiteNavigationLink: FC<SiteNavigationLinkProps> = memo(function Sit
     const { className, icon, children, styleType, ...other } = props;
 
     return (
-        <li className={ css.li }>
-            <Link
-                { ...other }
-                className={ classNames(css.container, {}, [ className ]) }
-                styleType={ styleType }
-            >
+        <Link
+            { ...other }
+            className={ classNames(css.container, {}, [ className ]) }
+            styleType={ styleType }
+        >
                 <span
                     className={ classNames(css.icon, {}, [ css[styleType] ]) }>
                     { icon }
                 </span>
-                <span>{ children }</span>
-            </Link>
-        </li>
+            <span>{ children }</span>
+        </Link>
     );
 });

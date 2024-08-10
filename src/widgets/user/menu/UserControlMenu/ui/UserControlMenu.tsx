@@ -2,9 +2,6 @@ import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './UserControlMenu.module.scss';
 import {
-    UserLogoutButton,
-} from '@/features/user/button/UserLogoutButton/ui/UserLogoutButton.tsx';
-import {
     UserSettingsLink,
 } from '@/features/user/link/UserSettingsLink/ui/UserSettingsLink.tsx';
 import {
@@ -24,10 +21,11 @@ export const UserControlMenu: FC<UserControlMenuProps> = memo(function UserContr
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            <UserMuteNotificationsButton/>
-            <UserSettingsLink/>
             <li>
-                <UserLogoutButton/>
+                <UserMuteNotificationsButton/>
+            </li>
+            <li>
+                <UserSettingsLink/>
             </li>
         </ul>
     );

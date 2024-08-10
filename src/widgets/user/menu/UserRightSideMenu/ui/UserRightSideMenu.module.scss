@@ -5,10 +5,13 @@
     height         : 100%;
 
     .buttons {
-        height : 50px;
+        height        : 40px;
+        background    : var(--bg-ghost-color);
+        padding       : var(--offset-small);
+        border-radius : var(--offset-small);
     }
 
     .notifications {
-        height : calc(100% - 50px);
+        height : calc(100% - 40px - var(--offset-medium));
     }
 }

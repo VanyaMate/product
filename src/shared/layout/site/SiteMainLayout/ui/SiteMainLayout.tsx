@@ -10,7 +10,11 @@ import {
 } from 'react';
 import classNames from 'classnames';
 import css from './SiteMainLayout.module.scss';
-import { IoClose, IoMenu, IoPersonCircle } from 'react-icons/io5';
+import {
+    IoClose,
+    IoMenu,
+    IoNotifications,
+} from 'react-icons/io5';
 import { inert } from '@/shared/lib/react/inert.ts';
 import { keyboardClose } from '@/shared/lib/react/keyboardClose.ts';
 import { noEvent } from '@/shared/lib/react/noEvent.ts';
@@ -116,21 +120,22 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
                     <PopOver
                         popover={ t(
                             rightMenuOpened
-                            ? 'close_user_menu'
-                            : 'open_user_menu',
+                            ? 'close_user_notifications'
+                            : 'open_user_notifications',
                         ) }
                     >
                         <Button
                             aria-label={ t(
                                 rightMenuOpened
-                                ? 'close_user_menu'
-                                : 'open_user_menu',
+                                ? 'close_user_notifications'
+                                : 'open_user_notifications',
                             ) }
                             onClick={ rightMenuToggle }
                             quad
                             { ...inert(leftMenuOpened) }
                         >
-                            { rightMenuOpened ? <IoClose/> : <IoPersonCircle/> }
+                            { rightMenuOpened ? <IoClose/> :
+                              <IoNotifications/> }
                         </Button>
                     </PopOver>
                 </header>
