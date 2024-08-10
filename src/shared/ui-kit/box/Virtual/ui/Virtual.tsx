@@ -121,11 +121,12 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
      * Wheel scroll, scroll animation, scrollTo
      ******************************************************************/
 
-    const containerRef           = useRef<HTMLDivElement>(null);
-    const targetScrollPosition   = useRef<number>(0);
-    const startAnimationTime     = useRef<number>(0);
-    const startAnimationPosition = useRef<number>(0);
-    const requestAnimation       = useRef<number>(0);
+    const containerRef            = useRef<HTMLDivElement>(null);
+    const targetScrollPosition    = useRef<number>(0);
+    const startAnimationTime      = useRef<number>(0);
+    const startAnimationPosition  = useRef<number>(0);
+    const requestAnimation        = useRef<number>(0);
+    const manualScrollTopPosition = useRef<number>();
 
     const scrollAnimation = useCallback((ref: HTMLDivElement, timestamp: number, animationMs: number) => {
         if (startAnimationTime.current === 0) {
@@ -140,7 +141,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
             startAnimationTime    : startAnimationTime.current,
         });
 
-        ref.scrollTop = scrollPosition;
+        ref.scrollTop = manualScrollTopPosition.current = scrollPosition;
 
         if (scrollPosition !== targetScrollPosition.current) {
             requestAnimation.current = requestAnimationFrame((t) => scrollAnimation(ref, t, animationMs));
@@ -158,7 +159,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
             } else {
                 targetScrollPosition.current = target;
                 cancelAnimationFrame(requestAnimation.current);
-                ref.scrollTop = target;
+                ref.scrollTop = manualScrollTopPosition.current = target;
             }
         }
     }, [ scrollAnimation ]);
@@ -257,7 +258,6 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                 const { scrollTop, scrollHeight, offsetHeight } = ref;
 
                 if (disableScrollHandler.current) {
-                    previousScrollTop.current = scrollTop;
                     return;
                 }
 
@@ -366,7 +366,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
     const userScroll                   = useRef<boolean>(true);
 
     const applyOffsetToCurrentScrollPosition = useCallback((ref: HTMLDivElement, offset: number) => {
-        ref.scrollTop                  = previousScrollTop.current + offset;
+        ref.scrollTop                  = manualScrollTopPosition.current += offset;
         targetScrollPosition.current   = targetScrollPosition.current + offset;
         startAnimationPosition.current = startAnimationPosition.current + offset;
     }, []);
@@ -437,7 +437,9 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                     } else {
                         scrollByFirstElement(content, ref);
                     }
-                    disableScrollHandler.current = false;
+                    setTimeout(() => {
+                        disableScrollHandler.current = false;
+                    });
                     break;
                 case VirtualAction.AUTOSCROLL_NEXT:
                     if (!autoscrollNext && userScroll.current) {
@@ -560,7 +562,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                 setScrollable(true);
             }
         }
-    }, [ list, scrollable ]);
+    }, [ virtualList, scrollable ]);
 
 
     /*******************************************************************

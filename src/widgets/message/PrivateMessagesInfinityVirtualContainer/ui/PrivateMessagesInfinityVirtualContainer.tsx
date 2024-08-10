@@ -105,7 +105,9 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             loadingPrevious={ messagesPending[dialogueId] }
             noMorePreviousElement={ <NoMoreMessageDialogue/> }
             permanentNextElement={ ({ toFirstItem }) => (
-                <Row className={ css.panel } fullWidth spaceBetween>
+                <Row className={ css.panel }
+                     fullWidth
+                     spaceBetween>
                     <Row
                         className={ classNames(css.info, { [css.online]: dialogue.user.online }) }>
                         <span
@@ -116,10 +118,10 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
                             className={ css.title }
                             key="title">{ dialogue.title || dialogue.user.login }</span>
                         <span/>
-                        <span className={ css.action } key="action">
-                            { dialogue.user.online ? 'набирает сообщение...'
-                                                   : `был в сети 35 минут назад` + '' }
-                        </span>
+                        {/*                        <span className={ css.action } key="action">
+                         { dialogue.user.online ? 'набирает сообщение...'
+                         : `был в сети 35 минут назад` + '' }
+                         </span>*/ }
                     </Row>
                     <Button onClick={ toFirstItem }
                             styleType={ ButtonStyleType.GHOST }>
