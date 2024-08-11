@@ -18,8 +18,8 @@ export const getModalPosition = function (containerRef: MutableRefObject<HTMLDiv
               width,
               height,
           }           = containerRef.current.getBoundingClientRect();
-    const modalHeight = modalRef.current.offsetHeight + MODAL_OFFSET;
-    const modalWidth  = modalRef.current.offsetWidth + MODAL_OFFSET;
+    const modalHeight = modalRef.current.offsetHeight;
+    const modalWidth  = modalRef.current.offsetWidth;
     const bodyWidth   = document.body.offsetWidth;
     const bodyHeight  = document.body.offsetHeight;
 
@@ -29,7 +29,7 @@ export const getModalPosition = function (containerRef: MutableRefObject<HTMLDiv
 
     const leftCenterPosition  = left + width / 2;
     const rightCenterPosition = bodyWidth - right + width / 2;
-    const halfModalWidth      = modalWidth / 2;
+    const halfModalWidth      = (modalWidth + MODAL_OFFSET) / 2;
 
     if (side === 'top') {
         topPosition = top > (modalHeight + MODAL_OFFSET)
