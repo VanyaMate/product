@@ -8,6 +8,8 @@ export type ModalPosition = {
 
 export type ModalPositionSide = 'bottom' | 'top';
 
+const MODAL_OFFSET: number = 5;
+
 export const getModalPosition = function (containerRef: MutableRefObject<HTMLDivElement>, modalRef: MutableRefObject<HTMLDivElement>, side: ModalPositionSide = 'top'): ModalPosition {
     const {
               top,
@@ -16,8 +18,8 @@ export const getModalPosition = function (containerRef: MutableRefObject<HTMLDiv
               width,
               height,
           }           = containerRef.current.getBoundingClientRect();
-    const modalHeight = modalRef.current.offsetHeight;
-    const modalWidth  = modalRef.current.offsetWidth;
+    const modalHeight = modalRef.current.offsetHeight + MODAL_OFFSET;
+    const modalWidth  = modalRef.current.offsetWidth + MODAL_OFFSET;
     const bodyWidth   = document.body.offsetWidth;
     const bodyHeight  = document.body.offsetHeight;
 
@@ -30,14 +32,14 @@ export const getModalPosition = function (containerRef: MutableRefObject<HTMLDiv
     const halfModalWidth      = modalWidth / 2;
 
     if (side === 'top') {
-        topPosition = top > (modalHeight + 5)
-                      ? top - modalHeight - 5
-                      : top + height + 5;
+        topPosition = top > (modalHeight + MODAL_OFFSET)
+                      ? top - modalHeight - MODAL_OFFSET
+                      : top + height + MODAL_OFFSET;
     } else {
-        if (top + height + modalHeight + 5 > bodyHeight) {
-            topPosition = top - modalHeight - 5;
+        if (top + height + modalHeight + MODAL_OFFSET > bodyHeight) {
+            topPosition = top - modalHeight - MODAL_OFFSET;
         } else {
-            topPosition = top + height + 5;
+            topPosition = top + height + MODAL_OFFSET;
         }
     }
 
