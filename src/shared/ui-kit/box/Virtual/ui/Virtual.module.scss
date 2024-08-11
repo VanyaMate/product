@@ -9,14 +9,13 @@ $scroll-width : 10px;
     flex-direction : column-reverse;
 
     .scrollContainer {
-        overflow        : hidden;
-        width           : 100%;
-        flex            : 1;
-        display         : flex;
-        flex-direction  : column-reverse;
-        transition      : var(--transition-fast);
-        contain         : strict;
-        backdrop-filter : var(--item-backdrop-filter);
+        overflow       : hidden;
+        width          : 100%;
+        flex           : 1;
+        display        : flex;
+        flex-direction : column-reverse;
+        transition     : var(--transition-fast);
+        contain        : strict;
 
         .content {
             height         : fit-content;
@@ -26,17 +25,18 @@ $scroll-width : 10px;
     }
 
     .scrollBar {
-        position       : absolute;
-        overflow       : hidden;
-        top            : 0;
-        right          : 0;
-        width          : 0;
-        height         : 100%;
-        background     : var(--bg-ghost-color);
-        border-radius  : var(--offset-small);
-        transition     : var(--transition-fast);
-        display        : flex;
-        flex-direction : column-reverse;
+        position        : absolute;
+        overflow        : hidden;
+        top             : 0;
+        right           : 0;
+        width           : 0;
+        height          : 100%;
+        background      : var(--bg-ghost-color);
+        border-radius   : var(--offset-small);
+        transition      : var(--transition-fast);
+        display         : flex;
+        flex-direction  : column-reverse;
+        backdrop-filter : var(--item-backdrop-filter);
 
         .marker {
             width         : 100%;
