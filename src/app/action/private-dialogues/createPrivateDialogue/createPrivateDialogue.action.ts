@@ -1,7 +1,7 @@
 import { request } from '@/app/lib/fetch/request.ts';
 import {
-    isDomainNotificationPrivateDialogueCreateData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationPrivateDialogueCreateData';
+    isDomainNotificationPrivateDialogueCreateData
+} from 'product-types/dist/notification/notification-data-types/private-dialogue/DomainNotificationPrivateDialogueCreateData';
 
 
 export const createPrivateDialogueAction = (userId: string) =>

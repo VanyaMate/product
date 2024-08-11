@@ -1,7 +1,7 @@
 import { request } from '@/app/lib/fetch/request.ts';
 import {
-    isDomainNotificationPrivateDialogueArchiveData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationPrivateDialogueArchiveData';
+    isDomainNotificationPrivateDialogueArchiveData
+} from 'product-types/dist/notification/notification-data-types/private-dialogue/DomainNotificationPrivateDialogueArchiveData';
 
 
 export const archivePrivateDialogueAction = (dialogueId: string) =>

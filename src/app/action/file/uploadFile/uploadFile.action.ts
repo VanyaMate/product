@@ -1,8 +1,8 @@
 // TODO: Continue
 import { request } from '@/app/lib/fetch/request.ts';
 import {
-    isDomainNotificationFileUploadedData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationFileUploadedData';
+    isDomainNotificationFileUploadedData
+} from 'product-types/dist/notification/notification-data-types/file/DomainNotificationFileUploadedData';
 
 
 export const uploadFileAction = async (file: File, onProgressCallback?: (progress: number) => void) => {

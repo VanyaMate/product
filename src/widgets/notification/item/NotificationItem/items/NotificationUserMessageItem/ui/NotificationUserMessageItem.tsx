@@ -7,14 +7,14 @@ import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import {
     NotificationDefaultLayout,
 } from '@/widgets/notification/item/NotificationItem/layouts/NotificationDefaultLayout/ui/NotificationDefaultLayout.tsx';
-import {
-    isDomainNotificationUserMessageData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationUserMessageData';
 import { IoArrowForward } from 'react-icons/io5';
 import {
     NotificationLinkLayout,
 } from '@/widgets/notification/item/NotificationItem/layouts/NotificationLinkLayout/ui/NotificationLinkLayout.tsx';
 import css from './NotificationUserMessageItem.module.scss';
+import {
+    isDomainNotificationUserMessageData
+} from 'product-types/dist/notification/notification-data-types/message/DomainNotificationUserMessageData';
 
 
 export type NotificationUserMessageItemProps =

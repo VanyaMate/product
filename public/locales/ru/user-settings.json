@@ -1,3 +1,11 @@
 {
-    "profile_settings": "Настройки профиля"
+    "profile_settings": "Настройки профиля",
+    "menu_profile_link": "Профиль",
+    "menu_privacy_link": "Приватность",
+    "menu_notifications_link": "Уведомления",
+    "menu_customisation_link": "Кастомизация",
+    "discard_changes": "Отменить",
+    "apply_changes": "Сохранить",
+    "link_to_avatar": "Ссылка на аватар",
+    "insert_link_to_avatar": "Вставьте ссылку на новый аватар"
 }

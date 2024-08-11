@@ -1,7 +1,7 @@
 import { request } from '@/app/lib/fetch/request.ts';
 import {
-    isDomainNotificationFriendRequestData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationFriendRequestData';
+    isDomainNotificationFriendRequestData
+} from 'product-types/dist/notification/notification-data-types/friend/DomainNotificationFriendRequestData';
 
 
 export const createFriendRequestAction = (userId: string) =>

@@ -6,13 +6,13 @@ import {
     NotificationLinkLayout,
 } from '@/widgets/notification/item/NotificationItem/layouts/NotificationLinkLayout/ui/NotificationLinkLayout.tsx';
 import {
-    isDomainNotificationFriendRequestAcceptedData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationFriendRequestAcceptedData';
-import {
     NotificationUnknownItem,
 } from '@/widgets/notification/item/NotificationItem/items/NotificationUnknownItem/ui/NotificationUnknownItem.tsx';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
+import {
+    isDomainNotificationFriendRequestAcceptedData
+} from 'product-types/dist/notification/notification-data-types/friend/DomainNotificationFriendRequestAcceptedData';
 
 
 export type NotificationFriendRequestAcceptedItemProps =

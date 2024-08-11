@@ -105,6 +105,10 @@ export class NotificationController implements INotificationController {
         [DomainNotificationType.LANGUAGE_WORD_UPDATED_OUT]      : [],
         [DomainNotificationType.LANGUAGE_WORD_DELETED_IN]       : [],
         [DomainNotificationType.LANGUAGE_WORD_DELETED_OUT]      : [],
+        [DomainNotificationType.USER_AVATAR_UPDATE_IN]          : [],
+        [DomainNotificationType.USER_AVATAR_UPDATE_OUT]         : [],
+        [DomainNotificationType.USER_LOGIN_UPDATE_IN]           : [],
+        [DomainNotificationType.USER_LOGIN_UPDATE_OUT]          : [],
     };
 
     private _currentNotificationIndex: number = 0;

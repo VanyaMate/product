@@ -1,7 +1,7 @@
 import { request } from '@/app/lib/fetch/request.ts';
 import {
-    isDomainNotificationPostDeletedData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationPostDeletedData';
+    isDomainNotificationPostDeletedData
+} from 'product-types/dist/notification/notification-data-types/post/DomainNotificationPostDeletedData';
 
 
 export const removePostAction = (postId: string) =>

@@ -1,9 +1,6 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './NotificationUserMessageBody.module.scss';
-import {
-    DomainNotificationUserMessageData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationUserMessageData';
 import { IoArrowForward, IoPeople, IoPerson } from 'react-icons/io5';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +8,9 @@ import {
     getDialoguePageUrl,
 } from '@/features/routes/lib/getDialoguePageUrl.ts';
 import { getUserPageUrl } from '@/features/routes/lib/getUserPageUrl.ts';
+import {
+    DomainNotificationUserMessageData
+} from 'product-types/dist/notification/notification-data-types/message/DomainNotificationUserMessageData';
 
 
 export type NotificationShortBodyUserMessageProps =

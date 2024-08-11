@@ -3,11 +3,11 @@
     gap         : var(--offset-small);
     align-items : center;
 
-    .spaceBetween {
+    &.spaceBetween {
         justify-content : space-between;
     }
 
-    .fullWidth {
+    &.fullWidth {
         width : 100%;
     }
 }

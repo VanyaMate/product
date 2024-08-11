@@ -1,6 +1,6 @@
 import {
-    assertDomainNotificationFriendDeletedData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationFriendDeletedData';
+    assertDomainNotificationFriendDeletedData
+} from 'product-types/dist/notification/notification-data-types/friend/DomainNotificationFriendDeletedData';
 
 
 export const removeFriendNotificationAction = async function (notification: unknown) {

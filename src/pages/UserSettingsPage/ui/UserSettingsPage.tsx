@@ -1,8 +1,7 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
-import classNames from 'classnames';
 import {
-    WorkInProgress,
-} from '@/entities/site/WorkInProgress/ui/WorkInProgress.tsx';
+    UserSettingsContainer,
+} from '@/widgets/user-settings/container/UserSettingsContainer/ui/UserSettingsContainer.tsx';
 
 
 export type UserSettingsPageProps =
@@ -10,12 +9,7 @@ export type UserSettingsPageProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const UserSettingsPage: FC<UserSettingsPageProps> = memo(function UserSettingsPage (props) {
-    const { className, ...other } = props;
-
     return (
-        <div { ...other }
-             className={ classNames('', {}, [ className ]) }>
-            <WorkInProgress/>
-        </div>
+        <UserSettingsContainer { ...props }/>
     );
 });

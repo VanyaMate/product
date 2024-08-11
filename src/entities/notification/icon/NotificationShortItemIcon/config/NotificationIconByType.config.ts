@@ -9,7 +9,7 @@ import {
     IoCloudDone,
     IoCloudOffline,
     IoDocument,
-    IoDownload, IoLanguage,
+    IoDownload, IoImage, IoLanguage,
     IoMail,
     IoMailOpen,
     IoMailUnread,
@@ -18,7 +18,7 @@ import {
     IoPersonAdd,
     IoPersonRemove,
     IoSad,
-    IoSync,
+    IoSync, IoText,
     IoTrash,
 } from 'react-icons/io5';
 import css
@@ -358,6 +358,22 @@ export const NotificationIconByType: Record<DomainNotificationType, Notification
     },
     [DomainNotificationType.LANGUAGE_FOLDER_DELETED_OUT]    : {
         component: IoLanguage,
+        className: css.neutral,
+    },
+    [DomainNotificationType.USER_AVATAR_UPDATE_IN]          : {
+        component: IoImage,
+        className: css.notification,
+    },
+    [DomainNotificationType.USER_AVATAR_UPDATE_OUT]         : {
+        component: IoImage,
+        className: css.neutral,
+    },
+    [DomainNotificationType.USER_LOGIN_UPDATE_IN]           : {
+        component: IoText,
+        className: css.notification,
+    },
+    [DomainNotificationType.USER_LOGIN_UPDATE_OUT]          : {
+        component: IoText,
         className: css.neutral,
     },
 };

@@ -1,3 +1,11 @@
 {
-    "profile_settings": "Profile settings"
+    "profile_settings": "Profile settings",
+    "menu_profile_link": "Profile",
+    "menu_privacy_link": "Privacy",
+    "menu_notifications_link": "Notifications",
+    "menu_customisation_link": "Customisation",
+    "discard_changes": "Discard",
+    "apply_changes": "Apply",
+    "link_to_avatar": "Link to avatar",
+    "insert_link_to_avatar": "Insert link to new avatar"
 }

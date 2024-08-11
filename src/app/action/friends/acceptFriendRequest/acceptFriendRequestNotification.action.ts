@@ -1,6 +1,6 @@
 import {
-    assertDomainNotificationFriendRequestAcceptedData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationFriendRequestAcceptedData';
+    assertDomainNotificationFriendRequestAcceptedData
+} from 'product-types/dist/notification/notification-data-types/friend/DomainNotificationFriendRequestAcceptedData';
 
 
 export const acceptFriendRequestNotificationAction = async function (notification: unknown) {

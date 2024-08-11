@@ -4,15 +4,15 @@ import {
 } from 'product-types/dist/notification/DomainNotification';
 import { useTranslation } from 'react-i18next';
 import {
-    isDomainNotificationFriendRequestAcceptedData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationFriendRequestAcceptedData';
-import {
     NotificationLinkLayout,
 } from '@/widgets/notification/item/NotificationItem/layouts/NotificationLinkLayout/ui/NotificationLinkLayout.tsx';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import {
     NotificationUnknownItem,
 } from '@/widgets/notification/item/NotificationItem/items/NotificationUnknownItem/ui/NotificationUnknownItem.tsx';
+import {
+    isDomainNotificationFriendRequestAcceptedData
+} from 'product-types/dist/notification/notification-data-types/friend/DomainNotificationFriendRequestAcceptedData';
 
 
 export type NotificationFriendRequestCanceledItemProps =

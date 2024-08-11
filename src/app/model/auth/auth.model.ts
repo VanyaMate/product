@@ -12,12 +12,20 @@ import {
     refreshAuthAction,
 } from '@/app/action/auth/refresh-auth/refresh-auth.action.ts';
 import { returnValidErrors } from '@/app/lib/error/returnValidErrors';
+import {
+    userAvatarUpdateAction,
+} from '@/app/action/user-settings/userAvatarUpdate/userAvatarUpdate.action.ts';
+import {
+    userLoginUpdateAction,
+} from '@/app/action/user-settings/userLoginUpdate/userLoginUpdate.action.ts';
 
 
-export const loginEffect        = effect(loginAction);
-export const registrationEffect = effect(registrationAction);
-export const refreshAuthEffect  = effect(refreshAuthAction);
-export const logoutEffect       = effect(logoutAction);
+export const loginEffect            = effect(loginAction);
+export const registrationEffect     = effect(registrationAction);
+export const refreshAuthEffect      = effect(refreshAuthAction);
+export const logoutEffect           = effect(logoutAction);
+export const userAvatarUpdateEffect = effect(userAvatarUpdateAction);
+export const userLoginUpdateEffect  = effect(userLoginUpdateAction);
 
 export const $authIsPending = store<boolean>(false)
     .on(loginEffect, 'onBefore', () => true)
@@ -45,4 +53,6 @@ export const $authUser = store<DomainUser | null>(null)
     .on(loginEffect, 'onSuccess', (_, { result }) => result.user)
     .on(registrationEffect, 'onSuccess', (_, { result }) => result.user)
     .on(refreshAuthEffect, 'onSuccess', (_, { result }) => result)
-    .on(logoutEffect, 'onBefore', () => null);
+    .on(logoutEffect, 'onBefore', () => null)
+    .on(userAvatarUpdateEffect, 'onSuccess', (_, { result }) => result.user)
+    .on(userLoginUpdateEffect, 'onSuccess', (_, { result }) => result.user);

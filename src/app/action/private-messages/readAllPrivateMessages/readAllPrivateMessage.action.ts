@@ -1,7 +1,7 @@
 import { request } from '@/app/lib/fetch/request.ts';
 import {
     isDomainNotificationPrivateMessageReadAllData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationPrivateMessageReadAllData';
+} from 'product-types/dist/notification/notification-data-types/private-message/DomainNotificationPrivateMessageReadAllData';
 
 
 export const readAllPrivateMessageAction = (dialogueId: string) =>

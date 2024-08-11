@@ -17,10 +17,17 @@ import {
 } from '@/pages/UserSettingsPage/ui/UserSettingsPage.async.tsx';
 
 
-export const SITE_ROUTE_DIALOGUE_ID   = 'dialogueId';
-export const SITE_ROUTE_USER_LOGIN    = 'login';
-export const SITE_ROUTE_FILE_ID       = 'fileId';
-export const SITE_ROUTE_SETTINGS_TYPE = 'type';
+export enum SiteRouteSettingsType {
+    SITE_ROUTE_SETTINGS_PRIVACY_TYPE       = 'privacy',
+    SITE_ROUTE_SETTINGS_NOTIFICATIONS_TYPE = 'notifications',
+    SITE_ROUTE_SETTINGS_CUSTOMISATION_TYPE = 'customisation'
+}
+
+
+export const SITE_ROUTE_PARAM_DIALOGUE_ID   = 'dialogueId';
+export const SITE_ROUTE_PARAM_USER_LOGIN    = 'login';
+export const SITE_ROUTE_PARAM_FILE_ID       = 'fileId';
+export const SITE_ROUTE_PARAM_SETTINGS_TYPE = 'type';
 
 export enum SiteAppRoute {
     HOME          = 'home',
@@ -43,12 +50,12 @@ export const SiteAppRoutePath: Record<SiteAppRoute, string> = {
     [SiteAppRoute.FRIENDS]      : '/friends',
     [SiteAppRoute.SEARCH]       : '/search',
     [SiteAppRoute.DIALOGUES]    : '/dialogues',
-    [SiteAppRoute.DIALOGUE]     : `/dialogues/:${ SITE_ROUTE_DIALOGUE_ID }`,
+    [SiteAppRoute.DIALOGUE]     : `/dialogues/:${ SITE_ROUTE_PARAM_DIALOGUE_ID }`,
     [SiteAppRoute.ABOUT]        : '/about',
-    [SiteAppRoute.USER]         : `/user/:${ SITE_ROUTE_USER_LOGIN }`,
+    [SiteAppRoute.USER]         : `/user/:${ SITE_ROUTE_PARAM_USER_LOGIN }`,
     [SiteAppRoute.SETTINGS]     : `/settings`,
-    [SiteAppRoute.SETTINGS_TYPE]: `/settings/:${ SITE_ROUTE_SETTINGS_TYPE }`,
-    [SiteAppRoute.FILE]         : `/file/:${ SITE_ROUTE_FILE_ID }`,
+    [SiteAppRoute.SETTINGS_TYPE]: `/settings/:${ SITE_ROUTE_PARAM_SETTINGS_TYPE }`,
+    [SiteAppRoute.FILE]         : `/file/:${ SITE_ROUTE_PARAM_FILE_ID }`,
     [SiteAppRoute.FILES]        : `/files`,
     [SiteAppRoute.LANGUAGES]    : `/languages`,
     [SiteAppRoute.NOT_FOUND]    : '*',

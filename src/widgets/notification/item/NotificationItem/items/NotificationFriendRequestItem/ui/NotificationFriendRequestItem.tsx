@@ -5,9 +5,6 @@ import {
     DomainNotification,
 } from 'product-types/dist/notification/DomainNotification';
 import {
-    isDomainNotificationFriendRequestData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationFriendRequestData';
-import {
     NotificationUnknownItem,
 } from '@/widgets/notification/item/NotificationItem/items/NotificationUnknownItem/ui/NotificationUnknownItem.tsx';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +17,9 @@ import {
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import {
+    isDomainNotificationFriendRequestData
+} from 'product-types/dist/notification/notification-data-types/friend/DomainNotificationFriendRequestData';
 
 
 export type NotificationFriendRequestItemProps =

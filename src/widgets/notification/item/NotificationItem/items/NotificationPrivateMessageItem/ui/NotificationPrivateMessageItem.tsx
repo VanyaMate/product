@@ -12,14 +12,14 @@ import {
     NotificationLinkLayout,
 } from '@/widgets/notification/item/NotificationItem/layouts/NotificationLinkLayout/ui/NotificationLinkLayout.tsx';
 import css from './NotificationPrivateMessageItem.module.scss';
-import {
-    isDomainNotificationPrivateMessageData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationPrivateMessageData';
 import { getUserPageUrl } from '@/features/routes/lib/getUserPageUrl.ts';
 import {
     getDialoguePageUrl,
 } from '@/features/routes/lib/getDialoguePageUrl.ts';
 import { getUserPageLinkAria } from '@/app/i18n/lib/getUserPageLinkAria.ts';
+import {
+    isDomainNotificationPrivateMessageData
+} from 'product-types/dist/notification/notification-data-types/private-message/DomainNotificationPrivateMessageData';
 
 
 export type NotificationUserMessageItemProps =

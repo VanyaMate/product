@@ -58,7 +58,7 @@
                 display : flex;
                 gap     : var(--offset-small);
 
-                .item {
+                .section {
                     color : var(--invisible-color);
 
                     &_me {
@@ -88,7 +88,7 @@
             }
 
             .status {
-                .item {
+                .section {
                     color : var(--light-gray);
 
                     &_me {

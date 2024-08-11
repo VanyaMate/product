@@ -14,7 +14,7 @@ import {
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import { useParams } from 'react-router-dom';
 import {
-    SITE_ROUTE_DIALOGUE_ID,
+    SITE_ROUTE_PARAM_DIALOGUE_ID,
 } from '@/app/routes/main-site/config/routes.tsx';
 import classNames from 'classnames';
 import css from './DialoguesPage.module.scss';
@@ -52,11 +52,11 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
     const { className, ...other }                  = props;
     const dialogues                                = useStore($privateDialogues);
     const dialoguesIsPending                       = useStore($privateDialoguesIsPending);
-    const userData                                 = useStore($authUser);
-    const { [SITE_ROUTE_DIALOGUE_ID]: dialogueId } = useParams<{
-        [SITE_ROUTE_DIALOGUE_ID]: string
+    const userData                                       = useStore($authUser);
+    const { [SITE_ROUTE_PARAM_DIALOGUE_ID]: dialogueId } = useParams<{
+        [SITE_ROUTE_PARAM_DIALOGUE_ID]: string
     }>();
-    const messages                                 = useStore($privateMessages);
+    const messages                                       = useStore($privateMessages);
 
     useLayoutEffect(() => {
         // TODO: Temp

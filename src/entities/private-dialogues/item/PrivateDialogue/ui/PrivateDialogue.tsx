@@ -19,7 +19,7 @@ import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import { DomainMessage } from 'product-types/dist/message/DomainMessage';
 import { getRouteUrl } from '@/app/routes/lib/getRouteUrl.ts';
 import {
-    SITE_ROUTE_DIALOGUE_ID,
+    SITE_ROUTE_PARAM_DIALOGUE_ID,
     SiteAppRoute,
     SiteAppRoutePath,
 } from '@/app/routes/main-site/config/routes.tsx';
@@ -51,7 +51,7 @@ export const PrivateDialogue: FC<PrivateDialogueProps> = memo(function PrivateDi
         >
             <Link className={ css.link }
                   to={ getRouteUrl(SiteAppRoutePath[SiteAppRoute.DIALOGUE], {
-                      [SITE_ROUTE_DIALOGUE_ID]: dialogue.id,
+                      [SITE_ROUTE_PARAM_DIALOGUE_ID]: dialogue.id,
                   }) }>
                 <PrivateDialogueIcon
                     className={ css.image }

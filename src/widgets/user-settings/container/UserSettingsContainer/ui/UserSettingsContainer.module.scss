@@ -1,0 +1,21 @@
+.container {
+    display         : flex;
+    gap             : var(--offset-medium);
+    width           : 100%;
+    height          : 100%;
+    justify-content : center;
+
+    .menu {
+        width  : 300px;
+        height : 100%;
+
+        .section {
+            background : var(--bg-ghost-color);
+        }
+    }
+
+    .content {
+        width  : 600px;
+        height : 100%;
+    }
+}

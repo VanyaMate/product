@@ -3,8 +3,8 @@ import {
 } from 'product-types/dist/message/DomainMessageCreateData';
 import { request } from '@/app/lib/fetch/request.ts';
 import {
-    isDomainNotificationPrivateMessageData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationPrivateMessageData';
+    isDomainNotificationPrivateMessageData
+} from 'product-types/dist/notification/notification-data-types/private-message/DomainNotificationPrivateMessageData';
 
 
 export const sendPrivateMessageAction = ([ dialogueId, messageData ]: [ string, DomainMessageCreateData ]) =>

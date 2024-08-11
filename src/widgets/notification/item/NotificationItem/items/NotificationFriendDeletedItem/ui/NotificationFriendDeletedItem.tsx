@@ -3,9 +3,6 @@ import {
     DomainNotification,
 } from 'product-types/dist/notification/DomainNotification';
 import {
-    isDomainNotificationFriendDeletedData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationFriendDeletedData';
-import {
     NotificationDefaultLayout,
 } from '@/widgets/notification/item/NotificationItem/layouts/NotificationDefaultLayout/ui/NotificationDefaultLayout.tsx';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
@@ -14,6 +11,9 @@ import {
 } from '@/widgets/notification/item/NotificationItem/layouts/NotificationLinkLayout/ui/NotificationLinkLayout.tsx';
 import { getUserPageUrl } from '@/features/routes/lib/getUserPageUrl.ts';
 import { getUserPageLinkAria } from '@/app/i18n/lib/getUserPageLinkAria.ts';
+import {
+    isDomainNotificationFriendDeletedData
+} from 'product-types/dist/notification/notification-data-types/friend/DomainNotificationFriendDeletedData';
 
 
 export type NotificationFriendDeletedItemProps =

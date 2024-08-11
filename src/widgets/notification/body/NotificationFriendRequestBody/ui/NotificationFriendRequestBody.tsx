@@ -2,8 +2,8 @@ import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './NotificationFriendRequestBody.module.scss';
 import {
-    DomainNotificationFriendRequestData,
-} from 'product-types/dist/notification/notification-data-types/DomainNotificationFriendRequestData';
+    DomainNotificationFriendRequestData
+} from 'product-types/dist/notification/notification-data-types/friend/DomainNotificationFriendRequestData';
 
 
 export type NotificationShortBodyFriendRequestProps =
