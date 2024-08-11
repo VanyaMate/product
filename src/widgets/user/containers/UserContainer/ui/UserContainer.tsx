@@ -76,7 +76,7 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
                     </Row>
                 </section>
                 <Col className={ css.right }>
-                    <Row fullWidth spaceBetween>
+                    <Row>
                         <Button>{ t('posts_page') }</Button>
                         <PopOver popover={ <WorkInProgress/> }>
                             <Button
