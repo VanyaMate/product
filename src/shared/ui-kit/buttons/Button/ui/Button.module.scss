@@ -9,6 +9,7 @@
     justify-content : center;
     line-height     : 0;
     overflow        : hidden;
+    backdrop-filter : var(--item-backdrop-filter);
 
     &:disabled {
         background     : var(--bg-ghost-color);
@@ -38,12 +39,12 @@
     }
 
     &.ghost:not(:disabled) {
-        background : var(--bg-main-color);
+        background : var(--bg-ghost-color);
         color      : var(--bg-main-foreground-color);
 
         &:focus,
         &:hover {
-            box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--ghost-color);
+            box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--bg-ghost-color);
         }
     }
 

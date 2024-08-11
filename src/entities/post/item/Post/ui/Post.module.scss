@@ -14,6 +14,7 @@
         padding         : var(--offset-small);
         border-radius   : var(--offset-small);
         background      : var(--bg-ghost-color);
+        backdrop-filter : var(--item-backdrop-filter);
 
         .info {
             display     : flex;
@@ -45,6 +46,10 @@
     }
 
     .content {
-        font-size : var(--font-size-m);
+        font-size       : var(--font-size-m);
+        padding         : var(--offset-small);
+        border-radius   : var(--offset-small);
+        background      : var(--bg-main-color);
+        backdrop-filter : var(--item-backdrop-filter);
     }
 }

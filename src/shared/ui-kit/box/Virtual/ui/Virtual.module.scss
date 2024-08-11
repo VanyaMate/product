@@ -9,13 +9,14 @@ $scroll-width : 10px;
     flex-direction : column-reverse;
 
     .scrollContainer {
-        overflow       : hidden;
-        width          : 100%;
-        flex           : 1;
-        display        : flex;
-        flex-direction : column-reverse;
-        transition     : var(--transition-fast);
-        contain        : strict;
+        overflow        : hidden;
+        width           : 100%;
+        flex            : 1;
+        display         : flex;
+        flex-direction  : column-reverse;
+        transition      : var(--transition-fast);
+        contain         : strict;
+        backdrop-filter : var(--item-backdrop-filter);
 
         .content {
             height         : fit-content;

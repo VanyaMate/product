@@ -1,7 +1,6 @@
 .dropdown {
     position      : fixed;
     z-index       : 2;
-    transition    : var(--transition-fast) visibility, var(--transition-fast) opacity;
     background    : var(--bg-main-color);
     border-radius : var(--offset-medium);
     padding       : var(--offset-small);
