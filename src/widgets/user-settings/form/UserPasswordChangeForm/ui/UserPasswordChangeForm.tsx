@@ -64,19 +64,25 @@ export const UserPasswordChangeForm: FC<UserPasswordChangeFormProps> = memo(func
     return (
         <Form
             { ...other }
+            aria-autocomplete="none"
+            autoComplete="off"
             className={ classNames(css.container, {}, [ className ]) }
             controller={ form }
         >
             <Col>
                 <InputWithError
+                    autoComplete="off"
                     controller={ firstPasswordInput }
                     label={ t('password_label') }
+                    name={ Math.random().toString() }
                     placeholder={ t('password_placeholder') }
                     type="password"
                 />
                 <InputWithError
+                    autoComplete="off"
                     controller={ secondPasswordInput }
                     label={ t('second_password_label') }
+                    name={ Math.random().toString() }
                     placeholder={ t('password_placeholder') }
                     type="password"
                 />

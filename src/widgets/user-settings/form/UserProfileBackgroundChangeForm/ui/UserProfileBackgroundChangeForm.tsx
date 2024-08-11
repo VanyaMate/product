@@ -72,6 +72,7 @@ export const UserProfileBackgroundChangeForm: FC<UserProfileBackgroundChangeForm
         >
             <Col>
                 <InputWithError
+                    autoComplete="off"
                     controller={ backgroundInput }
                     defaultValue={ currentBackground }
                     key="input"

@@ -62,6 +62,7 @@ export const UserLoginChangeForm: FC<UserLoginChangeFormProps> = memo(function U
         >
             <Col>
                 <InputWithError
+                    autoComplete="off"
                     controller={ loginInput }
                     defaultValue={ login }
                     label={ t('login_label') }

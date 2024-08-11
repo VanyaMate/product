@@ -64,6 +64,7 @@ export const UserAvatarChangeForm: FC<UserAvatarChangeFormProps> = memo(function
         <Form { ...other } className={ className } controller={ form }>
             <Col className={ css.container }>
                 <InputWithError
+                    autoComplete="off"
                     controller={ avatarInput }
                     defaultValue={ avatar }
                     label={ t('link_to_avatar') }
