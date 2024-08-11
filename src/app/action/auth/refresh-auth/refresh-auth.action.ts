@@ -1,5 +1,5 @@
 import { request } from '@/app/lib/fetch/request.ts';
-import { isDomainUser } from 'product-types/dist/user/DomainUser';
+import { isDomainUserFull } from 'product-types/dist/user/DomainUserFull';
 
 
-export const refreshAuthAction = () => request(`v1/authentication`, { method: 'GET' }, isDomainUser);
+export const refreshAuthAction = () => request(`v1/authentication`, { method: 'GET' }, isDomainUserFull);

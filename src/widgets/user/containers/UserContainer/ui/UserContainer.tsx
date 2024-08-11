@@ -32,6 +32,9 @@ import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
 import {
     WorkInProgress,
 } from '@/entities/site/WorkInProgress/ui/WorkInProgress.tsx';
+import {
+    ImageBackground,
+} from '@/shared/ui-kit/image/ImageBackground/ui/ImageBackground.tsx';
 
 
 export type UserContainerProps =
@@ -58,7 +61,7 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
 
     return (
         <section { ...other }
-                 className={ classNames(css.container, {}, [ className ]) }>
+                 className={ classNames(css.container, { [css.withBackground]: !!user.background }, [ className ]) }>
             <div className={ css.content }>
                 <section className={ css.left }>
                     <UserHeader user={ user }/>
@@ -110,7 +113,15 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
                     <UserPosts className={ css.content } userId={ user.id }/>
                 </Col>
             </div>
+            {
+                user.background
+                ? <ImageBackground
+                    alt="background"
+                    className={ css.background }
+                    src={ user.background }
+                />
+                : null
+            }
         </section>
-    )
-        ;
+    );
 });

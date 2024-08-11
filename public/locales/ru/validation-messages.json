@@ -1,5 +1,6 @@
 {
     "min_length_error": "Длина должна быть больше {{length}}",
     "max_length_error": "Длина должна быть не больше {{length}}",
-    "is_not_valid_email": "Это не правильная почта"
+    "is_not_valid_email": "Это не правильная почта",
+    "no_equal_password": "Пароли не совпадают"
 }

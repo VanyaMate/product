@@ -7,5 +7,17 @@
     "discard_changes": "Отменить",
     "apply_changes": "Сохранить",
     "link_to_avatar": "Ссылка на аватар",
-    "insert_link_to_avatar": "Вставьте ссылку на новый аватар"
+    "insert_link_to_avatar": "Вставьте ссылку на новый аватар",
+    "login_label": "Логин",
+    "login_placeholder": "Введите логин",
+    "avatar_change_form_title": "Аватар",
+    "login_change_form_title": "Логин",
+    "password_label": "Пароль",
+    "second_password_label": "Повторите пароль",
+    "password_placeholder": "Введите пароль",
+    "password_title": "Пароль",
+    "background_title": "Фон профиля",
+    "background_label": "Ссылка на фон",
+    "background_placeholder": "Вставьте ссылку на новый фон",
+    "no_background": "Фон не установлен"
 }

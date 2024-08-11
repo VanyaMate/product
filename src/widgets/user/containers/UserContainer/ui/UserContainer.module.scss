@@ -2,11 +2,29 @@
     container-name : container;
     container-type : inline-size;
     height         : 100%;
+    position       : relative;
+
+    &.withBackground {
+        padding       : var(--offset-small);
+        border-radius : var(--offset-medium);
+        overflow      : hidden;
+    }
+
+    .background {
+        position : absolute;
+        width    : 100%;
+        height   : 100%;
+        z-index  : 1;
+        top      : 0;
+        left     : 0;
+    }
 
     .content {
-        display : flex;
-        gap     : var(--offset-medium);
-        height  : 100%;
+        position : relative;
+        z-index  : 2;
+        display  : flex;
+        gap      : var(--offset-medium);
+        height   : 100%;
 
         @container container (max-width: 650px) {
             flex-direction : column;

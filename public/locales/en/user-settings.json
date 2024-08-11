@@ -7,5 +7,17 @@
     "discard_changes": "Discard",
     "apply_changes": "Apply",
     "link_to_avatar": "Link to avatar",
-    "insert_link_to_avatar": "Insert link to new avatar"
+    "insert_link_to_avatar": "Insert link to new avatar",
+    "login_label": "Login",
+    "login_placeholder": "Enter login",
+    "avatar_change_form_title": "Avatar",
+    "login_change_form_title": "Login",
+    "password_label": "Password",
+    "second_password_label": "Repeat password",
+    "password_placeholder": "Enter password",
+    "password_title": "Password",
+    "background_title": "Profile background",
+    "background_label": "Link to background",
+    "background_placeholder": "Insert link to new background",
+    "no_background": "Background not set"
 }

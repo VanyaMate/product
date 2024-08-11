@@ -91,8 +91,8 @@ export const useInputWithError = function (props: UseInputWithErrorProps): IUseI
     // Функция, которая навешивается на onChange в input
     const onChangeHandler: ChangeEventHandler<HTMLInputElement> = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         value.current = event.target.value;
-        validateCurrentValue().then(props.onChangeHandler);
-    }, [ props.onChangeHandler, validateCurrentValue ]);
+        validateCurrentValue().finally(() => props.onChangeHandler(value.current));
+    }, [ props, validateCurrentValue ]);
 
     useLayoutEffect(() => {
         if (inputRef.current) {

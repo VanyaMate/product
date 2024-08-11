@@ -7,7 +7,7 @@ import {
     IoChatbox,
     IoCloud,
     IoCloudDone,
-    IoCloudOffline,
+    IoCloudOffline, IoColorPalette,
     IoDocument,
     IoDownload, IoImage, IoLanguage,
     IoMail,
@@ -17,7 +17,7 @@ import {
     IoNotifications,
     IoPersonAdd,
     IoPersonRemove,
-    IoSad,
+    IoSad, IoSettings, IoShield,
     IoSync, IoText,
     IoTrash,
 } from 'react-icons/io5';
@@ -374,6 +374,42 @@ export const NotificationIconByType: Record<DomainNotificationType, Notification
     },
     [DomainNotificationType.USER_LOGIN_UPDATE_OUT]          : {
         component: IoText,
+        className: css.neutral,
+    },
+    [DomainNotificationType.PASSWORD_UPDATE]                : {
+        component: IoShield,
+        className: css.notification,
+    },
+    [DomainNotificationType.NOTIFICATIONS_UPDATE]           : {
+        component: IoNotifications,
+        className: css.notification,
+    },
+    [DomainNotificationType.NOTIFICATIONS_STATE_UPDATE]     : {
+        component: IoNotifications,
+        className: css.notification,
+    },
+    [DomainNotificationType.USER_CONTACTS_UPDATE_IN]        : {
+        component: IoSettings,
+        className: css.notification,
+    },
+    [DomainNotificationType.USER_CONTACTS_UPDATE_OUT]       : {
+        component: IoSettings,
+        className: css.neutral,
+    },
+    [DomainNotificationType.USER_BACKGROUND_UPDATE_IN]      : {
+        component: IoColorPalette,
+        className: css.notification,
+    },
+    [DomainNotificationType.USER_BACKGROUND_UPDATE_OUT]     : {
+        component: IoColorPalette,
+        className: css.neutral,
+    },
+    [DomainNotificationType.USER_PERMISSIONS_UPDATE_IN]     : {
+        component: IoSettings,
+        className: css.notification,
+    },
+    [DomainNotificationType.USER_PERMISSIONS_UPDATE_OUT]    : {
+        component: IoSettings,
         className: css.neutral,
     },
 };

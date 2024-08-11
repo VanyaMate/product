@@ -1,4 +1,9 @@
-import { ComponentPropsWithoutRef, FC, memo, useMemo } from 'react';
+import {
+    ComponentPropsWithoutRef,
+    FC,
+    memo,
+    useMemo,
+} from 'react';
 import classNames from 'classnames';
 import css from './UserSettingsContainer.module.scss';
 import {
@@ -11,10 +16,6 @@ import {
     IoShield,
 } from 'react-icons/io5';
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
-import {
-    Divider,
-    DividerType,
-} from '@/shared/ui-kit/divider/Divider/ui/Divider.tsx';
 import { getRouteUrl } from '@/app/routes/lib/getRouteUrl.ts';
 import {
     SITE_ROUTE_PARAM_SETTINGS_TYPE,
@@ -68,7 +69,6 @@ export const UserSettingsContainer: FC<UserSettingsContainerProps> = memo(functi
         <div { ...other }
              className={ classNames(css.container, {}, [ className ]) }>
             <Col className={ css.menu }>
-                <Divider type={ DividerType.HORIZONTAL }/>
                 <SiteNavigationLink
                     icon={ <IoPerson/> }
                     styleType={
@@ -125,6 +125,13 @@ export const UserSettingsContainer: FC<UserSettingsContainerProps> = memo(functi
             <div className={ css.content }>
                 { content }
             </div>
+
+            {/*            <Virtual
+             className={ css.content }
+             list={ [ content ] }
+             render={ (e: ReactNode) => e }
+             showAmount={ 1 }
+             />*/ }
         </div>
     );
 });

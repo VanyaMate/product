@@ -2,7 +2,6 @@ import { store, effect } from '@vanyamate/sec';
 import {
     DomainServiceResponseError,
 } from 'product-types/dist/error/DomainServiceResponseError';
-import { DomainUser } from 'product-types/dist/user/DomainUser';
 import { loginAction } from '@/app/action/auth/login/login.action.ts';
 import {
     registrationAction,
@@ -18,14 +17,23 @@ import {
 import {
     userLoginUpdateAction,
 } from '@/app/action/user-settings/userLoginUpdate/userLoginUpdate.action.ts';
+import {
+    userPasswordUpdateAction,
+} from '@/app/action/user-settings/userPasswordUpdate/userPasswordUpdate.action.ts';
+import { DomainUserFull } from 'product-types/dist/user/DomainUserFull';
+import {
+    userBackgroundUpdateAction,
+} from '@/app/action/user-settings/userBackgroundUpdate/userBackgroundUpdate.action.ts';
 
 
-export const loginEffect            = effect(loginAction);
-export const registrationEffect     = effect(registrationAction);
-export const refreshAuthEffect      = effect(refreshAuthAction);
-export const logoutEffect           = effect(logoutAction);
-export const userAvatarUpdateEffect = effect(userAvatarUpdateAction);
-export const userLoginUpdateEffect  = effect(userLoginUpdateAction);
+export const loginEffect                = effect(loginAction);
+export const registrationEffect         = effect(registrationAction);
+export const refreshAuthEffect          = effect(refreshAuthAction);
+export const logoutEffect               = effect(logoutAction);
+export const userAvatarUpdateEffect     = effect(userAvatarUpdateAction);
+export const userLoginUpdateEffect      = effect(userLoginUpdateAction);
+export const userPasswordUpdateEffect   = effect(userPasswordUpdateAction);
+export const userBackgroundUpdateEffect = effect(userBackgroundUpdateAction);
 
 export const $authIsPending = store<boolean>(false)
     .on(loginEffect, 'onBefore', () => true)
@@ -49,10 +57,29 @@ export const $authError = store<DomainServiceResponseError | null>(null)
     .on(logoutEffect, 'onBefore', () => null);
 
 
-export const $authUser = store<DomainUser | null>(null)
+export const $authUser = store<DomainUserFull | null>(null)
     .on(loginEffect, 'onSuccess', (_, { result }) => result.user)
     .on(registrationEffect, 'onSuccess', (_, { result }) => result.user)
     .on(refreshAuthEffect, 'onSuccess', (_, { result }) => result)
     .on(logoutEffect, 'onBefore', () => null)
-    .on(userAvatarUpdateEffect, 'onSuccess', (_, { result }) => result.user)
-    .on(userLoginUpdateEffect, 'onSuccess', (_, { result }) => result.user);
+    .on(
+        userAvatarUpdateEffect,
+        'onSuccess',
+        (state, { result }) => ({
+            ...state, ...result.newUser,
+        }),
+    )
+    .on(
+        userLoginUpdateEffect,
+        'onSuccess',
+        (state, { result }) => ({
+            ...state, ...result.newUser,
+        }),
+    )
+    .on(
+        userBackgroundUpdateEffect,
+        'onSuccess',
+        (state, { result }) => ({
+            ...state, background: result.currentBackground,
+        }),
+    );

@@ -1,5 +1,6 @@
 {
     "min_length_error": "Length must be greater than {{length}}",
     "max_length_error": "Length must be no more than {{length}}",
-    "is_not_valid_email": "Is not valid email"
+    "is_not_valid_email": "Is not valid email",
+    "no_equal_password": "No equal passwords"
 }
