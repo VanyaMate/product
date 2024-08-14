@@ -31,6 +31,14 @@ select {
 }
 
 *[inert] {
-    transition : var(--transition-medium);
-    filter     : blur(5px);
+    transition     : var(--transition-medium);
+    pointer-events : none;
+
+    @media only screen and (hover : none) and (pointer : coarse) {
+        opacity : .2;
+    }
+
+    @media only screen and (hover : hover) {
+        filter : blur(5px);
+    }
 }
