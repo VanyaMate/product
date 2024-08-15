@@ -1,0 +1,14 @@
+.container {
+    position      : fixed;
+    bottom        : 0;
+    right         : var(--offset-small);
+    transform     : translateY(100%);
+    transition    : var(--transition-fast);
+    padding       : var(--offset-medium);
+    border-radius : var(--offset-medium);
+    background    : var(--bg-main-color);
+
+    &.show {
+        transform : translateY(0);
+    }
+}

@@ -41,6 +41,8 @@ const connections: Set<string> = new Set<string>();
 
 export const useNotification = function (id: string): INotificationController {
     useEffect(() => {
+        console.log('CONNECT', connections.size);
+
         if (connections.size === 0) {
             notificationController.connect(`${ __API__ }/v1/notification`, () => ({
                 accessToken : localStorage.getItem(LOCAL_STORAGE_USER_ACCESS_TOKEN),

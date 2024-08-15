@@ -3,7 +3,7 @@ import {
 } from 'product-types/dist/notification/DomainNotification';
 import {
     IoArchive,
-    IoBuild,
+    IoBuild, IoCall,
     IoChatbox,
     IoCloud,
     IoCloudDone,
@@ -410,6 +410,34 @@ export const NotificationIconByType: Record<DomainNotificationType, Notification
     },
     [DomainNotificationType.USER_PERMISSIONS_UPDATE_OUT]    : {
         component: IoSettings,
+        className: css.neutral,
+    },
+    [DomainNotificationType.CALL_OFFER_IN]                  : {
+        component: IoCall,
+        className: css.notification,
+    },
+    [DomainNotificationType.CALL_OFFER_OUT]                 : {
+        component: IoCall,
+        className: css.positive,
+    },
+    [DomainNotificationType.CALL_ANSWER_IN]                 : {
+        component: IoCall,
+        className: css.notification,
+    },
+    [DomainNotificationType.CALL_ANSWER_OUT]                : {
+        component: IoCall,
+        className: css.positive,
+    },
+    [DomainNotificationType.CALL_START_IN]                  : {
+        component: IoCall,
+        className: css.notification,
+    },
+    [DomainNotificationType.CALL_FINISH_IN]                 : {
+        component: IoCall,
+        className: css.notification,
+    },
+    [DomainNotificationType.CALL_FINISH_OUT]                : {
+        component: IoCall,
         className: css.neutral,
     },
 };

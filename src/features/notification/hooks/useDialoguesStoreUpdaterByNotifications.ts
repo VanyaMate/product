@@ -3,10 +3,6 @@ import {
 } from '@/features/notification/hooks/useNotification.ts';
 import { useLayoutEffect } from 'react';
 import {
-    NotificationNotificatorCallback,
-} from '@/features/notification/services/notificator/notification-notificator.interface.ts';
-import {
-    DomainNotification,
     DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
 import { useStore } from '@vanyamate/sec-react';
@@ -20,6 +16,7 @@ import {
     readPrivateMessageNotificationEffect,
     sendPrivateMessageNotificationEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
+import { applyEffect } from '@/features/notification/lib/applyEffect.ts';
 
 
 export const useDialoguesStoreUpdaterByNotifications = function () {
@@ -31,13 +28,9 @@ export const useDialoguesStoreUpdaterByNotifications = function () {
     }, []);
 
     useLayoutEffect(() => {
-        if (dialogues) {
-            const applyEffect = function (callback: (data: unknown) => void): NotificationNotificatorCallback {
-                return (notifications: DomainNotification[]) => {
-                    notifications.forEach(({ data }) => callback(data));
-                };
-            };
+        console.log('here', dialogues, notification);
 
+        if (dialogues) {
             const onPrivateMessageIn   = applyEffect(sendPrivateMessageNotificationEffect);
             const onReadMessage        = applyEffect(readPrivateMessageNotificationEffect);
             const onReadAllInMessages  = applyEffect(readAllPrivateMessagesNotificationInEffect);

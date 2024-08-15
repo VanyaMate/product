@@ -118,6 +118,13 @@ export class NotificationController implements INotificationController {
         [DomainNotificationType.USER_BACKGROUND_UPDATE_OUT]     : [],
         [DomainNotificationType.USER_PERMISSIONS_UPDATE_IN]     : [],
         [DomainNotificationType.USER_PERMISSIONS_UPDATE_OUT]    : [],
+        [DomainNotificationType.CALL_OFFER_IN]                  : [],
+        [DomainNotificationType.CALL_OFFER_OUT]                 : [],
+        [DomainNotificationType.CALL_ANSWER_IN]                 : [],
+        [DomainNotificationType.CALL_ANSWER_OUT]                : [],
+        [DomainNotificationType.CALL_START_IN]                  : [],
+        [DomainNotificationType.CALL_FINISH_IN]                 : [],
+        [DomainNotificationType.CALL_FINISH_OUT]                : [],
     };
 
     private _currentNotificationIndex: number = 0;
