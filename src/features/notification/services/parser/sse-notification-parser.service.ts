@@ -12,8 +12,7 @@ import { jsonParse } from '@/shared/lib/json/json-parse.ts';
 export class SseNotificationParser implements INotificationParser {
     getMessages (response: string): string[] {
         return response
-            .split('\n\n')
-            .map((message) => message.split(/^data\s/)[1])
+            .split(/^data\s|\n\ndata\s/gi)
             .filter(Boolean) ?? [];
     }
 

@@ -1,6 +1,11 @@
 /* eslint-disable */
 
-import { ComponentPropsWithoutRef, FC, memo, useMemo } from 'react';
+import {
+    ComponentPropsWithoutRef,
+    FC,
+    memo,
+    useMemo,
+} from 'react';
 import classNames from 'classnames';
 import css from './CallModal.module.scss';
 import { useStore } from '@vanyamate/sec-react';
@@ -9,7 +14,6 @@ import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import {
     CreateCallAnswerButton,
 } from '@/features/call/button/CreateCallAnswerButton/ui/CreateCallAnswerButton.tsx';
-import { CallVideo } from '@/widgets/call/CallVideo/ui/CallVideo.tsx';
 
 
 export type CallModalProps =
@@ -26,8 +30,6 @@ export const CallModal: FC<CallModalProps> = memo(function CallModal (props) {
                 .map((id) => callConnections[id])
         , [ callConnections ]);
 
-    console.log('calls existsed', callsExisted);
-
     return (
         <div { ...other }
              className={ classNames(css.container, { [css.show]: !!callsExisted.length }, [ className ]) }>
@@ -43,8 +45,18 @@ export const CallModal: FC<CallModalProps> = memo(function CallModal (props) {
                         </Row>
                         <div>active: { call.active.toString() }</div>
                         <div>offer: { (!!call.offer).toString() }</div>
-                        <div>answer: { (!!call.answer).toString() }</div>
-                        <CallVideo call={ call.peerConnection }/>
+                        <video
+                            style={ { width: 300 } }
+                            ref={ el => el ? el.srcObject = call.localStream
+                                           : null }
+                            autoPlay
+                        />
+                        <video
+                            style={ { width: 300 } }
+                            ref={ el => el ? el.srcObject = call.remoteStream
+                                           : null }
+                            autoPlay
+                        />
                     </div>
                 ))
             }

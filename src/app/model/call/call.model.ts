@@ -13,7 +13,6 @@ import {
 } from '@/app/action/call/createCallAnswer/createCallAnswerNotification.action.ts';
 import { DomainUser } from 'product-types/dist/user/DomainUser';
 import { DomainCallOffer } from 'product-types/dist/call/DomainCallOffer';
-import { DomainCallAnswer } from 'product-types/dist/call/DomainCallAnswer';
 
 
 // TODO: Всё временное
@@ -25,9 +24,10 @@ export const createCallAnswerNotificationEffect = effect(createCallAnswerNotific
 
 export type PeerConnectionModel = Record<string, {
     peerConnection: RTCPeerConnection;
+    localStream: MediaStream;
+    remoteStream: MediaStream;
     user: DomainUser;
     offer: DomainCallOffer;
-    answer: DomainCallAnswer;
     active: boolean;
 }>
 
@@ -48,9 +48,10 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
 
             state[args[0]] = {
                 peerConnection: null,
-                user          : null,
-                answer        : null,
+                localStream   : null,
+                remoteStream  : null,
                 offer         : null,
+                user          : null,
                 active        : false,
             };
 
@@ -61,15 +62,16 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
         createCallOfferEffect,
         'onSuccess',
         (state, { args, result }) => {
-            const [ peer, offer, response ] = result;
-            const data                      = state[args[0]];
+            const [ peerConnection, localStream, remoteStream, response ] = result;
+            const data                                                    = state[args[0]];
 
             state[args[0]] = {
-                peerConnection: peer,
-                active        : data.active,
-                offer         : offer,
-                user          : response.user,
-                answer        : data.answer,
+                peerConnection,
+                localStream,
+                remoteStream,
+                active: data.active,
+                offer : response.offer,
+                user  : response.user,
             };
 
             return { ...state };
@@ -85,9 +87,10 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
 
             state[args[0]] = {
                 peerConnection: null,
-                user          : null,
-                answer        : null,
+                localStream   : null,
+                remoteStream  : null,
                 offer         : null,
+                user          : null,
                 active        : false,
             };
 
@@ -98,15 +101,16 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
         createCallAnswerEffect,
         'onSuccess',
         (state, { args, result }) => {
-            const [ peer, answer, response ] = result;
-            const data                       = state[args[0]];
+            const [ peerConnection, localStream, remoteStream ] = result;
+            const data                                          = state[args[0]];
 
             state[args[0]] = {
-                peerConnection: peer,
-                active        : data.active,
-                offer         : data.offer,
-                user          : response.user,
-                answer        : answer,
+                peerConnection,
+                localStream,
+                remoteStream,
+                active: data.active,
+                offer : data.offer,
+                user  : data.user,
             };
 
             return { ...state };
@@ -119,9 +123,10 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
             if (!state[result.user.id]) {
                 state[result.user.id] = {
                     peerConnection: null,
-                    user          : result.user,
-                    answer        : null,
+                    localStream   : null,
+                    remoteStream  : null,
                     offer         : result.offer,
+                    user          : result.user,
                     active        : false,
                 };
 
@@ -141,9 +146,10 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
 
             state[result.user.id] = {
                 peerConnection: data.peerConnection,
-                user          : result.user,
-                answer        : result.answer,
+                localStream   : data.localStream,
+                remoteStream  : data.remoteStream,
                 offer         : data.offer,
+                user          : data.user,
                 active        : true,
             };
 
