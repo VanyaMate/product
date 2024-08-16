@@ -142,7 +142,8 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
         (state, { result }) => {
             const data = state[result.user.id];
 
-            data.peerConnection.setRemoteDescription(result.answer as RTCSessionDescriptionInit);
+            data.peerConnection.setRemoteDescription(result.answer.answer as RTCSessionDescriptionInit);
+            Promise.all(result.answer.candidates.map((candidate) => data.peerConnection.addIceCandidate(candidate)));
 
             state[result.user.id] = {
                 peerConnection: data.peerConnection,

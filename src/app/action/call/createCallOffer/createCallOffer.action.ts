@@ -6,32 +6,35 @@ import {
 
 
 export const createCallOfferAction = async function (toUserId: string): Promise<[ RTCPeerConnection, MediaStream, MediaStream, DomainNotificationCallOfferData ]> {
+    const devices          = await window.navigator.mediaDevices.enumerateDevices();
+    const videoDeviceExist = devices.some((device) => device.kind === 'videoinput');
+
     // Создаю свой стрим
-    const localStream  = await navigator.mediaDevices.getDisplayMedia({
-        video: true,
-    });
+    const localStream = videoDeviceExist
+                        ?
+                        await navigator.mediaDevices.getUserMedia({
+                            video: true,
+                            audio: true,
+                        })
+                        :
+                        await navigator.mediaDevices.getDisplayMedia({
+                            video: true,
+                            audio: true,
+                        });
+
     const remoteStream = new MediaStream();
+
+    // Список кандидатов
+    const candidates: RTCIceCandidate[] = [];
 
     // Создаю пир соединение
     const peerConnection = new RTCPeerConnection({
         iceServers: [
             {
                 urls: [
-                    'stun:stun.l.google.com:19302',
                     'stun:stun1.l.google.com:19302',
                     'stun:stun2.l.google.com:19302',
-                    'stun:stun.chathelp.ru:3478',
                 ],
-            },
-            {
-                urls      : 'turn:192.158.29.39:3478?transport=tcp',
-                credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
-                username  : '28224511:1379330808',
-            },
-            {
-                urls      : 'turn:turn.anyfirewall.com:443?transport=tcp',
-                credential: 'webrtc',
-                username  : 'webrtc',
             },
         ],
     });
@@ -44,18 +47,25 @@ export const createCallOfferAction = async function (toUserId: string): Promise<
         e.streams[0].getTracks().forEach((track) => remoteStream.addTrack(track));
     };
 
+    peerConnection.onicecandidate = (e) => {
+        candidates.push(e.candidate);
+    };
+
     // Создаю offer
-    const offer = await peerConnection.createOffer({
-        offerToReceiveVideo: true,
-    });
+    const offer = await peerConnection.createOffer();
 
     // Устанавливаю локальное описание соединения
     await peerConnection.setLocalDescription(offer);
 
+    // Жду пока все кандидаты добавятся (надо будет поменять)
+    await new Promise<void>((resolve) => {
+        setTimeout(resolve, 1000);
+    });
+
     // Отправляю заявку
     const response = await request(
         `v1/call/offer/${ toUserId }`,
-        { method: 'POST', body: JSON.stringify(offer) },
+        { method: 'POST', body: JSON.stringify({ offer, candidates }) },
         isDomainNotificationCallOfferData,
     );
 
