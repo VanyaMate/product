@@ -34,7 +34,7 @@ export class SseNotificationParser implements INotificationParser {
             id          : Math.random().toString(),
             type        : type,
             data        : '',
-            creationDate: new Date().toUTCString(),
+            creationDate: Date.now(),
             viewed      : false,
         };
     }
@@ -44,7 +44,7 @@ export class SseNotificationParser implements INotificationParser {
             id          : Math.random().toString(),
             type        : DomainNotificationType.UNKNOWN,
             data        : message,
-            creationDate: new Date().toUTCString(),
+            creationDate: Date.now(),
             viewed      : false,
         };
     }

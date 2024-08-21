@@ -19,6 +19,9 @@ import {
     LOCAL_STORAGE_USER_ACCESS_TOKEN,
     LOCAL_STORAGE_USER_REFRESH_TOKEN,
 } from '@/app/model/auth/const.ts';
+import {
+    getConnectionId,
+} from '@/features/connectionId/lib/getConnectionId/getConnectionId.ts';
 
 
 const notificationController: INotificationController = new NotificationController(
@@ -28,16 +31,8 @@ const notificationController: INotificationController = new NotificationControll
 
 notificationController.subscribe(DomainNotificationType.TOKENS_UPDATE, tokenUpdate);
 
-let connectionId: string = '';
-if (localStorage.getItem('CONNECTION_ID')) {
-    connectionId = localStorage.getItem('CONNECTION_ID');
-} else {
-    const id = Math.random().toString();
-    localStorage.setItem('CONNECTION_ID', id);
-    connectionId = id;
-}
-
-const connections: Set<string> = new Set<string>();
+export const CONNECTION_ID: string = getConnectionId();
+const connections: Set<string>     = new Set<string>();
 
 export const useNotification = function (id: string): INotificationController {
     useEffect(() => {
@@ -47,7 +42,7 @@ export const useNotification = function (id: string): INotificationController {
             notificationController.connect(`${ __API__ }/v1/notification`, () => ({
                 accessToken : localStorage.getItem(LOCAL_STORAGE_USER_ACCESS_TOKEN),
                 refreshToken: localStorage.getItem(LOCAL_STORAGE_USER_REFRESH_TOKEN),
-                id          : connectionId,
+                id          : CONNECTION_ID,
             }));
         }
         connections.add(id);

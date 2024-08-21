@@ -15,7 +15,7 @@ import {
 export type NotificationDefaultLayoutProps =
     {
         type: DomainNotificationType;
-        creationDate: string;
+        creationDate: number;
         viewed: boolean;
     }
     & ComponentPropsWithoutRef<'article'>;

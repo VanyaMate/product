@@ -13,6 +13,9 @@ import {
 import {
     responseTokenRefreshXhrInterceptor,
 } from '@/app/lib/api/xhr/interceptors/response/response-token-refresh-xhr.interceptor.ts';
+import {
+    addConnectionIdInterceptor,
+} from '@/app/lib/api/xhr/interceptors/request/add-connection-id.interceptor.ts';
 
 
 export const apiXhr = createXhrWithInterceptors(
@@ -20,6 +23,7 @@ export const apiXhr = createXhrWithInterceptors(
         addBaseUrlXhrInterceptor(`${ __API__ }/`),
         addJsonContentTypeXhrInterceptor,
         addUserTokensXhrInterceptor,
+        addConnectionIdInterceptor,
     ],
     [
         responseTokenRefreshXhrInterceptor,

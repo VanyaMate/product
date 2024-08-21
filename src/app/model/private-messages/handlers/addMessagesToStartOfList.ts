@@ -11,12 +11,12 @@ export const addMessagesToStartOfList = (store: DomainMessage[], data: DomainMes
         const lastNewMessage      = messages[messages.length - 1];
         const dialogueLastMessage = store[0];
 
-        if (new Date(lastNewMessage.creationDate) < new Date(dialogueLastMessage.creationDate)) {
+        if (lastNewMessage.creationDate < dialogueLastMessage.creationDate) {
             return [ ...messages, ...store ];
         }
 
         for (let i = messages.length - 1; i >= 0; i--) {
-            if (new Date(messages[i].creationDate) < new Date(dialogueLastMessage.creationDate)) {
+            if (messages[i].creationDate < dialogueLastMessage.creationDate) {
                 return [ ...messages.slice(0, i + 1), ...store ];
             }
         }
@@ -26,7 +26,7 @@ export const addMessagesToStartOfList = (store: DomainMessage[], data: DomainMes
         const dialogueLastMessage = store[0];
         const newMessage          = messages[0];
         const lastMessageIsEqual  = dialogueLastMessage.id === newMessage.id;
-        const lastMessageIsOlder  = new Date(dialogueLastMessage.creationDate) < new Date(newMessage.creationDate);
+        const lastMessageIsOlder  = dialogueLastMessage.creationDate < newMessage.creationDate;
 
         if (lastMessageIsEqual || lastMessageIsOlder) {
             return null;

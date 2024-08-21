@@ -36,8 +36,8 @@ import {
     ImageBackground,
 } from '@/shared/ui-kit/image/ImageBackground/ui/ImageBackground.tsx';
 import {
-    CreateCallOfferButton,
-} from '@/features/call/button/CreateCallOfferButton/ui/CreateCallOfferButton.tsx';
+    CreateCallRequestButton,
+} from '@/features/call/button/CreateCallRequestButton/ui/CreateCallRequestButton.tsx';
 
 
 export type UserContainerProps =
@@ -74,7 +74,7 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
                             permissions={ user.permissions.privateDialogue }
                             userId={ user.id }
                         />
-                        <CreateCallOfferButton userId={ user.id }/>
+                        <CreateCallRequestButton userId={ user.id }/>
                         <Button
                             quad
                             styleType={ ButtonStyleType.DANGER }

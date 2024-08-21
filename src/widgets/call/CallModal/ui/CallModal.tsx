@@ -3,17 +3,18 @@
 import {
     ComponentPropsWithoutRef,
     FC,
-    memo,
+    memo, useLayoutEffect,
     useMemo,
 } from 'react';
 import classNames from 'classnames';
 import css from './CallModal.module.scss';
 import { useStore } from '@vanyamate/sec-react';
-import { $callPeerConnection } from '@/app/model/call/call.model.ts';
-import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import {
-    CreateCallAnswerButton,
-} from '@/features/call/button/CreateCallAnswerButton/ui/CreateCallAnswerButton.tsx';
+    $callPeerConnection, finishCallEffect,
+    getMyNotFinishedCallsEffect,
+} from '@/app/model/call/call.model.ts';
+import { CallPreview } from '@/entities/call/CallPreview/ui/CallPreview.tsx';
+import { $authUser } from '@/app/model/auth/auth.model.ts';
 
 
 export type CallModalProps =
@@ -23,10 +24,16 @@ export type CallModalProps =
 export const CallModal: FC<CallModalProps> = memo(function CallModal (props) {
     const { className, ...other } = props;
     const callConnections         = useStore($callPeerConnection);
-    const callsExisted            = useMemo(() =>
+    const user                    = useStore($authUser);
+
+    useLayoutEffect(() => {
+        getMyNotFinishedCallsEffect();
+    }, []);
+
+    const callsExisted = useMemo(() =>
             Object
                 .keys(callConnections)
-                .filter((id) => !!callConnections[id].user)
+                .filter((id) => !!callConnections[id].call && !callConnections[id].call.finished)
                 .map((id) => callConnections[id])
         , [ callConnections ]);
 
@@ -35,29 +42,14 @@ export const CallModal: FC<CallModalProps> = memo(function CallModal (props) {
              className={ classNames(css.container, { [css.show]: !!callsExisted.length }, [ className ]) }>
             {
                 callsExisted.map((call) => (
-                    <div key={ call.user.id }>
-                        <Row>
-                            <span>{ call.user.login }</span>
-                            <CreateCallAnswerButton
-                                offer={ call.offer }
-                                userId={ call.user.id }
-                            />
-                        </Row>
-                        <div>active: { call.active.toString() }</div>
-                        <div>offer: { (!!call.offer).toString() }</div>
-                        <video
-                            style={ { width: 300 } }
-                            ref={ el => el ? el.srcObject = call.localStream
-                                           : null }
-                            autoPlay
-                        />
-                        <video
-                            style={ { width: 300 } }
-                            ref={ el => el ? el.srcObject = call.remoteStream
-                                           : null }
-                            autoPlay
-                        />
-                    </div>
+                    <CallPreview
+                        cancelCall={ () => finishCallEffect(call.call.id).then() }
+                        acceptCall={ async () => {
+                        } }
+                        userId={ user.id }
+                        key={ call.call.id }
+                        call={ call.call }
+                    />
                 ))
             }
         </div>

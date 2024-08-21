@@ -1,0 +1,18 @@
+.container {
+    height        : 40px;
+    border-radius : var(--offset-small);
+    padding       : var(--offset-small);
+    max-width     : 350px;
+    min-width     : 250px;
+
+    .avatar {
+        width  : 30px;
+        height : 30px;
+    }
+
+    .login {
+        max-width     : 200px;
+        overflow      : hidden;
+        text-overflow : ellipsis;
+    }
+}

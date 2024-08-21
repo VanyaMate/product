@@ -11,8 +11,17 @@ import {
 import {
     createCallAnswerNotificationAction,
 } from '@/app/action/call/createCallAnswer/createCallAnswerNotification.action.ts';
-import { DomainUser } from 'product-types/dist/user/DomainUser';
 import { DomainCallOffer } from 'product-types/dist/call/DomainCallOffer';
+import { DomainCall } from 'product-types/dist/call/DomainCall';
+import {
+    createCallRequestAction,
+} from '@/app/action/call/createCallRequest/createCallRequest.action.ts';
+import {
+    getMyNotFinishedCallsAction,
+} from '@/app/action/call/getMyNotFinishedCalls/getMyNotFinishedCalls.action.ts';
+import {
+    finishCallAction,
+} from '@/app/action/call/finishCall/finishCall.action.ts';
 
 
 // TODO: Всё временное
@@ -21,12 +30,15 @@ export const createCallOfferEffect              = effect(createCallOfferAction);
 export const createCallOfferNotificationEffect  = effect(createCallOfferNotificationAction);
 export const createCallAnswerEffect             = effect(createCallAnswerAction);
 export const createCallAnswerNotificationEffect = effect(createCallAnswerNotificationAction);
+export const createCallRequestEffect            = effect(createCallRequestAction);
+export const finishCallEffect                   = effect(finishCallAction);
+export const getMyNotFinishedCallsEffect        = effect(getMyNotFinishedCallsAction);
 
 export type PeerConnectionModel = Record<string, {
     peerConnection: RTCPeerConnection;
     localStream: MediaStream;
     remoteStream: MediaStream;
-    user: DomainUser;
+    call: DomainCall;
     offer: DomainCallOffer;
     active: boolean;
 }>
@@ -34,10 +46,80 @@ export type PeerConnectionModel = Record<string, {
 export const $callPending = store<boolean>(false)
     .on(createCallOfferEffect, 'onBefore', () => true)
     .on(createCallAnswerEffect, 'onBefore', () => true)
+    .on(createCallRequestEffect, 'onBefore', () => true)
     .on(createCallOfferEffect, 'onFinally', () => false)
+    .on(createCallRequestEffect, 'onFinally', () => false)
     .on(createCallAnswerEffect, 'onFinally', () => false);
 
 export const $callPeerConnection = store<PeerConnectionModel>({})
+    .on(
+        finishCallEffect,
+        'onSuccess',
+        (state, { result }) => {
+            if (state[result.call.user.id]) {
+                delete state[result.call.user.id];
+                return { ...state };
+            }
+
+            return state;
+        },
+    )
+    .on(
+        getMyNotFinishedCallsEffect,
+        'onSuccess',
+        (state, { result }) => {
+            result.forEach((call) => {
+                if (state[call.user.id]) {
+                    return;
+                }
+
+                state[call.user.id] = {
+                    peerConnection: null,
+                    localStream   : null,
+                    remoteStream  : null,
+                    offer         : null,
+                    call          : call,
+                    active        : false,
+                };
+            });
+
+            return { ...state };
+        },
+    )
+    .on(
+        createCallRequestEffect,
+        'onBefore',
+        (state, { args }) => {
+            if (state[args[0]]) {
+                return state;
+            }
+
+            state[args[0]] = {
+                peerConnection: null,
+                localStream   : null,
+                remoteStream  : null,
+                offer         : null,
+                call          : null,
+                active        : false,
+            };
+
+            return { ...state };
+        },
+    )
+    .on(
+        createCallRequestEffect,
+        'onSuccess',
+        (state, { args, result }) => {
+            const data = state[args[0]];
+
+            state[args[0]] = {
+                ...data,
+                call: result.call,
+            };
+
+            return { ...state };
+        },
+    )
     .on(
         createCallOfferEffect,
         'onBefore',
@@ -51,7 +133,7 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
                 localStream   : null,
                 remoteStream  : null,
                 offer         : null,
-                user          : null,
+                call          : null,
                 active        : false,
             };
 
@@ -71,7 +153,7 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
                 remoteStream,
                 active: data.active,
                 offer : response.offer,
-                user  : response.user,
+                call  : response.call,
             };
 
             return { ...state };
@@ -90,7 +172,7 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
                 localStream   : null,
                 remoteStream  : null,
                 offer         : null,
-                user          : null,
+                call          : null,
                 active        : false,
             };
 
@@ -110,7 +192,7 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
                 remoteStream,
                 active: data.active,
                 offer : data.offer,
-                user  : data.user,
+                call  : data.call,
             };
 
             return { ...state };
@@ -120,13 +202,13 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
         createCallOfferNotificationEffect,
         'onSuccess',
         (state, { result }) => {
-            if (!state[result.user.id]) {
-                state[result.user.id] = {
+            if (!state[result.call.user.id]) {
+                state[result.call.user.id] = {
                     peerConnection: null,
                     localStream   : null,
                     remoteStream  : null,
                     offer         : result.offer,
-                    user          : result.user,
+                    call          : result.call,
                     active        : false,
                 };
 
@@ -140,17 +222,17 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
         createCallAnswerNotificationEffect,
         'onSuccess',
         (state, { result }) => {
-            const data = state[result.user.id];
+            const data = state[result.call.user.id];
 
             data.peerConnection.setRemoteDescription(result.answer.answer as RTCSessionDescriptionInit);
-            Promise.all(result.answer.candidates.map((candidate) => data.peerConnection.addIceCandidate(candidate)));
+            result.answer.candidates.forEach((candidate) => data.peerConnection.addIceCandidate(candidate));
 
-            state[result.user.id] = {
+            state[result.call.user.id] = {
                 peerConnection: data.peerConnection,
                 localStream   : data.localStream,
                 remoteStream  : data.remoteStream,
                 offer         : data.offer,
-                user          : data.user,
+                call          : data.call,
                 active        : true,
             };
 
