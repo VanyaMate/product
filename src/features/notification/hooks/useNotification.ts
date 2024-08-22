@@ -31,18 +31,15 @@ const notificationController: INotificationController = new NotificationControll
 
 notificationController.subscribe(DomainNotificationType.TOKENS_UPDATE, tokenUpdate);
 
-export const CONNECTION_ID: string = getConnectionId();
-const connections: Set<string>     = new Set<string>();
+const connections: Set<string> = new Set<string>();
 
 export const useNotification = function (id: string): INotificationController {
     useEffect(() => {
-        console.log('CONNECT', connections.size);
-
         if (connections.size === 0) {
             notificationController.connect(`${ __API__ }/v1/notification`, () => ({
                 accessToken : localStorage.getItem(LOCAL_STORAGE_USER_ACCESS_TOKEN),
                 refreshToken: localStorage.getItem(LOCAL_STORAGE_USER_REFRESH_TOKEN),
-                id          : CONNECTION_ID,
+                id          : getConnectionId(),
             }));
         }
         connections.add(id);

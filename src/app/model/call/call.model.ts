@@ -11,7 +11,6 @@ import {
 import {
     createCallAnswerNotificationAction,
 } from '@/app/action/call/createCallAnswer/createCallAnswerNotification.action.ts';
-import { DomainCallOffer } from 'product-types/dist/call/DomainCallOffer';
 import { DomainCall } from 'product-types/dist/call/DomainCall';
 import {
     createCallRequestAction,
@@ -22,24 +21,31 @@ import {
 import {
     finishCallAction,
 } from '@/app/action/call/finishCall/finishCall.action.ts';
+import {
+    createCallRequestNotificationAction,
+} from '@/app/action/call/createCallRequest/createCallRequestNotification.action.ts';
+import {
+    finishCallNotificationAction,
+} from '@/app/action/call/finishCall/finishCallNotification.action.ts';
 
 
 // TODO: Всё временное
 
-export const createCallOfferEffect              = effect(createCallOfferAction);
-export const createCallOfferNotificationEffect  = effect(createCallOfferNotificationAction);
-export const createCallAnswerEffect             = effect(createCallAnswerAction);
-export const createCallAnswerNotificationEffect = effect(createCallAnswerNotificationAction);
-export const createCallRequestEffect            = effect(createCallRequestAction);
-export const finishCallEffect                   = effect(finishCallAction);
-export const getMyNotFinishedCallsEffect        = effect(getMyNotFinishedCallsAction);
+export const createCallOfferEffect               = effect(createCallOfferAction);
+export const createCallOfferNotificationEffect   = effect(createCallOfferNotificationAction);
+export const createCallAnswerEffect              = effect(createCallAnswerAction);
+export const createCallAnswerNotificationEffect  = effect(createCallAnswerNotificationAction);
+export const createCallRequestEffect             = effect(createCallRequestAction);
+export const createCallRequestNotificationEffect = effect(createCallRequestNotificationAction);
+export const finishCallEffect                    = effect(finishCallAction);
+export const finishCallNotificationEffect        = effect(finishCallNotificationAction);
+export const getMyNotFinishedCallsEffect         = effect(getMyNotFinishedCallsAction);
 
 export type PeerConnectionModel = Record<string, {
     peerConnection: RTCPeerConnection;
     localStream: MediaStream;
     remoteStream: MediaStream;
     call: DomainCall;
-    offer: DomainCallOffer;
     active: boolean;
 }>
 
@@ -53,10 +59,53 @@ export const $callPending = store<boolean>(false)
 
 export const $callPeerConnection = store<PeerConnectionModel>({})
     .on(
+        createCallRequestNotificationEffect,
+        'onSuccess',
+        (state, { result }) => {
+            if (!state[result.call.user.id]) {
+                state[result.call.user.id] = {
+                    peerConnection: null,
+                    localStream   : null,
+                    remoteStream  : null,
+                    call          : result.call,
+                    active        : false,
+                };
+                return { ...state };
+            }
+            return state;
+        },
+    )
+    .on(
         finishCallEffect,
         'onSuccess',
         (state, { result }) => {
-            if (state[result.call.user.id]) {
+            const call = state[result.call.user.id];
+            if (call) {
+                const { peerConnection, localStream, remoteStream } = call;
+
+                peerConnection.close();
+                localStream.getTracks().forEach((track) => track.stop());
+                remoteStream.getTracks().forEach((track) => track.stop());
+
+                delete state[result.call.user.id];
+                return { ...state };
+            }
+
+            return state;
+        },
+    )
+    .on(
+        finishCallNotificationEffect,
+        'onSuccess',
+        (state, { result }) => {
+            const call = state[result.call.user.id];
+            if (call) {
+                const { peerConnection, localStream, remoteStream } = call;
+
+                peerConnection.close();
+                localStream.getTracks().forEach((track) => track.stop());
+                remoteStream.getTracks().forEach((track) => track.stop());
+
                 delete state[result.call.user.id];
                 return { ...state };
             }
@@ -77,7 +126,6 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
                     peerConnection: null,
                     localStream   : null,
                     remoteStream  : null,
-                    offer         : null,
                     call          : call,
                     active        : false,
                 };
@@ -98,7 +146,6 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
                 peerConnection: null,
                 localStream   : null,
                 remoteStream  : null,
-                offer         : null,
                 call          : null,
                 active        : false,
             };
@@ -122,37 +169,15 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
     )
     .on(
         createCallOfferEffect,
-        'onBefore',
-        (state, { args }) => {
-            if (state[args[0]]) {
-                return state;
-            }
-
-            state[args[0]] = {
-                peerConnection: null,
-                localStream   : null,
-                remoteStream  : null,
-                offer         : null,
-                call          : null,
-                active        : false,
-            };
-
-            return { ...state };
-        },
-    )
-    .on(
-        createCallOfferEffect,
         'onSuccess',
-        (state, { args, result }) => {
+        (state, { result }) => {
             const [ peerConnection, localStream, remoteStream, response ] = result;
-            const data                                                    = state[args[0]];
 
-            state[args[0]] = {
+            state[response.call.user.id] = {
                 peerConnection,
                 localStream,
                 remoteStream,
-                active: data.active,
-                offer : response.offer,
+                active: false,
                 call  : response.call,
             };
 
@@ -171,7 +196,6 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
                 peerConnection: null,
                 localStream   : null,
                 remoteStream  : null,
-                offer         : null,
                 call          : null,
                 active        : false,
             };
@@ -182,17 +206,15 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
     .on(
         createCallAnswerEffect,
         'onSuccess',
-        (state, { args, result }) => {
-            const [ peerConnection, localStream, remoteStream ] = result;
-            const data                                          = state[args[0]];
+        (state, { result }) => {
+            const [ peerConnection, localStream, remoteStream, response ] = result;
 
-            state[args[0]] = {
+            state[response.call.user.id] = {
                 peerConnection,
                 localStream,
                 remoteStream,
-                active: data.active,
-                offer : data.offer,
-                call  : data.call,
+                active: true,
+                call  : response.call,
             };
 
             return { ...state };
@@ -202,20 +224,18 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
         createCallOfferNotificationEffect,
         'onSuccess',
         (state, { result }) => {
-            if (!state[result.call.user.id]) {
-                state[result.call.user.id] = {
-                    peerConnection: null,
-                    localStream   : null,
-                    remoteStream  : null,
-                    offer         : result.offer,
-                    call          : result.call,
-                    active        : false,
-                };
+            const [ notification, answer ]                      = result;
+            const [ peerConnection, localStream, remoteStream ] = answer;
 
-                return { ...state };
-            }
+            state[notification.call.user.id] = {
+                peerConnection: peerConnection,
+                localStream   : localStream,
+                remoteStream  : remoteStream,
+                call          : notification.call,
+                active        : true,
+            };
 
-            return state;
+            return { ...state };
         },
     )
     .on(
@@ -224,17 +244,18 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
         (state, { result }) => {
             const data = state[result.call.user.id];
 
-            data.peerConnection.setRemoteDescription(result.answer.answer as RTCSessionDescriptionInit);
-            result.answer.candidates.forEach((candidate) => data.peerConnection.addIceCandidate(candidate));
+            if (data) {
+                data.peerConnection.setRemoteDescription(result.answer.answer as RTCSessionDescriptionInit);
+                result.answer.candidates.forEach((candidate) => data.peerConnection.addIceCandidate(candidate));
 
-            state[result.call.user.id] = {
-                peerConnection: data.peerConnection,
-                localStream   : data.localStream,
-                remoteStream  : data.remoteStream,
-                offer         : data.offer,
-                call          : data.call,
-                active        : true,
-            };
+                state[result.call.user.id] = {
+                    peerConnection: data.peerConnection,
+                    localStream   : data.localStream,
+                    remoteStream  : data.remoteStream,
+                    call          : data.call,
+                    active        : true,
+                };
+            }
 
             return { ...state };
         },

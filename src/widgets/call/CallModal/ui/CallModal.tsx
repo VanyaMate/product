@@ -10,11 +10,12 @@ import classNames from 'classnames';
 import css from './CallModal.module.scss';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    $callPeerConnection, finishCallEffect,
+    $callPeerConnection, createCallOfferEffect, finishCallEffect,
     getMyNotFinishedCallsEffect,
 } from '@/app/model/call/call.model.ts';
 import { CallPreview } from '@/entities/call/CallPreview/ui/CallPreview.tsx';
 import { $authUser } from '@/app/model/auth/auth.model.ts';
+import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 
 
 export type CallModalProps =
@@ -38,20 +39,23 @@ export const CallModal: FC<CallModalProps> = memo(function CallModal (props) {
         , [ callConnections ]);
 
     return (
-        <div { ...other }
+        <Col { ...other }
              className={ classNames(css.container, { [css.show]: !!callsExisted.length }, [ className ]) }>
             {
                 callsExisted.map((call) => (
                     <CallPreview
+                        className={ css.item }
                         cancelCall={ () => finishCallEffect(call.call.id).then() }
-                        acceptCall={ async () => {
-                        } }
+                        acceptCall={ () => createCallOfferEffect(call.call.id).then() }
                         userId={ user.id }
                         key={ call.call.id }
                         call={ call.call }
+                        remoteStream={ call.remoteStream }
+                        localStream={ call.localStream }
+                        active={ call.remoteStream !== null }
                     />
                 ))
             }
-        </div>
+        </Col>
     );
 });

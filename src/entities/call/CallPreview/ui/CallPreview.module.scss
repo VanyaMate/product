@@ -1,18 +1,124 @@
-.container {
-    height        : 40px;
-    border-radius : var(--offset-small);
-    padding       : var(--offset-small);
-    max-width     : 350px;
-    min-width     : 250px;
-
-    .avatar {
-        width  : 30px;
-        height : 30px;
+@keyframes active-call-animation {
+    0% {
+        box-shadow : 0 0 0 0 var(--bg-ghost-color),
+        0 0 0 0 var(--bg-ghost-color),
+        0 0 0 10px var(--bg-ghost-color),
+        0 0 0 20px var(--green),
+        0 0 0 30px var(--bg-ghost-color),
+        0 0 5px 40px var(--green),
+        0 0 5px 50px var(--bg-ghost-color);
     }
 
-    .login {
-        max-width     : 200px;
-        overflow      : hidden;
-        text-overflow : ellipsis;
+    50% {
+        box-shadow : 0 0 0 0 var(--bg-ghost-color),
+        0 0 0 10px var(--green),
+        0 0 0 20px var(--bg-ghost-color),
+        0 0 5px 30px var(--green),
+        0 0 5px 40px var(--bg-ghost-color),
+        0 0 10px 50px var(--green),
+        0 0 10px 60px var(--bg-ghost-color);
+    }
+
+    100% {
+        box-shadow : 0 0 0 10px var(--bg-ghost-color),
+        0 0 0 20px var(--green),
+        0 0 0 30px var(--bg-ghost-color),
+        0 0 5px 40px var(--green),
+        0 0 10px 55px var(--bg-ghost-color),
+        0 0 10px 65px var(--bg-ghost-color),
+        0 0 10px 70px var(--bg-ghost-color);
+    }
+}
+
+@keyframes process-call-animation {
+    0% {
+        box-shadow : 0 0 0 0 var(--bg-ghost-color),
+        0 0 0 0 var(--bg-ghost-color),
+        0 0 0 10px var(--bg-ghost-color),
+        0 0 0 20px var(--ghost-color),
+        0 0 0 30px var(--bg-ghost-color),
+        0 0 5px 40px var(--ghost-color),
+        0 0 5px 50px var(--bg-ghost-color);
+    }
+
+    50% {
+        box-shadow : 0 0 0 0 var(--bg-ghost-color),
+        0 0 0 10px var(--ghost-color),
+        0 0 0 20px var(--bg-ghost-color),
+        0 0 5px 30px var(--ghost-color),
+        0 0 5px 40px var(--bg-ghost-color),
+        0 0 10px 55px var(--ghost-color),
+        0 0 10px 60px var(--bg-ghost-color);
+    }
+
+    100% {
+        box-shadow : 0 0 0 10px var(--bg-ghost-color),
+        0 0 0 20px var(--ghost-color),
+        0 0 0 30px var(--bg-ghost-color),
+        0 0 5px 40px var(--ghost-color),
+        0 0 10px 55px var(--bg-ghost-color),
+        0 0 10px 65px var(--bg-ghost-color),
+        0 0 10px 70px var(--bg-ghost-color);
+    }
+}
+
+
+.container {
+    position  : relative;
+    max-width : 350px;
+    min-width : 250px;
+
+    .video {
+        max-width : 100%;
+        cursor    : pointer;
+    }
+
+    .preview {
+        height          : 40px;
+        width           : 100%;
+        border-radius   : var(--offset-small);
+        padding         : var(--offset-small);
+        background      : var(--bg-ghost-color-opacity-low);
+        overflow        : hidden;
+        backdrop-filter : var(--item-backdrop-filter);
+
+        @media only screen and (hover : none) and (pointer : coarse) {
+            --item-backdrop-filter : none;
+        }
+
+        @media only screen and (hover : hover) {
+            --item-backdrop-filter : blur(10px);
+        }
+
+        .background {
+            position      : absolute;
+            z-index       : 0;
+            top           : -5px;
+            left          : -50px;
+            width         : 50px;
+            height        : 50px;
+            border-radius : 50%;
+            animation     : process-call-animation .5s infinite linear;
+
+            &.active {
+                animation : active-call-animation .5s infinite linear;
+            }
+        }
+
+        .item {
+            position : relative;
+            z-index  : 1;
+        }
+
+        .avatar {
+            width  : 30px;
+            height : 30px;
+        }
+
+        .login {
+            max-width     : 200px;
+            overflow      : hidden;
+            text-overflow : ellipsis;
+        }
     }
 }

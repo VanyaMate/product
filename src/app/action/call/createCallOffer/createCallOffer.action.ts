@@ -1,11 +1,11 @@
 import { request } from '@/app/lib/fetch/request.ts';
 import {
-    DomainNotificationCallOfferData,
-    isDomainNotificationCallOfferData,
-} from 'product-types/dist/notification/notification-data-types/call/DomainNotificationCallOfferData';
+    DomainNotificationCallStartData,
+    isDomainNotificationCallStartData,
+} from 'product-types/dist/notification/notification-data-types/call/DomainNotificationCallStartData';
 
 
-export const createCallOfferAction = async function (toUserId: string): Promise<[ RTCPeerConnection, MediaStream, MediaStream, DomainNotificationCallOfferData ]> {
+export const createCallOfferAction = async function (callId: string): Promise<[ RTCPeerConnection, MediaStream, MediaStream, DomainNotificationCallStartData ]> {
     const devices          = await window.navigator.mediaDevices.enumerateDevices();
     const videoDeviceExist = devices.some((device) => device.kind === 'videoinput');
 
@@ -64,9 +64,9 @@ export const createCallOfferAction = async function (toUserId: string): Promise<
 
     // Отправляю заявку
     const response = await request(
-        `v1/call/offer/${ toUserId }`,
+        `v1/call/offer/${ callId }`,
         { method: 'POST', body: JSON.stringify({ offer, candidates }) },
-        isDomainNotificationCallOfferData,
+        isDomainNotificationCallStartData,
     );
 
     return [

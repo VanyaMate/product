@@ -1,27 +1,29 @@
 import { DomainCallOffer } from 'product-types/dist/call/DomainCallOffer';
 import { request } from '@/app/lib/fetch/request.ts';
 import {
-    DomainNotificationCallAnswerData,
-    isDomainNotificationCallAnswerData,
-} from 'product-types/dist/notification/notification-data-types/call/DomainNotificationCallAnswerData';
+    DomainNotificationCallStartData, isDomainNotificationCallStartData,
+} from 'product-types/dist/notification/notification-data-types/call/DomainNotificationCallStartData';
 
 
-export const createCallAnswerAction = async function (toUserId: string, offer: DomainCallOffer): Promise<[ RTCPeerConnection, MediaStream, MediaStream, DomainNotificationCallAnswerData ]> {
+export type CallAnswerResponse = [ RTCPeerConnection, MediaStream, MediaStream, DomainNotificationCallStartData ];
+
+export const createCallAnswerAction = async function (callId: string, offer: DomainCallOffer): Promise<CallAnswerResponse> {
     const devices          = await window.navigator.mediaDevices.enumerateDevices();
     const videoDeviceExist = devices.some((device) => device.kind === 'videoinput');
 
     // Создаю свой стрим
-    const localStream  = videoDeviceExist
-                         ?
-                         await navigator.mediaDevices.getUserMedia({
-                             video: true,
-                             audio: true,
-                         })
-                         :
-                         await navigator.mediaDevices.getDisplayMedia({
-                             video: true,
-                             audio: true,
-                         });
+    const localStream = videoDeviceExist
+                        ?
+                        await navigator.mediaDevices.getUserMedia({
+                            video: true,
+                            audio: true,
+                        })
+                        :
+                        await navigator.mediaDevices.getDisplayMedia({
+                            video: true,
+                            audio: true,
+                        });
+    
     const remoteStream = new MediaStream();
 
     // Список кандидатов
@@ -69,9 +71,9 @@ export const createCallAnswerAction = async function (toUserId: string, offer: D
 
     // Отправляю ответ
     const response = await request(
-        `v1/call/answer/${ toUserId }`,
+        `v1/call/answer/${ callId }`,
         { method: 'POST', body: JSON.stringify({ answer, candidates }) },
-        isDomainNotificationCallAnswerData,
+        isDomainNotificationCallStartData,
     );
 
     return [

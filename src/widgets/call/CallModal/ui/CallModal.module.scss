@@ -1,12 +1,13 @@
 .container {
     position      : fixed;
-    bottom        : 0;
+    bottom        : var(--offset-small);
+    z-index       : 10;
     right         : var(--offset-small);
     transform     : translateY(100%);
     transition    : var(--transition-fast);
-    padding       : var(--offset-medium);
-    border-radius : var(--offset-medium);
-    background    : var(--bg-main-color);
+    padding       : var(--offset-small);
+    background    : var(--bg-main-color-opacity-low);
+    border-radius : var(--offset-small);
 
     &.show {
         transform : translateY(0);
