@@ -432,6 +432,10 @@ export const NotificationIconByType: Record<DomainNotificationType, Notification
         component: IoCall,
         className: css.notification,
     },
+    [DomainNotificationType.CALL_START_OUT]                 : {
+        component: IoCall,
+        className: css.positive,
+    },
     [DomainNotificationType.CALL_FINISH_IN]                 : {
         component: IoCall,
         className: css.notification,

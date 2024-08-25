@@ -125,6 +125,7 @@ export class NotificationController implements INotificationController {
         [DomainNotificationType.CALL_START_IN]                  : [],
         [DomainNotificationType.CALL_FINISH_IN]                 : [],
         [DomainNotificationType.CALL_FINISH_OUT]                : [],
+        [DomainNotificationType.CALL_START_OUT]                 : [],
     };
 
     private _currentNotificationIndex: number = 0;

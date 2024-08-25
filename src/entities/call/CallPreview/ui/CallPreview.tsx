@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, memo } from 'react';
+import { ComponentPropsWithoutRef, FC, memo, useCallback } from 'react';
 import classNames from 'classnames';
 import css from './CallPreview.module.scss';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
@@ -12,6 +12,14 @@ import {
 import { IoCall } from 'react-icons/io5';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
+import {
+    useModalController,
+} from '@/shared/ui-kit/modal/Modal/hooks/useModalController.ts';
+import { Modal } from '@/shared/ui-kit/modal/Modal/ui/Modal.tsx';
+import {
+    CallFullscreen,
+} from '@/entities/call/CallFullscreen/ui/CallFullscreen.tsx';
+import { finishCallEffect } from '@/app/model/call/call.model.ts';
 
 
 export type CallPreviewProps =
@@ -39,39 +47,65 @@ export const CallPreview: FC<CallPreviewProps> = memo(function CallPreview (prop
               ...other
           } = props;
 
-    const setStream = function (stream: MediaStream) {
+    const setStream = useCallback((stream: MediaStream) => {
         return (video: HTMLVideoElement) => {
             if (video) {
                 video.srcObject = stream;
 
-                if (!video.getAttribute('data-stream-add')) {
-                    video.setAttribute('data-stream-add', 'true');
-                    video.addEventListener('click', () => {
-                        if (document.pictureInPictureEnabled && !document.pictureInPictureElement) {
-                            video.requestPictureInPicture();
-                        }
-                    });
-                }
+                /*                if (!video.getAttribute('data-stream-add')) {
+                 video.setAttribute('data-stream-add', 'true');
+                 video.addEventListener('click', () => {
+                 if (document.pictureInPictureEnabled && !document.pictureInPictureElement) {
+                 video.requestPictureInPicture();
+                 }
+                 });
+                 }*/
             }
         };
-    };
+    }, []);
+
+    const fullscreenModal = useModalController();
 
     return (
         <Col
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            <video autoPlay
-                   className={ css.video }
-                   ref={ setStream(localStream) }
-            />
-            <video autoPlay
-                   className={ css.video }
-                   ref={ setStream(remoteStream) }
-            />
+            <Modal className={ css.fullscreen } controller={ fullscreenModal }>
+                <CallFullscreen
+                    callId={ call.id }
+                    changeVolume={ async () => {
+                    } }
+                    enableMicrophone={ async () => {
+                    } }
+                    enableScreenSharing={ async () => {
+                    } }
+                    enableVideoCam={ async () => {
+                    } }
+                    finishCall={ finishCallEffect }
+                    localStream={ localStream }
+                    microphone={ !!localStream?.getAudioTracks().length }
+                    remoteStream={ remoteStream }
+                    screenSharing={ !!localStream?.getVideoTracks().length }
+                    videoCam={ !!localStream?.getVideoTracks().length }
+                    volume={ 100 }
+                />
+            </Modal>
+            {
+                !fullscreenModal.opened
+                ? <video
+                    autoPlay
+                    className={ classNames(css.video, { [css.visible]: localStream || remoteStream }) }
+                    key="video"
+                    onClick={ () => fullscreenModal.setOpened(true) }
+                    ref={ setStream(remoteStream ?? localStream) }
+                />
+                : null
+            }
             <Row
                 className={ css.preview }
                 fullWidth
+                key="preview"
                 spaceBetween
             >
                 <div
@@ -81,7 +115,8 @@ export const CallPreview: FC<CallPreviewProps> = memo(function CallPreview (prop
                     <UserAvatar
                         avatar={ call.user.avatar }
                         className={ css.avatar }
-                        login={ call.user.login }/>
+                        login={ call.user.login }
+                    />
                     <span className={ css.login }>{ call.user.login }</span>
                 </Row>
                 <Row className={ css.item }>

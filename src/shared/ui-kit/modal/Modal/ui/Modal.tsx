@@ -18,7 +18,10 @@ export type ModalProps =
 export const Modal: FC<ModalProps> = memo(function Modal (props) {
     const { className, controller, ...other } = props;
     const { t }                               = useTranslation();
-    const { placeRef, modalRef }              = useModalInnerManager(controller.opened);
+    const {
+              placeRef,
+              modalRef,
+          }                                   = useModalInnerManager(controller.opened);
 
     return (
         <>
@@ -39,8 +42,12 @@ export const Modal: FC<ModalProps> = memo(function Modal (props) {
                         </Button>
                         <div className={ css.overlay }
                              onClick={ () => controller.setOpened(false) }/>
-                        <div
-                            className={ classNames(css.content, {}, [ className ]) } { ...other }/>
+                        {
+                            controller.opened
+                            ? <div
+                                className={ classNames(css.content, {}, [ className ]) } { ...other }/>
+                            : null
+                        }
                     </div>,
                     document.body,
                 )

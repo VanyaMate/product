@@ -83,9 +83,9 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
             if (call) {
                 const { peerConnection, localStream, remoteStream } = call;
 
-                peerConnection.close();
-                localStream.getTracks().forEach((track) => track.stop());
-                remoteStream.getTracks().forEach((track) => track.stop());
+                peerConnection?.close();
+                localStream?.getTracks().forEach((track) => track.stop());
+                remoteStream?.getTracks().forEach((track) => track.stop());
 
                 delete state[result.call.user.id];
                 return { ...state };
@@ -102,9 +102,9 @@ export const $callPeerConnection = store<PeerConnectionModel>({})
             if (call) {
                 const { peerConnection, localStream, remoteStream } = call;
 
-                peerConnection.close();
-                localStream.getTracks().forEach((track) => track.stop());
-                remoteStream.getTracks().forEach((track) => track.stop());
+                peerConnection?.close();
+                localStream?.getTracks().forEach((track) => track.stop());
+                remoteStream?.getTracks().forEach((track) => track.stop());
 
                 delete state[result.call.user.id];
                 return { ...state };
