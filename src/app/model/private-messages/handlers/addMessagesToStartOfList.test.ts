@@ -8,7 +8,7 @@ import {
 import { expect } from 'playwright/test';
 
 
-const getMessageObject = function (id: string, date: string) {
+const getMessageObject = function (id: string, date: number): DomainMessage {
     return {
         id          : id,
         message     : '',
@@ -30,13 +30,13 @@ describe('addMessagesToStartOfList', () => {
     let store: DomainMessage[];
 
     beforeAll(() => {
-        store = [ getMessageObject('1', new Date().toISOString()) ];
+        store = [ getMessageObject('1', Date.now()) ];
     });
 
     test('добавление старого сообщения в начало списка', () => {
         const state = addMessagesToStartOfList(
             store,
-            [ getMessageObject('2', new Date(Date.now() - 1000).toISOString()) ],
+            [ getMessageObject('2', Date.now() - 1000) ],
         );
 
         expect(state.length).toBe(2);
@@ -47,10 +47,10 @@ describe('addMessagesToStartOfList', () => {
         const state = addMessagesToStartOfList(
             store,
             [
-                getMessageObject('3', new Date(Date.now() - 6000).toISOString()),
-                getMessageObject('2', new Date(Date.now() - 5000).toISOString()),
-                getMessageObject('4', new Date(Date.now() - 3000).toISOString()),
-                getMessageObject('5', new Date(Date.now() - 1000).toISOString()),
+                getMessageObject('3', Date.now() - 6000),
+                getMessageObject('2', Date.now() - 5000),
+                getMessageObject('4', Date.now() - 3000),
+                getMessageObject('5', Date.now() - 1000),
             ],
         );
 
@@ -62,10 +62,10 @@ describe('addMessagesToStartOfList', () => {
         const state = addMessagesToStartOfList(
             store,
             [
-                getMessageObject('2', new Date(Date.now() - 8000).toISOString()),
-                getMessageObject('4', new Date(Date.now() - 5000).toISOString()),
-                getMessageObject('3', new Date(Date.now() - 3000).toISOString()),
-                getMessageObject('5', new Date(Date.now() + 1000).toISOString()),
+                getMessageObject('2', Date.now() - 8000),
+                getMessageObject('4', Date.now() - 5000),
+                getMessageObject('3', Date.now() - 3000),
+                getMessageObject('5', Date.now() + 1000),
             ],
         );
 
@@ -76,7 +76,7 @@ describe('addMessagesToStartOfList', () => {
     test('попытка добавить новое сообщение, но не подходящее по дате', () => {
         const state = addMessagesToStartOfList(
             store,
-            [ getMessageObject('2', new Date(Date.now() + 1000).toISOString()) ],
+            [ getMessageObject('2', Date.now() + 1000) ],
         );
 
         expect(state).toBeNull();
@@ -85,7 +85,7 @@ describe('addMessagesToStartOfList', () => {
     test('попытка добавить сообщение которое уже добавлено', () => {
         const state = addMessagesToStartOfList(
             store,
-            [ getMessageObject('1', new Date(Date.now()).toISOString()) ],
+            [ getMessageObject('1', Date.now()) ],
         );
 
         expect(state).toBeNull();

@@ -11,7 +11,7 @@ import {
 
 export type NotificationItemFooterProps =
     {
-        creationTime: string;
+        creationTime: number;
     }
     & ComponentPropsWithoutRef<'footer'>;
 

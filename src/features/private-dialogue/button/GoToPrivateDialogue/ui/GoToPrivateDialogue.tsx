@@ -22,6 +22,9 @@ import {
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
 import { useTranslation } from 'react-i18next';
+import {
+    getDialoguePageUrl,
+} from '@/features/routes/lib/getDialoguePageUrl.ts';
 
 
 export type GoToPrivateDialogueProps =
@@ -44,7 +47,7 @@ export const GoToPrivateDialogue: FC<GoToPrivateDialogueProps> = memo(function G
             <PopOver popover={ t('open_dialogue') }>
                 <Button
                     aria-label={ t('open_dialogue') }
-                    onClick={ () => navigate(`/dialogue/${ dialogueWithUser[userId].dialogueId }`) }
+                    onClick={ () => navigate(getDialoguePageUrl(dialogueWithUser[userId].dialogueId)) }
                     quad
                     styleType={ ButtonStyleType.SECOND }
                 >
@@ -67,7 +70,7 @@ export const GoToPrivateDialogue: FC<GoToPrivateDialogueProps> = memo(function G
                 aria-label={ t('create_dialogue') }
                 className={ classNames(css.container, {}, [ className ]) }
                 disabled={ !isCreatableDialogue }
-                onClick={ () => createPrivateDialogueEffect(userId).then((dialogue) => navigate(`/dialogue/${ dialogue.dialogue.id }`)) }
+                onClick={ () => createPrivateDialogueEffect(userId).then((dialogue) => navigate(getDialoguePageUrl(dialogue.dialogue.id))) }
                 quad
             >
                 <IoChatbox/>

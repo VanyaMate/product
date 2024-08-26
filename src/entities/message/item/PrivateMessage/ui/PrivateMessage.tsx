@@ -81,7 +81,7 @@ export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMess
                     <div className={ css.info }>
                         <time
                             className={ css.date }
-                            dateTime={ message.creationDate }
+                            dateTime={ new Date(message.creationDate).toISOString() }
                             key="time"
                         >
                             { dayJs.current.format('LLL') }

@@ -44,7 +44,7 @@ export const CompanionMessage: FC<CompanionMessageProps> = memo(function Compani
                     </Link>
                     <div className={ css.info }>
                         <time className={ css.date }
-                              dateTime={ message.creationDate }>
+                              dateTime={ new Date(message.creationDate).toISOString() }>
                             { dayJs.current.format('LLL') }
                         </time>
                         {

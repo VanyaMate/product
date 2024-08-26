@@ -94,14 +94,14 @@ export const UserProfileBackgroundChangeForm: FC<UserProfileBackgroundChangeForm
                     spaceBetween
                 >
                     <Button
-                        disabled={ currentBackground === background }
+                        disabled={ (currentBackground === background) || (currentBackground === '') }
                         onClick={ discardChanges }
                         type="button"
                     >
                         { t('discard_changes') }
                     </Button>
                     <ButtonWithLoading
-                        disabled={ currentBackground === background || !form.canBeSubmitted }
+                        disabled={ (currentBackground === background) || !form.canBeSubmitted }
                         loading={ form.pending }
                         type="submit"
                     >

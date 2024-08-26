@@ -40,7 +40,7 @@ export const UserSignInFormWithLogin: FC<UserSignInFormWithLoginProps> = memo(fu
         inputs  : [ loginInputController, passwordInputController ],
         onSubmit: async (authData) => {
             return loginEffect({ ...authData, remember: true })
-                .then((data) => onSuccess(data.user))
+                .then((data) => onSuccess?.(data.user))
                 .catch(onError);
         },
     });

@@ -22,6 +22,7 @@ import {
 } from '@/widgets/user/menu/UserRightSideMenu/ui/UserRightSideMenu.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import { $authUser } from '@/app/model/auth/auth.model.ts';
+import { CallModal } from '@/widgets/call/CallModal/ui/CallModal.tsx';
 
 
 export type AppProps = {};
@@ -44,6 +45,7 @@ export const AppContent: FC<AppProps> = memo(function App (props) {
                 >
                     <MainSiteRouter/>
                 </SiteMainLayout>
+                <CallModal/>
             </ScreenHeight>
         </Suspense>
     );
