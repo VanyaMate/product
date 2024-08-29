@@ -9,7 +9,6 @@ import {
 import {
     UserPreviewItem,
 } from '@/entities/user/item/UserPreviewItem/ui/UserPreviewItem.tsx';
-import { useTranslation } from 'react-i18next';
 import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
 import {
     CancelFriendRequestButton,
@@ -19,11 +18,12 @@ import { useStore } from '@vanyamate/sec-react';
 import {
     $friendRequestsSent,
 } from '@/app/model/friends/friends.model.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export const FriendRequestsOutDetails: FC = memo(function FriendRequestsOutDetails () {
     const friends = useStore($friendRequestsSent);
-    const { t }   = useTranslation([ 'friends-page' ]);
+    const { t }   = useTranslation();
 
     if (!friends) {
         return <Loader/>;
@@ -32,7 +32,7 @@ export const FriendRequestsOutDetails: FC = memo(function FriendRequestsOutDetai
     return (
         <Details>
             <DetailsTitle>
-                { t('requests_out_list_title') } ({ friends.length })
+                { t.page.friends.requests_out_list_title } ({ friends.length })
             </DetailsTitle>
             <DetailsBody>
                 <Col>

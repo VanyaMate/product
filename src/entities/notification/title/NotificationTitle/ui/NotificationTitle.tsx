@@ -1,8 +1,8 @@
-import { FC, memo } from 'react';
+import { FC, memo, useMemo } from 'react';
 import {
     DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type NotificationTitleProps = {
@@ -11,6 +11,6 @@ export type NotificationTitleProps = {
 
 export const NotificationTitle: FC<NotificationTitleProps> = memo(function NotificationTitle (props) {
     const { type } = props;
-    const { t }    = useTranslation('notification-messages');
-    return t(type, { ns: 'notification-messages' });
+    const { t }    = useTranslation();
+    return useMemo(() => t.notifications.title[type as keyof typeof t.notifications.title] ?? t.notifications.title.unk, [ t, type ]);
 });

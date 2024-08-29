@@ -26,7 +26,7 @@ import {
     LOCAL_STORAGE_SITE_MAIN_LAYOUT_RIGHT_MENU_OPENED,
 } from '@/shared/layout/site/SiteMainLayout/const/site-main-layout.const.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type SiteMainLayoutProps =
@@ -56,7 +56,7 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
         setLeftMenuOpened(false);
         setTimeout(() => mainLinkRef.current?.focus());
     }, []);
-    const { t }                                   = useTranslation([ 'site-app' ]);
+    const { t }                                   = useTranslation();
 
     const rightMenuToggle = function () {
         setRightMenuOpened((prev) => {
@@ -93,18 +93,18 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
                  className={ classNames(css.container, {}, [ className ]) }>
                 <header className={ css.header }>
                     <PopOver
-                        popover={ t(
+                        popover={
                             leftMenuOpened
-                            ? 'close_navigation_menu'
-                            : 'open_navigation_menu',
-                        ) }
+                            ? t.app.close_navigation_menu
+                            : t.app.open_navigation_menu
+                        }
                     >
                         <Button
-                            aria-label={ t(
+                            aria-label={
                                 leftMenuOpened
-                                ? 'close_navigation_menu'
-                                : 'open_navigation_menu',
-                            ) }
+                                ? t.app.close_navigation_menu
+                                : t.app.open_navigation_menu
+                            }
                             onClick={ () => setLeftMenuOpened((prev) => !prev) }
                             quad
                         >
@@ -118,18 +118,18 @@ export const SiteMainLayout: FC<SiteMainLayoutProps> = memo(function SiteMainLay
                         { header }
                     </div>
                     <PopOver
-                        popover={ t(
+                        popover={
                             rightMenuOpened
-                            ? 'close_user_notifications'
-                            : 'open_user_notifications',
-                        ) }
+                            ? t.app.close_user_notifications
+                            : t.app.open_user_notifications
+                        }
                     >
                         <Button
-                            aria-label={ t(
+                            aria-label={
                                 rightMenuOpened
-                                ? 'close_user_notifications'
-                                : 'open_user_notifications',
-                            ) }
+                                ? t.app.close_user_notifications
+                                : t.app.open_user_notifications
+                            }
                             onClick={ rightMenuToggle }
                             quad
                             { ...inert(leftMenuOpened) }

@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, memo, FC } from 'react';
 import classNames from 'classnames';
 import css from './ThrowError.module.scss';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type ThrowErrorProps =
@@ -16,8 +16,9 @@ export const ThrowError: FC<ThrowErrorProps> = memo(function ThrowError (props) 
     const { t }                                   = useTranslation();
 
     return (
-        <div { ...other } className={ classNames(css.container, {}, [ className ]) }>
-            <h3>{ t('error_boundary_title') }</h3>
+        <div { ...other }
+             className={ classNames(css.container, {}, [ className ]) }>
+            <h3>{ t.app.error_boundary_title }</h3>
             <p className={ css.error }>{ message }</p>
             <p className={ css.trace }>{ trace }</p>
         </div>

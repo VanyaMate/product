@@ -1,12 +1,12 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import { IModalController } from '../hooks/useModalController.ts';
 import { useModalInnerManager } from '../hooks/useModalInnerManager.ts';
-import { useTranslation } from 'react-i18next';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 import css from './Modal.module.scss';
 import { IoClose } from 'react-icons/io5';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type ModalProps =
@@ -33,7 +33,7 @@ export const Modal: FC<ModalProps> = memo(function Modal (props) {
                         ref={ modalRef }
                     >
                         <Button
-                            aria-label={ t('close_modal_window_button') }
+                            aria-label={ t.app.close_modal_window_button }
                             className={ css.closeButton }
                             onClick={ () => controller.setOpened(false) }
                             quad

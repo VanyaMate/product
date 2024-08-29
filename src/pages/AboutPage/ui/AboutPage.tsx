@@ -7,7 +7,6 @@ const AboutPage: React.FC<AboutPageContentProps> = (props) => {
     const {} = props;
 
     return (
-        //eslint-disable-next-line i18next/no-literal-string
         <div>
             AboutPage
         </div>

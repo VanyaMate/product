@@ -11,7 +11,7 @@ import {
     cancelFriendRequestEffect,
 } from '@/app/model/friends/friends.model.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type CancelFriendRequestButtonProps =
@@ -22,13 +22,13 @@ export type CancelFriendRequestButtonProps =
 
 export const CancelFriendRequestButton: FC<CancelFriendRequestButtonProps> = memo(function CancelFriendRequestButton (props) {
     const { className, requestId, ...other } = props;
-    const { t }                              = useTranslation([ 'friends-page' ]);
+    const { t }                              = useTranslation();
 
     return (
-        <PopOver popover={ t('cancel_friend_request') }>
+        <PopOver popover={ t.page.friends.cancel_friend_request }>
             <ButtonWithLoading
                 { ...other }
-                aria-label={ t('cancel_friend_request') }
+                aria-label={ t.page.friends.cancel_friend_request }
                 className={ className }
                 onClick={ () => cancelFriendRequestEffect(requestId) }
                 quad

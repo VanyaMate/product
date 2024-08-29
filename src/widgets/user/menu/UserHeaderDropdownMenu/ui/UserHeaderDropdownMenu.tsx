@@ -18,7 +18,6 @@ import {
     ButtonWithFixes,
 } from '@/shared/ui-kit/buttons/ButtonWithFixes/ui/ButtonWithFixes.tsx';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
-import { useTranslation } from 'react-i18next';
 import {
     SiteNavigationLink,
 } from '@/widgets/site/navigation/SiteNavigationMenu/ui/SiteNavigationLink/SiteNavigationLink.tsx';
@@ -26,6 +25,7 @@ import {
     SiteAppRoute,
     SiteAppRoutePath,
 } from '@/app/routes/main-site/config/routes.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UserHeaderDropdownMenuProps =
@@ -35,7 +35,7 @@ export type UserHeaderDropdownMenuProps =
 export const UserHeaderDropdownMenu: FC<UserHeaderDropdownMenuProps> = memo(function UserHeaderDropdownMenu (props) {
     const { className, ...other } = props;
     const userData                = useStore($authUser);
-    const { t }                   = useTranslation([ 'translation', 'site-app' ]);
+    const { t }                   = useTranslation();
 
     return (
         <Col
@@ -57,7 +57,7 @@ export const UserHeaderDropdownMenu: FC<UserHeaderDropdownMenuProps> = memo(func
                 styleType={ LinkStyleType.GHOST }
                 to={ SiteAppRoutePath[SiteAppRoute.SETTINGS] }
             >
-                { t('settings_page', { ns: 'site-app' }) }
+                { t.app.settings_page }
             </SiteNavigationLink>
             <Divider className={ css.divider } type={ DividerType.HORIZONTAL }/>
             <ButtonWithFixes
@@ -66,7 +66,7 @@ export const UserHeaderDropdownMenu: FC<UserHeaderDropdownMenuProps> = memo(func
                 pref={ <IoLogOut/> }
                 styleType={ ButtonStyleType.DANGER }
             >
-                { t('logout_button', { ns: 'translation' }) }
+                { t.app.logout_button }
             </ButtonWithFixes>
         </Col>
     );

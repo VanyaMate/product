@@ -19,7 +19,6 @@ import {
 } from '@/widgets/posts/CreatePostForm/ui/CreatePostForm.tsx';
 import { $authUser } from '@/app/model/auth/auth.model.ts';
 import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
-import { useTranslation } from 'react-i18next';
 import {
     PostDropdownButton,
 } from '@/features/post/button/PostDropdownButton/ui/PostDropdownButton.tsx';
@@ -29,6 +28,7 @@ import {
 import { DomainPost } from 'product-types/dist/post/DomainPost';
 import { Virtual } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 import { NoMorePosts } from '@/entities/post/NoMorePosts/ui/NoMorePosts.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UserPostsProps =
@@ -43,7 +43,7 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
     const posts                           = useStore($postsList);
     const postsPending                    = useStore($postsPending);
     const authData                        = useStore($authUser);
-    const { t }                           = useTranslation([ 'posts' ]);
+    const { t }                           = useTranslation();
 
     useLayoutEffect(() => {
         if (currentPostsUserId !== userId) {
@@ -83,7 +83,7 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
                     noMorePreviousElement={ <NoMorePosts/> }
                     render={ render }
                 />
-                : t('empty_posts_list')
+                : t.page.posts.empty_posts_list
             }
         </section>
     );

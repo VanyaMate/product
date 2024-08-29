@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import css from './NotFoundError.module.scss';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type NotFoundErrorProps = {};
@@ -11,8 +11,8 @@ export const NotFoundError: FC<NotFoundErrorProps> = memo(function NotFoundError
 
     return (
         <div className={ css.container }>
-            <h3>{ t('not_found_title') }</h3>
-            <p>{ t('not_found_description') }</p>
+            <h3>{ t.app.not_found_title }</h3>
+            <p>{ t.app.not_found_description }</p>
         </div>
     );
 });

@@ -20,7 +20,7 @@ import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import { lengthValidator } from '@/app/validation/string/length.validator.ts';
 import { DomainLanguage } from 'product-types/dist/language/DomainLanguage';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UpdateLanguageFormProps =
@@ -54,7 +54,7 @@ export const UpdateLanguageForm: FC<UpdateLanguageFormProps> = memo(function Upd
             .catch(onErrorHandler)
             .finally(onFinallyHandler),
     });
-    const { t }                = useTranslation([ 'languages' ]);
+    const { t }                = useTranslation();
 
     return (
         <Form
@@ -65,7 +65,7 @@ export const UpdateLanguageForm: FC<UpdateLanguageFormProps> = memo(function Upd
             <InputWithError
                 controller={ titleInputController }
                 defaultValue={ language.title }
-                placeholder={ t('folder_title') }
+                placeholder={ t.page.languages.folder_title }
             />
             <ButtonWithLoading
                 disabled={ !formController.canBeSubmitted }
@@ -75,7 +75,7 @@ export const UpdateLanguageForm: FC<UpdateLanguageFormProps> = memo(function Upd
             >
                 <Row>
                     <IoCreate/>
-                    <span>{ t('add_item') }</span>
+                    <span>{ t.page.languages.add_item }</span>
                 </Row>
             </ButtonWithLoading>
         </Form>

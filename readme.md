@@ -5,7 +5,8 @@
 ### Architecture
 
 - ~~**FSD**~~
-- **_VMA_** - [ссылка на статью](https://habr.com/ru/articles/824842/)
+- **_MVA_
+  ** - [ссылка на статью](https://github.com/VanyaMate/articles/tree/master/ru/0003.%20Frontend.%20MVE%20%D0%B0%D1%80%D1%85%D0%B8%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%B0)
 
 ### Builder
 
@@ -22,12 +23,11 @@
         - ~~**Redux ThunkError**~~
     - **@vanyamate/sec** - `вместо redux`
 - **SCSS** + **CSS Modules**
-- **I18N-Next**
+- ~~**I18N-Next**~~ - `слишком много весит. ~80kb (30kb gzip)`
 - ~~**Shadcn UI**~~ - `слишком много весит. ~45kb (15kb gzip)`
     - ~~**Tailwind**~~
 - ~~**Axios**~~ - `слишком много весит. ~70kb (25kb gzip) o.O`
 - **@vanyamate/fetch-with-interceptors** - `вместо axios`
-- **@vanyamate/react-infinity-virtual** - динамический виртуальный скролл вместо react-window и tanstack virtual
 
 ### DevTools
 

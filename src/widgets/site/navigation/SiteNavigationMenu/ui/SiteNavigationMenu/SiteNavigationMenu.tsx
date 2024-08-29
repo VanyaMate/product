@@ -14,7 +14,6 @@ import {
     IoSearch,
 } from 'react-icons/io5';
 import { IoLogoGithub } from 'react-icons/io';
-import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import {
     useSiteMainLayoutSideMenu,
@@ -25,6 +24,7 @@ import {
     SiteAppRoutePath,
 } from '@/app/routes/main-site/config/routes.tsx';
 import { isRouteOf } from '@/app/routes/lib/isRouteOf.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type SiteNavigationMenuProps =
@@ -33,7 +33,7 @@ export type SiteNavigationMenuProps =
 
 export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function SiteNavigationMenu (props) {
     const { className, ...other } = props;
-    const { t }                   = useTranslation([ 'site-app', 'contacts' ]);
+    const { t }                   = useTranslation();
     const { pathname }            = useLocation();
     const { onCompleteAction }    = useSiteMainLayoutSideMenu();
 
@@ -53,7 +53,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             }
                             to={ SiteAppRoutePath[SiteAppRoute.HOME] }
                         >
-                            { t('home_page') }
+                            { t.app.home_page }
                         </SiteNavigationLink>
                     </li>
                     <li>
@@ -67,7 +67,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             }
                             to={ SiteAppRoutePath[SiteAppRoute.SEARCH] }
                         >
-                            { t('search_page') }
+                            { t.app.search_page }
                         </SiteNavigationLink>
                     </li>
                     <li>
@@ -81,7 +81,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             }
                             to={ SiteAppRoutePath[SiteAppRoute.FRIENDS] }
                         >
-                            { t('friends_page') }
+                            { t.app.friends_page }
                         </SiteNavigationLink>
                     </li>
                     <li>
@@ -96,7 +96,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             }
                             to={ SiteAppRoutePath[SiteAppRoute.DIALOGUES] }
                         >
-                            { t('dialogues_page') }
+                            { t.app.dialogues_page }
                         </SiteNavigationLink>
                     </li>
                     <SiteNavigationLink
@@ -110,7 +110,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                         }
                         to={ SiteAppRoutePath[SiteAppRoute.FILES] }
                     >
-                        { t('files_page') }
+                        { t.app.files_page }
                     </SiteNavigationLink>
                     <li>
                         <SiteNavigationLink
@@ -123,7 +123,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             }
                             to={ SiteAppRoutePath[SiteAppRoute.LANGUAGES] }
                         >
-                            { t('languages_page') }
+                            { t.app.languages_page }
                         </SiteNavigationLink>
                     </li>
                     <li>
@@ -137,7 +137,7 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             }
                             to={ SiteAppRoutePath[SiteAppRoute.ABOUT] }
                         >
-                            { t('about_us_page') }
+                            { t.app.about_us_page }
                         </SiteNavigationLink>
                     </li>
                 </ul>
@@ -146,24 +146,24 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                 <ul className={ css.list }>
                     <li>
                         <SiteNavigationLink
-                            aria-label={ t('github', { ns: 'contacts' }) }
+                            aria-label={ t.contacts.github }
                             icon={ <IoLogoGithub/> }
                             styleType={ LinkStyleType.GHOST }
                             target="_blank"
                             to="https://github.com/VanyaMate/product"
                         >
-                            { t('github', { ns: 'contacts' }) }
+                            { t.contacts.github }
                         </SiteNavigationLink>
                     </li>
                     <li>
                         <SiteNavigationLink
-                            aria-label={ t('vk', { ns: 'contacts' }) }
+                            aria-label={ t.contacts.vk }
                             icon={ <IoLogoVk/> }
                             styleType={ LinkStyleType.GHOST }
                             target="_blank"
                             to="https://vk.com/vanya_mate"
                         >
-                            { t('vk', { ns: 'contacts' }) }
+                            { t.contacts.vk }
                         </SiteNavigationLink>
                     </li>
                 </ul>

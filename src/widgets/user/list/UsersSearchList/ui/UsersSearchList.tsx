@@ -13,7 +13,7 @@ import {
     $usersSearch, $usersSearchCount, $usersSearchError, $usersSearchIsPending,
 } from '@/app/model/search/user-search.model.ts';
 
-/* eslint-disable */
+
 // TODO
 
 export type UsersSearchListProps =

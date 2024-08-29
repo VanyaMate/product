@@ -31,7 +31,6 @@ import { $authUser } from '@/app/model/auth/auth.model.ts';
 import {
     $privateMessages,
 } from '@/app/model/private-messages/private-messages.model.ts';
-import { useTranslation } from 'react-i18next';
 import {
     DomainPrivateDialogueFull,
 } from 'product-types/dist/private-dialogue/DomainPrivateDialogueFull';
@@ -62,9 +61,6 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
         // TODO: Temp
         getListPrivateDialogueEffect({ query: '', limit: 1000, offset: 0 });
     }, []);
-
-    // Подгрузка для бандла
-    useTranslation([ 'dialogue', 'friends-page', 'posts' ]);
 
     const dialoguesRender = useCallback<VirtualRenderMethod>((dialogue: DomainPrivateDialogueFull) => (
         <PrivateDialogue

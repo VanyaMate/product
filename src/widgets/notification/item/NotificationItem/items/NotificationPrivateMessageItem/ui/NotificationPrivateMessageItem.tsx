@@ -2,7 +2,6 @@ import { ComponentPropsWithoutRef, FC, memo, useMemo } from 'react';
 import {
     DomainNotification,
 } from 'product-types/dist/notification/DomainNotification';
-import { useTranslation } from 'react-i18next';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import {
     NotificationDefaultLayout,
@@ -16,10 +15,10 @@ import { getUserPageUrl } from '@/features/routes/lib/getUserPageUrl.ts';
 import {
     getDialoguePageUrl,
 } from '@/features/routes/lib/getDialoguePageUrl.ts';
-import { getUserPageLinkAria } from '@/app/i18n/lib/getUserPageLinkAria.ts';
 import {
-    isDomainNotificationPrivateMessageData
+    isDomainNotificationPrivateMessageData,
 } from 'product-types/dist/notification/notification-data-types/private-message/DomainNotificationPrivateMessageData';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type NotificationUserMessageItemProps =
@@ -30,18 +29,17 @@ export type NotificationUserMessageItemProps =
 
 export const NotificationPrivateMessageItem: FC<NotificationUserMessageItemProps> = memo(function NotificationUserMessageItem (props) {
     const { className, notification, ...other } = props;
-    const { t }                                 = useTranslation([ 'site-app', 'notification-links', 'translation' ]);
+    const { t, replace }                        = useTranslation();
     const linkOnMessageAriaLabel                = useMemo(() => {
         if (isDomainNotificationPrivateMessageData(notification.data)) {
-            return t(notification.type, {
-                ns           : 'notification-links',
+            return replace(t.notifications.message.u_msg_out, {
                 user_login   : notification.data.message.author.login,
                 dialogue_name: notification.data.dialogue.title,
                 message      : notification.data.message.message,
             });
         }
         return '';
-    }, [ notification.data, notification.type, t ]);
+    }, [ notification.data, replace, t.notifications.message.u_msg_out ]);
     const linkToMessage                         = useMemo(() => {
         if (isDomainNotificationPrivateMessageData(notification.data)) {
             return `/dialogue/${ notification.data.dialogue.id }#${ notification.data.message.id }`;
@@ -61,15 +59,14 @@ export const NotificationPrivateMessageItem: FC<NotificationUserMessageItemProps
                 outside={
                     <div className={ css.container }>
                         <Link
-                            aria-label={ getUserPageLinkAria(notification.data.message.author.login) }
+                            aria-label={ linkOnMessageAriaLabel }
                             to={ getUserPageUrl(notification.data.message.author.login) }
                         >
                             { notification.data.message.author.login }
                         </Link>
                         <IoArrowForward/>
                         <Link
-                            aria-label={ t('dialogue_page', {
-                                ns   : 'site-app',
+                            aria-label={ replace(t.app.dialogue_page, {
                                 login: notification.data.dialogue.title,
                             }) }
                             to={ getDialoguePageUrl(notification.data.dialogue.id) }

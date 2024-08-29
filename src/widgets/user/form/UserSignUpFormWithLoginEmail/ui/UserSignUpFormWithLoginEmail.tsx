@@ -14,7 +14,6 @@ import {
     registrationEffect,
 } from '@/app/model/auth/auth.model.ts';
 import { emailValidator } from '@/app/validation/user/email.validator.ts';
-import { useTranslation } from 'react-i18next';
 import { Form } from '@/shared/ui-kit/forms/Form/ui/Form.tsx';
 import {
     InputWithError,
@@ -24,6 +23,7 @@ import {
 } from '@/shared/ui-kit/buttons/ButtonWithFixes/ui/ButtonWithFixes.tsx';
 import { AiOutlineLoading, AiOutlineLogin } from 'react-icons/ai';
 import css from './UserSignUpFormWithLoginEmail.module.scss';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 type UserSignUpFormData = {
@@ -39,7 +39,7 @@ export type UserSignUpFormWithLoginEmailProps = {
 
 export const UserSignUpFormWithLoginEmail: FC<UserSignUpFormWithLoginEmailProps> = memo(function UserSignUpFormWithLoginEmail (props) {
     const { onError, onSuccess } = props;
-    const { t }                  = useTranslation([ 'translation' ]);
+    const { t }                  = useTranslation();
 
     const loginInputController    = useInputWithError({
         name            : 'login',
@@ -73,19 +73,19 @@ export const UserSignUpFormWithLoginEmail: FC<UserSignUpFormWithLoginEmailProps>
             <InputWithError
                 autoComplete="off"
                 controller={ loginInputController }
-                label={ t('user_auth_form_login_label') }
+                label={ t.app.user_auth_form_login_label }
                 required
             />
             <InputWithError
                 autoComplete="new-password"
                 controller={ passwordInputController }
-                label={ t('user_auth_form_password_label') }
+                label={ t.app.user_auth_form_password_label }
                 required
                 type="password"
             />
             <InputWithError
                 controller={ emailInputController }
-                label={ t('user_auth_form_email_label') }
+                label={ t.app.user_auth_form_email_label }
                 required
                 type="email"
             />
@@ -98,7 +98,7 @@ export const UserSignUpFormWithLoginEmail: FC<UserSignUpFormWithLoginEmailProps>
                 }
                 type="submit"
             >
-                { t('user_registration_form_enter_button') }
+                { t.app.user_registration_form_enter_button }
             </ButtonWithFixes>
         </Form>
     );

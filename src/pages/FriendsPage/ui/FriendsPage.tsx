@@ -20,7 +20,7 @@ import {
     $friendsIsPending,
     $friendsList, getMyFriendsEffect,
 } from '@/app/model/friends/friends.model.ts';
-/* eslint-disable */
+
 
 export type FriendsPageProps =
     {}

@@ -17,7 +17,7 @@ import { IoCreate } from 'react-icons/io5';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import { lengthValidator } from '@/app/validation/string/length.validator.ts';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type CreateLanguageFormProps =
@@ -48,7 +48,7 @@ export const CreateLanguageForm: FC<CreateLanguageFormProps> = memo(function Cre
             .catch(onErrorHandler)
             .finally(onFinallyHandler),
     });
-    const { t }                = useTranslation([ 'languages' ]);
+    const { t }                = useTranslation();
 
     const clearForm = useCallback(() => {
         titleInputController.value.current          = '';
@@ -63,7 +63,7 @@ export const CreateLanguageForm: FC<CreateLanguageFormProps> = memo(function Cre
         >
             <InputWithError
                 controller={ titleInputController }
-                placeholder={ t('language_title') }
+                placeholder={ t.page.languages.language_title }
             />
             <ButtonWithLoading
                 disabled={ !formController.canBeSubmitted }
@@ -73,7 +73,7 @@ export const CreateLanguageForm: FC<CreateLanguageFormProps> = memo(function Cre
             >
                 <Row>
                     <IoCreate/>
-                    <span>{ t('add_item') }</span>
+                    <span>{ t.page.languages.add_item }</span>
                 </Row>
             </ButtonWithLoading>
         </Form>

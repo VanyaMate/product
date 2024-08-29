@@ -1,8 +1,13 @@
 import { FC, memo } from 'react';
 import css from './SiteLogoLinkTitle.module.scss';
 import { Link, LinkProps } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
-import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { getRouteUrl } from '@/app/routes/lib/getRouteUrl.ts';
+import {
+    SiteAppRoute,
+    SiteAppRoutePath,
+} from '@/app/routes/main-site/config/routes.tsx';
 
 
 export type SiteLogoLinkTitleProps =
@@ -11,16 +16,16 @@ export type SiteLogoLinkTitleProps =
 
 export const SiteLogoLinkTitle: FC<SiteLogoLinkTitleProps> = memo(function SiteLogoLinkTitle (props) {
     const { className, ...other } = props;
-    const { t }                   = useTranslation([ 'site-app' ]);
+    const { t }                   = useTranslation();
 
     return (
         <Link
-            aria-label={ t('aria_logo') }
+            aria-label={ t.app.logo }
             className={ classNames(css.container, {}, [ className ]) }
-            to="/"
+            to={ getRouteUrl(SiteAppRoutePath[SiteAppRoute.HOME]) }
             { ...other }
         >
-            { t('logo') }
+            { t.app.logo }
         </Link>
     );
 });

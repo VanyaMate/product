@@ -5,7 +5,6 @@ module.exports = {
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:react-hooks/recommended",
-        "plugin:i18next/recommended",
         "plugin:storybook/recommended"
     ],
     ignorePatterns: ['dist', '.eslintrc.cjs'],
@@ -57,14 +56,7 @@ module.exports = {
         "react/jsx-one-expression-per-line": "off",
         "react/prop-types": "off",
     },
-    overrides: [
-        {
-            files: ['**/src/**/*.{test,it,story,stories,e2e-it,e2e-test}.{ts,tsx}'],
-            rules: {
-                'i18next/no-literal-string': 'off',
-            }
-        }
-    ],
+    overrides: [],
     globals: {
         __IS_DEV__: true,
         __API__: true

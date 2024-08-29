@@ -20,9 +20,7 @@ export const NotificationUserMessageDeletedItem: FC<NotificationUserMessageDelet
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
-                { }
-                // message deleted
+            // message deleted
         </div>
     );
 });

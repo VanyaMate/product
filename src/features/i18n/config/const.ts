@@ -1,0 +1,1 @@
+export const LOCAL_STORAGE_SELECTED_LANGUAGE = 'product__selected-language';

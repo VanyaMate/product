@@ -1,5 +1,4 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
 import { Details } from '@/shared/ui-kit/details/Details/ui/Details.tsx';
 import {
@@ -23,6 +22,7 @@ import { useStore } from '@vanyamate/sec-react';
 import {
     $friendRequestsReceived,
 } from '@/app/model/friends/friends.model.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type FriendRequestsInDetailsProps =
@@ -31,7 +31,7 @@ export type FriendRequestsInDetailsProps =
 
 export const FriendRequestsInDetails: FC<FriendRequestsInDetailsProps> = memo(function FriendRequestsInDetails () {
     const friends = useStore($friendRequestsReceived);
-    const { t }   = useTranslation([ 'friends-page' ]);
+    const { t }   = useTranslation();
 
     if (!friends) {
         return <Loader/>;
@@ -40,7 +40,7 @@ export const FriendRequestsInDetails: FC<FriendRequestsInDetailsProps> = memo(fu
     return (
         <Details>
             <DetailsTitle>
-                { t('requests_in_list_title') } ({ friends.length })
+                { t.page.friends.requests_in_list_title } ({ friends.length })
             </DetailsTitle>
             <DetailsBody>
                 <Col>

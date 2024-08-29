@@ -7,13 +7,13 @@ import {
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import { getUserPageUrl } from '@/features/routes/lib/getUserPageUrl.ts';
-import { getUserPageLinkAria } from '@/app/i18n/lib/getUserPageLinkAria.ts';
 import {
     getDeltaByDates,
 } from '@vanyamate/helpers/date/getDeltaByDates/getDeltaByDates.ts';
 import {
     getStringDeltaByDates,
 } from '@vanyamate/helpers/date/getStringDeltaByDates/getStringDeltaByDates.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type PostProps =
@@ -26,6 +26,7 @@ export type PostProps =
 
 export const Post: FC<PostProps> = memo(function Post (props) {
     const { post, extra, footer, className, ...other } = props;
+    const { t, replace }                               = useTranslation();
 
     const date = useMemo(() => getStringDeltaByDates(getDeltaByDates(post.creationData, Date.now())), [ post.creationData ]);
 
@@ -43,7 +44,7 @@ export const Post: FC<PostProps> = memo(function Post (props) {
                     />
                     <div className={ css.details }>
                         <Link
-                            aria-label={ getUserPageLinkAria(post.author.login) }
+                            aria-label={ replace(t.app.user_page, { login: post.author.login }) }
                             to={ getUserPageUrl(post.author.login) }
                         >
                             { post.author.login }

@@ -3,10 +3,16 @@ import classNames from 'classnames';
 import css from './UserPreviewItem.module.scss';
 import { DomainUser } from 'product-types/dist/user/DomainUser';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
-import { useTranslation } from 'react-i18next';
 import {
     UserAvatar,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { getRouteUrl } from '@/app/routes/lib/getRouteUrl.ts';
+import {
+    SITE_ROUTE_PARAM_USER_LOGIN,
+    SiteAppRoute,
+    SiteAppRoutePath,
+} from '@/app/routes/main-site/config/routes.tsx';
 
 
 export type UserPreviewItemProps =
@@ -17,8 +23,14 @@ export type UserPreviewItemProps =
     & ComponentPropsWithoutRef<'article'>;
 
 export const UserPreviewItem: FC<UserPreviewItemProps> = memo(function ProfilePreviewItem (props) {
-    const { className, user, children, showOnline, ...other } = props;
-    const { t }                                               = useTranslation([ 'translation' ]);
+    const {
+              className,
+              user,
+              children,
+              showOnline,
+              ...other
+          }              = props;
+    const { t, replace } = useTranslation();
 
     return (
         <article
@@ -26,12 +38,11 @@ export const UserPreviewItem: FC<UserPreviewItemProps> = memo(function ProfilePr
             className={ classNames(css.container, {}, [ className ]) }
         >
             <Link
-                aria-label={ t('go_to_user_page_of', {
-                    ns   : 'translation',
+                aria-label={ replace(t.app.go_to_user_page_of, {
                     login: user.login,
                 }) }
                 className={ css.link }
-                to={ `/user/${ user.login }` }
+                to={ getRouteUrl(SiteAppRoutePath[SiteAppRoute.USER], { [SITE_ROUTE_PARAM_USER_LOGIN]: user.login }) }
             >
                 <UserAvatar
                     avatar={ user.avatar }

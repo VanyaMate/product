@@ -9,7 +9,6 @@ import {
 import {
     FileSelectedPreview,
 } from '@/entities/file/item/FileSelectedPreview/ui/FileSelectedPreview.tsx';
-import { useTranslation } from 'react-i18next';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import { Details } from '@/shared/ui-kit/details/Details/ui/Details.tsx';
 import {
@@ -18,9 +17,8 @@ import {
 import {
     DetailsBody,
 } from '@/shared/ui-kit/details/Details/ui/DetailsBody/DetailsBody.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
-/* eslint-disable */
-// TODO: Tempo disable
 
 export type FilesSideMenuContainerProps =
     {}
@@ -29,14 +27,14 @@ export type FilesSideMenuContainerProps =
 export const FilesSideMenuContainer: FC<FilesSideMenuContainerProps> = memo(function FilesSideMenuContainer (props) {
     const { className, ...other } = props;
     const filesSelected           = useStore($filesSelected);
-    const { t }                   = useTranslation([ 'files-page' ]);
+    const { t }                   = useTranslation();
 
     return (
         <section
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            <h3 className={ css.title }>{ t('selected_files') }</h3>
+            <h3 className={ css.title }>{ t.page.files.selected_files }</h3>
             <Details open>
                 <DetailsTitle>Подробности</DetailsTitle>
                 <DetailsBody>

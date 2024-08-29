@@ -1,13 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ThrowError } from '../ui/ThrowError';
-import { translationDecorator } from '$/.storybook';
 
 
 const meta: Meta<typeof ThrowError> = {
     title     : 'shared/ui-kit/errors/ThrowError',
     component : ThrowError,
     tags      : [ 'autodocs' ],
-    decorators: [ translationDecorator ],
+    decorators: [],
     argTypes  : {
         message: {
             control: {

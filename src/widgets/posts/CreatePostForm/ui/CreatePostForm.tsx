@@ -15,7 +15,7 @@ import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
 import { createPostEffect } from '@/app/model/posts/posts.model.ts';
 import { IoSend } from 'react-icons/io5';
 import { lengthValidator } from '@/app/validation/string/length.validator.ts';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type CreatePostFormProps =
@@ -24,7 +24,7 @@ export type CreatePostFormProps =
 
 export const CreatePostForm: FC<CreatePostFormProps> = memo(function CreatePostForm (props) {
     const { className, ...other } = props;
-    const { t }                   = useTranslation([ 'posts' ]);
+    const { t }                   = useTranslation();
 
     const inputController = useInputWithError({
         name            : 'message',
@@ -50,7 +50,7 @@ export const CreatePostForm: FC<CreatePostFormProps> = memo(function CreatePostF
             <InputWithError
                 containerClassName={ css.input }
                 controller={ inputController }
-                placeholder={ t('write_new_post') }
+                placeholder={ t.page.posts.write_new_post }
             />
             <ButtonWithLoading
                 disabled={ !formController.canBeSubmitted }

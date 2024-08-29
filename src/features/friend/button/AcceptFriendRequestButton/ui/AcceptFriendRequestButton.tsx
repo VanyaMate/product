@@ -11,7 +11,7 @@ import {
     acceptFriendRequestEffect,
 } from '@/app/model/friends/friends.model.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type AcceptFriendRequestButtonProps =
@@ -22,13 +22,13 @@ export type AcceptFriendRequestButtonProps =
 
 export const AcceptFriendRequestButton: FC<AcceptFriendRequestButtonProps> = memo(function AcceptFriendRequestButton (props) {
     const { className, requestId, ...other } = props;
-    const { t }                              = useTranslation([ 'friends-page' ]);
+    const { t }                              = useTranslation();
 
     return (
-        <PopOver popover={ t('accept_friend_request') }>
+        <PopOver popover={ t.page.friends.accept_friend_request }>
             <ButtonWithLoading
                 { ...other }
-                aria-label={ t('accept_friend_request') }
+                aria-label={ t.page.friends.accept_friend_request }
                 className={ className }
                 onClick={ () => acceptFriendRequestEffect(requestId) }
                 quad

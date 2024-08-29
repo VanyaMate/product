@@ -9,7 +9,6 @@ import {
 import {
     UserPreviewItem,
 } from '@/entities/user/item/UserPreviewItem/ui/UserPreviewItem.tsx';
-import { useTranslation } from 'react-i18next';
 import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
 import {
     RemoveFriendButton,
@@ -17,11 +16,12 @@ import {
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import { $friendsList } from '@/app/model/friends/friends.model.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export const FriendsDetails: FC = memo(function FriendsDetails () {
     const friends = useStore($friendsList);
-    const { t }   = useTranslation([ 'friends-page' ]);
+    const { t }   = useTranslation();
 
     if (!friends) {
         return <Loader/>;
@@ -29,7 +29,7 @@ export const FriendsDetails: FC = memo(function FriendsDetails () {
 
     return (
         <Details open={ true }>
-            <DetailsTitle>{ t('friends_list_title') } ({ friends.length })</DetailsTitle>
+            <DetailsTitle>{ t.page.friends.friends_list_title } ({ friends.length })</DetailsTitle>
             <DetailsBody>
                 <Col>
                     {

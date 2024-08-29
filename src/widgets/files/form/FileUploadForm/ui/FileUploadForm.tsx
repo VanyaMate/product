@@ -9,10 +9,10 @@ import {
 } from 'react';
 import classNames from 'classnames';
 import css from './FileUploadForm.module.scss';
-import { useTranslation } from 'react-i18next';
 import {
     uploadFileEffect, uploadFileProgressEffect,
 } from '@/app/model/file-page/file-page.model.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type FileUploadFormProps =
@@ -22,7 +22,7 @@ export type FileUploadFormProps =
 export const FileUploadForm: FC<FileUploadFormProps> = memo(function FileUploadForm (props) {
     const { className, ...other }               = props;
     const [ dragFileAmount, setDragFileAmount ] = useState<number>(0);
-    const { t }                                 = useTranslation([ 'files-page' ]);
+    const { t, replace }                        = useTranslation();
 
     const onDropOver: DragEventHandler = useCallback((event) => {
         setDragFileAmount(event.dataTransfer.items.length);
@@ -57,7 +57,7 @@ export const FileUploadForm: FC<FileUploadFormProps> = memo(function FileUploadF
             className={ classNames(css.container, {}, [ className ]) }
         >
             <form
-                action="http://localhost:3000/api/v1/file"
+                action={ __API__ + `/v1/file` }
                 className={ css.form }
                 method="post"
                 onDragEnd={ onDragEnd }
@@ -72,8 +72,8 @@ export const FileUploadForm: FC<FileUploadFormProps> = memo(function FileUploadF
                     <span className={ css.text }>
                         {
                             dragFileAmount
-                            ? t('upload_files', { amount: dragFileAmount })
-                            : t('select_files')
+                            ? replace(t.page.files.upload_files, { amount: dragFileAmount.toString() })
+                            : t.page.files.select_files
                         }
                     </span>
                     <input

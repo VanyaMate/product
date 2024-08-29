@@ -1,14 +1,14 @@
 import { FC, memo, Suspense } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
-    useModalController
+    useModalController,
 } from '@/shared/ui-kit/modal/Modal/hooks/useModalController.ts';
 import { Modal } from '@/shared/ui-kit/modal/Modal/ui/Modal.tsx';
 import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
 import {
-    UserSignInFormWithLoginAsync
+    UserSignInFormWithLoginAsync,
 } from '@/widgets/user/form/UserSignInFormWithLogin/ui/UserSignInFormWithLogin.async.tsx';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type OpenUserAuthFormButtonProps = {};
@@ -34,7 +34,7 @@ export const OpenUserAuthFormButton: FC<OpenUserAuthFormButtonProps> = memo(func
             <Button
                 onClick={ () => modalController.setOpened(true) }
             >
-                { t('user_auth_form_enter_button') }
+                { t.app.user_auth_form_enter_button }
             </Button>
         </>
     );

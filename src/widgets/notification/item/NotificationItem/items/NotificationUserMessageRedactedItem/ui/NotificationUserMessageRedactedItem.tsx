@@ -20,8 +20,6 @@ export const NotificationUserMessageRedactedItem: FC<NotificationUserMessageReda
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
-            { }
             // message redacted
         </div>
     );

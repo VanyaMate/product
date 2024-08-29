@@ -35,9 +35,6 @@ import {
     UnselectAllFilesButton,
 } from '@/features/file/button/UnselectAllFilesButton/ui/UnselectAllFilesButton.tsx';
 
-
-{/* eslint-disable i18next/no-literal-string */
-}
 // TODO: Что-то не очень красиво получается с выбором в меню.. Надо сделать
 //  боковое меню
 

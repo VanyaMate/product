@@ -25,7 +25,6 @@ import {
 import { isRouteOf } from '@/app/routes/lib/isRouteOf.ts';
 import { useLocation, useParams } from 'react-router-dom';
 import { LinkStyleType } from '@/shared/ui-kit/links/Link/types/types.ts';
-import { useTranslation } from 'react-i18next';
 import {
     UserPrivacySettingsContainer,
 } from '@/widgets/user-settings/container/UserPrivacySettingsContainer/ui/UserPrivacySettingsContainer.tsx';
@@ -38,6 +37,7 @@ import {
 import {
     UserProfileSettingsContainer,
 } from '@/widgets/user-settings/container/UserProfileSettingsContainer/ui/UserProfileSettingsContainer.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UserSettingsContainerProps =
@@ -47,7 +47,7 @@ export type UserSettingsContainerProps =
 export const UserSettingsContainer: FC<UserSettingsContainerProps> = memo(function UserSettingsContainer (props) {
     const { className, ...other } = props;
     const { pathname }            = useLocation();
-    const { t }                   = useTranslation([ 'user-settings' ]);
+    const { t }                   = useTranslation();
     const params                  = useParams<{
         [SITE_ROUTE_PARAM_SETTINGS_TYPE]: SiteRouteSettingsType
     }>();
@@ -77,7 +77,7 @@ export const UserSettingsContainer: FC<UserSettingsContainerProps> = memo(functi
                     }
                     to={ SiteAppRoutePath[SiteAppRoute.SETTINGS] }
                 >
-                    { t('menu_profile_link') }
+                    { t.page.userSettings.menu_profile_link }
                 </SiteNavigationLink>
                 <SiteNavigationLink
                     icon={ <IoShield/> }
@@ -91,7 +91,7 @@ export const UserSettingsContainer: FC<UserSettingsContainerProps> = memo(functi
                         })
                     }
                 >
-                    { t('menu_privacy_link') }
+                    { t.page.userSettings.menu_privacy_link }
                 </SiteNavigationLink>
                 <SiteNavigationLink
                     icon={ <IoNotifications/> }
@@ -105,7 +105,7 @@ export const UserSettingsContainer: FC<UserSettingsContainerProps> = memo(functi
                         })
                     }
                 >
-                    { t('menu_notifications_link') }
+                    { t.page.userSettings.menu_notifications_link }
                 </SiteNavigationLink>
                 <SiteNavigationLink
                     icon={ <IoColorPalette/> }
@@ -119,7 +119,7 @@ export const UserSettingsContainer: FC<UserSettingsContainerProps> = memo(functi
                         })
                     }
                 >
-                    { t('menu_customisation_link') }
+                    { t.page.userSettings.menu_customisation_link }
                 </SiteNavigationLink>
             </Col>
             <div className={ css.content }>

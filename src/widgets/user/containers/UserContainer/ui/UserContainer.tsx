@@ -27,7 +27,6 @@ import {
     Divider,
     DividerType,
 } from '@/shared/ui-kit/divider/Divider/ui/Divider.tsx';
-import { useTranslation } from 'react-i18next';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
 import {
     WorkInProgress,
@@ -38,6 +37,7 @@ import {
 import {
     CreateCallRequestButton,
 } from '@/features/call/button/CreateCallRequestButton/ui/CreateCallRequestButton.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UserContainerProps =
@@ -50,7 +50,7 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
     const { className, login, ...other } = props;
     const userPagePending                = useStore($userPageIsPending);
     const user                           = useStore($userPageData);
-    const { t }                          = useTranslation([ 'site-app' ]);
+    const { t }                          = useTranslation();
 
     useLayoutEffect(() => {
         if (user?.login !== login) {
@@ -85,23 +85,23 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
                 </section>
                 <Col className={ css.right }>
                     <Row>
-                        <Button>{ t('posts_page') }</Button>
+                        <Button>{ t.app.posts_page }</Button>
                         <PopOver popover={ <WorkInProgress/> }>
                             <Button
                                 styleType={ ButtonStyleType.GHOST }>
-                                { t('friends_page') }
+                                { t.app.friends_page }
                             </Button>
                         </PopOver>
                         <PopOver popover={ <WorkInProgress/> }>
                             <Button
                                 styleType={ ButtonStyleType.GHOST }>
-                                { t('music_page') }
+                                { t.app.music_page }
                             </Button>
                         </PopOver>
                         <PopOver popover={ <WorkInProgress/> }>
                             <Button
                                 styleType={ ButtonStyleType.GHOST }>
-                                { t('photos_page') }
+                                { t.app.photos_page }
                             </Button>
                         </PopOver>
                         <PopOver popover={ <WorkInProgress/> }>

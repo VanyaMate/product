@@ -20,8 +20,6 @@ export const NotificationUserMessageReadItem: FC<NotificationUserMessageReadItem
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            {/* eslint-disable-next-line i18next/no-literal-string */ }
-            { }
             // message read
         </div>
     );

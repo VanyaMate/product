@@ -5,6 +5,11 @@ import {
     SiteNavigationLink,
 } from '@/widgets/site/navigation/SiteNavigationMenu/ui/SiteNavigationLink/SiteNavigationLink.tsx';
 import { LinkStyleType } from '@/shared/ui-kit/links/Link/types/types.ts';
+import { getRouteUrl } from '@/app/routes/lib/getRouteUrl.ts';
+import {
+    SiteAppRoute,
+    SiteAppRoutePath,
+} from '@/app/routes/main-site/config/routes.tsx';
 
 
 export type UserSettingsLinkProps =
@@ -19,7 +24,7 @@ export const UserSettingsLink: FC<UserSettingsLinkProps> = memo(function UserSet
             { ...other }
             icon={ <IoSettings/> }
             styleType={ LinkStyleType.PRIMARY }
-            to="/settings"
+            to={ getRouteUrl(SiteAppRoutePath[SiteAppRoute.SETTINGS]) }
         />
     );
 });
