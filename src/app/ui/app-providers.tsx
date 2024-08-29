@@ -16,17 +16,17 @@ export const AppProviders: FC<AppProvidersProps> = memo(function AppProviders (p
 
     return (
         <StrictMode>
-            <I18nextProvider i18n={ i18nConfig }>
-                <ThemeProvider
-                    isPageTheme={ true }
-                    storageId="site-app"
-                    withStorage={ true }
-                >
-                    <ErrorBoundary>
+            <ErrorBoundary>
+                <I18nextProvider i18n={ i18nConfig }>
+                    <ThemeProvider
+                        isPageTheme={ true }
+                        storageId="site-app"
+                        withStorage={ true }
+                    >
                         { children }
-                    </ErrorBoundary>
-                </ThemeProvider>
-            </I18nextProvider>
+                    </ThemeProvider>
+                </I18nextProvider>
+            </ErrorBoundary>
         </StrictMode>
     );
 });

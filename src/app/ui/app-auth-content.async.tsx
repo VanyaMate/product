@@ -17,6 +17,9 @@ import {
 import { MainSiteRouter } from '@/app/routes/main-site/ui/MainSiteRouter.tsx';
 import { CallModal } from '@/widgets/call/CallModal/ui/CallModal.tsx';
 import { BrowserRouter } from 'react-router-dom';
+import {
+    ErrorBoundary,
+} from '@/shared/ui-kit/errors/ErrorBoundary/ui/ErrorBoundary.tsx';
 
 
 export const AppAuthContentAsync: FC = memo(function AppAuthContentAsync () {
@@ -28,7 +31,9 @@ export const AppAuthContentAsync: FC = memo(function AppAuthContentAsync () {
                     leftSideMenu={ <SiteNavigationMenu/> }
                     rightSideMenu={ <UserRightSideMenu/> }
                 >
-                    <MainSiteRouter/>
+                    <ErrorBoundary>
+                        <MainSiteRouter/>
+                    </ErrorBoundary>
                 </SiteMainLayout>
                 <CallModal/>
             </BrowserRouter>
