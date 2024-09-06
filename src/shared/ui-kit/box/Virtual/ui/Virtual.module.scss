@@ -1,12 +1,13 @@
 $scroll-width : 10px;
 
 .container {
-    overflow       : hidden;
+    // overflow       : hidden; // -почему то вызывает постоянные репеинты в диалогах
     width          : 100%;
     height         : 100%;
     position       : relative;
     display        : flex;
     flex-direction : column-reverse;
+    transform      : translateZ(0);
 
     .scrollContainer {
         overflow       : hidden;
