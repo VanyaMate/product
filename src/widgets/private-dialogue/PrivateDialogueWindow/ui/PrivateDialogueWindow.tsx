@@ -24,6 +24,7 @@ import {
     PrivateMessagesInfinityVirtualContainer,
 } from '@/widgets/message/PrivateMessagesInfinityVirtualContainer/ui/PrivateMessagesInfinityVirtualContainer.tsx';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { inert } from '@/shared/lib/react/inert.ts';
 
 
 export type PrivateDialogueWindowProps =
@@ -86,6 +87,7 @@ export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(functi
                     <PrivateDialogueWindowUserPreview
                         dialogueId={ dialogueId }
                         opened={ true }
+                        { ...inert(!rightMenuOpened) }
                     />
                 </div>
             </div>

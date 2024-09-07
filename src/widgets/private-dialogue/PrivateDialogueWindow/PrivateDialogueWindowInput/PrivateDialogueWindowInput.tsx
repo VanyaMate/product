@@ -74,6 +74,7 @@ export const PrivateDialogueWindowInput: FC<PrivateDialogueWindowInputProps> = m
                 <Row className={ css.interface }>
                     <InputWithError
                         autoComplete="off"
+                        autoFocus
                         className={ css.input }
                         containerClassName={ css.inputContainer }
                         controller={ inputController }

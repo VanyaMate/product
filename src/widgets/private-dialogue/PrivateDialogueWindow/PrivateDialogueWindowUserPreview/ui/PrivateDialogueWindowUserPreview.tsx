@@ -16,11 +16,11 @@ export type PrivateDialogueWindowUserPreviewProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const PrivateDialogueWindowUserPreview: FC<PrivateDialogueWindowUserPreviewProps> = memo(function PrivateDialogueWindowUserPreview (props) {
-    const { dialogueId } = props;
+    const { dialogueId, ...other } = props;
     // TODO
-    const login          = useStore($privateDialogues).find(({ id }) => id === dialogueId)?.user.login;
+    const login                    = useStore($privateDialogues).find(({ id }) => id === dialogueId)?.user.login;
 
     return (
-        <UserContainer login={ login }/>
+        <UserContainer { ...other } login={ login }/>
     );
 });
