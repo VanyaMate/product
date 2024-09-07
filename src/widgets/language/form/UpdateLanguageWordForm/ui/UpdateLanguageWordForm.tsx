@@ -17,12 +17,12 @@ import {
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
-import { IoCreate } from 'react-icons/io5';
+import { IoSettings } from 'react-icons/io5';
 import { lengthValidator } from '@/app/validation/string/length.validator.ts';
 import {
     DomainLanguageWord,
 } from 'product-types/dist/language/DomainLanguageWord';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UpdateLanguageWordFormProps =
@@ -69,7 +69,7 @@ export const UpdateLanguageWordForm: FC<UpdateLanguageWordFormProps> = memo(func
             .catch(onErrorHandler)
             .finally(onFinallyHandler),
     });
-    const { t }                       = useTranslation([ 'languages' ]);
+    const { t }                       = useTranslation();
 
     return (
         <Form
@@ -79,15 +79,15 @@ export const UpdateLanguageWordForm: FC<UpdateLanguageWordFormProps> = memo(func
         >
             <InputWithError controller={ originalInputController }
                             defaultValue={ word.original }
-                            placeholder={ t('word_original') }
+                            placeholder={ t.page.languages.word_original }
             />
             <InputWithError controller={ translationsInputController }
                             defaultValue={ word.translations.join(',') }
-                            placeholder={ t('word_translations') }
+                            placeholder={ t.page.languages.word_translations }
             />
             <InputWithError controller={ noticeInputController }
                             defaultValue={ word.notice }
-                            placeholder={ t('word_notice') }
+                            placeholder={ t.page.languages.word_notice }
             />
             <ButtonWithLoading
                 disabled={ !formController.canBeSubmitted }
@@ -96,8 +96,8 @@ export const UpdateLanguageWordForm: FC<UpdateLanguageWordFormProps> = memo(func
                 type="submit"
             >
                 <Row>
-                    <IoCreate/>
-                    <span>{ t('add_item') }</span>
+                    <IoSettings/>
+                    <span>{ t.page.languages.update_word }</span>
                 </Row>
             </ButtonWithLoading>
         </Form>

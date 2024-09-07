@@ -22,10 +22,10 @@ import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
-import { useTranslation } from 'react-i18next';
 import {
     userAuthLoginValidator,
 } from '@/app/validation/user/login.validators.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UserLoginChangeFormProps =
@@ -36,7 +36,7 @@ export type UserLoginChangeFormProps =
 
 export const UserLoginChangeForm: FC<UserLoginChangeFormProps> = memo(function UserLoginChangeForm (props) {
     const { login, className, ...other }    = props;
-    const { t }                             = useTranslation([ 'user-settings' ]);
+    const { t }                             = useTranslation();
     const [ currentLogin, setCurrentLogin ] = useState<string>(login);
     const loginInput                        = useInputWithError({
         name            : 'login',
@@ -65,8 +65,8 @@ export const UserLoginChangeForm: FC<UserLoginChangeFormProps> = memo(function U
                     autoComplete="off"
                     controller={ loginInput }
                     defaultValue={ login }
-                    label={ t('login_label') }
-                    placeholder={ t('login_placeholder') }
+                    label={ t.page.userSettings.login_label }
+                    placeholder={ t.page.userSettings.login_placeholder }
                 />
                 <Row fullWidth spaceBetween>
                     <Button
@@ -74,14 +74,14 @@ export const UserLoginChangeForm: FC<UserLoginChangeFormProps> = memo(function U
                         onClick={ discardChanges }
                         type="button"
                     >
-                        { t('discard_changes') }
+                        { t.page.userSettings.discard_changes }
                     </Button>
                     <ButtonWithLoading
                         disabled={ currentLogin === login || !form.canBeSubmitted }
                         loading={ form.pending }
                         type="submit"
                     >
-                        { t('apply_changes') }
+                        { t.page.userSettings.apply_changes }
                     </ButtonWithLoading>
                 </Row>
             </Col>

@@ -17,12 +17,12 @@ import {
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
-import { IoCreate } from 'react-icons/io5';
+import { IoSettings } from 'react-icons/io5';
 import { lengthValidator } from '@/app/validation/string/length.validator.ts';
 import {
     DomainLanguageFolder,
 } from 'product-types/dist/language/DomainLanguageFolder';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UpdateLanguageFolderFormProps =
@@ -54,7 +54,7 @@ export const UpdateLanguageFolderForm: FC<UpdateLanguageFolderFormProps> = memo(
             .catch(onErrorHandler)
             .finally(onFinallyHandler),
     });
-    const { t }                = useTranslation([ 'languages' ]);
+    const { t }                = useTranslation();
 
     return (
         <Form
@@ -65,7 +65,7 @@ export const UpdateLanguageFolderForm: FC<UpdateLanguageFolderFormProps> = memo(
             <InputWithError
                 controller={ titleInputController }
                 defaultValue={ folder.title }
-                placeholder={t('folder_title')}
+                placeholder={ t.page.languages.folder_title }
             />
             <ButtonWithLoading
                 disabled={ !formController.canBeSubmitted }
@@ -74,8 +74,8 @@ export const UpdateLanguageFolderForm: FC<UpdateLanguageFolderFormProps> = memo(
                 type="submit"
             >
                 <Row>
-                    <IoCreate/>
-                    <span>{t('add_item')}</span>
+                    <IoSettings/>
+                    <span>{ t.page.languages.update_folder }</span>
                 </Row>
             </ButtonWithLoading>
         </Form>

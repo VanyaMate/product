@@ -11,7 +11,7 @@ import {
     $privateDialogues, unArchivePrivateDialogueEffect,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type ArchivePrivateDialogueProps =
@@ -24,16 +24,19 @@ export const ArchivePrivateDialogue: FC<ArchivePrivateDialogueProps> = memo(func
     const { className, dialogueId, ...other } = props;
     const dialogues                           = useStore($privateDialogues);
     const inArchive                           = useMemo(() => dialogues.find((dialogue) => dialogue.id === dialogueId)?.meArchived, [ dialogueId, dialogues ]);
-    const { t }                               = useTranslation([ 'dialogue' ]);
+    const { t }                               = useTranslation();
 
     return (
         <PopOver popover={
-            t(inArchive ? 'unarchive_dialogue' : 'archive_dialogue')
+            t.page.dialogues[inArchive ? 'unarchive_dialogue'
+                                       : 'archive_dialogue']
         }>
             <ButtonWithLoading
                 { ...other }
-                aria-label={ t(inArchive ? 'unarchive_dialogue'
-                                         : 'archive_dialogue') }
+                aria-label={
+                    t.page.dialogues[inArchive ? 'unarchive_dialogue'
+                                               : 'archive_dialogue']
+                }
                 className={ className }
                 onClick={
                     () => inArchive

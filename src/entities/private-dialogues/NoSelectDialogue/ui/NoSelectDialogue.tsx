@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './NoSelectDialogue.module.scss';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type NoSelectDialogueProps =
@@ -10,14 +10,14 @@ export type NoSelectDialogueProps =
 
 export const NoSelectDialogue: FC<NoSelectDialogueProps> = memo(function NoSelectDialogue (props) {
     const { className, ...other } = props;
-    const { t }                   = useTranslation([ 'dialogue' ]);
+    const { t }                   = useTranslation();
 
     return (
         <div
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            { t('dialogue_not_selected') }
+            { t.page.dialogues.dialogue_not_selected }
         </div>
     );
 });

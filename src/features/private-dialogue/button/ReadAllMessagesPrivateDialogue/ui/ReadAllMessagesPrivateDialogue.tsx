@@ -9,7 +9,7 @@ import {
     readAllPrivateMessagesEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type ReadAllMessagesPrivateDialogueProps =
@@ -20,13 +20,13 @@ export type ReadAllMessagesPrivateDialogueProps =
 
 export const ReadAllMessagesPrivateDialogue: FC<ReadAllMessagesPrivateDialogueProps> = memo(function ReadAllMessagesPrivateDialogue (props) {
     const { dialogueId, ...other } = props;
-    const { t }                    = useTranslation([ 'dialogue' ]);
+    const { t }                    = useTranslation();
 
     return (
-        <PopOver popover={ t('mark_all_messages_as_read') }>
+        <PopOver popover={ t.page.dialogues.mark_all_messages_as_read }>
             <ButtonWithLoading
                 { ...other }
-                aria-label={ t('mark_all_messages_as_read') }
+                aria-label={ t.page.dialogues.mark_all_messages_as_read }
                 onClick={ () => readAllPrivateMessagesEffect(dialogueId) }
                 quad
                 styleType={ ButtonStyleType.PRIMARY }

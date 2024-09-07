@@ -3,14 +3,14 @@ import classNames from 'classnames';
 import css from './NotificationUserMessageBody.module.scss';
 import { IoArrowForward, IoPeople, IoPerson } from 'react-icons/io5';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
-import { useTranslation } from 'react-i18next';
 import {
     getDialoguePageUrl,
 } from '@/features/routes/lib/getDialoguePageUrl.ts';
 import { getUserPageUrl } from '@/features/routes/lib/getUserPageUrl.ts';
 import {
-    DomainNotificationUserMessageData
+    DomainNotificationUserMessageData,
 } from 'product-types/dist/notification/notification-data-types/message/DomainNotificationUserMessageData';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type NotificationShortBodyUserMessageProps =
@@ -21,7 +21,7 @@ export type NotificationShortBodyUserMessageProps =
 
 export const NotificationUserMessageBody: FC<NotificationShortBodyUserMessageProps> = memo(function NotificationShortBodyUserMessage (props) {
     const { className, data, ...other } = props;
-    const { t }                         = useTranslation([ 'translation' ]);
+    const { t, replace }                = useTranslation();
 
     return (
         <section
@@ -31,10 +31,11 @@ export const NotificationUserMessageBody: FC<NotificationShortBodyUserMessagePro
             <div className={ css.links }>
                 <header>
                     <Link
-                        aria-label={ t('go_to_user_page_of', {
-                            ns   : 'translation',
-                            login: data.message.author.login,
-                        }) }
+                        aria-label={
+                            replace(t.app.go_to_user_page_of, {
+                                login: data.message.author.login,
+                            })
+                        }
                         className={ css.row }
                         to={ getUserPageUrl(data.message.author.login) }
                     >
@@ -45,10 +46,11 @@ export const NotificationUserMessageBody: FC<NotificationShortBodyUserMessagePro
                 <IoArrowForward/>
                 <footer>
                     <Link
-                        aria-label={ t('dialogue_page', {
-                            ns           : 'site-app',
-                            dialogue_name: data.dialogue.title,
-                        }) }
+                        aria-label={
+                            replace(t.app.dialogue_page, {
+                                dialogue_name: data.dialogue.title,
+                            })
+                        }
                         className={ css.row }
                         to={ getDialoguePageUrl(data.dialogue.id) }
                     >

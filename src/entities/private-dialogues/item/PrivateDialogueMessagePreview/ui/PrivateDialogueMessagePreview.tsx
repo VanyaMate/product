@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './PrivateDialogueMessagePreview.module.scss';
 import { DomainMessage } from 'product-types/dist/message/DomainMessage';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type PrivateDialogueMessagePreviewProps =
@@ -15,7 +15,7 @@ export type PrivateDialogueMessagePreviewProps =
 
 export const PrivateDialogueMessagePreview: FC<PrivateDialogueMessagePreviewProps> = memo(function PrivateDialogueMessagePreview (props) {
     const { className, message, login, selected, ...other } = props;
-    const { t }                                             = useTranslation([ 'dialogue' ]);
+    const { t }                                             = useTranslation();
 
     if (!message) {
         return (
@@ -23,7 +23,8 @@ export const PrivateDialogueMessagePreview: FC<PrivateDialogueMessagePreviewProp
                 { ...other }
                 className={ classNames(css.container, { [css.selected]: selected }, [ className ]) }
             >
-                <span className={ css.empty }>{ t('empty_dialogue') }</span>
+                <span
+                    className={ css.empty }>{ t.page.dialogues.empty_dialogue }</span>
             </div>
         );
     }
@@ -36,7 +37,7 @@ export const PrivateDialogueMessagePreview: FC<PrivateDialogueMessagePreviewProp
             <span className={ css.sender }>
                 {
                     message.author.login === login
-                    ? `${ t('dialogue_me') }:`
+                    ? `${ t.page.dialogues.dialogue_me }:`
                     : `${ message.author.login[0] }:`
                 }
             </span>

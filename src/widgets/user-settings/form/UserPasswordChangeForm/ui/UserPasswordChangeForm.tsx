@@ -17,7 +17,6 @@ import {
 } from '@/shared/ui-kit/inputs/InputWithError/ui/InputWithError.tsx';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
-import { useTranslation } from 'react-i18next';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
@@ -26,6 +25,7 @@ import {
     passwordEqualValidator,
 } from '@/app/validation/password/password-equal.validator.ts';
 import { userPasswordUpdateEffect } from '@/app/model/auth/auth.model.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UserPasswordChangeFormProps =
@@ -34,7 +34,7 @@ export type UserPasswordChangeFormProps =
 
 export const UserPasswordChangeForm: FC<UserPasswordChangeFormProps> = memo(function UserPasswordChangeForm (props) {
     const { className, ...other } = props;
-    const { t }                   = useTranslation([ 'user-settings' ]);
+    const { t }                   = useTranslation();
     const [ isEmpty, setIsEmpty ] = useState<boolean>(true);
 
     const firstPasswordInput  = useInputWithError({
@@ -73,17 +73,17 @@ export const UserPasswordChangeForm: FC<UserPasswordChangeFormProps> = memo(func
                 <InputWithError
                     autoComplete="off"
                     controller={ firstPasswordInput }
-                    label={ t('password_label') }
+                    label={ t.page.userSettings.password_label }
                     name={ Math.random().toString() }
-                    placeholder={ t('password_placeholder') }
+                    placeholder={ t.page.userSettings.password_placeholder }
                     type="password"
                 />
                 <InputWithError
                     autoComplete="off"
                     controller={ secondPasswordInput }
-                    label={ t('second_password_label') }
+                    label={ t.page.userSettings.second_password_label }
                     name={ Math.random().toString() }
-                    placeholder={ t('password_placeholder') }
+                    placeholder={ t.page.userSettings.password_placeholder }
                     type="password"
                 />
                 <Row fullWidth spaceBetween>
@@ -92,14 +92,14 @@ export const UserPasswordChangeForm: FC<UserPasswordChangeFormProps> = memo(func
                         onClick={ discard }
                         type="button"
                     >
-                        { t('discard_changes') }
+                        { t.page.userSettings.discard_changes }
                     </Button>
                     <ButtonWithLoading
                         disabled={ !form.canBeSubmitted }
                         loading={ form.pending }
                         type="submit"
                     >
-                        { t('apply_changes') }
+                        { t.page.userSettings.apply_changes }
                     </ButtonWithLoading>
                 </Row>
             </Col>

@@ -10,8 +10,8 @@ import {
 import {
     createFriendRequestEffect,
 } from '@/app/model/friends/friends.model.ts';
-import { useTranslation } from 'react-i18next';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type AddToFriendButtonProps =
@@ -22,13 +22,13 @@ export type AddToFriendButtonProps =
 
 export const AddToFriendButton: FC<AddToFriendButtonProps> = memo(function AddToFriendButton (props) {
     const { className, userId, ...other } = props;
-    const { t }                           = useTranslation([ 'friends-page' ]);
+    const { t }                           = useTranslation();
 
     return (
-        <PopOver popover={ t('add_to_friends') }>
+        <PopOver popover={ t.page.friends.add_to_friends }>
             <ButtonWithLoading
                 { ...other }
-                aria-label={ t('add_to_friends') }
+                aria-label={ t.page.friends.add_to_friends }
                 className={ className }
                 onClick={ () => createFriendRequestEffect(userId) }
                 quad

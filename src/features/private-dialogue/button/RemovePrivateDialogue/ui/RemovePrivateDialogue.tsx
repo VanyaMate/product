@@ -9,7 +9,7 @@ import {
     removePrivateDialogueEffect,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type RemovePrivateDialogueProps =
@@ -20,13 +20,13 @@ export type RemovePrivateDialogueProps =
 
 export const RemovePrivateDialogue: FC<RemovePrivateDialogueProps> = memo(function RemovePrivateDialogue (props) {
     const { className, dialogueId, ...other } = props;
-    const { t }                               = useTranslation([ 'dialogue' ]);
+    const { t }                               = useTranslation();
 
     return (
-        <PopOver popover={ t('remove_dialogue') }>
+        <PopOver popover={ t.page.dialogues.remove_dialogue }>
             <ButtonWithLoading
                 { ...other }
-                aria-label={ t('remove_dialogue') }
+                aria-label={ t.page.dialogues.remove_dialogue }
                 className={ className }
                 onClick={ () => removePrivateDialogueEffect(dialogueId) }
                 quad

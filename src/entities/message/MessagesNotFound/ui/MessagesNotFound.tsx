@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './MessagesNotFound.module.scss';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type MessagesNotFoundProps =
@@ -10,14 +10,14 @@ export type MessagesNotFoundProps =
 
 export const MessagesNotFound: FC<MessagesNotFoundProps> = memo(function MessagesNotFound (props) {
     const { className, ...other } = props;
-    const { t }                   = useTranslation([ 'dialogue' ]);
+    const { t }                   = useTranslation();
 
     return (
         <div
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            { t('search_messages_not_found') }
+            { t.page.dialogues.search_messages_not_found }
         </div>
     );
 });

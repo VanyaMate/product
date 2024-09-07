@@ -21,10 +21,10 @@ import {
     $privateDialogueWithUser,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
 import {
     getDialoguePageUrl,
 } from '@/features/routes/lib/getDialoguePageUrl.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type GoToPrivateDialogueProps =
@@ -39,14 +39,14 @@ export const GoToPrivateDialogue: FC<GoToPrivateDialogueProps> = memo(function G
     const friends                                      = useStore($friendsList);
     const dialogueWithUser                             = useStore($privateDialogueWithUser);
     const navigate                                     = useNavigate();
-    const { t }                                        = useTranslation([ 'dialogue' ]);
+    const { t }                                        = useTranslation();
 
     // if exist
     if (dialogueWithUser[userId]?.created) {
         return (
-            <PopOver popover={ t('open_dialogue') }>
+            <PopOver popover={ t.page.dialogues.open_dialogue }>
                 <Button
-                    aria-label={ t('open_dialogue') }
+                    aria-label={ t.page.dialogues.open_dialogue }
                     onClick={ () => navigate(getDialoguePageUrl(dialogueWithUser[userId].dialogueId)) }
                     quad
                     styleType={ ButtonStyleType.SECOND }
@@ -64,10 +64,10 @@ export const GoToPrivateDialogue: FC<GoToPrivateDialogueProps> = memo(function G
                                   : false;
 
     return (
-        <PopOver popover={ t('create_dialogue') }>
+        <PopOver popover={ t.page.dialogues.create_dialogue }>
             <ButtonWithLoading
                 { ...other }
-                aria-label={ t('create_dialogue') }
+                aria-label={ t.page.dialogues.create_dialogue }
                 className={ classNames(css.container, {}, [ className ]) }
                 disabled={ !isCreatableDialogue }
                 onClick={ () => createPrivateDialogueEffect(userId).then((dialogue) => navigate(getDialoguePageUrl(dialogue.dialogue.id))) }

@@ -12,11 +12,11 @@ import {
 } from '@/app/model/languages/languages.model.ts';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
 import {
     useDropdownController,
 } from '@/shared/ui-kit/modal/Dropdown/hooks/useDropdownController.ts';
 import { Dropdown } from '@/shared/ui-kit/modal/Dropdown/ui/Dropdown.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type RemoveLanguageWordButtonProps =
@@ -27,13 +27,13 @@ export type RemoveLanguageWordButtonProps =
 
 export const RemoveLanguageWordButton: FC<RemoveLanguageWordButtonProps> = memo(function RemoveLanguageWordButton (props) {
     const { wordId, ...other } = props;
-    const { t }                = useTranslation([ 'languages' ]);
+    const { t }                = useTranslation();
     const dropdownController   = useDropdownController();
 
     return (
-        <PopOver popover={ t('remove_word') }>
+        <PopOver popover={ t.page.languages.remove_word }>
             <Dropdown controller={ dropdownController } dropdownContent={
-                <PopOver popover={ t('remove_word') }>
+                <PopOver popover={ t.page.languages.remove_word }>
                     <ButtonWithLoading
                         { ...other }
                         onClick={ async () => removeLanguageWordEffect(wordId) }

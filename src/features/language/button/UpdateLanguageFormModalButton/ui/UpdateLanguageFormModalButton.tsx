@@ -13,7 +13,7 @@ import {
 import { DomainLanguage } from 'product-types/dist/language/DomainLanguage';
 import { IoSettings } from 'react-icons/io5';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UpdateLanguageFormModalButtonProps =
@@ -25,7 +25,7 @@ export type UpdateLanguageFormModalButtonProps =
 export const UpdateLanguageFormModalButton: FC<UpdateLanguageFormModalButtonProps> = memo(function UpdateLanguageFormModalButton (props) {
     const { language, ...other } = props;
     const modalController        = useModalController();
-    const { t }                  = useTranslation([ 'languages' ]);
+    const { t }                  = useTranslation();
 
     return (
         <>
@@ -35,7 +35,7 @@ export const UpdateLanguageFormModalButton: FC<UpdateLanguageFormModalButtonProp
                     onSubmitHandler={ () => modalController.setOpened(false) }
                 />
             </Modal>
-            <PopOver popover={ t('update_language') }>
+            <PopOver popover={ t.page.languages.update_language }>
                 <Button
                     { ...other }
                     onClick={ () => modalController.setOpened(true) }

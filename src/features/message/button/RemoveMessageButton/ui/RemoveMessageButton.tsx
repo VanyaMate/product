@@ -8,8 +8,8 @@ import { IoTrash } from 'react-icons/io5';
 import {
     removePrivateMessageEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
-import { useTranslation } from 'react-i18next';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type RemoveMessageButtonProps =
@@ -20,13 +20,13 @@ export type RemoveMessageButtonProps =
 
 export const RemoveMessageButton: FC<RemoveMessageButtonProps> = memo(function RemoveMessageButton (props) {
     const { messageId, ...other } = props;
-    const { t }                   = useTranslation([ 'dialogue' ]);
+    const { t }                   = useTranslation();
 
     return (
-        <PopOver popover={ t('remove_message') }>
+        <PopOver popover={ t.page.dialogues.remove_message }>
             <ButtonWithLoading
                 { ...other }
-                aria-label={ t('remove_message') }
+                aria-label={ t.page.dialogues.remove_message }
                 onClick={ () => removePrivateMessageEffect(messageId) }
                 quad
                 styleType={ ButtonStyleType.DANGER }

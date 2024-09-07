@@ -25,7 +25,7 @@ import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import {
     ControlDetails,
 } from '@/shared/ui-kit/details/ControlDetails/ui/ControlDetails.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type LanguageItemProps =
@@ -36,7 +36,7 @@ export type LanguageItemProps =
 
 export const LanguageItem: FC<LanguageItemProps> = memo(function LanguageItem (props) {
     const { language, ...other } = props;
-    const { t }                  = useTranslation([ 'languages' ]);
+    const { t }                  = useTranslation();
 
     return (
         <ControlDetails
@@ -67,7 +67,7 @@ export const LanguageItem: FC<LanguageItemProps> = memo(function LanguageItem (p
                             key={ folder.id }
                         />
                     ))
-                    : t('folders_not_exist')
+                    : t.page.languages.folders_not_exist
                 }
             </Col>
         </ControlDetails>

@@ -21,12 +21,12 @@ import {
     $privateMessagesIsPending,
     getPrivateMessagesByQueryEffect, resetPrivateMessagesSearchEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
-import { useTranslation } from 'react-i18next';
 import { useStore } from '@vanyamate/sec-react';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
 import { IoSearch } from 'react-icons/io5';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type PrivateDialogueWindowHeaderProps =
@@ -38,17 +38,19 @@ export type PrivateDialogueWindowHeaderProps =
 export const PrivateDialogueWindowHeader: FC<PrivateDialogueWindowHeaderProps> = memo(function PrivateDialogueWindowHeader (props) {
     const { className, dialogueId, children, ...other } = props;
     const messagesStatus                                = useStore($privateMessagesIsPending);
-    const { t }                                         = useTranslation([ 'dialogue' ]);
+    const { t }                                         = useTranslation();
     const search                                        = useInputWithError({
         name           : '',
         debounce       : 500,
         onChangeHandler: (query) => {
             query
-            ? getPrivateMessagesByQueryEffect([ dialogueId, {
-                query,
-                limit : 20,
-                offset: 0,
-            } ])
+            ? getPrivateMessagesByQueryEffect([
+                dialogueId, {
+                    query,
+                    limit : 20,
+                    offset: 0,
+                },
+            ])
             : resetPrivateMessagesSearchEffect(dialogueId);
         },
     });
@@ -75,7 +77,7 @@ export const PrivateDialogueWindowHeader: FC<PrivateDialogueWindowHeaderProps> =
                     </ButtonWithLoading>
                     <InputWithError
                         controller={ search }
-                        placeholder={ t(`search_message`) }
+                        placeholder={ t.page.dialogues.search_message }
                     />
                 </Row>
                 <Row>

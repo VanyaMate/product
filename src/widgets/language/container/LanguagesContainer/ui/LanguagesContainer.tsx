@@ -25,7 +25,6 @@ import {
 import {
     LanguageWordItem,
 } from '@/widgets/language/items/LanguageWordItem/ui/LanguageWordItem.tsx';
-import { useTranslation } from 'react-i18next';
 import {
     CreateLanguageWordForm,
 } from '@/widgets/language/form/CreateLanguageWordForm/ui/CreateLanguageWordForm.tsx';
@@ -36,9 +35,8 @@ import { Dropdown } from '@/shared/ui-kit/modal/Dropdown/ui/Dropdown.tsx';
 import {
     useDropdownController,
 } from '@/shared/ui-kit/modal/Dropdown/hooks/useDropdownController.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
-// TODO: TEmp
-/* eslint-disable */
 
 export type LanguagesContainerProps =
     {
@@ -52,13 +50,14 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
     const selectedFolderId                = useStore($currentFolderId);
     const words                           = useStore($languageFolderWordsList);
     const [ revert, setRevert ]           = useState<boolean>(false);
-    const { t }                           = useTranslation([ 'languages', 'buttons' ]);
+    const { t, replace }                  = useTranslation();
     const dropdownController              = useDropdownController();
 
     useLayoutEffect(() => {
         // Tempo
+        console.log('loading for ->', userId);
         getMyLanguagesEffect();
-    }, []);
+    }, [ userId ]);
 
     return (
         <section
@@ -66,7 +65,7 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
             className={ classNames(css.container, {}, [ className ]) }
         >
             <Row>
-                <h2>{ t('language_page_title') }</h2>
+                <h2>{ t.page.languages.language_page_title }</h2>
                 <CreateLanguageFormModalButton/>
             </Row>
             <Row className={ css.content }>
@@ -75,30 +74,30 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
                         languages.length
                         ? languages.map((language) => (
                             <LanguageItem
-                                open
                                 key={ language.id }
                                 language={ language }
+                                open
                             />
                         ))
-                        : t('languages_not_exist')
+                        : t.page.languages.languages_not_exist
                     }
                 </Col>
                 <Col className={ css.words }>
                     {
                         selectedFolderId === ''
-                        ? t('no_folder_selected')
+                        ? t.page.languages.no_folder_selected
                         : (
                             <>
                                 <CreateLanguageWordForm
-                                    folderId={ selectedFolderId }
                                     className={ css.form }
+                                    folderId={ selectedFolderId }
                                 />
-                                <Row spaceBetween fullWidth>
+                                <Row fullWidth spaceBetween>
                                     <span>
                                         {
-                                            t('words_checked', {
-                                                remember: words.reduce((acc, item) => acc + Number(item.checked), 0),
-                                                all     : words.length,
+                                            replace(t.page.languages.words_checked, {
+                                                remember: words.reduce((acc, item) => acc + Number(item.checked), 0).toString(),
+                                                all     : words.length.toString(),
                                             })
                                         }
                                     </span>
@@ -114,7 +113,7 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
                                                         : ButtonStyleType.PRIMARY
                                                     }
                                                 >
-                                                    { t('order_new_to_old', { ns: 'buttons' }) }
+                                                    { t.buttons.order_new_to_old }
                                                 </Button>
                                                 <Button
                                                     onClick={ () => setRevert(true) }
@@ -124,14 +123,14 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
                                                         : ButtonStyleType.GHOST
                                                     }
                                                 >
-                                                    { t('order_old_to_new', { ns: 'buttons' }) }
+                                                    { t.buttons.order_old_to_new }
                                                 </Button>
                                             </Col>
                                         }
                                     >
                                         <Button
-                                            styleType={ ButtonStyleType.GHOST }
                                             quad
+                                            styleType={ ButtonStyleType.GHOST }
                                         >
                                             {
                                                 dropdownController.opened
@@ -151,7 +150,7 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
                                                 word={ word }
                                             />
                                         ))
-                                        : t('words_not_exits')
+                                        : t.page.languages.words_not_exits
                                     }
                                 </Col>
                             </>

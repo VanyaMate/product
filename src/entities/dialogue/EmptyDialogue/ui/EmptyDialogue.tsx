@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './EmptyDialogue.module.scss';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type EmptyDialogueProps =
@@ -10,14 +10,14 @@ export type EmptyDialogueProps =
 
 export const EmptyDialogue: FC<EmptyDialogueProps> = memo(function EmptyDialogue (props) {
     const { className, ...other } = props;
-    const { t }                   = useTranslation([ 'dialogue' ]);
+    const { t }                   = useTranslation();
 
     return (
         <div
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            { t('empty_dialogue') }
+            { t.page.dialogues.empty_dialogue }
         </div>
     );
 });

@@ -10,11 +10,11 @@ import { IoCheckmark, IoTrash } from 'react-icons/io5';
 import { removeLanguageEffect } from '@/app/model/languages/languages.model.ts';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
 import { Dropdown } from '@/shared/ui-kit/modal/Dropdown/ui/Dropdown.tsx';
 import {
     useDropdownController,
 } from '@/shared/ui-kit/modal/Dropdown/hooks/useDropdownController.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type RemoveLanguageButtonProps =
@@ -25,13 +25,13 @@ export type RemoveLanguageButtonProps =
 
 export const RemoveLanguageButton: FC<RemoveLanguageButtonProps> = memo(function RemoveLanguageButton (props) {
     const { languageId, ...other } = props;
-    const { t }                    = useTranslation([ 'languages' ]);
+    const { t }                    = useTranslation();
     const dropdownController       = useDropdownController();
 
     return (
-        <PopOver popover={ t('remove_language') }>
+        <PopOver popover={ t.page.languages.remove_language }>
             <Dropdown controller={ dropdownController } dropdownContent={
-                <PopOver popover={ t('remove_language') }>
+                <PopOver popover={ t.page.languages.remove_language }>
                     <ButtonWithLoading
                         { ...other }
                         onClick={ async () => removeLanguageEffect(languageId) }

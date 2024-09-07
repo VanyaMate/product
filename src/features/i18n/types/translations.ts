@@ -20,7 +20,9 @@ export type Translation = {
 
 export type TranslationButtons = {
     order_new_to_old: string,
-    order_old_to_new: string
+    order_old_to_new: string,
+    accept: string,
+    cancel: string
 }
 
 export type TranslationMainApp = {

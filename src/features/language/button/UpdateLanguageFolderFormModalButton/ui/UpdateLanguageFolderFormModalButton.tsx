@@ -15,7 +15,7 @@ import {
 import {
     UpdateLanguageFolderForm,
 } from '@/widgets/language/form/UpdateLanguageFolderForm/ui/UpdateLanguageFolderForm.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UpdateLanguageFolderFormModalButtonProps =
@@ -27,7 +27,7 @@ export type UpdateLanguageFolderFormModalButtonProps =
 export const UpdateLanguageFolderFormModalButton: FC<UpdateLanguageFolderFormModalButtonProps> = memo(function UpdateLanguageFolderFormModalButton (props) {
     const { folder, ...other } = props;
     const modalController      = useModalController();
-    const { t }                = useTranslation([ 'languages' ]);
+    const { t }                = useTranslation();
 
     return (
         <>
@@ -37,9 +37,10 @@ export const UpdateLanguageFolderFormModalButton: FC<UpdateLanguageFolderFormMod
                     onSubmitHandler={ () => modalController.setOpened(false) }
                 />
             </Modal>
-            <PopOver popover={ t('update_folder') }>
+            <PopOver popover={ t.page.languages.update_folder }>
                 <Button
                     { ...other }
+                    aria-label={ t.page.languages.update_folder }
                     onClick={ () => modalController.setOpened(true) }
                     quad
                 >

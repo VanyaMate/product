@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './UserSettingsNoSetBackground.module.scss';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UserSettingsNoSetBackgroundProps =
@@ -10,12 +10,12 @@ export type UserSettingsNoSetBackgroundProps =
 
 export const UserSettingsNoSetBackground: FC<UserSettingsNoSetBackgroundProps> = memo(function UserSettingsNoSetBackground (props) {
     const { className, ...other } = props;
-    const { t }                   = useTranslation([ 'user-settings' ]);
+    const { t }                   = useTranslation();
 
     return (
         <div { ...other }
              className={ classNames(css.container, {}, [ className ]) }>
-            { t('no_background') }
+            { t.page.userSettings.no_background }
         </div>
     );
 });

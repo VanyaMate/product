@@ -1,4 +1,6 @@
 {
     "order_new_to_old": "Сначала новые",
-    "order_old_to_new": "Сначала старые"
+    "order_old_to_new": "Сначала старые",
+    "cancel": "Отменить",
+    "accept": "Принять"
 }

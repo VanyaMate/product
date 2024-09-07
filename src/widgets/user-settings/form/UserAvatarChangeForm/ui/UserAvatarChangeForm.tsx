@@ -27,8 +27,8 @@ import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
-import { useTranslation } from 'react-i18next';
 import { userAvatarUpdateEffect } from '@/app/model/auth/auth.model.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UserAvatarChangeFormProps =
@@ -41,7 +41,7 @@ export type UserAvatarChangeFormProps =
 export const UserAvatarChangeForm: FC<UserAvatarChangeFormProps> = memo(function UserAvatarChangeForm (props) {
     const { avatar, login, className, ...other } = props;
     const [ currentAvatar, setCurrentAvatar ]    = useState<string>(avatar);
-    const { t }                                  = useTranslation([ 'user-settings' ]);
+    const { t }                                  = useTranslation();
     const avatarInput                            = useInputWithError({
         name            : 'avatar',
         validationMethod: (value) => value.length ? imageUrlValidator(value)
@@ -67,8 +67,8 @@ export const UserAvatarChangeForm: FC<UserAvatarChangeFormProps> = memo(function
                     autoComplete="off"
                     controller={ avatarInput }
                     defaultValue={ avatar }
-                    label={ t('link_to_avatar') }
-                    placeholder={ t('insert_link_to_avatar') }
+                    label={ t.page.userSettings.link_to_avatar }
+                    placeholder={ t.page.userSettings.insert_link_to_avatar }
                 />
                 <Row className={ css.avatarImagesCol }>
                     <UserAvatar
@@ -97,18 +97,20 @@ export const UserAvatarChangeForm: FC<UserAvatarChangeFormProps> = memo(function
                 </Row>
                 <Row fullWidth spaceBetween>
                     <Button
+                        aria-label={ t.page.userSettings.discard_changes }
                         disabled={ currentAvatar === avatar }
                         onClick={ discardChanges }
                         styleType={ ButtonStyleType.GHOST }
                     >
-                        { t('discard_changes') }
+                        { t.page.userSettings.discard_changes }
                     </Button>
                     <ButtonWithLoading
+                        aria-label={ t.page.userSettings.apply_changes }
                         disabled={ currentAvatar === avatar }
                         loading={ form.pending }
                         type="submit"
                     >
-                        { t('apply_changes') }
+                        { t.page.userSettings.apply_changes }
                     </ButtonWithLoading>
                 </Row>
             </Col>

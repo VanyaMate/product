@@ -7,7 +7,6 @@ import {
 } from 'react';
 import classNames from 'classnames';
 import css from './UserProfileBackgroundChangeForm.module.scss';
-import { useTranslation } from 'react-i18next';
 import {
     useInputWithError,
 } from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
@@ -34,6 +33,7 @@ import {
 import {
     ImageBackground,
 } from '@/shared/ui-kit/image/ImageBackground/ui/ImageBackground.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UserProfileBackgroundChangeFormProps =
@@ -44,7 +44,7 @@ export type UserProfileBackgroundChangeFormProps =
 
 export const UserProfileBackgroundChangeForm: FC<UserProfileBackgroundChangeFormProps> = memo(function UserProfileBackgroundChangeForm (props) {
     const { background, className, ...other }         = props;
-    const { t }                                       = useTranslation([ 'user-settings' ]);
+    const { t }                                       = useTranslation();
     const [ currentBackground, setCurrentBackground ] = useState<string>(background ?? '');
     const backgroundInput                             = useInputWithError({
         name            : 'background',
@@ -76,8 +76,8 @@ export const UserProfileBackgroundChangeForm: FC<UserProfileBackgroundChangeForm
                     controller={ backgroundInput }
                     defaultValue={ currentBackground }
                     key="input"
-                    label={ t('background_label') }
-                    placeholder={ t('background_placeholder') }
+                    label={ t.page.userSettings.background_label }
+                    placeholder={ t.page.userSettings.background_placeholder }
                 />
                 {
                     currentBackground === ''
@@ -98,14 +98,14 @@ export const UserProfileBackgroundChangeForm: FC<UserProfileBackgroundChangeForm
                         onClick={ discardChanges }
                         type="button"
                     >
-                        { t('discard_changes') }
+                        { t.page.userSettings.discard_changes }
                     </Button>
                     <ButtonWithLoading
                         disabled={ (currentBackground === background) || !form.canBeSubmitted }
                         loading={ form.pending }
                         type="submit"
                     >
-                        { t('apply_changes') }
+                        { t.page.userSettings.apply_changes }
                     </ButtonWithLoading>
                 </Row>
             </Col>

@@ -19,7 +19,7 @@ import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import { IoCreate } from 'react-icons/io5';
 import { lengthValidator } from '@/app/validation/string/length.validator.ts';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type CreateLanguageFolderFormProps =
@@ -52,7 +52,7 @@ export const CreateLanguageFolderForm: FC<CreateLanguageFolderFormProps> = memo(
             .catch(onErrorHandler)
             .finally(onFinallyHandler),
     });
-    const { t }                = useTranslation([ 'languages' ]);
+    const { t }                = useTranslation();
 
     const clearForm = useCallback(() => {
         titleInputController.value.current          = '';
@@ -67,7 +67,7 @@ export const CreateLanguageFolderForm: FC<CreateLanguageFolderFormProps> = memo(
         >
             <InputWithError
                 controller={ titleInputController }
-                placeholder={ t('folder_title') }
+                placeholder={ t.page.languages.folder_title }
             />
             <ButtonWithLoading
                 disabled={ !formController.canBeSubmitted }
@@ -77,7 +77,7 @@ export const CreateLanguageFolderForm: FC<CreateLanguageFolderFormProps> = memo(
             >
                 <Row>
                     <IoCreate/>
-                    <span>{ t('add_item') }</span>
+                    <span>{ t.page.languages.add_folder }</span>
                 </Row>
             </ButtonWithLoading>
         </Form>

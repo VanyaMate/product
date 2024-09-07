@@ -15,7 +15,7 @@ import { IoSettings } from 'react-icons/io5';
 import {
     UpdateLanguageWordForm,
 } from '@/widgets/language/form/UpdateLanguageWordForm/ui/UpdateLanguageWordForm.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type UpdateLanguageWordFormModalButtonProps =
@@ -27,7 +27,7 @@ export type UpdateLanguageWordFormModalButtonProps =
 export const UpdateLanguageWordFormModalButton: FC<UpdateLanguageWordFormModalButtonProps> = memo(function UpdateLanguageWordFormModalButton (props) {
     const { word, ...other } = props;
     const modalController    = useModalController();
-    const { t }              = useTranslation([ 'languages' ]);
+    const { t }              = useTranslation();
 
     return (
         <>
@@ -37,7 +37,7 @@ export const UpdateLanguageWordFormModalButton: FC<UpdateLanguageWordFormModalBu
                     word={ word }
                 />
             </Modal>
-            <PopOver popover={ t('update_word') }>
+            <PopOver popover={ t.page.languages.update_word }>
                 <Button
                     { ...other }
                     onClick={ () => modalController.setOpened(true) }

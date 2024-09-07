@@ -1,8 +1,8 @@
 import { FC, memo } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 import css from './UserProfileLink.module.scss';
-import { useTranslation } from 'react-i18next';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type ToUserPageLinkProps =
@@ -13,15 +13,15 @@ export type ToUserPageLinkProps =
 
 export const UserProfileLink: FC<ToUserPageLinkProps> = memo(function UserProfileLink (props) {
     const { login, to, ...other } = props;
-    const { t }                   = useTranslation([ 'translation' ]);
+    const { t, replace }          = useTranslation();
 
     return (
         <div { ...other } className={ css.container }>
             <AiOutlineUser/>
-            <Link aria-label={ t('go_to_user_page_of', {
-                ns: 'translation',
-                login,
-            }) } to={ to }>
+            <Link
+                aria-label={ replace(t.app.go_to_user_page_of, { login }) }
+                to={ to }
+            >
                 { login }
             </Link>
         </div>

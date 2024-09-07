@@ -21,13 +21,13 @@ import { IoSend } from 'react-icons/io5';
 import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
 import { Form } from '@/shared/ui-kit/forms/Form/ui/Form.tsx';
 import { ButtonSizeType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
-import { useTranslation } from 'react-i18next';
 import {
     getMessageTypeByBody,
 } from '@/entities/message/lib/getMessageTypeByBody.ts';
 import {
     sendPrivateMessageEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type PrivateDialogueWindowInputProps =
@@ -38,17 +38,19 @@ export type PrivateDialogueWindowInputProps =
 
 export const PrivateDialogueWindowInput: FC<PrivateDialogueWindowInputProps> = memo(function PrivateDialogueWindowInput (props) {
     const { className, dialogueId, ...other } = props;
-    const { t }                               = useTranslation([ 'dialogue' ]);
+    const { t }                               = useTranslation();
     const inputController                     = useInputWithError({ name: 'message' });
     const form                                = useForm<{ message: string }>({
         inputs  : [ inputController ],
         onSubmit: (data) => {
             if (data.message) {
                 resetInput();
-                return sendPrivateMessageEffect([ dialogueId, {
-                    message    : data.message,
-                    messageType: getMessageTypeByBody(data.message),
-                } ]).then();
+                return sendPrivateMessageEffect([
+                    dialogueId, {
+                        message    : data.message,
+                        messageType: getMessageTypeByBody(data.message),
+                    },
+                ]).then();
             }
             return Promise.resolve();
         },
@@ -75,7 +77,7 @@ export const PrivateDialogueWindowInput: FC<PrivateDialogueWindowInputProps> = m
                         className={ css.input }
                         containerClassName={ css.inputContainer }
                         controller={ inputController }
-                        placeholder={ t('write_message') }
+                        placeholder={ t.page.dialogues.write_message }
                     />
                     <ButtonWithLoading
                         loading={ form.pending }

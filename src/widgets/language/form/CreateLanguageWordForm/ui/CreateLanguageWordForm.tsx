@@ -19,7 +19,7 @@ import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import { IoCreate } from 'react-icons/io5';
 import { lengthValidator } from '@/app/validation/string/length.validator.ts';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type CreateLanguageWordFormProps =
@@ -67,7 +67,7 @@ export const CreateLanguageWordForm: FC<CreateLanguageWordFormProps> = memo(func
             .catch(onErrorHandler)
             .finally(onFinallyHandler),
     });
-    const { t }                       = useTranslation([ 'languages' ]);
+    const { t }                       = useTranslation();
 
     const clearForm = useCallback(() => {
         originalInputController.value.current              = '';
@@ -85,11 +85,11 @@ export const CreateLanguageWordForm: FC<CreateLanguageWordFormProps> = memo(func
             controller={ formController }
         >
             <InputWithError controller={ originalInputController }
-                            placeholder={ t('word_original') }/>
+                            placeholder={ t.page.languages.word_original }/>
             <InputWithError controller={ translationsInputController }
-                            placeholder={ t('word_translations') }/>
+                            placeholder={ t.page.languages.word_translations }/>
             <InputWithError controller={ noticeInputController }
-                            placeholder={ t('word_notice') }/>
+                            placeholder={ t.page.languages.word_notice }/>
             <ButtonWithLoading
                 disabled={ !formController.canBeSubmitted }
                 loading={ formController.pending }
@@ -98,7 +98,7 @@ export const CreateLanguageWordForm: FC<CreateLanguageWordFormProps> = memo(func
             >
                 <Row>
                     <IoCreate/>
-                    <span>{ t('add_item') }</span>
+                    <span>{ t.page.languages.add_word }</span>
                 </Row>
             </ButtonWithLoading>
         </Form>

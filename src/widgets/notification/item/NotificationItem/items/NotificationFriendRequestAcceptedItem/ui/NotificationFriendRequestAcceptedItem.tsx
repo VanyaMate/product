@@ -8,11 +8,21 @@ import {
 import {
     NotificationUnknownItem,
 } from '@/widgets/notification/item/NotificationItem/items/NotificationUnknownItem/ui/NotificationUnknownItem.tsx';
-import { useTranslation } from 'react-i18next';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import {
-    isDomainNotificationFriendRequestAcceptedData
+    assertDomainNotificationFriendRequestAcceptedData,
+    isDomainNotificationFriendRequestAcceptedData,
 } from 'product-types/dist/notification/notification-data-types/friend/DomainNotificationFriendRequestAcceptedData';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import {
+    TranslationNotificationTitle,
+} from '@/features/i18n/types/translations.ts';
+import { getRouteUrl } from '@/app/routes/lib/getRouteUrl.ts';
+import {
+    SITE_ROUTE_PARAM_USER_LOGIN,
+    SiteAppRoute,
+    SiteAppRoutePath,
+} from '@/app/routes/main-site/config/routes.tsx';
 
 
 export type NotificationFriendRequestAcceptedItemProps =
@@ -23,18 +33,34 @@ export type NotificationFriendRequestAcceptedItemProps =
 
 export const NotificationFriendRequestAcceptedItem: FC<NotificationFriendRequestAcceptedItemProps> = memo(function NotificationFriendRequestAcceptedItem (props) {
     const { className, notification, ...other } = props;
-    const { t }                                 = useTranslation([ 'site-app', 'notification-messages', 'translation' ]);
-    const ariaLabel: string                     = useMemo(() =>
-        isDomainNotificationFriendRequestAcceptedData(notification.data)
-        ? t(notification.type, { ns: 'notification-messages' }) + '.' + t('go_to_user_page_of', {
-            ns   : 'translation',
-            login: notification.data.user.login,
-        })
-        : '', [ notification.data, notification.type, t ]);
+    const { t, replace }                        = useTranslation();
+    const ariaLabel: string                     = useMemo(() => {
+        try {
+            assertDomainNotificationFriendRequestAcceptedData(notification.data, '', '');
+            const notificationTitle = t.notifications.title[notification.type as keyof TranslationNotificationTitle];
+
+            if (notificationTitle) {
+                const goToUserPageLabel = replace(t.app.go_to_user_page_of, {
+                    login: notification.data.user.login,
+                });
+
+                return `${ notificationTitle } ${ goToUserPageLabel }`;
+            }
+
+            return '';
+        } catch (_) {
+            return '';
+        }
+    }, [ notification.data, notification.type, replace, t.app.go_to_user_page_of, t.notifications.title ]);
     const linkTo: string                        = useMemo(() =>
-        isDomainNotificationFriendRequestAcceptedData(notification.data)
-        ? `/user/${ notification.data.user.login }`
-        : '#', [ notification.data ]);
+            isDomainNotificationFriendRequestAcceptedData(notification.data)
+            ? getRouteUrl(
+                SiteAppRoutePath[SiteAppRoute.USER],
+                { [SITE_ROUTE_PARAM_USER_LOGIN]: notification.data.user.login },
+            )
+            : '#',
+        [ notification.data ],
+    );
 
     if (isDomainNotificationFriendRequestAcceptedData(notification.data)) {
         return (

@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './NoMoreDialogues.module.scss';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type NoMoreDialoguesProps =
@@ -10,12 +10,12 @@ export type NoMoreDialoguesProps =
 
 export const NoMoreDialogues: FC<NoMoreDialoguesProps> = memo(function NoMoreDialogues (props) {
     const { className, ...other } = props;
-    const { t }                   = useTranslation([ 'dialogue' ]);
+    const { t }                   = useTranslation();
 
     return (
         <div { ...other }
              className={ classNames(css.container, {}, [ className ]) }>
-            { t('no_more_dialogues') }
+            { t.page.dialogues.no_more_dialogues }
         </div>
     );
 });

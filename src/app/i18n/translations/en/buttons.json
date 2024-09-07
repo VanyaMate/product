@@ -1,4 +1,6 @@
 {
     "order_new_to_old": "New ones first",
-    "order_old_to_new": "Old ones first"
+    "order_old_to_new": "Old ones first",
+    "cancel": "Cancel",
+    "accept": "Accept"
 }

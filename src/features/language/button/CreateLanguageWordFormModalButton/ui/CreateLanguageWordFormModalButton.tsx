@@ -13,7 +13,7 @@ import {
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type CreateLanguageWordFormModalButtonProps =
@@ -25,7 +25,7 @@ export type CreateLanguageWordFormModalButtonProps =
 export const CreateLanguageWordFormModalButton: FC<CreateLanguageWordFormModalButtonProps> = memo(function CreateLanguageWordFormModalButton (props) {
     const { folderId, ...other } = props;
     const modalController        = useModalController();
-    const { t }                  = useTranslation([ 'languages' ]);
+    const { t }                  = useTranslation();
 
     return (
         <>
@@ -35,7 +35,7 @@ export const CreateLanguageWordFormModalButton: FC<CreateLanguageWordFormModalBu
                     onSubmitHandler={ () => modalController.setOpened(false) }
                 />
             </Modal>
-            <PopOver popover={ t('add_word') }>
+            <PopOver popover={ t.page.languages.add_word }>
                 <Button
                     { ...other }
                     onClick={ () => modalController.setOpened(true) }

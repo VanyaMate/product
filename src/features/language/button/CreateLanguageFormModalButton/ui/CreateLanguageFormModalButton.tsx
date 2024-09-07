@@ -12,7 +12,7 @@ import {
     useModalController,
 } from '@/shared/ui-kit/modal/Modal/hooks/useModalController.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type CreateLanguageFormModalButtonProps =
@@ -22,7 +22,7 @@ export type CreateLanguageFormModalButtonProps =
 export const CreateLanguageFormModalButton: FC<CreateLanguageFormModalButtonProps> = memo(function CreateLanguageFormModalButton (props) {
     const { ...other }    = props;
     const modalController = useModalController();
-    const { t }           = useTranslation([ 'languages' ]);
+    const { t }           = useTranslation();
 
     return (
         <>
@@ -31,7 +31,7 @@ export const CreateLanguageFormModalButton: FC<CreateLanguageFormModalButtonProp
                     onSubmitHandler={ () => modalController.setOpened(false) }
                 />
             </Modal>
-            <PopOver popover={ t('add_language') }>
+            <PopOver popover={ t.page.languages.add_language }>
                 <Button
                     { ...other }
                     onClick={ () => modalController.setOpened(true) }

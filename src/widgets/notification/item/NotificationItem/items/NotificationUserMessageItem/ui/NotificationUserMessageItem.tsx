@@ -2,7 +2,6 @@ import { ComponentPropsWithoutRef, FC, memo, useMemo } from 'react';
 import {
     DomainNotification,
 } from 'product-types/dist/notification/DomainNotification';
-import { useTranslation } from 'react-i18next';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import {
     NotificationDefaultLayout,
@@ -13,8 +12,18 @@ import {
 } from '@/widgets/notification/item/NotificationItem/layouts/NotificationLinkLayout/ui/NotificationLinkLayout.tsx';
 import css from './NotificationUserMessageItem.module.scss';
 import {
-    isDomainNotificationUserMessageData
+    isDomainNotificationUserMessageData,
 } from 'product-types/dist/notification/notification-data-types/message/DomainNotificationUserMessageData';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import {
+    TranslationNotificationsMessage,
+} from '@/features/i18n/types/translations.ts';
+import { getRouteUrl } from '@/app/routes/lib/getRouteUrl.ts';
+import {
+    SITE_ROUTE_PARAM_DIALOGUE_ID, SITE_ROUTE_PARAM_USER_LOGIN,
+    SiteAppRoute,
+    SiteAppRoutePath,
+} from '@/app/routes/main-site/config/routes.tsx';
 
 
 export type NotificationUserMessageItemProps =
@@ -25,21 +34,26 @@ export type NotificationUserMessageItemProps =
 
 export const NotificationUserMessageItem: FC<NotificationUserMessageItemProps> = memo(function NotificationUserMessageItem (props) {
     const { className, notification, ...other } = props;
-    const { t }                                 = useTranslation([ 'site-app', 'notification-links', 'translation' ]);
+    const { t, replace }                        = useTranslation();
     const linkOnMessageAriaLabel                = useMemo(() => {
         if (isDomainNotificationUserMessageData(notification.data)) {
-            return t(notification.type, {
-                ns           : 'notification-links',
-                user_login   : notification.data.message.author.login,
-                dialogue_name: notification.data.dialogue.title,
-                message      : notification.data.message.message,
-            });
+            const message = t.notifications.message[notification.type as keyof TranslationNotificationsMessage];
+            if (message) {
+                return replace(message, {
+                    user_login   : notification.data.message.author.login,
+                    dialogue_name: notification.data.dialogue.title,
+                    message      : notification.data.message.message,
+                });
+            }
+            return '';
         }
         return '';
-    }, [ notification.data, notification.type, t ]);
+    }, [ notification.data, notification.type, replace, t.notifications.message ]);
     const linkToMessage                         = useMemo(() => {
         if (isDomainNotificationUserMessageData(notification.data)) {
-            return `/dialogue/${ notification.data.dialogue.id }#${ notification.data.message.id }`;
+            return getRouteUrl(SiteAppRoutePath[SiteAppRoute.DIALOGUES], {
+                [SITE_ROUTE_PARAM_DIALOGUE_ID]: notification.data.dialogue.id,
+            }) + `#${ notification.data.message.id }`;
         }
         return '#';
     }, [ notification.data ]);
@@ -56,21 +70,31 @@ export const NotificationUserMessageItem: FC<NotificationUserMessageItemProps> =
                 outside={
                     <div className={ css.container }>
                         <Link
-                            aria-label={ t('go_to_user_page_of', {
-                                ns   : 'translation',
-                                login: notification.data.message.author.login,
-                            }) }
-                            to={ `/user/${ notification.data.message.author.login }` }
+                            aria-label={
+                                replace(t.app.go_to_user_page_of, {
+                                    login: notification.data.message.author.login,
+                                })
+                            }
+                            to={
+                                getRouteUrl(SiteAppRoutePath[SiteAppRoute.USER], {
+                                    [SITE_ROUTE_PARAM_USER_LOGIN]: notification.data.message.author.login,
+                                })
+                            }
                         >
                             { notification.data.message.author.login }
                         </Link>
                         <IoArrowForward/>
                         <Link
-                            aria-label={ t('dialogue_page', {
-                                ns   : 'site-app',
-                                login: notification.data.dialogue.title,
-                            }) }
-                            to={ `/dialogue/${ notification.data.dialogue.id }` }
+                            aria-label={
+                                replace(t.app.dialogue_page, {
+                                    login: notification.data.dialogue.title,
+                                })
+                            }
+                            to={
+                                getRouteUrl(SiteAppRoutePath[SiteAppRoute.DIALOGUES], {
+                                    [SITE_ROUTE_PARAM_DIALOGUE_ID]: notification.data.dialogue.id,
+                                })
+                            }
                         >
                             { notification.data.dialogue.title }
                         </Link>

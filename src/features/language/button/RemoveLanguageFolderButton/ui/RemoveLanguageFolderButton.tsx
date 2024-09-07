@@ -12,11 +12,11 @@ import {
     removeLanguageFolderEffect,
 } from '@/app/model/languages/languages.model.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
 import {
     useDropdownController,
 } from '@/shared/ui-kit/modal/Dropdown/hooks/useDropdownController.ts';
 import { Dropdown } from '@/shared/ui-kit/modal/Dropdown/ui/Dropdown.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type RemoveLanguageFolderButtonProps =
@@ -27,13 +27,13 @@ export type RemoveLanguageFolderButtonProps =
 
 export const RemoveLanguageFolderButton: FC<RemoveLanguageFolderButtonProps> = memo(function RemoveLanguageFolderButton (props) {
     const { folderId, ...other } = props;
-    const { t }                  = useTranslation([ 'languages' ]);
+    const { t }                  = useTranslation();
     const dropdownController     = useDropdownController();
 
     return (
-        <PopOver popover={ t('remove_folder') }>
+        <PopOver popover={ t.page.languages.remove_folder }>
             <Dropdown controller={ dropdownController } dropdownContent={
-                <PopOver popover={ t('remove_folder') }>
+                <PopOver popover={ t.page.languages.remove_folder }>
                     <ButtonWithLoading
                         { ...other }
                         onClick={ async () => removeLanguageFolderEffect(folderId) }

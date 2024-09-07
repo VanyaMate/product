@@ -1,7 +1,8 @@
 import {
     userAuthPasswordValidator,
 } from '@/app/validation/user/password.validators.ts';
-import i18n from 'i18next';
+import { translations } from '@/features/i18n/config/translations.ts';
+import { getCurrentLanguage } from '@/features/i18n/lib/getCurrentLanguage.ts';
 
 
 export const passwordEqualValidator = function (firstPassword: string, secondPassword: string) {
@@ -12,7 +13,7 @@ export const passwordEqualValidator = function (firstPassword: string, secondPas
 
     if (secondPassword.length) {
         if (firstPassword !== secondPassword) {
-            return i18n.t('no_equal_password', { ns: 'validation-messages' });
+            return translations[getCurrentLanguage()].validation.no_equal_password;
         }
     }
 

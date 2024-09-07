@@ -12,7 +12,7 @@ import {
     CreateLanguageFolderForm,
 } from '@/widgets/language/form/CreateLanguageFolderForm/ui/CreateLanguageFolderForm.tsx';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type CreateLanguageFolderFormModalButtonProps =
@@ -24,7 +24,7 @@ export type CreateLanguageFolderFormModalButtonProps =
 export const CreateLanguageFolderFormModalButton: FC<CreateLanguageFolderFormModalButtonProps> = memo(function CreateLanguageFolderFormModalButton (props) {
     const { languageId, ...other } = props;
     const modalController          = useModalController();
-    const { t }                    = useTranslation([ 'languages' ]);
+    const { t }                    = useTranslation();
 
     return (
         <>
@@ -34,7 +34,7 @@ export const CreateLanguageFolderFormModalButton: FC<CreateLanguageFolderFormMod
                     onSubmitHandler={ () => modalController.setOpened(false) }
                 />
             </Modal>
-            <PopOver popover={ t('add_folder') }>
+            <PopOver popover={ t.page.languages.add_language }>
                 <Button
                     { ...other }
                     onClick={ () => modalController.setOpened(true) }

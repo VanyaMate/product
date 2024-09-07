@@ -25,7 +25,7 @@ import {
     updateLanguageWordEffect,
 } from '@/app/model/languages/languages.model.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type LanguageWordItemProps =
@@ -36,7 +36,7 @@ export type LanguageWordItemProps =
 
 export const LanguageWordItem: FC<LanguageWordItemProps> = memo(function LanguageWordItem (props) {
     const { word, className, ...other } = props;
-    const { t }                         = useTranslation([ 'languages' ]);
+    const { t }                         = useTranslation();
 
     return (
         <ControlDetails
@@ -45,9 +45,13 @@ export const LanguageWordItem: FC<LanguageWordItemProps> = memo(function Languag
             titleChildren={
                 <Row fullWidth spaceBetween>
                     <Row>
-                        <PopOver popover={
-                            word.checked ? t('uncheck_word') : t('check_word')
-                        }>
+                        <PopOver
+                            popover={
+                                word.checked
+                                ? t.page.languages.uncheck_word
+                                : t.page.languages.check_word
+                            }
+                        >
                             <ButtonWithLoading
                                 onClick={ () => updateLanguageWordEffect(word.id, { checked: !word.checked }) }
                                 styleType={

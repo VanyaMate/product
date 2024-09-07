@@ -7,7 +7,7 @@ import {
 import { removePostEffect } from '@/app/model/posts/posts.model.ts';
 import { IoTrash } from 'react-icons/io5';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type RemovePostButtonProps =
@@ -18,14 +18,14 @@ export type RemovePostButtonProps =
 
 export const RemovePostButton: FC<RemovePostButtonProps> = memo(function RemovePostButton (props) {
     const { postId, ...other } = props;
-    const { t }                = useTranslation([ 'posts' ]);
+    const { t }                = useTranslation();
 
     return (
-        <PopOver popover={ t('delete_post') }>
+        <PopOver popover={ t.page.posts.delete_post }>
             <ButtonWithLoading
                 { ...other }
-                aria-label={ t('delete_post') }
-                onClick={ async () => removePostEffect(postId) }
+                aria-label={ t.page.posts.delete_post }
+                onClick={ () => removePostEffect(postId) }
                 quad
                 styleType={ ButtonStyleType.DANGER }
             >

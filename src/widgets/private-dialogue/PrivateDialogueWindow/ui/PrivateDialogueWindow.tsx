@@ -19,11 +19,11 @@ import { useStore } from '@vanyamate/sec-react';
 import {
     $privateDialoguesStatus,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
-import { useTranslation } from 'react-i18next';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
 import {
     PrivateMessagesInfinityVirtualContainer,
 } from '@/widgets/message/PrivateMessagesInfinityVirtualContainer/ui/PrivateMessagesInfinityVirtualContainer.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type PrivateDialogueWindowProps =
@@ -36,7 +36,7 @@ export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(functi
     const { className, dialogueId, ...other }     = props;
     const [ rightMenuOpened, setRightMenuOpened ] = useState<boolean>(false);
     const dialogues                               = useStore($privateDialoguesStatus);
-    const { t }                                   = useTranslation([ 'dialogue' ]);
+    const { t }                                   = useTranslation();
 
     if (!dialogueId || !dialogues[dialogueId]) {
         return (
@@ -54,18 +54,17 @@ export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(functi
                     className={ css.header }
                     dialogueId={ dialogueId }
                 >
-                    <PopOver popover={ t(
-                        rightMenuOpened
-                        ? 'hide_interlocutor'
-                        : 'show_interlocutor',
-                    ) }
+                    <PopOver popover={
+                        t.page.dialogues[rightMenuOpened ? 'hide_interlocutor'
+                                                         : 'show_interlocutor']
+                    }
                     >
                         <Button
-                            aria-label={ t(
-                                rightMenuOpened
-                                ? 'hide_interlocutor'
-                                : 'show_interlocutor',
-                            ) }
+                            aria-label={
+                                t.page.dialogues[rightMenuOpened
+                                                 ? 'hide_interlocutor'
+                                                 : 'show_interlocutor']
+                            }
                             onClick={ () => setRightMenuOpened(prev => !prev) }
                             quad
                         >
