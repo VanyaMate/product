@@ -11,15 +11,12 @@ import {
 import {
     FriendRequestsInDetails,
 } from '@/widgets/friends/details/FriendRequestsInDetails/ui/FriendRequestsInDetails.tsx';
-import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    $friendRequestsReceived,
-    $friendRequestsSent,
-    $friendsError,
-    $friendsIsPending,
     $friendsList, getMyFriendsEffect,
 } from '@/app/model/friends/friends.model.ts';
+import css from './FriendsPage.module.scss';
+import classNames from 'classnames';
 
 
 export type FriendsPageProps =
@@ -28,11 +25,7 @@ export type FriendsPageProps =
 
 export const FriendsPage: FC<FriendsPageProps> = memo(function FriendsPage (props) {
     const { className, ...other } = props;
-    const isPending               = useStore($friendsIsPending);
-    const error                   = useStore($friendsError);
     const friends                 = useStore($friendsList);
-    const requestsReceived        = useStore($friendRequestsReceived);
-    const requestsSent            = useStore($friendRequestsSent);
 
     useLayoutEffect(() => {
         getMyFriendsEffect();
@@ -45,19 +38,11 @@ export const FriendsPage: FC<FriendsPageProps> = memo(function FriendsPage (prop
     return (
         <div
             { ...other }
-            className={ className }
+            className={ classNames(css.container, {}, [ className ]) }
         >
-            <p>pending: { isPending.toString() }</p>
-            <p>error: { JSON.stringify(error) ?? 'null' }</p>
-            <p>friends: { friends.length }</p>
-            <p>requestsIn: { requestsReceived.length }</p>
-            <p>requestsOut: { requestsSent.length }</p>
-
-            <Col>
-                <FriendRequestsInDetails/>
-                <FriendRequestsOutDetails/>
-                <FriendsDetails/>
-            </Col>
+            <FriendsDetails/>
+            <FriendRequestsInDetails/>
+            <FriendRequestsOutDetails/>
         </div>
     );
 });

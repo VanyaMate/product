@@ -1,0 +1,9 @@
+.container {
+    display : flex;
+    gap     : var(--offset-small);
+
+    & > * {
+        flex   : 1;
+        height : auto;
+    }
+}
