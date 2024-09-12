@@ -8,5 +8,6 @@
     "select_files": "Выбрать файлы",
     "upload_files": "Загрузить {{amount}}",
     "files_preload_title": "Загрузка",
-    "selected_files": "Выбранные файлы"
+    "selected_files": "Выбранные файлы",
+    "selected_files_title": "Файлы - Выбрано {{amount}}"
 }

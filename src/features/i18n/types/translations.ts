@@ -151,7 +151,8 @@ export type TranslationFilesPage = {
     select_files: string,
     upload_files: string,
     files_preload_title: string,
-    selected_files: string
+    selected_files: string,
+    selected_files_title: string,
 }
 
 export type TranslationDialoguesPage = {

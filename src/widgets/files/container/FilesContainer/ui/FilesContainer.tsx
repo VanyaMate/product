@@ -7,6 +7,7 @@ import {
 import classNames from 'classnames';
 import css from './FilesContainer.module.scss';
 import {
+    $filesPending,
     $filesSelected,
     getMyFilesEffect,
 } from '@/app/model/file-page/file-page.model.ts';
@@ -26,6 +27,11 @@ import { useStore } from '@vanyamate/sec-react';
 import {
     FilesSideMenuContainer,
 } from '@/widgets/files/container/FilesSideMenuContainer/ui/FilesSideMenuContainer.tsx';
+import {
+    PageLoader,
+} from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
+import { useTitle } from '@/entities/site/hooks/useTitle/useTitle.ts';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type FilesContainerProps =
@@ -35,6 +41,24 @@ export type FilesContainerProps =
 export const FilesContainer: FC<FilesContainerProps> = memo(function FilesContainer (props) {
     const { className, ...other } = props;
     const filesSelected           = useStore($filesSelected);
+    const filesLoading            = useStore($filesPending);
+    const setTitle                = useTitle();
+    const { t, replace }          = useTranslation();
+
+    useLayoutEffect(() => {
+        if (filesSelected.length) {
+            setTitle(
+                replace(
+                    t.page.files.selected_files_title,
+                    {
+                        amount: filesSelected.length.toString(),
+                    },
+                ),
+            );
+        } else {
+            setTitle(t.app.files_page);
+        }
+    }, [ filesSelected, replace, setTitle, t.app.files_page, t.page.files.selected_files, t.page.files.selected_files_title ]);
 
     useLayoutEffect(() => {
         getMyFilesEffect({});
@@ -49,8 +73,14 @@ export const FilesContainer: FC<FilesContainerProps> = memo(function FilesContai
                 <FileUploadForm/>
                 <FilesControlPanel className={ css.control }/>
                 <div className={ css.list }>
-                    <FilesUploadInsert/>
-                    <FilesInsert/>
+                    {
+                        filesLoading
+                        ? <PageLoader/>
+                        : <>
+                            <FilesUploadInsert/>
+                            <FilesInsert/>
+                        </>
+                    }
                 </div>
             </div>
             <div className={ css.sideMenu }>

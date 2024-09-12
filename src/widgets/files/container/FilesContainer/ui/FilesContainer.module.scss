@@ -1,9 +1,7 @@
 .container {
-    display  : flex;
-    gap      : var(--offset-small);
-    height   : 100%;
-    width    : 100%;
-    overflow : auto;
+    display : flex;
+    gap     : var(--offset-small);
+    width   : 100%;
 
     .files {
         display        : flex;

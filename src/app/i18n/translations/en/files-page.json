@@ -8,5 +8,6 @@
     "select_files": "Select files",
     "upload_files": "Upload {{amount}}",
     "files_preload_title": "Upload",
-    "selected_files": "Selected files"
+    "selected_files": "Selected files",
+    "selected_files_title": "Files - Selected {{amount}}"
 }
