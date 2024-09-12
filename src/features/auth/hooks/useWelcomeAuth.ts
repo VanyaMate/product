@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import {
     $authIsPending,
     refreshAuthEffect,
@@ -10,7 +10,7 @@ export const useWelcomeAuth = function () {
     const send        = useRef<boolean>(true);
     const authPending = useStore($authIsPending);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (!authPending && send.current) {
             send.current = false;
             refreshAuthEffect();

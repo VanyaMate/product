@@ -1,10 +1,12 @@
 import { FC, lazy, memo, Suspense } from 'react';
 import {
-    PageLoader
+    PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
 import {
-    ErrorBoundary
+    ErrorBoundary,
 } from '@/shared/ui-kit/errors/ErrorBoundary/ui/ErrorBoundary.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { useTitle } from '@/entities/site/hooks/useTitle/useTitle.ts';
 
 
 const SearchPage = lazy(() => import('./SearchPage.tsx').then((data) => ({
@@ -14,7 +16,10 @@ const SearchPage = lazy(() => import('./SearchPage.tsx').then((data) => ({
 export type SearchPageAsyncProps = {};
 
 export const SearchPageAsync: FC<SearchPageAsyncProps> = memo(function SearchPageAsync (props) {
-    const {} = props;
+    const {}    = props;
+    const { t } = useTranslation();
+
+    useTitle(t.app.search_page);
 
     return (
         <Suspense fallback={ <PageLoader/> }>

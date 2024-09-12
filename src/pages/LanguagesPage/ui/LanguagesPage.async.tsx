@@ -5,6 +5,8 @@ import {
 import {
     ErrorBoundary,
 } from '@/shared/ui-kit/errors/ErrorBoundary/ui/ErrorBoundary.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { useTitle } from '@/entities/site/hooks/useTitle/useTitle.ts';
 
 
 const LanguagesPage = lazy(() => import('./LanguagesPage.tsx').then((data) => ({
@@ -12,6 +14,10 @@ const LanguagesPage = lazy(() => import('./LanguagesPage.tsx').then((data) => ({
 })));
 
 export const LanguagesPageAsync: FC = memo(function LanguagesPageAsync () {
+    const { t } = useTranslation();
+
+    useTitle(t.app.languages_page);
+
     return (
         <Suspense fallback={ <PageLoader/> }>
             <ErrorBoundary>

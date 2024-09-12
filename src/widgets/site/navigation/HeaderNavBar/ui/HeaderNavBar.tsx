@@ -10,7 +10,7 @@ import {
 import {
     UserProfileOrAuthButton,
 } from '@/widgets/user/button/UserProfileOrAuthButton/ui/UserProfileOrAuthButton.tsx';
-import { SiteLogoLinkTitle } from '@/entities/site/logo/SiteLogoLinkTitle.tsx';
+import { SiteLogoLinkTitle } from '@/entities/site/ui/SiteLogoLinkTitle/SiteLogoLinkTitle.tsx';
 import { getMyFriendsEffect } from '@/app/model/friends/friends.model.ts';
 
 

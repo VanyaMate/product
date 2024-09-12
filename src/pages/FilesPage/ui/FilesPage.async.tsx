@@ -5,6 +5,8 @@ import {
 import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { useTitle } from '@/entities/site/hooks/useTitle/useTitle.ts';
 
 
 const FilesPage = lazy(() => import('./FilesPage.tsx').then((data) => ({
@@ -14,7 +16,10 @@ const FilesPage = lazy(() => import('./FilesPage.tsx').then((data) => ({
 export type FilesPageAsyncProps = {};
 
 export const FilesPageAsync: FC<FilesPageAsyncProps> = memo(function FilesPageAsync (props) {
-    const {} = props;
+    const {}    = props;
+    const { t } = useTranslation();
+
+    useTitle(t.app.files_page);
 
     return (
         <Suspense fallback={ <PageLoader/> }>

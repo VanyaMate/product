@@ -1,4 +1,10 @@
-import { ComponentPropsWithoutRef, FC, memo, useState } from 'react';
+import {
+    ComponentPropsWithoutRef,
+    FC,
+    memo,
+    useLayoutEffect,
+    useState,
+} from 'react';
 import classNames from 'classnames';
 import css from './PrivateDialogueWindow.module.scss';
 import {
@@ -17,6 +23,7 @@ import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { IoClose, IoPerson } from 'react-icons/io5';
 import { useStore } from '@vanyamate/sec-react';
 import {
+    $privateDialogues,
     $privateDialoguesStatus,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
@@ -25,6 +32,7 @@ import {
 } from '@/widgets/message/PrivateMessagesInfinityVirtualContainer/ui/PrivateMessagesInfinityVirtualContainer.tsx';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 import { inert } from '@/shared/lib/react/inert.ts';
+import { useTitle } from '@/entities/site/hooks/useTitle/useTitle.ts';
 
 
 export type PrivateDialogueWindowProps =
@@ -36,10 +44,31 @@ export type PrivateDialogueWindowProps =
 export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(function PrivateDialogueWindow (props) {
     const { className, dialogueId, ...other }     = props;
     const [ rightMenuOpened, setRightMenuOpened ] = useState<boolean>(false);
-    const dialogues                               = useStore($privateDialoguesStatus);
-    const { t }                                   = useTranslation();
+    const dialogues                               = useStore($privateDialogues);
+    const dialoguesStatus                         = useStore($privateDialoguesStatus);
+    const { t, replace }                          = useTranslation();
+    const setTitle                                = useTitle(t.app.dialogues_page);
+    const dialogueNotSelected                     = !dialogueId || !dialoguesStatus[dialogueId];
 
-    if (!dialogueId || !dialogues[dialogueId]) {
+    useLayoutEffect(() => {
+        if (!dialogueNotSelected) {
+            const dialogue      = dialogues.find((dialogue) => dialogue.id === dialogueId);
+            const dialogueTitle = dialogue.title || dialogue.user.login;
+
+            setTitle(
+                replace(
+                    t.app.dialogue_page,
+                    {
+                        dialogue_name: dialogueTitle,
+                    },
+                ),
+            );
+        } else {
+            setTitle(t.app.dialogues_page);
+        }
+    }, [ dialogueId, dialogueNotSelected, dialogues, replace, setTitle, t.app.dialogue_page, t.app.dialogues_page ]);
+
+    if (dialogueNotSelected) {
         return (
             <NoSelectDialogue/>
         );

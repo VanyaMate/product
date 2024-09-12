@@ -48,9 +48,9 @@ export type DialoguesPageProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage (props) {
-    const { className, ...other }                  = props;
-    const dialogues                                = useStore($privateDialogues);
-    const dialoguesIsPending                       = useStore($privateDialoguesIsPending);
+    const { className, ...other }                        = props;
+    const dialogues                                      = useStore($privateDialogues);
+    const dialoguesIsPending                             = useStore($privateDialoguesIsPending);
     const userData                                       = useStore($authUser);
     const { [SITE_ROUTE_PARAM_DIALOGUE_ID]: dialogueId } = useParams<{
         [SITE_ROUTE_PARAM_DIALOGUE_ID]: string
