@@ -22,7 +22,8 @@ export type SearchPageProps =
 export const SearchPage: FC<SearchPageProps> = memo(function SearchPage (props) {
     const { className, ...other }           = props;
     const [ searchParams, setSearchParams ] = useSearchParams();
-    const setQuery                          = (query: string) => setSearchParams(new URLSearchParams({ query }));
+    const setQuery                          = (query: string) =>
+        setSearchParams(query ? new URLSearchParams({ query }) : {});
     const search                            = useInputWithError({
         name           : '',
         onChangeHandler: setQuery,

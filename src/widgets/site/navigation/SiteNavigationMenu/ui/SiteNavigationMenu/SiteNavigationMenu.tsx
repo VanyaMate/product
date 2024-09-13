@@ -11,7 +11,6 @@ import {
     IoLogoVk,
     IoMail,
     IoPeople,
-    IoSearch,
 } from 'react-icons/io5';
 import { IoLogoGithub } from 'react-icons/io';
 import { useLocation } from 'react-router-dom';
@@ -54,20 +53,6 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             to={ SiteAppRoutePath[SiteAppRoute.HOME] }
                         >
                             { t.app.home_page }
-                        </SiteNavigationLink>
-                    </li>
-                    <li>
-                        <SiteNavigationLink
-                            icon={ <IoSearch/> }
-                            onClick={ onCompleteAction }
-                            styleType={
-                                isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.SEARCH])
-                                ? LinkStyleType.PRIMARY
-                                : LinkStyleType.GHOST
-                            }
-                            to={ SiteAppRoutePath[SiteAppRoute.SEARCH] }
-                        >
-                            { t.app.search_page }
                         </SiteNavigationLink>
                     </li>
                     <li>

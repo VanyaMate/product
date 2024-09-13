@@ -10,8 +10,13 @@ import {
 import {
     UserProfileOrAuthButton,
 } from '@/widgets/user/button/UserProfileOrAuthButton/ui/UserProfileOrAuthButton.tsx';
-import { SiteLogoLinkTitle } from '@/entities/site/ui/SiteLogoLinkTitle/SiteLogoLinkTitle.tsx';
+import {
+    SiteLogoLinkTitle,
+} from '@/entities/site/ui/SiteLogoLinkTitle/SiteLogoLinkTitle.tsx';
 import { getMyFriendsEffect } from '@/app/model/friends/friends.model.ts';
+import {
+    HeaderSearch,
+} from '@/widgets/site/search/HeaderSearch/HeaderSearch.tsx';
 
 
 export type HeaderNavBarProps = {};
@@ -26,6 +31,7 @@ export const HeaderNavBar: FC<HeaderNavBarProps> = memo(function HeaderNavBar (p
     return (
         <div className={ css.container }>
             <SiteLogoLinkTitle className={ css.logo }/>
+            <HeaderSearch/>
             <ul className={ classNames(css.utils, {}, [ css.list ]) }>
                 <li>
                     <ToggleLanguageButton/>

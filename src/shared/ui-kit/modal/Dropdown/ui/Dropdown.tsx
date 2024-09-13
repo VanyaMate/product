@@ -21,6 +21,7 @@ export type DropdownProps =
     {
         controller: UseDropdownController;
         dropdownContent: ReactNode;
+        containerClassName?: string;
     }
     & ComponentPropsWithoutRef<'div'>;
 
@@ -29,6 +30,7 @@ export const Dropdown: FC<DropdownProps> = memo(function Dropdown (props) {
               children,
               controller,
               dropdownContent,
+              containerClassName,
               className,
               ...other
           }            = props;
@@ -94,7 +96,7 @@ export const Dropdown: FC<DropdownProps> = memo(function Dropdown (props) {
             {
                 controller.opened ? createPortal(
                     <div
-                        className={ css.dropdown }
+                        className={ classNames(css.dropdown, {}, [ containerClassName ]) }
                         ref={ dropdownRef }
                     >
                         { dropdownContent }

@@ -1,0 +1,31 @@
+$max-width    : 100%;
+$target-width : 700px;
+
+.item {
+    width     : $target-width;
+    max-width : $max-width;
+}
+
+.dropdownContent {
+    padding : var(--offset-small);
+}
+
+.container {
+    display         : flex;
+    flex-direction  : column;
+    align-items     : center;
+    gap             : var(--offset-extra-large);
+    width           : 100%;
+    height          : 100%;
+    justify-content : center;
+
+    .inputContainer {
+        width       : 100%;
+        align-items : center;
+
+        .input {
+            display    : block;
+            text-align : center;
+        }
+    }
+}

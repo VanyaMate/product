@@ -6,7 +6,9 @@ export type ModalPosition = {
     left: number;
 }
 
-export type ModalPositionSide = 'bottom' | 'top';
+export type ModalPositionSide =
+    'bottom'
+    | 'top';
 
 const MODAL_OFFSET: number = 5;
 
@@ -17,33 +19,33 @@ export const getModalPosition = function (containerRef: MutableRefObject<HTMLDiv
               right,
               width,
               height,
-          }           = containerRef.current.getBoundingClientRect();
-    const modalHeight = modalRef.current.offsetHeight;
-    const modalWidth  = modalRef.current.offsetWidth;
-    const bodyWidth   = document.body.offsetWidth;
-    const bodyHeight  = document.body.offsetHeight;
+          }                  = containerRef.current.getBoundingClientRect();
+    const modalHeight        = modalRef.current.offsetHeight;
+    const modalWidth         = modalRef.current.offsetWidth;
+    const documentBodyWidth  = document.body.offsetWidth;
+    const documentBodyHeight = document.body.offsetHeight;
 
     // calculate popover position
     let topPosition: number  = 0;
     let leftPosition: number = 0;
 
     const leftCenterPosition  = left + width / 2;
-    const rightCenterPosition = bodyWidth - right + width / 2;
-    const halfModalWidth      = (modalWidth + MODAL_OFFSET) / 2;
+    const rightCenterPosition = documentBodyWidth - right + width / 2;
+    const halfModalWidth      = modalWidth / 2;
 
     if (side === 'top') {
         topPosition = top > (modalHeight + MODAL_OFFSET)
                       ? top - modalHeight - MODAL_OFFSET
                       : top + height + MODAL_OFFSET;
     } else {
-        if (top + height + modalHeight + MODAL_OFFSET > bodyHeight) {
+        if (top + height + modalHeight + MODAL_OFFSET > documentBodyHeight) {
             topPosition = top - modalHeight - MODAL_OFFSET;
         } else {
             topPosition = top + height + MODAL_OFFSET;
         }
     }
 
-    if (bodyWidth <= modalWidth) {
+    if (documentBodyWidth <= modalWidth) {
         leftPosition = leftCenterPosition - halfModalWidth;
     } else if (leftCenterPosition > halfModalWidth) {
         if (rightCenterPosition > halfModalWidth) {

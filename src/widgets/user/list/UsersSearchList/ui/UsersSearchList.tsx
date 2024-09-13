@@ -6,10 +6,14 @@ import {
 } from '@/widgets/user/item/UserSearchItem/ui/UserSearchItem.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
+    $usersSearch,
+    $usersSearchIsPending,
     searchUsersByLoginStartEffect,
-    $usersSearch, $usersSearchIsPending,
 } from '@/app/model/search/user-search.model.ts';
-import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
+import {
+    Divider,
+    DividerType,
+} from '@/shared/ui-kit/divider/Divider/ui/Divider.tsx';
 
 
 // TODO
@@ -28,19 +32,21 @@ export const UsersSearchList: FC<UsersSearchListProps> = memo(function UsersSear
     const searchPending                                 = useStore($usersSearchIsPending);
 
     useEffect(() => {
-        searchUsersByLoginStartEffect({ query, limit, offset });
+        if (query) {
+            searchUsersByLoginStartEffect({ query, limit, offset });
+        }
     }, [ query, limit, offset ]);
-
-    if (!searchUsers || searchPending) {
-        return <Loader/>;
-    }
 
     return (
         <section
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
+            <h3>Users</h3>
+            <Divider type={ DividerType.HORIZONTAL }/>
             {
+                searchPending ? 'Loading..' :
+                !searchUsers.length ? 'No users' :
                 searchUsers.map((user) => (
                     <UserSearchItem
                         key={ user.id }
