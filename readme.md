@@ -1,4 +1,6 @@
-# Simple product-app
+# Social network "Liberty"
+
+Full private
 
 ## Technologies
 
