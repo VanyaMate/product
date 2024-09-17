@@ -718,7 +718,7 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                     className={ classNames(css.content, {}, [ contentClassName ]) }
                     ref={ contentRef }
                 >
-                    { virtualList.map(render) }
+                    { virtualList.map((item, index) => render(item, index, currentIndex.current)) }
                 </div>
                 { !hasMorePrevious ? noMorePreviousElement : null }
             </div>

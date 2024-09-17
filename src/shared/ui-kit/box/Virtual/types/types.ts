@@ -34,7 +34,7 @@ export enum VirtualType {
 
 export type VirtualList = Array<unknown>;
 export type VirtualUploadMethod = () => Promise<unknown>;
-export type VirtualRenderMethod = (item: unknown, index: number) => ReactNode;
+export type VirtualRenderMethod = (item: unknown, index: number, offset: number) => ReactNode;
 export type VirtualScrollTo = (target: number, smooth: boolean, animationMs: number) => void;
 
 export type VirtualElementProps = {

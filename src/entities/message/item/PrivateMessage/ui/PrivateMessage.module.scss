@@ -40,24 +40,16 @@
     max-width     : 600px;
     padding       : var(--offset-small);
     border-radius : var(--offset-medium);
-    box-shadow    : 0 0 0 3px var(--bg-main-color), -3px 0 0 2px var(--bg-second-color);
     transition    : var(--transition-fast), var(--transition-medium) box-shadow;
+    margin        : var(--offset-small) 0;
+    background    : var(--bg-ghost-color-opacity-medium);
 
-    &:not(.me).target {
+    &.target {
         animation : mark .5s ease-in-out 5;
     }
 
-    &.me {
-        box-shadow : 0 0 0 3px var(--bg-main-color), -3px 0 0 2px var(--primary-color);
-
-        &.target {
-            animation : mark .5s ease-in-out 5;
-        }
-    }
-
-    &:hover {
-        cursor     : pointer;
-        box-shadow : 0 0 0 3px var(--bg-main-color), 0 0 0 5px var(--primary-color);
+    &:not(.me).target {
+        animation : mark .5s ease-in-out 5;
     }
 
     .avatar {
@@ -73,8 +65,19 @@
         text-decoration : none;
     }
 
+    &.me {
+        box-shadow   : none;
+        align-self   : end;
+        padding-left : var(--offset-medium);
+        background   : var(--bg-mark-color);
+
+        & .avatar {
+            display : none;
+        }
+    }
+
     &.notRead {
-        background : var(--bg-ghost-color);
+        background : var(--bg-second-color);
 
         .avatar {
             background : var(--bg-second-color);
@@ -117,6 +120,49 @@
         .message {
             color      : var(--text-main-color);
             word-break : break-all;
+        }
+    }
+
+    &.top {
+        border-radius : var(--offset-medium) var(--offset-medium) var(--offset-extra-small) var(--offset-extra-small);
+        margin-bottom : 0;
+    }
+
+    &.middle {
+        border-radius : var(--offset-extra-small);
+        margin        : 0;
+
+        .avatar {
+            opacity    : 0;
+            visibility : hidden;
+            height     : 0;
+            min-height : 0;
+            max-height : 0;
+        }
+
+        .body {
+            .header {
+                display : none;
+            }
+        }
+    }
+
+    &.bottom {
+        border-radius : var(--offset-extra-small) var(--offset-extra-small) var(--offset-medium) var(--offset-medium);
+        margin-top    : 0;
+
+        .avatar {
+            opacity    : 0;
+            visibility : hidden;
+            height     : 0;
+            min-height : 0;
+            max-height : 0;
+        }
+
+        .body {
+            .header {
+                display : none;
+            }
         }
     }
 }

@@ -34,14 +34,35 @@ export type PrivateMessageProps =
     {
         message: DomainMessage;
         userId: string;
+        nextUserId?: string;
+        nextMessageDate?: number;
+        previousUserId?: string;
+        previousMessageDate?: number;
         onShowMessage?: (messageId: string) => void;
     }
     & ComponentPropsWithoutRef<'article'>;
 
 export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMessage (props) {
-    const { className, message, userId, onShowMessage, ...other } = props;
-    const dayJs                                                   = useRef(dayjs(message.creationDate));
-    const messageRef                                              = useRef<HTMLDivElement>(null);
+    const {
+              className,
+              message,
+              userId,
+              nextMessageDate,
+              nextUserId,
+              previousUserId,
+              previousMessageDate,
+              onShowMessage,
+              ...other
+          }                       = props;
+    const dayJs                   = useRef(dayjs(message.creationDate));
+    const messageRef              = useRef<HTMLDivElement>(null);
+    const nextIsSameAuthor        = message.author.id === nextUserId;
+    const previousIsSameAuthor    = message.author.id === previousUserId;
+    const nextMessageManyTime     = nextMessageDate - message.creationDate > 60 * 1000;
+    const previousMessageManyTime = message.creationDate - previousMessageDate > 60 * 1000;
+    const concatenateNext         = nextIsSameAuthor && !nextMessageManyTime;
+    const concatenatePrevious     = previousIsSameAuthor && !previousMessageManyTime;
+    const isMiddle                = concatenateNext && concatenatePrevious;
 
     useLayoutEffect(() => {
         if (message.author.id !== userId && messageRef.current && !message.read) {
@@ -64,6 +85,9 @@ export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMess
             className={ classNames(css.container, {
                 [css.me]     : userId === message.author.id,
                 [css.notRead]: !message.read,
+                [css.middle] : isMiddle,
+                [css.top]    : concatenateNext && !isMiddle,
+                [css.bottom] : concatenatePrevious && !isMiddle,
             }, [ className ]) }
             id={ `m_${ message.id }` }
             ref={ messageRef }

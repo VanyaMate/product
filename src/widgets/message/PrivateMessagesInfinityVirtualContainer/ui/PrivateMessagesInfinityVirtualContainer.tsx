@@ -55,33 +55,45 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
     const dialogues                           = useStore($privateDialogues);
     const user                                = useStore($authUser);
     const dialogue                            = useMemo(() => dialogues.find((dialogue) => dialogue.id === dialogueId), [ dialogueId, dialogues ]);
+    const dialogueMessages                    = useMemo(() => messages[dialogueId], [ dialogueId, messages ]);
 
     const loadPreviousMessages = useCallback(async () => {
-        const messageId = messages[dialogueId]?.[0]?.id;
+        const messageId = dialogueMessages?.[0]?.id;
         if (messageId) {
-            return getPrivateMessagesByCursorEffect([ dialogueId, {
-                cursor: messageId,
-                limit : 40,
-                query : '',
-            } ]);
+            return getPrivateMessagesByCursorEffect([
+                dialogueId, {
+                    cursor: messageId,
+                    limit : 40,
+                    query : '',
+                },
+            ]);
         }
-    }, [ dialogueId, messages ]);
+    }, [ dialogueId, dialogueMessages ]);
 
     useLayoutEffect(() => {
-        const messagesLength = messages[dialogueId]?.length;
+        const messagesLength = dialogueMessages?.length;
         if (messagesLength < 20 && hasMoreMessages[dialogueId]) {
             loadPreviousMessages();
         }
-    }, [ dialogueId, hasMoreMessages, loadPreviousMessages, messages ]);
+    }, [ dialogueId, dialogueMessages?.length, hasMoreMessages, loadPreviousMessages, messages ]);
 
-    const render = useCallback<VirtualRenderMethod>((message: DomainMessage) => (
-        <PrivateMessage
-            key={ message.id }
-            message={ message }
-            onShowMessage={ readPrivateMessageEffect }
-            userId={ user.id }
-        />
-    ), [ user.id ]);
+    const render = useCallback<VirtualRenderMethod>((message: DomainMessage, index: number, offset: number) => {
+        const nextMessage     = dialogueMessages[index + 1 + offset];
+        const previousMessage = dialogueMessages[index - 1 + offset];
+
+        return (
+            <PrivateMessage
+                key={ message.id }
+                message={ message }
+                nextMessageDate={ nextMessage?.creationDate }
+                nextUserId={ nextMessage?.author.id }
+                onShowMessage={ readPrivateMessageEffect }
+                previousMessageDate={ previousMessage?.creationDate }
+                previousUserId={ previousMessage?.author.id }
+                userId={ user.id }
+            />
+        );
+    }, [ dialogueMessages, user.id ]);
 
     if (!messages[dialogueId]?.length) {
         return <EmptyDialogue { ...other } className={ className }/>;
@@ -98,7 +110,7 @@ export const PrivateMessagesInfinityVirtualContainer: FC<PrivateMessagesInfinity
             hasMoreNext={ false }
             hasMorePrevious={ hasMoreMessages[dialogueId] ?? false }
             key={ dialogueId }
-            list={ messages[dialogueId] ?? [] }
+            list={ dialogueMessages ?? [] }
             loaderNextElement={ <Loader/> }
             loaderPreviousElement={ <Loader/> }
             loadingNext={ false }
