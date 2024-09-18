@@ -5,7 +5,7 @@ import {
 import {
     ErrorBoundary,
 } from '@/shared/ui-kit/errors/ErrorBoundary/ui/ErrorBoundary.tsx';
-import { useTitle } from '@/entities/site/hooks/useTitle/useTitle.ts';
+import { usePageTitle } from '@/entities/site/hooks/useTitle/usePageTitle.ts';
 import { useParams } from 'react-router-dom';
 import {
     SITE_ROUTE_PARAM_USER_LOGIN,
@@ -24,7 +24,7 @@ export const ProfilePageAsync: FC<ProfilePageAsyncProps> = memo(function Profile
         [SITE_ROUTE_PARAM_USER_LOGIN]: string
     }>();
 
-    useTitle(login);
+    usePageTitle(login);
 
     return (
         <Suspense fallback={ <PageLoader/> }>

@@ -5,8 +5,8 @@ import {
 import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
+import { usePageTitle } from '@/entities/site/hooks/useTitle/usePageTitle.ts';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
-import { useTitle } from '@/entities/site/hooks/useTitle/useTitle.ts';
 
 
 const DialoguesPage = lazy(() => import('./DialoguesPage.tsx').then((data) => ({
@@ -19,7 +19,7 @@ export const DialoguesPageAsync: FC<DialoguesPageAsyncProps> = memo(function Dia
     const {}    = props;
     const { t } = useTranslation();
 
-    useTitle(t.app.dialogues_page);
+    usePageTitle(t.app.dialogues_page);
 
     return (
         <Suspense fallback={ <PageLoader/> }>

@@ -6,7 +6,7 @@ import {
     ErrorBoundary,
 } from '@/shared/ui-kit/errors/ErrorBoundary/ui/ErrorBoundary.tsx';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
-import { useTitle } from '@/entities/site/hooks/useTitle/useTitle.ts';
+import { usePageTitle } from '@/entities/site/hooks/useTitle/usePageTitle.ts';
 
 
 const AboutPageContent = lazy(() => import('./AboutPage.tsx'));
@@ -17,7 +17,7 @@ export const AboutPageAsync: FC<AboutPageProps> = memo(function AboutPage (props
     const {} = props;
     const { t } = useTranslation();
 
-    useTitle(t.app.about_us_page);
+    usePageTitle(t.app.about_us_page);
 
     return (
         <Suspense fallback={ <PageLoader/> }>

@@ -30,7 +30,7 @@ import {
 import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
-import { useTitle } from '@/entities/site/hooks/useTitle/useTitle.ts';
+import { usePageTitle } from '@/entities/site/hooks/useTitle/usePageTitle.ts';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
@@ -42,7 +42,7 @@ export const FilesContainer: FC<FilesContainerProps> = memo(function FilesContai
     const { className, ...other } = props;
     const filesSelected           = useStore($filesSelected);
     const filesLoading            = useStore($filesPending);
-    const setTitle                = useTitle();
+    const setTitle                = usePageTitle();
     const { t, replace }          = useTranslation();
 
     useLayoutEffect(() => {

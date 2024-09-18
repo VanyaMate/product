@@ -6,7 +6,7 @@ import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
-import { useTitle } from '@/entities/site/hooks/useTitle/useTitle.ts';
+import { usePageTitle } from '@/entities/site/hooks/useTitle/usePageTitle.ts';
 
 
 const FriendsPage = lazy(() => import('./FriendsPage.tsx').then((data) => ({
@@ -19,7 +19,7 @@ export const FriendsPageAsync: FC<FriendsPageAsyncProps> = memo(function Friends
     const {}    = props;
     const { t } = useTranslation();
 
-    useTitle(t.app.friends_page);
+    usePageTitle(t.app.friends_page);
 
     return (
         <Suspense fallback={ <PageLoader/> }>

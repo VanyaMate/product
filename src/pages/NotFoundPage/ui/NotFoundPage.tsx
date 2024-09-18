@@ -3,7 +3,7 @@ import {
     NotFoundError,
 } from '@/shared/ui-kit/errors/NotFoundError/ui/NotFoundError.tsx';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
-import { useTitle } from '@/entities/site/hooks/useTitle/useTitle.ts';
+import { usePageTitle } from '@/entities/site/hooks/useTitle/usePageTitle.ts';
 
 
 export type NotFoundPageProps = {};
@@ -12,7 +12,7 @@ export const NotFoundPage: FC<NotFoundPageProps> = memo(function NotFoundPage (p
     const {}    = props;
     const { t } = useTranslation();
 
-    useTitle(t.app.not_found_title);
+    usePageTitle(t.app.not_found_title);
 
     return (
         <NotFoundError/>

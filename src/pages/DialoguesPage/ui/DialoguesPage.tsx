@@ -24,7 +24,7 @@ import {
 import { useStore } from '@vanyamate/sec-react';
 import {
     $privateDialogues,
-    $privateDialoguesIsPending,
+    $privateDialoguesIsPending, $privateDialoguesStatus,
     getListPrivateDialogueEffect,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import { $authUser } from '@/app/model/auth/auth.model.ts';
@@ -41,6 +41,8 @@ import { Virtual } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 import {
     NoMoreDialogues,
 } from '@/entities/dialogue/NoMoreDialogues/ui/NoMoreDialogues.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { usePageTitle } from '@/entities/site/hooks/useTitle/usePageTitle.ts';
 
 
 export type DialoguesPageProps =
@@ -56,6 +58,30 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
         [SITE_ROUTE_PARAM_DIALOGUE_ID]: string
     }>();
     const messages                                       = useStore($privateMessages);
+    const dialoguesStatus                                = useStore($privateDialoguesStatus);
+    const { t, replace }                                 = useTranslation();
+    const setPageTitle                                   = usePageTitle(t.app.dialogues_page);
+    const dialogueNotSelected                            = !dialogueId || !dialoguesStatus[dialogueId];
+
+    useLayoutEffect(() => {
+        if (!dialogueNotSelected) {
+            const dialogue      = dialogues.find((dialogue) => dialogue.id === dialogueId);
+            const dialogueTitle = dialogue.title || dialogue.user.login;
+
+            console.log('set page title to with dialogue', t.app.dialogue_page);
+            setPageTitle(
+                replace(
+                    t.app.dialogue_page,
+                    {
+                        dialogue_name: dialogueTitle,
+                    },
+                ),
+            );
+        } else {
+            console.log('set page title to', t.app.dialogue_page);
+            setPageTitle(t.app.dialogues_page);
+        }
+    }, [ dialogueId, dialogueNotSelected, dialogues, replace, setPageTitle, t.app.dialogue_page, t.app.dialogues_page ]);
 
     useLayoutEffect(() => {
         // TODO: Temp
