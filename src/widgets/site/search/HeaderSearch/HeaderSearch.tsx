@@ -15,6 +15,7 @@ import { Dropdown } from '@/shared/ui-kit/modal/Dropdown/ui/Dropdown.tsx';
 import {
     SearchContainer,
 } from '@/widgets/search/container/SearchContainer/SearchContainer.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type HeaderSearchProps =
@@ -39,6 +40,7 @@ export const HeaderSearch: FC<HeaderSearchProps> = memo(function HeaderSearch (p
         onChangeHandler: setQuery,
         debounce       : 300,
     });
+    const { t }                             = useTranslation();
 
     return (
         <div { ...other }
@@ -59,7 +61,7 @@ export const HeaderSearch: FC<HeaderSearchProps> = memo(function HeaderSearch (p
                     className={ classNames(css.input, {}, [ css.item ]) }
                     containerClassName={ css.inputContainer }
                     controller={ search }
-                    placeholder="search"
+                    placeholder={ t.search.search_placeholder }
                 />
             </Dropdown>
         </div>

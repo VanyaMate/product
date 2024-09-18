@@ -32,6 +32,8 @@ import ru_notification_helpers
     from '@/app/i18n/translations/ru/notifications.json';
 import en_notification_helpers
     from '@/app/i18n/translations/en/notifications.json';
+import ru_search from '@/app/i18n/translations/ru/search.json';
+import en_search from '@/app/i18n/translations/en/search.json';
 
 
 export const translations: Record<TranslationLanguage, Translation> = {
@@ -40,6 +42,7 @@ export const translations: Record<TranslationLanguage, Translation> = {
         buttons      : ru_buttons,
         validation   : ru_validation,
         contacts     : ru_contacts,
+        search       : ru_search,
         page         : {
             files       : ru_files,
             dialogues   : ru_dialogues,
@@ -59,6 +62,7 @@ export const translations: Record<TranslationLanguage, Translation> = {
         buttons      : en_buttons,
         validation   : en_validation,
         contacts     : en_contacts,
+        search       : en_search,
         page         : {
             files       : en_files,
             dialogues   : en_dialogues,

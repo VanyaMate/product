@@ -13,6 +13,7 @@ import {
 import css from './SearchPage.module.scss';
 import classNames from 'classnames';
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
+import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 
 
 export type SearchPageProps =
@@ -29,6 +30,7 @@ export const SearchPage: FC<SearchPageProps> = memo(function SearchPage (props) 
         onChangeHandler: setQuery,
         debounce       : 300,
     });
+    const { t }                             = useTranslation();
 
     return (
         <div
@@ -40,7 +42,7 @@ export const SearchPage: FC<SearchPageProps> = memo(function SearchPage (props) 
                     className={ classNames(css.input, {}, [ css.item ]) }
                     containerClassName={ css.inputContainer }
                     controller={ search }
-                    placeholder="search"
+                    placeholder={ t.search.search_placeholder }
                 />
             </Row>
             <Col className={ css.item }>

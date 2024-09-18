@@ -28,7 +28,7 @@ export const FriendsDetails: FC = memo(function FriendsDetails () {
     }
 
     return (
-        <Details open={ true }>
+        <Details open>
             <DetailsTitle>{ t.page.friends.friends_list_title } ({ friends.length })</DetailsTitle>
             <DetailsBody>
                 <Col>

@@ -3,6 +3,7 @@ export type Translation = {
     buttons: TranslationButtons;
     validation: TranslationValidation
     contacts: TranslationContactsPage,
+    search: TranslationSearch,
     page: {
         userSettings: TranslationUserSettingsPage,
         files: TranslationFilesPage,
@@ -16,6 +17,12 @@ export type Translation = {
         title: TranslationNotificationTitle,
         helpers: TranslationNotificationsHelpers
     },
+}
+
+export type TranslationSearch = {
+    search_placeholder: string,
+    search_users: string,
+    search_no_results: string
 }
 
 export type TranslationButtons = {

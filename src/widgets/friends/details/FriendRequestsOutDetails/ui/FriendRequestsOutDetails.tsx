@@ -30,7 +30,7 @@ export const FriendRequestsOutDetails: FC = memo(function FriendRequestsOutDetai
     }
 
     return (
-        <Details>
+        <Details open>
             <DetailsTitle>
                 { t.page.friends.requests_out_list_title } ({ friends.length })
             </DetailsTitle>

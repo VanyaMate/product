@@ -38,7 +38,7 @@ export const FriendRequestsInDetails: FC<FriendRequestsInDetailsProps> = memo(fu
     }
 
     return (
-        <Details>
+        <Details open>
             <DetailsTitle>
                 { t.page.friends.requests_in_list_title } ({ friends.length })
             </DetailsTitle>
