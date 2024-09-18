@@ -115,7 +115,6 @@ export const PrivateDialogueWindow: FC<PrivateDialogueWindowProps> = memo(functi
                 <div className={ css.content }>
                     <PrivateDialogueWindowUserPreview
                         dialogueId={ dialogueId }
-                        opened={ true }
                         { ...inert(!rightMenuOpened) }
                     />
                 </div>

@@ -32,10 +32,12 @@ export type PrivateDialogueStatus = {
     error: DomainServiceResponseError | null
 };
 
-export type PrivateDialogueStatusWithUser = PrivateDialogueStatus & {
-    created: boolean;
-    dialogueId: string;
-}
+export type PrivateDialogueStatusWithUser =
+    PrivateDialogueStatus
+    & {
+        created: boolean;
+        dialogueId: string;
+    }
 
 
 export const archivePrivateDialogueEffect   = effect(archivePrivateDialogueAction);
@@ -265,7 +267,8 @@ export const $privateDialoguesStatus = store<Record<string, PrivateDialogueStatu
             ...state,
             [result.dialogue.id]: { isPending: false, error: null },
         }),
-    );
+    )
+    .on(logoutEffect, 'onBefore', () => ({}));
 
 
 export const $privateDialogueWithUser = store<Record<string, PrivateDialogueStatusWithUser>>({})
@@ -409,4 +412,5 @@ export const $privateDialogueWithUser = store<Record<string, PrivateDialogueStat
                 dialogueId: result.id,
             },
         }),
-    );
+    )
+    .on(logoutEffect, 'onBefore', () => ({}));

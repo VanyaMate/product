@@ -11,7 +11,6 @@ import {
 export type PrivateDialogueWindowUserPreviewProps =
     {
         dialogueId: string;
-        opened: boolean;
     }
     & ComponentPropsWithoutRef<'div'>;
 

@@ -55,14 +55,15 @@ export const HeaderSearch: FC<HeaderSearchProps> = memo(function HeaderSearch (p
                         query={ searchParams.get('query') }
                     />
                 }
-
             >
-                <InputWithError
-                    className={ classNames(css.input, {}, [ css.item ]) }
-                    containerClassName={ css.inputContainer }
-                    controller={ search }
-                    placeholder={ t.search.search_placeholder }
-                />
+                <search role="search">
+                    <InputWithError
+                        className={ classNames(css.input, {}, [ css.item ]) }
+                        containerClassName={ css.inputContainer }
+                        controller={ search }
+                        placeholder={ t.search.search_placeholder }
+                    />
+                </search>
             </Dropdown>
         </div>
     );

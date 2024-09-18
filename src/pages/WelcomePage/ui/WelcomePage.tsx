@@ -19,7 +19,7 @@ export const WelcomePage: FC<WelcomePageProps> = memo(function WelcomePage (prop
     useWelcomeAuth();
 
     return (
-        <div className={ css.container }>
+        <main className={ css.container }>
             <div className={ css.content }>
                 <Image
                     alt="Logo"
@@ -32,6 +32,6 @@ export const WelcomePage: FC<WelcomePageProps> = memo(function WelcomePage (prop
                     <UserSignForm/>
                 </div>
             </div>
-        </div>
+        </main>
     );
 });
