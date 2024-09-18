@@ -44,6 +44,11 @@
     margin        : var(--offset-small) 0;
     background    : var(--bg-ghost-color-opacity-medium);
 
+    &:hover {
+        cursor     : pointer;
+        background : var(--bg-ghost-color-opacity-low);
+    }
+
     &.target {
         animation : mark .5s ease-in-out 5;
     }
@@ -70,6 +75,10 @@
         align-self   : end;
         padding-left : var(--offset-medium);
         background   : var(--bg-mark-color);
+
+        &:hover {
+            background : var(--blue-opacity-medium);
+        }
 
         & .avatar {
             display : none;
