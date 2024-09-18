@@ -105,6 +105,7 @@
         "jest-css-modules": "^2.1.0",
         "jest-environment-jsdom": "^29.7.0",
         "json-server": "^0.17.3",
+        "lightningcss": "^1.27.0",
         "nodemon": "^3.1.0",
         "postcss": "^8.4.38",
         "react-test-renderer": "^18.2.0",

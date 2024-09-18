@@ -8,6 +8,11 @@
     <meta property="og:image" content="https://vm-any.web.app/images/logo/android-chrome-512x512.png"/>
     <meta property="og:url" content="https://vm-any.web.app"/>
     <title>Liberty</title>
+    <script>
+        // Временно. Нужно найти способ добавлять их инлайново из вне
+        const currentLanguage = localStorage.getItem('product__selected-language') ?? 'ru';
+        document.title = currentLanguage === 'ru' ? 'Либерти' : 'Liberty';
+    </script>
 </head>
 <body>
 <div id="root"></div>

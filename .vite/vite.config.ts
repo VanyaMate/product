@@ -41,8 +41,15 @@ export default defineConfig(({ mode }) => {
         },
         publicDir: 'public',
         build    : {
-            outDir   : 'dist',
-            assetsDir: 'assets',
+            outDir       : 'dist',
+            assetsDir    : 'assets',
+            minify       : 'terser',
+            rollupOptions: {
+                output: {
+                    generatedCode: 'es2015',
+                },
+            },
+            cssMinify    : 'lightningcss',
         },
     };
 });
