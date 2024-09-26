@@ -3,6 +3,7 @@
     "aria_logo": "Home",
     "home_page": "Home",
     "about_us_page": "About us",
+    "excel_splitter_page": "Excel splitter",
     "dialogue_page": "Dialogue {{dialogue_name}}",
     "user_page": "User {{login}}",
     "search_page": "Search",

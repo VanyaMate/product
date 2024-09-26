@@ -3,6 +3,7 @@
     "aria_logo": "Домой",
     "home_page": "Главная",
     "about_us_page": "О нас",
+    "excel_splitter_page": "Эксель сплиттер",
     "dialogue_page": "Диалог - {{dialogue_name}}",
     "user_page": "Пользователь - {{login}}",
     "search_page": "Поиск",

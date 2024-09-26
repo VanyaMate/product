@@ -7,7 +7,7 @@ import {
 import {
     IoDesktop,
     IoDocuments,
-    IoHome, IoLanguage,
+    IoHome, IoLanguage, IoList,
     IoLogoVk,
     IoMail,
     IoPeople,
@@ -123,6 +123,21 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             to={ SiteAppRoutePath[SiteAppRoute.ABOUT] }
                         >
                             { t.app.about_us_page }
+                        </SiteNavigationLink>
+                    </li>
+
+                    <li>
+                        <SiteNavigationLink
+                            icon={ <IoList/> }
+                            onClick={ onCompleteAction }
+                            styleType={
+                                isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.EXCEL_SPLITTER])
+                                ? LinkStyleType.PRIMARY
+                                : LinkStyleType.GHOST
+                            }
+                            to={ SiteAppRoutePath[SiteAppRoute.EXCEL_SPLITTER] }
+                        >
+                            { t.app.excel_splitter_page }
                         </SiteNavigationLink>
                     </li>
                 </ul>

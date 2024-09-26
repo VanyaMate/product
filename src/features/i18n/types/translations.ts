@@ -37,6 +37,7 @@ export type TranslationMainApp = {
     aria_logo: string,
     home_page: string,
     about_us_page: string,
+    excel_splitter_page: string,
     dialogue_page: string,
     user_page: string,
     search_page: string,
