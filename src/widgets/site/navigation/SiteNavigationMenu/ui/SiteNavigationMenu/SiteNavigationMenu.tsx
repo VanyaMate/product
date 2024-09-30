@@ -131,11 +131,11 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             icon={ <IoList/> }
                             onClick={ onCompleteAction }
                             styleType={
-                                isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.EXCEL_SPLITTER])
+                                isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.EXCEL])
                                 ? LinkStyleType.PRIMARY
                                 : LinkStyleType.GHOST
                             }
-                            to={ SiteAppRoutePath[SiteAppRoute.EXCEL_SPLITTER] }
+                            to={ SiteAppRoutePath[SiteAppRoute.EXCEL] }
                         >
                             { t.app.excel_splitter_page }
                         </SiteNavigationLink>

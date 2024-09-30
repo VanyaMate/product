@@ -33,93 +33,93 @@ export const SITE_ROUTE_PARAM_FILE_ID       = 'fileId';
 export const SITE_ROUTE_PARAM_SETTINGS_TYPE = 'type';
 
 export enum SiteAppRoute {
-    HOME           = 'home',
-    ABOUT          = 'about',
-    USER           = 'user',
-    SETTINGS       = 'settings',
-    SETTINGS_TYPE  = 'settings-type',
-    SEARCH         = 'search',
-    FRIENDS        = 'friends',
-    DIALOGUE       = 'dialogue',
-    DIALOGUES      = 'dialogues',
-    FILE           = 'file',
-    FILES          = 'files',
-    LANGUAGES      = 'languages',
-    EXCEL_SPLITTER = 'excel-splitter',
-    NOT_FOUND      = 'not_found',
+    HOME          = 'home',
+    ABOUT         = 'about',
+    USER          = 'user',
+    SETTINGS      = 'settings',
+    SETTINGS_TYPE = 'settings-type',
+    SEARCH        = 'search',
+    FRIENDS       = 'friends',
+    DIALOGUE      = 'dialogue',
+    DIALOGUES     = 'dialogues',
+    FILE          = 'file',
+    FILES         = 'files',
+    LANGUAGES     = 'languages',
+    EXCEL         = 'excel',
+    NOT_FOUND     = 'not_found',
 }
 
 export const SiteAppRoutePath: Record<SiteAppRoute, string> = {
-    [SiteAppRoute.HOME]          : '/',
-    [SiteAppRoute.FRIENDS]       : '/friends',
-    [SiteAppRoute.SEARCH]        : '/search',
-    [SiteAppRoute.DIALOGUES]     : '/dialogues',
-    [SiteAppRoute.DIALOGUE]      : `/dialogues/:${ SITE_ROUTE_PARAM_DIALOGUE_ID }`,
-    [SiteAppRoute.ABOUT]         : '/about',
-    [SiteAppRoute.USER]          : `/user/:${ SITE_ROUTE_PARAM_USER_LOGIN }`,
-    [SiteAppRoute.SETTINGS]      : `/settings`,
-    [SiteAppRoute.SETTINGS_TYPE] : `/settings/:${ SITE_ROUTE_PARAM_SETTINGS_TYPE }`,
-    [SiteAppRoute.FILE]          : `/file/:${ SITE_ROUTE_PARAM_FILE_ID }`,
-    [SiteAppRoute.FILES]         : `/files`,
-    [SiteAppRoute.LANGUAGES]     : `/languages`,
-    [SiteAppRoute.EXCEL_SPLITTER]: '/excel-splitter',
-    [SiteAppRoute.NOT_FOUND]     : '*',
+    [SiteAppRoute.HOME]         : '/',
+    [SiteAppRoute.FRIENDS]      : '/friends',
+    [SiteAppRoute.SEARCH]       : '/search',
+    [SiteAppRoute.DIALOGUES]    : '/dialogues',
+    [SiteAppRoute.DIALOGUE]     : `/dialogues/:${ SITE_ROUTE_PARAM_DIALOGUE_ID }`,
+    [SiteAppRoute.ABOUT]        : '/about',
+    [SiteAppRoute.USER]         : `/user/:${ SITE_ROUTE_PARAM_USER_LOGIN }`,
+    [SiteAppRoute.SETTINGS]     : `/settings`,
+    [SiteAppRoute.SETTINGS_TYPE]: `/settings/:${ SITE_ROUTE_PARAM_SETTINGS_TYPE }`,
+    [SiteAppRoute.FILE]         : `/file/:${ SITE_ROUTE_PARAM_FILE_ID }`,
+    [SiteAppRoute.FILES]        : `/files`,
+    [SiteAppRoute.LANGUAGES]    : `/languages`,
+    [SiteAppRoute.EXCEL]        : '/excel',
+    [SiteAppRoute.NOT_FOUND]    : '*',
 };
 
 export const SiteAppRouteConfig: Record<SiteAppRoute, RouteProps> = {
-    [SiteAppRoute.HOME]          : {
+    [SiteAppRoute.HOME]         : {
         path   : SiteAppRoutePath[SiteAppRoute.HOME],
         element: <HomePageAsync/>,
     },
-    [SiteAppRoute.ABOUT]         : {
+    [SiteAppRoute.ABOUT]        : {
         path   : SiteAppRoutePath[SiteAppRoute.ABOUT],
         element: <AboutPageAsync/>,
     },
-    [SiteAppRoute.USER]          : {
+    [SiteAppRoute.USER]         : {
         path   : SiteAppRoutePath[SiteAppRoute.USER],
         element: <ProfilePageAsync/>,
     },
-    [SiteAppRoute.SETTINGS]      : {
+    [SiteAppRoute.SETTINGS]     : {
         path   : SiteAppRoutePath[SiteAppRoute.SETTINGS],
         element: <UserSettingsPageAsync/>,
     },
-    [SiteAppRoute.SETTINGS_TYPE] : {
+    [SiteAppRoute.SETTINGS_TYPE]: {
         path   : SiteAppRoutePath[SiteAppRoute.SETTINGS_TYPE],
         element: <UserSettingsPageAsync/>,
     },
-    [SiteAppRoute.DIALOGUES]     : {
+    [SiteAppRoute.DIALOGUES]    : {
         path   : SiteAppRoutePath[SiteAppRoute.DIALOGUES],
         element: <DialoguesPageAsync/>,
     },
-    [SiteAppRoute.DIALOGUE]      : {
+    [SiteAppRoute.DIALOGUE]     : {
         path   : SiteAppRoutePath[SiteAppRoute.DIALOGUE],
         element: <DialoguesPageAsync/>,
     },
-    [SiteAppRoute.FRIENDS]       : {
+    [SiteAppRoute.FRIENDS]      : {
         path   : SiteAppRoutePath[SiteAppRoute.FRIENDS],
         element: <FriendsPageAsync/>,
     },
-    [SiteAppRoute.SEARCH]        : {
+    [SiteAppRoute.SEARCH]       : {
         path   : SiteAppRoutePath[SiteAppRoute.SEARCH],
         element: <SearchPageAsync/>,
     },
-    [SiteAppRoute.FILE]          : {
+    [SiteAppRoute.FILE]         : {
         path   : SiteAppRoutePath[SiteAppRoute.FILE],
         element: <FilesPageAsync/>,
     },
-    [SiteAppRoute.FILES]         : {
+    [SiteAppRoute.FILES]        : {
         path   : SiteAppRoutePath[SiteAppRoute.FILES],
         element: <FilesPageAsync/>,
     },
-    [SiteAppRoute.LANGUAGES]     : {
+    [SiteAppRoute.LANGUAGES]    : {
         path   : SiteAppRoutePath[SiteAppRoute.LANGUAGES],
         element: <LanguagesPageAsync/>,
     },
-    [SiteAppRoute.EXCEL_SPLITTER]: {
-        path   : SiteAppRoutePath[SiteAppRoute.EXCEL_SPLITTER],
+    [SiteAppRoute.EXCEL]        : {
+        path   : SiteAppRoutePath[SiteAppRoute.EXCEL],
         element: <ExcelSplitterPage/>,
     },
-    [SiteAppRoute.NOT_FOUND]     : {
+    [SiteAppRoute.NOT_FOUND]    : {
         path   : SiteAppRoutePath[SiteAppRoute.NOT_FOUND],
         element: <NotFoundPage/>,
     },
