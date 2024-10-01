@@ -66,12 +66,17 @@ export const ExcelFileUploadForm: FC<ExcelFileUploadFormProps> = memo(function E
                               : 'Загрузить таблицу'
                         }
                     </span>
-                    <progress
-                        className={ css.progress }
-                        max={ 100 }
-                        value={ progress }
-                    />
+                    <div className={ css.progress }>
+                        <div className={ css.bar }
+                             style={ {
+                                 transform: `scaleX(${
+                                     process ? 100 / progress
+                                             : 0
+                                 })`,
+                             } }/>
+                    </div>
                     <input
+                        accept="*.xls*"
                         className={ css.input }
                         id="upload-excel-file"
                         name="upload-excel-file"

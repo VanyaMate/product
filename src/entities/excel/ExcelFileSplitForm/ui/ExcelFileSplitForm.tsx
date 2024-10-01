@@ -129,7 +129,7 @@ export const ExcelFileSplitForm: FC<ExcelFileSplitFormProps> = memo(function Exc
                     loading={ formController.pending }
                     type="submit"
                 >
-                    Обработать
+                    { formController.pending ? 'Обработка' : 'Обработать' }
                 </ButtonWithLoading>
             </Col>
         </Form>

@@ -51,6 +51,7 @@
                 transition      : var(--transition-fast);
                 border-radius   : var(--offset-small);
                 margin-right    : var(--offset-small);
+                color           : var(--on-ghost-text-color);
             }
         }
 
@@ -78,6 +79,7 @@
             &::before {
                 content    : '+';
                 background : var(--primary-color);
+                color      : var(--on-primary-text-color);
             }
         }
     }
