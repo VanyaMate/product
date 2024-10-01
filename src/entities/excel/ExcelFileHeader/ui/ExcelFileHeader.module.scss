@@ -1,0 +1,18 @@
+.container {
+    padding         : var(--offset-medium);
+    border-radius   : var(--offset-medium);
+    background      : var(--bg-ghost-color);
+    display         : flex;
+    justify-content : space-between;
+    align-items     : center;
+    gap             : var(--offset-small);
+
+    h2 {
+        font-size : var(--font-size-m);
+        color     : var(--text-second-color);
+
+        span {
+            color : var(--bg-main-foreground-color);
+        }
+    }
+}

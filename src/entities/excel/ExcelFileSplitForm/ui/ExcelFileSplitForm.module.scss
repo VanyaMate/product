@@ -1,0 +1,68 @@
+.container {
+    padding        : var(--offset-medium);
+    border-radius  : var(--offset-medium);
+    background     : var(--bg-ghost-color);
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-large);
+
+    .label {
+        span {
+            max-width     : 300px;
+            overflow      : hidden;
+            text-overflow : ellipsis;
+            white-space   : nowrap;
+            color         : var(--text-second-color);
+            font-size     : var(--font-size-s);
+            padding       : var(--offset-small);
+            border-radius : var(--offset-small);
+            background    : var(--bg-ghost-color);
+            cursor        : pointer;
+
+            &:hover {
+                background : var(--bg-main-color);
+            }
+
+            &::before {
+                content         : '-';
+                display         : inline-flex;
+                align-items     : center;
+                justify-content : center;
+                width           : 20px;
+                overflow        : hidden;
+                height          : 20px;
+                background      : var(--ghost-color);
+                transition      : var(--transition-fast);
+                border-radius   : var(--offset-small);
+                margin-right    : var(--offset-small);
+            }
+        }
+
+        &:focus-within {
+            span {
+                background : var(--bg-second-color);
+                box-shadow : 0 0 0 2px var(--primary-color);
+            }
+        }
+
+        input {
+            background : none;
+            outline    : none;
+            border     : none;
+            opacity    : 0;
+            width      : 0;
+            height     : 0;
+            overflow   : hidden;
+        }
+
+        input:checked ~ span {
+            color      : var(--text-main-color);
+            background : var(--bg-second-color);
+
+            &::before {
+                content    : '+';
+                background : var(--primary-color);
+            }
+        }
+    }
+}

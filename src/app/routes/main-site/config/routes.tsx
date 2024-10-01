@@ -15,9 +15,7 @@ import {
 import {
     UserSettingsPageAsync,
 } from '@/pages/UserSettingsPage/ui/UserSettingsPage.async.tsx';
-import {
-    ExcelSplitterPage,
-} from '@/pages/ExcelSplitterPage/ui/ExcelSplitterPage.tsx';
+import { ExcelPage } from '@/pages/ExcelPage/ui/ExcelPage.tsx';
 
 
 export enum SiteRouteSettingsType {
@@ -117,7 +115,7 @@ export const SiteAppRouteConfig: Record<SiteAppRoute, RouteProps> = {
     },
     [SiteAppRoute.EXCEL]        : {
         path   : SiteAppRoutePath[SiteAppRoute.EXCEL],
-        element: <ExcelSplitterPage/>,
+        element: <ExcelPage/>,
     },
     [SiteAppRoute.NOT_FOUND]    : {
         path   : SiteAppRoutePath[SiteAppRoute.NOT_FOUND],

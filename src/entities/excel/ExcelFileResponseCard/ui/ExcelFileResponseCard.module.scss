@@ -1,0 +1,29 @@
+.container {
+    padding       : var(--offset-medium);
+    border-radius : var(--offset-medium);
+    background    : var(--bg-ghost-color);
+    font-size     : var(--font-size-s);
+
+    h3 {
+        font-size : var(--font-size-m);
+    }
+
+    p {
+        span {
+            color : var(--text-second-color);
+        }
+    }
+
+    ul {
+        list-style-type : none;
+
+        li::before {
+            content : '- ';
+        }
+    }
+
+    a {
+        color  : var(--primary-color);
+        cursor : pointer;
+    }
+}
