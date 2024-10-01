@@ -64,7 +64,8 @@
                     height     : 100%;
                     background : var(--primary-color);
                     width      : 100%;
-                    transform  : 0;
+                    transform  : scaleX(0);
+                    transition : var(--transition-fast);
                 }
             }
         }

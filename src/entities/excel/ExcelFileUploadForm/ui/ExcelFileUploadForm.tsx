@@ -70,7 +70,7 @@ export const ExcelFileUploadForm: FC<ExcelFileUploadFormProps> = memo(function E
                         <div className={ css.bar }
                              style={ {
                                  transform: `scaleX(${
-                                     process ? 100 / progress
+                                     process ? progress / 100
                                              : 0
                                  })`,
                              } }/>
