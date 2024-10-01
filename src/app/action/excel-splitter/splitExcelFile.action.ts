@@ -4,15 +4,15 @@ import {
 } from 'product-types/dist/excel/excel-split/DomainExcelFileSplitResponse';
 
 
-export const splitExcelFileAction = function (rows: number) {
+export const splitExcelFileAction = function (rows: number, sheet: string, columns: Array<string>) {
     return request(
         `v1/excel/split`,
         {
             method: 'POST',
             body  : JSON.stringify({
                 rowsPerFile    : rows,
-                selectedSheet  : 'Sheet1',
-                selectedColumns: [ 'Имя', 'Телефон' ],
+                selectedSheet  : sheet,
+                selectedColumns: columns,
             }),
             isJson: true,
         },

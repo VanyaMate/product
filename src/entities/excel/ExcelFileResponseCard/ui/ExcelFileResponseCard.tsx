@@ -46,7 +46,6 @@ export const ExcelFileResponseCard: FC<ExcelFileResponseCardProps> = memo(functi
             </ul>
             <Link
                 download={ fileName }
-                target="_blank"
                 to={ filePath }
             >
                 Скачать
