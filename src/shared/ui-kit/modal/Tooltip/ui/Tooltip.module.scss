@@ -1,0 +1,18 @@
+.container {
+    width      : fit-content;
+    height     : fit-content;
+    max-width  : 300px;
+    transition : var(--transition-fast) opacity, var(--transition-fast) visibility, var(--transition-fast) transform;
+    opacity    : 1;
+    visibility : visible;
+    position   : absolute;
+    box-shadow : 0 3px 5px -3px var(--danger-color);
+
+    &.hidden {
+        opacity    : 0;
+        visibility : hidden;
+        top        : 0;
+        left       : 0;
+        transform  : scale(.8);
+    }
+}

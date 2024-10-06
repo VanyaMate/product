@@ -12,7 +12,7 @@ export type ModalPositionSide =
 
 const MODAL_OFFSET: number = 5;
 
-export const getModalPosition = function (containerRef: MutableRefObject<HTMLDivElement>, modalRef: MutableRefObject<HTMLDivElement>, side: ModalPositionSide = 'top'): ModalPosition {
+export const getModalPosition = function (containerRef: MutableRefObject<HTMLElement>, modalRef: MutableRefObject<HTMLElement>, side: ModalPositionSide = 'top'): ModalPosition {
     const {
               top,
               left,

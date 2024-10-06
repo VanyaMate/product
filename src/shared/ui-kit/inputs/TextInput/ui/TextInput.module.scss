@@ -1,0 +1,15 @@
+.container {
+    color : inherit;
+}
+
+.labelContainer {
+    color : inherit;
+}
+
+.errorMessage {
+    background    : var(--danger-color);
+    color         : var(--on-danger-color);
+    padding       : var(--offset-medium);
+    border-radius : var(--offset-medium);
+    position      : relative;
+}
