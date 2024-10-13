@@ -20,6 +20,7 @@ Full private
 - **TypeScript**
 - **React**
     - **React-Router-Dom**
+    - **React-Hook-Form**
     - ~~**Redux**~~ - `слишком много весит. ~45kb (15kb gzip)`
         - ~~**Redux Toolkit**~~
         - ~~**Redux ThunkError**~~
