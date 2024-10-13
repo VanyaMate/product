@@ -11,9 +11,18 @@
     cursor        : pointer;
     transition    : var(--transition-fast);
     border        : 1px solid var(--border-main-color);
+    user-select   : none;
+
+    &.checked {
+        border : 1px solid var(--primary-color);
+    }
 
     &:hover {
         background : var(--bg-main-color);
+    }
+
+    &:active {
+        background : var(--bg-second-color);
     }
 
     span {
@@ -34,10 +43,16 @@
         }
     }
 
-    &:focus-within {
+    &:focus-within.checked {
         box-shadow : 0 0 0 1px var(--primary-color), 0 5px 25px -5px var(--primary-color);
         border     : 1px solid var(--primary-color);
         background : var(--bg-main-color);
+    }
+
+    &:focus-within:not(.checked) {
+        box-shadow : 0 0 0 1px var(--ghost-color), 0 5px 25px -5px var(--ghost-color);
+        border     : 1px solid var(--border-main-color);
+        background : var(--bg-ghost-color);
     }
 
     input {
