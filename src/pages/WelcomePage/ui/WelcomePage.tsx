@@ -1,5 +1,4 @@
 import { FC, memo } from 'react';
-import { useWelcomeAuth } from '@/features/auth/hooks/useWelcomeAuth.ts';
 import css from './WelcomePage.module.scss';
 import classNames from 'classnames';
 import { useStore } from '@vanyamate/sec-react';
@@ -8,6 +7,7 @@ import {
     UserSignForm,
 } from '@/widgets/user/form/UserSignForm/ui/UserSignForm.tsx';
 import { Image } from '@/shared/ui-kit/image/Image/ui/Image.tsx';
+import { useWelcomeAuth } from '@/features/auth/hooks/useWelcomeAuth.ts';
 
 
 export type WelcomePageProps = {};
