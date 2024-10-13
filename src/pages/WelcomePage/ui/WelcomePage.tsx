@@ -1,5 +1,4 @@
 import { FC, memo } from 'react';
-import { useWelcomeAuth } from '@/features/auth/hooks/useWelcomeAuth.ts';
 import css from './WelcomePage.module.scss';
 import classNames from 'classnames';
 import { useStore } from '@vanyamate/sec-react';
@@ -16,7 +15,7 @@ export const WelcomePage: FC<WelcomePageProps> = memo(function WelcomePage (prop
     const {}          = props;
     const authPending = useStore($authIsPending);
 
-    useWelcomeAuth();
+    // useWelcomeAuth();
 
     return (
         <main className={ css.container }>

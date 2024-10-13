@@ -6,7 +6,7 @@
     gap             : var(--offset-small);
     backdrop-filter : var(--item-backdrop-filter);
 
-    .error {
+    .inputError {
         position      : absolute;
         z-index       : 1;
         bottom        : calc(100% + var(--offset-medium));
@@ -62,7 +62,7 @@
 
     }
 
-    &.noValid .input:focus ~ .error {
+    &.noValid .input:focus ~ .inputError {
         visibility : visible;
         opacity    : 1;
     }
