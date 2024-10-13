@@ -1,65 +1,55 @@
 import { FC, memo } from 'react';
-import classNames from 'classnames';
 import css from './CreatePostForm.module.scss';
-import { Form, FormProps } from '@/shared/ui-kit/forms/Form/ui/Form.tsx';
-import {
-    InputWithError,
-} from '@/shared/ui-kit/inputs/InputWithError/ui/InputWithError.tsx';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
-import {
-    useInputWithError,
-} from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
-import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
 import { createPostEffect } from '@/app/model/posts/posts.model.ts';
 import { IoSend } from 'react-icons/io5';
-import { lengthValidator } from '@/app/validation/string/length.validator.ts';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { useForm } from 'react-hook-form';
+import { TextInput } from '@/shared/ui-kit/input/TextInput/ui/TextInput.tsx';
+import {
+    DomainPostCreateData,
+} from 'product-types/dist/post/DomainPostCreateData';
+import {
+    isPostTextValidatorRhf,
+} from '@/app/react-hook-form/validator/isPostTextValidatorRhf/isPostTextValidatorRhf.ts';
 
 
-export type CreatePostFormProps =
-    {}
-    & Omit<FormProps, 'controller'>;
+export const CreatePostForm: FC = memo(function CreatePostForm () {
+    const { t } = useTranslation();
 
-export const CreatePostForm: FC<CreatePostFormProps> = memo(function CreatePostForm (props) {
-    const { className, ...other } = props;
-    const { t }                   = useTranslation();
+    const {
+              register, handleSubmit, formState, reset,
+          } = useForm<DomainPostCreateData>({ mode: 'onChange' });
 
-    const inputController = useInputWithError({
-        name            : 'message',
-        validationMethod: lengthValidator(1, 255),
-    });
-
-    const formController = useForm<{ message: string }>({
-        inputs  : [ inputController ],
-        onSubmit: async (data) => createPostEffect(data).then(
-            () => {
-                inputController.inputRef.current.value = '';
-                inputController.value.current          = '';
-            },
-        ),
-    });
+    const createPostHandler = function (data: DomainPostCreateData) {
+        return createPostEffect(data).then(() => reset());
+    };
 
     return (
-        <Form
-            { ...other }
-            className={ classNames(css.container, {}, [ className ]) }
-            controller={ formController }
+        <form
+            className={ css.container }
+            onSubmit={ handleSubmit(createPostHandler) }
         >
-            <InputWithError
-                containerClassName={ css.input }
-                controller={ inputController }
+            <TextInput
+                className={ css.input }
+                errorMessage={ formState.errors.message?.message }
                 placeholder={ t.page.posts.write_new_post }
+                type="text"
+                { ...register('message', {
+                    required: true,
+                    validate: isPostTextValidatorRhf,
+                }) }
             />
             <ButtonWithLoading
-                disabled={ !formController.canBeSubmitted }
-                loading={ formController.pending }
+                disabled={ !formState.isValid }
+                loading={ formState.isSubmitting }
                 quad
                 type="submit"
             >
                 <IoSend/>
             </ButtonWithLoading>
-        </Form>
+        </form>
     );
 });
