@@ -83,7 +83,6 @@ export const Tooltip: FC<TooltipProps> = memo(function Tooltip (props) {
     useEffect(() => {
         if (show && currentTooltipRenderState && elementRef.current && tooltipRef.current) {
             const observer = new IntersectionObserver(() => {
-                console.log('resized');
                 setPositionOffset(() => {
                     const positionDelta = getModalPosition(elementRef, tooltipRef, tooltipPosition);
                     return {

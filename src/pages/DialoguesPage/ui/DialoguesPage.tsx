@@ -68,7 +68,6 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
             const dialogue      = dialogues.find((dialogue) => dialogue.id === dialogueId);
             const dialogueTitle = dialogue.title || dialogue.user.login;
 
-            console.log('set page title to with dialogue', t.app.dialogue_page);
             setPageTitle(
                 replace(
                     t.app.dialogue_page,
@@ -78,7 +77,6 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
                 ),
             );
         } else {
-            console.log('set page title to', t.app.dialogue_page);
             setPageTitle(t.app.dialogues_page);
         }
     }, [ dialogueId, dialogueNotSelected, dialogues, replace, setPageTitle, t.app.dialogue_page, t.app.dialogues_page ]);

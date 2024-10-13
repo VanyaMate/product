@@ -36,6 +36,7 @@ export const CreatePostForm: FC = memo(function CreatePostForm () {
                 className={ css.input }
                 errorMessage={ formState.errors.message?.message }
                 placeholder={ t.page.posts.write_new_post }
+                required
                 type="text"
                 { ...register('message', {
                     required: true,
