@@ -26,6 +26,7 @@ export type TextInputProps =
         errorMessage?: string;
         label?: string;
         labelClassName?: string;
+        containerClassName?: string;
         tooltipPosition?: TextInputTooltipPosition;
     }
     & Omit<ComponentPropsWithRef<'input'>, 'type'>;
@@ -35,6 +36,7 @@ export const TextInput: FC<TextInputProps> = memo(forwardRef(function TextInput 
               className,
               label,
               labelClassName,
+              containerClassName,
               errorMessage    = '',
               tooltipPosition = 'top',
               ...other
@@ -53,7 +55,8 @@ export const TextInput: FC<TextInputProps> = memo(forwardRef(function TextInput 
     }, [ errorMessage ]);
 
     const Input = (
-        <div className={ css.container }>
+        <div
+            className={ classNames(css.container, {}, [ containerClassName ]) }>
             <input
                 className={ classNames(css.input, { [css.inputError]: showError }, [ className ]) }
                 ref={ ref }

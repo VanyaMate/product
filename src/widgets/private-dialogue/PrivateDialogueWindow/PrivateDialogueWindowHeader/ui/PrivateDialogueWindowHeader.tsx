@@ -56,9 +56,7 @@ export const PrivateDialogueWindowHeader: FC<PrivateDialogueWindowHeaderProps> =
         : resetPrivateMessagesSearchEffect(dialogueId);
     }, [ dialogueId ]);
 
-    const { handleSubmit, register, reset } = useForm<{ search: string }>(
-        { mode: 'onChange' },
-    );
+    const { handleSubmit, register, reset } = useForm<{ search: string }>();
 
     useEffect(() => reset(), [ dialogueId, reset ]);
 
