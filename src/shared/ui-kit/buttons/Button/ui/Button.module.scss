@@ -8,8 +8,10 @@
     align-items     : center;
     justify-content : center;
     line-height     : 0;
+    text-wrap       : nowrap;
     overflow        : hidden;
     backdrop-filter : var(--item-backdrop-filter);
+    min-width       : fit-content;
 
     &:disabled {
         background     : var(--bg-ghost-color);

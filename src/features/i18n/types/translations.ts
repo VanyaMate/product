@@ -161,6 +161,7 @@ export type TranslationFilesPage = {
     files_preload_title: string,
     selected_files: string,
     selected_files_title: string,
+    find_file_by_title: string,
 }
 
 export type TranslationDialoguesPage = {

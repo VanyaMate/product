@@ -30,6 +30,7 @@ export const TranslationProvider: FC<{ children: ReactNode }> = (props) => {
 
     const setLanguageHandler = useCallback(function (language: TranslationLanguage) {
         setLanguage(language);
+        document.documentElement.setAttribute('lang', language);
         localStorage.setItem(LOCAL_STORAGE_SELECTED_LANGUAGE, language);
     }, []);
 

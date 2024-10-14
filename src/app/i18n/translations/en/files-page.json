@@ -9,5 +9,6 @@
     "upload_files": "Upload {{amount}}",
     "files_preload_title": "Upload",
     "selected_files": "Selected files",
-    "selected_files_title": "Files - Selected {{amount}}"
+    "selected_files_title": "Files - Selected {{amount}}",
+    "find_file_by_title": "Find files by title"
 }

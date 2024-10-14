@@ -16,9 +16,9 @@ export const ButtonWithFixes: FC<ButtonWithFixesProps> = memo(function ButtonWit
 
     return (
         <Button { ...other } className={ classNames(css.container, {}, [ className ]) }>
-            { pref ? <span className={ css.item }>{ pref }</span> : null }
-            { children ? <span className={ css.item }>{ children }</span> : null }
-            { post ? <span className={ css.item }>{ post }</span> : null }
+            { pref ? <span className={ css.section }>{ pref }</span> : null }
+            { children ? <span className={ css.section }>{ children }</span> : null }
+            { post ? <span className={ css.section }>{ post }</span> : null }
         </Button>
     );
 });
