@@ -2,24 +2,17 @@ import { ComponentPropsWithoutRef, FC, memo, useCallback } from 'react';
 import classNames from 'classnames';
 import css from './CreateLanguageFolderForm.module.scss';
 import {
-    useInputWithError,
-} from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
-import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
-import {
     createLanguageFolderEffect,
 } from '@/app/model/languages/languages.model.ts';
-import { Form } from '@/shared/ui-kit/forms/Form/ui/Form.tsx';
-import {
-    InputWithError,
-} from '@/shared/ui-kit/inputs/InputWithError/ui/InputWithError.tsx';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
-import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
-import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
-import { IoCreate } from 'react-icons/io5';
-import { lengthValidator } from '@/app/validation/string/length.validator.ts';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { useForm } from 'react-hook-form';
+import { TextInput } from '@/shared/ui-kit/input/TextInput/ui/TextInput.tsx';
+import {
+    DomainLanguageFolderCreateData,
+} from 'product-types/dist/language/DomainLanguageFolderCreateData';
 
 
 export type CreateLanguageFolderFormProps =
@@ -39,47 +32,47 @@ export const CreateLanguageFolderForm: FC<CreateLanguageFolderFormProps> = memo(
               onErrorHandler,
               onFinallyHandler,
               ...other
-          }                    = props;
-    const titleInputController = useInputWithError({
-        name            : 'title',
-        validationMethod: lengthValidator(1, Infinity),
-    });
-    const formController       = useForm<{ title: string }>({
-        inputs  : [ titleInputController ],
-        onSubmit: async (data) => createLanguageFolderEffect(languageId, data)
-            .then(onSubmitHandler)
-            .then(clearForm)
-            .catch(onErrorHandler)
-            .finally(onFinallyHandler),
-    });
-    const { t }                = useTranslation();
+          }     = props;
+    const {
+              handleSubmit,
+              formState,
+              register,
+              reset,
+          }     = useForm<DomainLanguageFolderCreateData>();
+    const { t } = useTranslation();
 
-    const clearForm = useCallback(() => {
-        titleInputController.value.current          = '';
-        titleInputController.inputRef.current.value = '';
-    }, [ titleInputController.inputRef, titleInputController.value ]);
+    const onSubmit = useCallback((data: DomainLanguageFolderCreateData) => {
+        return createLanguageFolderEffect(languageId, data)
+            .then(onSubmitHandler)
+            .then(() => reset())
+            .catch(onErrorHandler)
+            .finally(onFinallyHandler);
+    }, [ languageId, onErrorHandler, onFinallyHandler, onSubmitHandler, reset ]);
+
 
     return (
-        <Form
+        <form
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
-            controller={ formController }
+            onSubmit={ handleSubmit(onSubmit) }
         >
-            <InputWithError
-                controller={ titleInputController }
+            <TextInput
                 placeholder={ t.page.languages.folder_title }
+                required
+                type="text"
+                { ...register('title', {
+                    required : true,
+                    minLength: 1,
+                    maxLength: 255,
+                }) }
             />
             <ButtonWithLoading
-                disabled={ !formController.canBeSubmitted }
-                loading={ formController.pending }
-                styleType={ ButtonStyleType.PRIMARY }
+                disabled={ !formState.isValid }
+                loading={ formState.isSubmitting }
                 type="submit"
             >
-                <Row>
-                    <IoCreate/>
-                    <span>{ t.page.languages.add_folder }</span>
-                </Row>
+                { t.page.languages.add_folder }
             </ButtonWithLoading>
-        </Form>
+        </form>
     );
 });

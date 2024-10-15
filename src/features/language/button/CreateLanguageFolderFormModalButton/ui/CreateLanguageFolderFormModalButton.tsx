@@ -34,7 +34,7 @@ export const CreateLanguageFolderFormModalButton: FC<CreateLanguageFolderFormMod
                     onSubmitHandler={ () => modalController.setOpened(false) }
                 />
             </Modal>
-            <PopOver popover={ t.page.languages.add_language }>
+            <PopOver popover={ t.page.languages.add_folder }>
                 <Button
                     { ...other }
                     onClick={ () => modalController.setOpened(true) }
