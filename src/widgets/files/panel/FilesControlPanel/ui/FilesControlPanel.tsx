@@ -22,15 +22,15 @@ export type FilesControlPanelProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const FilesControlPanel: FC<FilesControlPanelProps> = memo(function FilesControlPanel (props) {
-    const { className, ...other }    = props;
-    const { t }                      = useTranslation();
-    const debounce                   = useDebounce(300);
+    const { className, ...other } = props;
+    const { t } = useTranslation();
+    const debounce = useDebounce(300);
     const { handleSubmit, register } = useForm<{
         search: string,
         sort: string,
         type: string
     }>();
-    const onSearchFile               = useCallback((search: {
+    const onSearchFile = useCallback((search: {
         search: string,
         sort: string,
         type: string
@@ -58,7 +58,7 @@ export const FilesControlPanel: FC<FilesControlPanelProps> = memo(function Files
                         placeholder={ t.page.files.find_file_by_title }
                         type="text"
                         { ...register('search', {
-                            minLength: 1, maxLength: 255, required: true,
+                            minLength: 1, maxLength: 255,
                         }) }
                     />
                     <Row key="sort">
