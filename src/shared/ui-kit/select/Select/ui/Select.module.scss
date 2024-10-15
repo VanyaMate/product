@@ -1,0 +1,38 @@
+.container {
+    ul {
+        visibility      : hidden;
+        opacity         : 0;
+        transform       : translateY(calc(0px + -1 * var(--offset-small)));
+        transition      : var(--transition-fast);
+        list-style-type : none;
+        border-radius   : var(--offset-small);
+        border          : 1px solid var(--border-main-color);
+        background      : var(--bg-ghost-color);
+        padding         : var(--offset-small);
+        display         : flex;
+        flex-direction  : column;
+        gap             : var(--offset-small);
+
+        li {
+            padding       : var(--offset-small);
+            background    : var(--bg-second-color);
+            border-radius : var(--offset-small);
+
+            &:focus {
+                background : var(--primary-color);
+            }
+
+            &.active {
+                background : var(--second-color);
+            }
+        }
+    }
+
+    &.visible {
+        ul {
+            visibility : visible;
+            opacity    : 1;
+            transform  : translateY(0);
+        }
+    }
+}

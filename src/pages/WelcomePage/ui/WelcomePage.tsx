@@ -7,7 +7,7 @@ import {
     UserSignForm,
 } from '@/widgets/user/form/UserSignForm/ui/UserSignForm.tsx';
 import { Image } from '@/shared/ui-kit/image/Image/ui/Image.tsx';
-import { useWelcomeAuth } from '@/features/auth/hooks/useWelcomeAuth.ts';
+import { Select } from '@/shared/ui-kit/select/Select/ui/Select.tsx';
 
 
 export type WelcomePageProps = {};
@@ -16,7 +16,7 @@ export const WelcomePage: FC<WelcomePageProps> = memo(function WelcomePage (prop
     const {}          = props;
     const authPending = useStore($authIsPending);
 
-    useWelcomeAuth();
+    // useWelcomeAuth();
 
     return (
         <main className={ css.container }>
@@ -31,6 +31,11 @@ export const WelcomePage: FC<WelcomePageProps> = memo(function WelcomePage (prop
                 >
                     <UserSignForm/>
                 </div>
+                <Select options={ [
+                    { value: '1', label: 'Первый' },
+                    { value: '2', label: 'Второй' },
+                    { value: '3', label: 'Третий' },
+                ] }/>
             </div>
         </main>
     );
