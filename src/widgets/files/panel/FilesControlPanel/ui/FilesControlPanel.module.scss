@@ -15,6 +15,10 @@
             display : flex;
             gap     : var(--offset-small);
         }
+
+        .select {
+            width : 200px;
+        }
     }
 
     .control {

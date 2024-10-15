@@ -12,9 +12,11 @@
     }
 
     button {
-        display     : inline-flex;
-        gap         : var(--offset-small);
-        align-items : center;
+        display         : inline-flex;
+        gap             : var(--offset-small);
+        align-items     : center;
+        width           : 100%;
+        justify-content : space-between;
 
         svg {
             transition : var(--transition-fast);
@@ -60,13 +62,14 @@
             }
 
             &.active {
-                background : var(--second-color);
-                border     : 1px solid var(--second-color);
+                background : var(--primary-color);
+                border     : 1px solid var(--primary-color);
+                color      : var(--on-primary-text-color);
 
                 &:focus {
-                    box-shadow : 0 0 0 1px var(--second-color), 0 5px 25px -5px var(--second-color);
-                    border     : 1px solid var(--second-color);
-                    background : var(--second-color);
+                    box-shadow : 0 0 0 1px var(--primary-color), 0 5px 25px -5px var(--primary-color);
+                    border     : 1px solid var(--primary-color);
+                    background : var(--primary-color);
                 }
             }
         }

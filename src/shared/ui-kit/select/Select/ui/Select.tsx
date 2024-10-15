@@ -1,16 +1,19 @@
 import {
-    ComponentPropsWithoutRef,
-    FC,
-    memo, MouseEventHandler,
+    ComponentPropsWithRef,
+    FC, forwardRef,
+    memo, MouseEventHandler, MutableRefObject,
     ReactNode,
     useCallback,
-    useEffect,
+    useEffect, useLayoutEffect,
     useRef,
     useState,
 } from 'react';
 import classNames from 'classnames';
 import css from './Select.module.scss';
-import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import {
+    Button,
+    ButtonProps,
+} from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import {
     isChildElementOf,
 } from '@/shared/lib/dom/isChildElementOf/isChildElementOf.ts';
@@ -18,6 +21,9 @@ import { IoChevronDown } from 'react-icons/io5';
 import {
     getOptionLabel,
 } from '@/shared/ui-kit/select/Select/lib/getOptionLabel.ts';
+import {
+    getCustomSelectChangeEvent,
+} from '@/shared/ui-kit/select/Select/lib/getCustomSelectChangeEvent.ts';
 
 
 /**
@@ -41,13 +47,15 @@ export type SelectProps =
     {
         options: Array<SelectOption>;
         initialValue?: SelectOptionValueType;
+        buttonProps?: ButtonProps;
     }
-    & ComponentPropsWithoutRef<'div'>;
+    & ComponentPropsWithRef<'select'>;
 
-export const Select: FC<SelectProps> = memo(function Select (props) {
+export const Select: FC<SelectProps> = memo(forwardRef(function Select (props, ref: MutableRefObject<HTMLSelectElement>) {
     const {
               className,
               options,
+              buttonProps,
               initialValue = '',
               ...other
           } = props;
@@ -73,7 +81,16 @@ export const Select: FC<SelectProps> = memo(function Select (props) {
         focusOnLiRef.current    = li;
         setCurrentLabel(getOptionLabel(options, value));
         li.classList.add(css.active);
+        setVisible(false);
+
+        selectRef.current.dispatchEvent(getCustomSelectChangeEvent(value));
     }, [ options ]);
+
+    useLayoutEffect(() => {
+        if (containerRef.current) {
+            selectRef.current = containerRef.current.querySelector('select');
+        }
+    }, []);
 
     useEffect(() => {
         if (visible && selectRef.current !== null && ulRef.current !== null) {
@@ -151,6 +168,7 @@ export const Select: FC<SelectProps> = memo(function Select (props) {
                     setCurrentLabel(getOptionLabel(options, value));
                     setVisible(false);
                     buttonRef.current.focus();
+                    selectRef.current.dispatchEvent(getCustomSelectChangeEvent(value));
                 }
             };
 
@@ -210,14 +228,14 @@ export const Select: FC<SelectProps> = memo(function Select (props) {
 
     return (
         <div
-            { ...other }
             className={ classNames(css.container, { [css.visible]: visible }, [ className ]) }
             ref={ containerRef }
         >
             <select
+                { ...other }
                 defaultValue={ initialValue }
                 multiple={ false }
-                ref={ selectRef }
+                ref={ ref }
             >
                 <option disabled value="">No select</option>
                 {
@@ -232,6 +250,7 @@ export const Select: FC<SelectProps> = memo(function Select (props) {
                 }
             </select>
             <Button
+                { ...buttonProps }
                 onClick={ (e) => {
                     e.preventDefault();
                     setVisible((prev) => !prev);
@@ -258,4 +277,4 @@ export const Select: FC<SelectProps> = memo(function Select (props) {
             </ul>
         </div>
     );
-});
+}));
