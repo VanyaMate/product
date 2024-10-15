@@ -1,7 +1,7 @@
 import {
     ComponentPropsWithoutRef,
     FC,
-    memo,
+    memo, MouseEventHandler,
     ReactNode,
     useCallback,
     useEffect,
@@ -11,6 +11,21 @@ import {
 import classNames from 'classnames';
 import css from './Select.module.scss';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
+import {
+    isChildElementOf,
+} from '@/shared/lib/dom/isChildElementOf/isChildElementOf.ts';
+import { IoChevronDown } from 'react-icons/io5';
+import {
+    getOptionLabel,
+} from '@/shared/ui-kit/select/Select/lib/getOptionLabel.ts';
+
+
+/**
+ * TODO:
+ * Не стал реализовывать:
+ * - Переключение без открытия
+ * - Добавление aria- и role
+ */
 
 
 export type SelectOptionValueType =
@@ -18,7 +33,8 @@ export type SelectOptionValueType =
 
 export type SelectOption = {
     value: SelectOptionValueType;
-    label: ReactNode;
+    textLabel: string;
+    customLabel?: ReactNode;
 }
 
 export type SelectProps =
@@ -36,72 +52,57 @@ export const Select: FC<SelectProps> = memo(function Select (props) {
               ...other
           } = props;
 
-    const [ visible, setVisible ] = useState<boolean>(false);
-    // const [ currentValue, setCurrentValue ] =
-    // useState<SelectOptionValueType>(initialValue);
-    const ulRef         = useRef<HTMLUListElement>(null);
-    const selectRef     = useRef<HTMLSelectElement>(null);
-    const selectedLiRef = useRef<HTMLLIElement>(null);
-    const focusOnLiRef  = useRef<HTMLLIElement>(null);
-    const buttonRef     = useRef<HTMLButtonElement>(null);
+    const [ currentLabel, setCurrentLabel ] = useState<string>(getOptionLabel(options, initialValue));
+    const [ visible, setVisible ]           = useState<boolean>(false);
+    const ulRef                             = useRef<HTMLUListElement>(null);
+    const selectRef                         = useRef<HTMLSelectElement>(null);
+    const selectedLiRef                     = useRef<HTMLLIElement>(null);
+    const focusOnLiRef                      = useRef<HTMLLIElement>(null);
+    const buttonRef                         = useRef<HTMLButtonElement>(null);
+    const containerRef                      = useRef<HTMLDivElement>(null);
 
-    const liSelectHandler = useCallback((li: HTMLLIElement) => {
-        if (li) {
-            li.addEventListener('click', () => console.log('click'));
+    const liSelectHandler = useCallback<MouseEventHandler<HTMLLIElement>>((e) => {
+        const li: HTMLLIElement = e.target as HTMLLIElement;
+        if (selectedLiRef.current !== null) {
+            selectedLiRef.current.classList.remove(css.active);
         }
-    }, []);
+
+        const value             = li.getAttribute('data-value');
+        selectRef.current.value = value;
+        selectedLiRef.current   = li;
+        focusOnLiRef.current    = li;
+        setCurrentLabel(getOptionLabel(options, value));
+        li.classList.add(css.active);
+    }, [ options ]);
 
     useEffect(() => {
-        // Если нужно показать и есть select
-        if (visible && selectRef.current !== null) {
-            const selectValue = selectRef.current.value;
+        if (visible && selectRef.current !== null && ulRef.current !== null) {
+            if (initialValue !== '' && selectedLiRef.current === null) {
+                const selectedLi: HTMLLIElement | null = ulRef.current.querySelector(`li[data-value="${ initialValue }"]`);
+                if (selectedLi) {
+                    selectedLiRef.current = selectedLi;
+                    selectedLi.classList.add(css.active);
+                }
+            }
 
-            // Если значение select не пустое
-            if (selectValue !== '') {
-
-                // Если есть уже выбранный li с нужным data-value
-                if (selectedLiRef.current !== null && selectedLiRef.current.getAttribute('data-value') === selectValue) {
-                    selectedLiRef.current.focus();
-                    focusOnLiRef.current.focus();
-
-                    // Если ulRef существует
-                } else if (ulRef.current !== null) {
-
-                    // Найти первый li с нужным data-value
-                    const li: HTMLLIElement | null = ulRef.current.querySelector(`li[data-value="${ selectValue }"]`);
-                    if (li) {
-                        focusOnLiRef.current = li;
-                        li.focus();
+            const arrowDownKeyHandler = function () {
+                if (focusOnLiRef.current === null) {
+                    if (selectedLiRef.current !== null) {
+                        const next = selectedLiRef.current.nextElementSibling as HTMLLIElement | null;
+                        if (next) {
+                            focusOnLiRef.current = next;
+                            next.focus();
+                        }
                     } else {
-
-                        // Очистить и найти первый li
-                        selectRef.current.value             = '';
                         const firstLi: HTMLLIElement | null = ulRef.current.querySelector('li');
                         if (firstLi) {
                             focusOnLiRef.current = firstLi;
                             firstLi.focus();
                         } else {
-
-                            // Иначе скрыть
                             setVisible(false);
                         }
                     }
-                }
-            } else {
-                console.log('here 1');
-                // Найти первый li
-                const firstLi: HTMLLIElement | null = ulRef.current.querySelector('li');
-                if (firstLi) {
-                    console.log(firstLi);
-                    focusOnLiRef.current = firstLi;
                 } else {
-                    // Иначе скрыть
-                    setVisible(false);
-                }
-            }
-
-            const arrowDownKeyHandler = function () {
-                if (focusOnLiRef.current !== null) {
                     const next = focusOnLiRef.current.nextElementSibling as HTMLLIElement | null;
                     if (next) {
                         focusOnLiRef.current = next;
@@ -111,9 +112,24 @@ export const Select: FC<SelectProps> = memo(function Select (props) {
             };
 
             const arrowUpKeyHandler = function () {
-                if (focusOnLiRef.current !== null) {
+                if (focusOnLiRef.current === null) {
+                    if (selectedLiRef.current !== null) {
+                        const next = selectedLiRef.current.previousElementSibling as HTMLLIElement | null;
+                        if (next) {
+                            focusOnLiRef.current = next;
+                            next.focus();
+                        }
+                    } else {
+                        const firstLi: HTMLLIElement | null = ulRef.current.querySelector('li');
+                        if (firstLi) {
+                            focusOnLiRef.current = firstLi;
+                            firstLi.focus();
+                        } else {
+                            setVisible(false);
+                        }
+                    }
+                } else {
                     const next = focusOnLiRef.current.previousElementSibling as HTMLLIElement | null;
-                    console.log('next is', next);
                     if (next) {
                         focusOnLiRef.current = next;
                         next.focus();
@@ -127,9 +143,12 @@ export const Select: FC<SelectProps> = memo(function Select (props) {
                         selectedLiRef.current.classList.remove(css.active);
                     }
 
+                    const value = focusOnLiRef.current.getAttribute('data-value');
+
                     selectedLiRef.current = focusOnLiRef.current;
                     selectedLiRef.current.classList.add(css.active);
-                    selectRef.current.value = selectedLiRef.current.getAttribute('data-value');
+                    selectRef.current.value = value;
+                    setCurrentLabel(getOptionLabel(options, value));
                     setVisible(false);
                     buttonRef.current.focus();
                 }
@@ -172,17 +191,28 @@ export const Select: FC<SelectProps> = memo(function Select (props) {
                 }
             };
 
+            const onAnyMouseClick = function (e: Event) {
+                const target: HTMLElement = e.target as unknown as HTMLElement;
+
+                if (!isChildElementOf(containerRef.current, target)) {
+                    setVisible(false);
+                }
+            };
+
             window.addEventListener('keydown', keydownHandler);
+            window.addEventListener('click', onAnyMouseClick);
             return () => {
                 window.removeEventListener('keydown', keydownHandler);
+                window.removeEventListener('click', onAnyMouseClick);
             };
         }
-    }, [ visible ]);
+    }, [ initialValue, options, visible ]);
 
     return (
         <div
             { ...other }
             className={ classNames(css.container, { [css.visible]: visible }, [ className ]) }
+            ref={ containerRef }
         >
             <select
                 defaultValue={ initialValue }
@@ -196,7 +226,7 @@ export const Select: FC<SelectProps> = memo(function Select (props) {
                             key={ index }
                             value={ option.value }
                         >
-                            { option.label }
+                            { option.textLabel }
                         </option>
                     ))
                 }
@@ -207,8 +237,10 @@ export const Select: FC<SelectProps> = memo(function Select (props) {
                     setVisible((prev) => !prev);
                 } }
                 ref={ buttonRef }
+                type="button"
             >
-                Open
+                <span>{ currentLabel }</span>
+                <IoChevronDown/>
             </Button>
             <ul ref={ ulRef }>
                 {
@@ -216,10 +248,10 @@ export const Select: FC<SelectProps> = memo(function Select (props) {
                         <li
                             data-value={ option.value }
                             key={ index }
-                            ref={ liSelectHandler }
+                            onClick={ liSelectHandler }
                             tabIndex={ -1 }
                         >
-                            { option.label }
+                            { option.customLabel ?? option.textLabel }
                         </li>
                     ))
                 }
