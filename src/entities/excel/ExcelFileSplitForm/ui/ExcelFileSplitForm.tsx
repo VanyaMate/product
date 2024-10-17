@@ -2,7 +2,7 @@ import {
     ComponentPropsWithoutRef,
     FC,
     memo,
-    useCallback,
+    useCallback, useMemo,
 } from 'react';
 import classNames from 'classnames';
 import css from './ExcelFileSplitForm.module.scss';
@@ -27,6 +27,9 @@ import { Checkbox } from '@/shared/ui-kit/input/Checkbox/ui/Checkbox.tsx';
 import { TextInput } from '@/shared/ui-kit/input/TextInput/ui/TextInput.tsx';
 
 // TODO: После добавления новой системы форм - обновить эту
+// TODO: Добавить переводы
+// TODO: Возможно, перенести сюда и sheets. Тогда можно будет сделать
+//  values -> defaultValues
 
 export type ExcelFileSplitFormProps =
     {
@@ -37,13 +40,23 @@ export type ExcelFileSplitFormProps =
     & ComponentPropsWithoutRef<'form'>;
 
 export const ExcelFileSplitForm: FC<ExcelFileSplitFormProps> = memo(function ExcelFileSplitForm (props) {
-    const { className, columns, rowsAmount, ...other } = props;
+    const { sheet, className, columns, rowsAmount, ...other } = props;
+    const validColumns                                        = useMemo(() => {
+        return columns.filter(Boolean).map((col) => col.toString());
+    }, [ columns ]);
     const {
               register,
               handleSubmit,
               setValue,
               formState,
-          }                                                   = useForm<DomainExcelFileSplitData>();
+              trigger,
+          }                                                   = useForm<DomainExcelFileSplitData>({
+        values: {
+            selectedSheet  : sheet,
+            selectedColumns: validColumns,
+            rowsPerFile    : 500,
+        },
+    });
     const onSubmit                                            = useCallback((data: DomainExcelFileSplitData) => {
         return splitExcelFileEffect(data);
     }, []);
@@ -54,6 +67,7 @@ export const ExcelFileSplitForm: FC<ExcelFileSplitFormProps> = memo(function Exc
             className={ classNames(css.container, {}, [ className ]) }
             onSubmit={ handleSubmit(onSubmit) }
         >
+            <input type="hidden" { ...register('selectedSheet') }/>
             <Col className={ css.item }>
                 <h4>Информация</h4>
                 <div className={ css.info }>
@@ -67,29 +81,36 @@ export const ExcelFileSplitForm: FC<ExcelFileSplitFormProps> = memo(function Exc
                 <Row>
                     <h4>Столбцы</h4>
                     <Button
-                        onClick={ () => setValue('selectedColumns', columns) }
+                        onClick={ () => {
+                            setValue('selectedColumns', validColumns);
+                            trigger('selectedColumns');
+                        } }
                         size={ ButtonSizeType.SMALL }
                         styleType={ ButtonStyleType.GHOST }
                     >
                         Выделить все
                     </Button>
                     <Button
-                        onClick={ () => setValue('selectedColumns', []) }
+                        onClick={ () => {
+                            setValue('selectedColumns', []);
+                            trigger('selectedColumns');
+                        } }
                         size={ ButtonSizeType.SMALL }
                         styleType={ ButtonStyleType.GHOST }
                     >
                         Снять выделение
                     </Button>
                 </Row>
-                <Row>
+                <Row className={ css.columns }>
                     {
-                        columns.map((col, index) => (
+                        validColumns.map((col, index) => (
                             <Checkbox
-                                key={ index }
+                                key={ `col${ col }+${ index }` }
                                 label={ col }
                                 value={ col }
                                 { ...register('selectedColumns', {
-                                    required: true,
+                                    required     : true,
+                                    valueAsNumber: false,
                                 }) }
                             />
                         ))

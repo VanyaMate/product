@@ -22,6 +22,11 @@
         }
     }
 
+    .columns {
+        display   : flex;
+        flex-wrap : wrap;
+    }
+
     .label {
         span {
             max-width     : 300px;

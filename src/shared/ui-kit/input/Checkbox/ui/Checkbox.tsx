@@ -4,9 +4,7 @@ import {
     ForwardedRef,
     forwardRef,
     memo,
-    useCallback,
-    useRef,
-    useState,
+    useMemo,
 } from 'react';
 import classNames from 'classnames';
 import css from './Checkbox.module.scss';
@@ -20,37 +18,21 @@ export type CheckboxProps =
 
 export const Checkbox: FC<CheckboxProps> = memo(forwardRef(function Checkbox (props, ref: ForwardedRef<HTMLInputElement>) {
     const { className, label, ...other } = props;
-    const [ checked, setChecked ]        = useState<boolean>(!!props.checked);
-    const labelRef                       = useRef<HTMLLabelElement>(null);
-
-    /*
-     *  Это сделано так потому что я использую react-hook-form который не
-     *  вызывает change эвенты при изменении полей через функции и в итоге я
-     *  отслеживаю изменения через css и transitionEnd
-     *
-     *  Можно будет в будущем переделать верстку и убрать checked впринципе
-     */
-    const onTransitionStart = useCallback(() => {
-        const ref = labelRef.current;
-        if (ref) {
-            setChecked(ref.querySelector('input').checked);
-        }
-    }, []);
+    const uniqueId                       = useMemo(() => crypto.randomUUID(), []);
 
     return (
-        <label
-            className={ classNames(css.container, { [css.checked]: checked }, [ className ]) }
-            ref={ labelRef }
+        <div
+            className={ classNames(css.container, {}, [ className ]) }
         >
             <input
+                id={ uniqueId }
                 ref={ ref }
                 type="checkbox"
                 { ...other }
             />
-            <span>
+            <label htmlFor={ uniqueId }>
                 { label }
-            </span>
-            <div onTransitionEnd={ onTransitionStart }/>
-        </label>
+            </label>
+        </div>
     );
 }));
