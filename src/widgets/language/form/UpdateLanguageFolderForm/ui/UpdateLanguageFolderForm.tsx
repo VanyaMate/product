@@ -1,13 +1,12 @@
 import { ComponentPropsWithoutRef, FC, memo, useCallback } from 'react';
 import classNames from 'classnames';
-import css from './CreateLanguageFolderForm.module.scss';
+import css from './UpdateLanguageFolderForm.module.scss';
 import {
     updateLanguageFolderEffect,
 } from '@/app/model/languages/languages.model.ts';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
-import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import {
     DomainLanguageFolder,
 } from 'product-types/dist/language/DomainLanguageFolder';
@@ -17,6 +16,9 @@ import {
 } from 'product-types/dist/language/DomainLanguageFolderUpdateData';
 import { useForm } from 'react-hook-form';
 import { TextInput } from '@/shared/ui-kit/input/TextInput/ui/TextInput.tsx';
+import {
+    isLanguageFolderNameValidatorRhf,
+} from '@/app/react-hook-form/validator/isLanguageFolderNameValidatorRhf/isLanguageFolderNameValidatorRhf.ts';
 
 
 export type UpdateLanguageFolderFormProps =
@@ -60,20 +62,18 @@ export const UpdateLanguageFolderForm: FC<UpdateLanguageFolderFormProps> = memo(
             onSubmit={ handleSubmit(onSubmit) }
         >
             <TextInput
+                errorMessage={ formState.errors.title?.message }
                 placeholder={ t.page.languages.folder_title }
                 required
                 type="text"
                 { ...register('title', {
-                    minLength: 1,
-                    maxLength: 255,
-                    required : true,
-                    validate : () => true,
+                    validate: isLanguageFolderNameValidatorRhf,
+                    required: true,
                 }) }
             />
             <ButtonWithLoading
                 disabled={ !formState.isValid }
                 loading={ formState.isSubmitting }
-                styleType={ ButtonStyleType.PRIMARY }
                 type="submit"
             >
                 { t.page.languages.update_folder }

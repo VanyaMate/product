@@ -11,6 +11,9 @@ import {
     DomainLanguageCreateData,
 } from 'product-types/dist/language/DomainLanguageCreateData';
 import { TextInput } from '@/shared/ui-kit/input/TextInput/ui/TextInput.tsx';
+import {
+    isLanguageNameValidatorRhf,
+} from '@/app/react-hook-form/validator/isLanguageNameValidatorRhf/isLanguageNameValidatorRhf.ts';
 
 
 export type CreateLanguageFormProps =
@@ -28,9 +31,11 @@ export const CreateLanguageForm: FC<CreateLanguageFormProps> = memo(function Cre
               onErrorHandler,
               onFinallyHandler,
               ...other
-          }                                            = props;
-    const { t }                                        = useTranslation();
-    const { handleSubmit, register, formState, reset } = useForm();
+          }     = props;
+    const { t } = useTranslation();
+    const {
+              handleSubmit, register, formState, reset,
+          }     = useForm<DomainLanguageCreateData>();
 
     const onSubmit = useCallback((data: DomainLanguageCreateData) => {
         return createLanguageEffect(data)
@@ -47,13 +52,13 @@ export const CreateLanguageForm: FC<CreateLanguageFormProps> = memo(function Cre
             onSubmit={ handleSubmit(onSubmit) }
         >
             <TextInput
+                errorMessage={ formState.errors.title?.message }
                 placeholder={ t.page.languages.language_title }
                 required
                 type="text"
                 { ...register('title', {
-                    required : true,
-                    minLength: 1,
-                    maxLength: 255,
+                    required: true,
+                    validate: isLanguageNameValidatorRhf,
                 }) }
             />
             <ButtonWithLoading

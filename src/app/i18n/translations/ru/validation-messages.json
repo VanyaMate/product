@@ -2,5 +2,8 @@
     "min_length_error": "Длина должна быть больше {{length}}",
     "max_length_error": "Длина должна быть не больше {{length}}",
     "is_not_valid_email": "Это не правильная почта",
-    "no_equal_password": "Пароли не совпадают"
+    "no_equal_password": "Пароли не совпадают",
+    "is_not_valid_login": "Неверный логин",
+    "is_not_valid_password": "Неверный пароль",
+    "is_not_string": "Это не строка"
 }

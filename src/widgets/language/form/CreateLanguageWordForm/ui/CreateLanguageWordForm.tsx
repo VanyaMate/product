@@ -7,13 +7,21 @@ import {
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
-import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 import {
     DomainLanguageWordCreateData,
 } from 'product-types/dist/language/DomainLanguageWordCreateData';
 import { useForm } from 'react-hook-form';
 import { TextInput } from '@/shared/ui-kit/input/TextInput/ui/TextInput.tsx';
+import {
+    isLanguageWordNameValidatorRhf,
+} from '@/app/react-hook-form/validator/isLanguageWordNameValidatorRhf/isLanguageWordNameValidatorRhf.ts';
+import {
+    isLanguageWordTranslationsValidatorRhf,
+} from '@/app/react-hook-form/validator/isLanguageWordTranslationsValidatorRhf/isLanguageWordTranslationsValidatorRhf.ts';
+import {
+    isLanguageWordNoticeValidatorRhf,
+} from '@/app/react-hook-form/validator/isLanguageWordNoticeValidatorRhf/isLanguageWordNoticeValidatorRhf.ts';
 
 
 export type CreateLanguageWordFormProps =
@@ -57,41 +65,37 @@ export const CreateLanguageWordForm: FC<CreateLanguageWordFormProps> = memo(func
             onSubmit={ handleSubmit(onSubmit) }
         >
             <TextInput
+                errorMessage={ formState.errors.original?.message }
                 placeholder={ t.page.languages.word_original }
                 required
                 type="text"
                 { ...register('original', {
-                    minLength: 1,
-                    maxLength: 255,
-                    required : true,
+                    validate: isLanguageWordNameValidatorRhf,
+                    required: true,
                 }) }
             />
-            {
-                // TODO: Вынести валидацию в методы (как с login, email и
-                //  password)
-            }
             <TextInput
+                errorMessage={ formState.errors.translations?.message }
                 placeholder={ t.page.languages.word_translations }
                 required
                 type="text"
                 { ...register('translations', {
-                    minLength : 1,
-                    maxLength : 1000,
+                    validate  : isLanguageWordTranslationsValidatorRhf,
                     required  : true,
                     setValueAs: (value: string) => value.split(','),
                 }) }
             />
             <TextInput
+                errorMessage={ formState.errors.notice?.message }
                 placeholder={ t.page.languages.word_notice }
                 type="text"
                 { ...register('notice', {
-                    maxLength: 1000,
+                    validate: isLanguageWordNoticeValidatorRhf,
                 }) }
             />
             <ButtonWithLoading
                 disabled={ !formState.isValid }
                 loading={ formState.isSubmitting }
-                styleType={ ButtonStyleType.PRIMARY }
                 type="submit"
             >
                 { t.page.languages.add_word }

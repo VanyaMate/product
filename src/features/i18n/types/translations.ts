@@ -198,7 +198,10 @@ export type TranslationValidation = {
     min_length_error: string,
     max_length_error: string,
     is_not_valid_email: string,
-    no_equal_password: string
+    is_not_valid_login: string,
+    is_not_valid_password: string,
+    is_not_string: string,
+    no_equal_password: string,
 }
 
 export type TranslationNotificationsHelpers = {

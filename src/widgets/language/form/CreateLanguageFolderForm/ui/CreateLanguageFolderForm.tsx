@@ -13,6 +13,9 @@ import { TextInput } from '@/shared/ui-kit/input/TextInput/ui/TextInput.tsx';
 import {
     DomainLanguageFolderCreateData,
 } from 'product-types/dist/language/DomainLanguageFolderCreateData';
+import {
+    isLanguageFolderNameValidatorRhf,
+} from '@/app/react-hook-form/validator/isLanguageFolderNameValidatorRhf/isLanguageFolderNameValidatorRhf.ts';
 
 
 export type CreateLanguageFolderFormProps =
@@ -57,13 +60,13 @@ export const CreateLanguageFolderForm: FC<CreateLanguageFolderFormProps> = memo(
             onSubmit={ handleSubmit(onSubmit) }
         >
             <TextInput
+                errorMessage={ formState.errors.title?.message }
                 placeholder={ t.page.languages.folder_title }
                 required
                 type="text"
                 { ...register('title', {
-                    required : true,
-                    minLength: 1,
-                    maxLength: 255,
+                    required: true,
+                    validate: isLanguageFolderNameValidatorRhf,
                 }) }
             />
             <ButtonWithLoading
