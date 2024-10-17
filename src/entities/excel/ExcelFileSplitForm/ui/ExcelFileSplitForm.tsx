@@ -2,19 +2,10 @@ import {
     ComponentPropsWithoutRef,
     FC,
     memo,
-    useEffect,
-    useState,
+    useCallback,
 } from 'react';
 import classNames from 'classnames';
 import css from './ExcelFileSplitForm.module.scss';
-import { Form } from '@/shared/ui-kit/forms/Form/ui/Form.tsx';
-import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
-import {
-    useInputWithError,
-} from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
-import {
-    InputWithError,
-} from '@/shared/ui-kit/inputs/InputWithError/ui/InputWithError.tsx';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
@@ -28,6 +19,12 @@ import {
     ButtonSizeType,
     ButtonStyleType,
 } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import { useForm } from 'react-hook-form';
+import {
+    DomainExcelFileSplitData,
+} from 'product-types/dist/excel/excel-split/DomainExcelFileSplitData';
+import { Checkbox } from '@/shared/ui-kit/input/Checkbox/ui/Checkbox.tsx';
+import { TextInput } from '@/shared/ui-kit/input/TextInput/ui/TextInput.tsx';
 
 // TODO: После добавления новой системы форм - обновить эту
 
@@ -40,35 +37,22 @@ export type ExcelFileSplitFormProps =
     & ComponentPropsWithoutRef<'form'>;
 
 export const ExcelFileSplitForm: FC<ExcelFileSplitFormProps> = memo(function ExcelFileSplitForm (props) {
-    const { className, columns, sheet, rowsAmount, ...other } = props;
-    const rowsPerFileInput                                    = useInputWithError({
-        name: 'rows',
-    });
-    const formController                                      = useForm<{
-        rows: string
-    }>({
-        inputs  : [ rowsPerFileInput ],
-        onSubmit: async (data) => {
-            const selectedCheckboxes = checkboxes
-                .filter((checkbox) => checkbox.checked)
-                .map((checkbox) => checkbox.value);
-
-            if (selectedCheckboxes.length) {
-                return splitExcelFileEffect(parseInt(data.rows), sheet, selectedCheckboxes).then();
-            }
-        },
-    });
-    const [ checkboxes, setCheckboxes ]                       = useState<Array<HTMLInputElement>>([]);
-
-    useEffect(() => {
-        setCheckboxes([ ...rowsPerFileInput.inputRef.current?.form.querySelectorAll('input[type="checkbox"]') ?? [] ] as Array<HTMLInputElement>);
-    }, [ rowsPerFileInput.inputRef, columns ]);
+    const { className, columns, rowsAmount, ...other } = props;
+    const {
+              register,
+              handleSubmit,
+              setValue,
+              formState,
+          }                                                   = useForm<DomainExcelFileSplitData>();
+    const onSubmit                                            = useCallback((data: DomainExcelFileSplitData) => {
+        return splitExcelFileEffect(data);
+    }, []);
 
     return (
-        <Form
+        <form
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
-            controller={ formController }
+            onSubmit={ handleSubmit(onSubmit) }
         >
             <Col className={ css.item }>
                 <h4>Информация</h4>
@@ -83,14 +67,14 @@ export const ExcelFileSplitForm: FC<ExcelFileSplitFormProps> = memo(function Exc
                 <Row>
                     <h4>Столбцы</h4>
                     <Button
-                        onClick={ () => checkboxes.forEach((checkbox) => checkbox.checked = true) }
+                        onClick={ () => setValue('selectedColumns', columns) }
                         size={ ButtonSizeType.SMALL }
                         styleType={ ButtonStyleType.GHOST }
                     >
                         Выделить все
                     </Button>
                     <Button
-                        onClick={ () => checkboxes.forEach((checkbox) => checkbox.checked = false) }
+                        onClick={ () => setValue('selectedColumns', []) }
                         size={ ButtonSizeType.SMALL }
                         styleType={ ButtonStyleType.GHOST }
                     >
@@ -100,38 +84,40 @@ export const ExcelFileSplitForm: FC<ExcelFileSplitFormProps> = memo(function Exc
                 <Row>
                     {
                         columns.map((col, index) => (
-                            <label className={ css.label } key={ col + index }>
-                                <input
-                                    defaultChecked={ true }
-                                    type="checkbox"
-                                    value={ col }
-                                />
-                                <span>
-                                    { col }
-                                </span>
-                            </label>
+                            <Checkbox
+                                key={ index }
+                                label={ col }
+                                value={ col }
+                                { ...register('selectedColumns', {
+                                    required: true,
+                                }) }
+                            />
                         ))
                     }
                 </Row>
             </Col>
             <Col className={ css.item }>
                 <h4>Настройки</h4>
-                <InputWithError
-                    controller={ rowsPerFileInput }
+                <TextInput
                     label="Строк в файле"
                     placeholder="Введите колличество строк в файле"
+                    required
                     type="number"
+                    { ...register('rowsPerFile', {
+                        valueAsNumber: true,
+                        required     : true,
+                    }) }
                 />
             </Col>
             <Col className={ css.item }>
                 <ButtonWithLoading
-                    disabled={ !formController.canBeSubmitted }
-                    loading={ formController.pending }
+                    disabled={ !formState.isValid }
+                    loading={ formState.isSubmitting }
                     type="submit"
                 >
-                    { formController.pending ? 'Обработка' : 'Обработать' }
+                    { formState.isSubmitting ? 'Обработка' : 'Обработать' }
                 </ButtonWithLoading>
             </Col>
-        </Form>
+        </form>
     );
 });

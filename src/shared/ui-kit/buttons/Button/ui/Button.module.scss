@@ -52,7 +52,7 @@
             border     : 1px solid var(--bg-main-color);
         }
 
-        &:hover {
+        &:not(:focus):hover {
             box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--bg-ghost-color);
         }
     }

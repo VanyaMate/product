@@ -43,6 +43,11 @@
         }
     }
 
+    div {
+        transition : .0001s;
+        color      : var(--bg-main-color);
+    }
+
     &:focus-within.checked {
         box-shadow : 0 0 0 1px var(--primary-color), 0 5px 25px -5px var(--primary-color);
         border     : 1px solid var(--primary-color);
@@ -65,13 +70,19 @@
         overflow   : hidden;
     }
 
-    input:checked ~ span {
-        color : var(--text-main-color);
+    input:checked {
+        & ~ span {
+            color : var(--text-main-color);
 
-        &::before {
-            content    : '\2714';
-            background : var(--primary-color);
-            color      : var(--on-primary-text-color);
+            &::before {
+                content    : '\2714';
+                background : var(--primary-color);
+                color      : var(--on-primary-text-color);
+            }
+        }
+
+        & ~ div {
+            color : transparent;
         }
     }
 }
