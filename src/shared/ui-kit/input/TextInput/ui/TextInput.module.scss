@@ -10,6 +10,7 @@
 
 .errorMessage {
     position      : absolute;
+    z-index       : 1;
     background    : var(--danger-color);
     color         : var(--on-danger-color);
     padding       : var(--offset-small);
@@ -43,7 +44,7 @@
     justify-content : center;
 
     &::after {
-        content    : '!';
+        content    : '?';
         color      : var(--on-danger-color);
         text-align : center;
         font-size  : var(--font-size-s);
@@ -59,6 +60,7 @@
 .container {
     width    : 100%;
     position : relative;
+    z-index  : 1;
 
     .input {
         width         : 100%;
@@ -79,6 +81,14 @@
 
         &:required:valid {
             border : 1px solid var(--primary-color);
+        }
+
+        &.inputError {
+            &:focus {
+                box-shadow : 0 0 0 1px var(--danger-color), 0 5px 25px -5px var(--danger-color);
+                border     : 1px solid var(--danger-color);
+                background : var(--bg-main-color);
+            }
         }
 
         &.inputError:not(:focus) {

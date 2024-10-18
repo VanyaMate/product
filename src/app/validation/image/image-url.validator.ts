@@ -7,5 +7,6 @@ export const imageUrlValidator: Validator<string> = function (url: string): stri
         return '';
     }
 
+    // TODO: Добавить перевод
     return 'Ссылка должна быть на картинку';
 };

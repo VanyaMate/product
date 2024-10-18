@@ -5,7 +5,6 @@ import {
     SiteNavigationLink,
 } from '@/widgets/site/navigation/SiteNavigationMenu/ui/SiteNavigationLink/SiteNavigationLink.tsx';
 import {
-    IoDesktop,
     IoDocuments,
     IoHome, IoLanguage, IoList,
     IoLogoVk,
@@ -111,21 +110,6 @@ export const SiteNavigationMenu: FC<SiteNavigationMenuProps> = memo(function Sit
                             { t.app.languages_page }
                         </SiteNavigationLink>
                     </li>
-                    <li>
-                        <SiteNavigationLink
-                            icon={ <IoDesktop/> }
-                            onClick={ onCompleteAction }
-                            styleType={
-                                isRouteOf(pathname, SiteAppRoutePath[SiteAppRoute.ABOUT])
-                                ? LinkStyleType.PRIMARY
-                                : LinkStyleType.GHOST
-                            }
-                            to={ SiteAppRoutePath[SiteAppRoute.ABOUT] }
-                        >
-                            { t.app.about_us_page }
-                        </SiteNavigationLink>
-                    </li>
-
                     <li>
                         <SiteNavigationLink
                             icon={ <IoList/> }
