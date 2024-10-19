@@ -1,4 +1,10 @@
-import { ComponentPropsWithoutRef, FC, memo } from 'react';
+import {
+    ComponentPropsWithRef,
+    FC,
+    forwardRef,
+    memo,
+    MutableRefObject,
+} from 'react';
 import classNames from 'classnames';
 import css from './Button.module.scss';
 import { ButtonSizeType, ButtonStyleType } from '../types/types.ts';
@@ -10,9 +16,9 @@ export type ButtonProps =
         size?: ButtonSizeType;
         quad?: boolean;
     }
-    & ComponentPropsWithoutRef<'button'>;
+    & ComponentPropsWithRef<'button'>;
 
-export const Button: FC<ButtonProps> = memo(function Button (props) {
+export const Button: FC<ButtonProps> = memo(forwardRef(function Button (props, ref: MutableRefObject<HTMLButtonElement>) {
     const {
               styleType = ButtonStyleType.PRIMARY,
               size      = ButtonSizeType.MEDIUM,
@@ -26,7 +32,8 @@ export const Button: FC<ButtonProps> = memo(function Button (props) {
         <button
             { ...other }
             className={ classNames(css.container, { [css.quad]: quad }, [ className, css[styleType], css[size] ]) }
+            ref={ ref }
             type={ type ? type : 'button' }
         />
     );
-});
+}));

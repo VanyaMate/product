@@ -28,8 +28,6 @@ export const useDialoguesStoreUpdaterByNotifications = function () {
     }, []);
 
     useLayoutEffect(() => {
-        console.log('here', dialogues, notification);
-
         if (dialogues) {
             const onPrivateMessageIn   = applyEffect(sendPrivateMessageNotificationEffect);
             const onReadMessage        = applyEffect(readPrivateMessageNotificationEffect);

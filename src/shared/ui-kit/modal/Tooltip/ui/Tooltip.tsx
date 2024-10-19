@@ -12,7 +12,7 @@ import css from './Tooltip.module.scss';
 import { createPortal } from 'react-dom';
 import {
     getModalPosition,
-    ModalPosition,
+    ModalPosition, ModalPositionSide,
 } from '@/shared/lib/modal-position/getModalPosition.ts';
 
 
@@ -20,6 +20,7 @@ export type TooltipProps =
     {
         elementRef: MutableRefObject<HTMLElement>;
         show: boolean;
+        tooltipPosition?: ModalPositionSide;
     }
     & ComponentPropsWithoutRef<'div'>;
 
@@ -29,6 +30,7 @@ export const Tooltip: FC<TooltipProps> = memo(function Tooltip (props) {
               elementRef,
               show,
               children,
+              tooltipPosition = 'top',
               ...other
           }                                                           = props;
     const [ currentTooltipRenderState, setCurrentTooltipRenderState ] = useState<boolean>(false);
@@ -49,7 +51,7 @@ export const Tooltip: FC<TooltipProps> = memo(function Tooltip (props) {
             setCurrentTooltipRenderState(true);
         } else if (show && currentTooltipRenderState && elementRef.current && tooltipRef.current) {
             requestAnimationFrame(() => {
-                setCurrentTooltipPosition(getModalPosition(elementRef, tooltipRef));
+                setCurrentTooltipPosition(getModalPosition(elementRef, tooltipRef, tooltipPosition));
                 setCurrentTooltipShowState(true);
             });
         } else if (!show && currentTooltipRenderState) {
@@ -61,22 +63,42 @@ export const Tooltip: FC<TooltipProps> = memo(function Tooltip (props) {
             };
             ref.addEventListener('transitionend', onTransitionEnd);
         }
-    }, [ currentTooltipRenderState, elementRef, show ]);
+    }, [ currentTooltipRenderState, elementRef, show, tooltipPosition ]);
 
     // Update offset position
     useEffect(() => {
         if (show && currentTooltipRenderState && elementRef.current && tooltipRef.current) {
             requestAnimationFrame(() => {
                 setPositionOffset(() => {
-                    const position = getModalPosition(elementRef, tooltipRef);
+                    const positionDelta = getModalPosition(elementRef, tooltipRef, tooltipPosition);
                     return {
-                        top : currentTooltipPosition.top - position.top,
-                        left: currentTooltipPosition.left - position.left,
+                        top : currentTooltipPosition.top - positionDelta.top,
+                        left: currentTooltipPosition.left - positionDelta.left,
                     };
                 });
             });
         }
-    }, [ currentTooltipRenderState, elementRef, show, children, currentTooltipPosition.top, currentTooltipPosition.left ]);
+    }, [ currentTooltipRenderState, elementRef, show, children, currentTooltipPosition.top, currentTooltipPosition.left, tooltipPosition ]);
+
+    useEffect(() => {
+        if (show && currentTooltipRenderState && elementRef.current && tooltipRef.current) {
+            const observer = new IntersectionObserver(() => {
+                setPositionOffset(() => {
+                    const positionDelta = getModalPosition(elementRef, tooltipRef, tooltipPosition);
+                    return {
+                        top : currentTooltipPosition.top - positionDelta.top,
+                        left: currentTooltipPosition.left - positionDelta.left,
+                    };
+                });
+            });
+
+            observer.observe(elementRef.current);
+
+            return () => {
+                observer.disconnect();
+            };
+        }
+    }, [ currentTooltipPosition.left, currentTooltipPosition.top, currentTooltipRenderState, elementRef, show, tooltipPosition ]);
 
     if (currentTooltipRenderState) {
         return createPortal(

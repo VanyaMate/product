@@ -1,0 +1,103 @@
+.labelContainer {
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-small);
+
+    .label {
+        color : var(--text-second-color);
+    }
+}
+
+.errorMessage {
+    position      : absolute;
+    z-index       : 1;
+    background    : var(--danger-color);
+    color         : var(--on-danger-color);
+    padding       : var(--offset-small);
+    border-radius : var(--offset-small);
+    top           : calc(100% + var(--offset-small));
+    width         : 100%;
+    visibility    : hidden;
+    opacity       : 0;
+    transform     : scale(.8) translateY(var(--offset-small)) translateX(var(--offset-medium));
+    transition    : var(--transition-fast);
+
+    &.errorMessageTop {
+        top    : auto;
+        bottom : calc(100% + var(--offset-small));
+    }
+}
+
+.errorTooltip {
+    position        : absolute;
+    right           : var(--offset-small);
+    top             : var(--offset-small);
+    width           : 20px;
+    height          : 20px;
+    background      : var(--danger-color);
+    border-radius   : 50%;
+    transition      : var(--transition-fast);
+    opacity         : 0;
+    visibility      : hidden;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+
+    &::after {
+        content    : '?';
+        color      : var(--on-danger-color);
+        text-align : center;
+        font-size  : var(--font-size-s);
+    }
+
+    &:hover ~ .errorMessage {
+        visibility : visible;
+        opacity    : 1;
+        transform  : scale(1) translateY(0) translateX(0);
+    }
+}
+
+.container {
+    width    : 100%;
+    position : relative;
+    z-index  : 1;
+
+    .input {
+        width         : 100%;
+        padding       : var(--offset-small);
+        border-radius : var(--offset-small);
+        outline       : none;
+        transition    : var(--transition-fast);
+        height        : 30px;
+        border        : 1px solid var(--border-main-color);
+        background    : var(--bg-ghost-color);
+        color         : var(--bg-second-foreground-color);
+
+        &:focus {
+            box-shadow : 0 0 0 1px var(--primary-color), 0 5px 25px -5px var(--primary-color);
+            border     : 1px solid var(--primary-color);
+            background : var(--bg-main-color);
+        }
+
+        &:required:valid {
+            border : 1px solid var(--primary-color);
+        }
+
+        &.inputError {
+            &:focus {
+                box-shadow : 0 0 0 1px var(--danger-color), 0 5px 25px -5px var(--danger-color);
+                border     : 1px solid var(--danger-color);
+                background : var(--bg-main-color);
+            }
+        }
+
+        &.inputError:not(:focus) {
+            border : 1px solid var(--danger-color);
+
+            & ~ .errorTooltip {
+                opacity    : 1;
+                visibility : visible;
+            }
+        }
+    }
+}

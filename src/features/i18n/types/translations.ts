@@ -161,6 +161,7 @@ export type TranslationFilesPage = {
     files_preload_title: string,
     selected_files: string,
     selected_files_title: string,
+    find_file_by_title: string,
 }
 
 export type TranslationDialoguesPage = {
@@ -197,7 +198,10 @@ export type TranslationValidation = {
     min_length_error: string,
     max_length_error: string,
     is_not_valid_email: string,
-    no_equal_password: string
+    is_not_valid_login: string,
+    is_not_valid_password: string,
+    is_not_string: string,
+    no_equal_password: string,
 }
 
 export type TranslationNotificationsHelpers = {

@@ -99,8 +99,6 @@ export const useVirtualScroll = function (props: UseVirtualScrollProps) {
             previousScrollHeight.current = ref.scrollHeight;
 
             return () => {
-                console.log('[RETURN] RefContainerHeight', ref.scrollHeight);
-
             };
         }
     });

@@ -2,24 +2,26 @@ import { ComponentPropsWithoutRef, FC, memo, useCallback } from 'react';
 import classNames from 'classnames';
 import css from './CreateLanguageWordForm.module.scss';
 import {
-    useInputWithError,
-} from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
-import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
-import {
     createLanguageWordEffect,
 } from '@/app/model/languages/languages.model.ts';
-import { Form } from '@/shared/ui-kit/forms/Form/ui/Form.tsx';
-import {
-    InputWithError,
-} from '@/shared/ui-kit/inputs/InputWithError/ui/InputWithError.tsx';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
-import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
-import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
-import { IoCreate } from 'react-icons/io5';
-import { lengthValidator } from '@/app/validation/string/length.validator.ts';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import {
+    DomainLanguageWordCreateData,
+} from 'product-types/dist/language/DomainLanguageWordCreateData';
+import { useForm } from 'react-hook-form';
+import { TextInput } from '@/shared/ui-kit/input/TextInput/ui/TextInput.tsx';
+import {
+    isLanguageWordNameValidatorRhf,
+} from '@/app/react-hook-form/validator/isLanguageWordNameValidatorRhf/isLanguageWordNameValidatorRhf.ts';
+import {
+    isLanguageWordTranslationsValidatorRhf,
+} from '@/app/react-hook-form/validator/isLanguageWordTranslationsValidatorRhf/isLanguageWordTranslationsValidatorRhf.ts';
+import {
+    isLanguageWordNoticeValidatorRhf,
+} from '@/app/react-hook-form/validator/isLanguageWordNoticeValidatorRhf/isLanguageWordNoticeValidatorRhf.ts';
 
 
 export type CreateLanguageWordFormProps =
@@ -39,68 +41,65 @@ export const CreateLanguageWordForm: FC<CreateLanguageWordFormProps> = memo(func
               onErrorHandler,
               onFinallyHandler,
               ...other
-          }                           = props;
-    const originalInputController     = useInputWithError({
-        name            : 'original',
-        validationMethod: lengthValidator(1, Infinity),
-    });
-    const translationsInputController = useInputWithError({
-        name            : 'translations',
-        validationMethod: lengthValidator(1, Infinity),
-    });
-    const noticeInputController       = useInputWithError({
-        name: 'notice',
-    });
-    const formController              = useForm<{
-        original: string,
-        translations: string,
-        notice: string
-    }>({
-        inputs  : [ originalInputController, translationsInputController, noticeInputController ],
-        onSubmit: async (data) => createLanguageWordEffect(folderId, {
-            original    : data.original,
-            notice      : data.notice,
-            translations: data.translations.split(','),
-        })
-            .then(onSubmitHandler)
-            .then(clearForm)
-            .catch(onErrorHandler)
-            .finally(onFinallyHandler),
-    });
-    const { t }                       = useTranslation();
+          }     = props;
+    const {
+              reset,
+              handleSubmit,
+              formState,
+              register,
+          }     = useForm<DomainLanguageWordCreateData>();
+    const { t } = useTranslation();
 
-    const clearForm = useCallback(() => {
-        originalInputController.value.current              = '';
-        originalInputController.inputRef.current.value     = '';
-        translationsInputController.value.current          = '';
-        translationsInputController.inputRef.current.value = '';
-        noticeInputController.value.current                = '';
-        noticeInputController.inputRef.current.value       = '';
-    }, [ noticeInputController.inputRef, noticeInputController.value, originalInputController.inputRef, originalInputController.value, translationsInputController.inputRef, translationsInputController.value ]);
+    const onSubmit = useCallback((data: DomainLanguageWordCreateData) => {
+        return createLanguageWordEffect(folderId, data)
+            .then(onSubmitHandler)
+            .then(() => reset())
+            .catch(onErrorHandler)
+            .finally(onFinallyHandler);
+    }, [ folderId, onErrorHandler, onFinallyHandler, onSubmitHandler, reset ]);
 
     return (
-        <Form
+        <form
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
-            controller={ formController }
+            onSubmit={ handleSubmit(onSubmit) }
         >
-            <InputWithError controller={ originalInputController }
-                            placeholder={ t.page.languages.word_original }/>
-            <InputWithError controller={ translationsInputController }
-                            placeholder={ t.page.languages.word_translations }/>
-            <InputWithError controller={ noticeInputController }
-                            placeholder={ t.page.languages.word_notice }/>
+            <TextInput
+                errorMessage={ formState.errors.original?.message }
+                placeholder={ t.page.languages.word_original }
+                required
+                type="text"
+                { ...register('original', {
+                    validate: isLanguageWordNameValidatorRhf,
+                    required: true,
+                }) }
+            />
+            <TextInput
+                errorMessage={ formState.errors.translations?.message }
+                placeholder={ t.page.languages.word_translations }
+                required
+                type="text"
+                { ...register('translations', {
+                    validate  : isLanguageWordTranslationsValidatorRhf,
+                    required  : true,
+                    setValueAs: (value: string) => value.split(','),
+                }) }
+            />
+            <TextInput
+                errorMessage={ formState.errors.notice?.message }
+                placeholder={ t.page.languages.word_notice }
+                type="text"
+                { ...register('notice', {
+                    validate: isLanguageWordNoticeValidatorRhf,
+                }) }
+            />
             <ButtonWithLoading
-                disabled={ !formController.canBeSubmitted }
-                loading={ formController.pending }
-                styleType={ ButtonStyleType.PRIMARY }
+                disabled={ !formState.isValid }
+                loading={ formState.isSubmitting }
                 type="submit"
             >
-                <Row>
-                    <IoCreate/>
-                    <span>{ t.page.languages.add_word }</span>
-                </Row>
+                { t.page.languages.add_word }
             </ButtonWithLoading>
-        </Form>
+        </form>
     );
 });

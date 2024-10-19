@@ -1,5 +1,5 @@
 .container {
-    border          : none;
+    border          : 1px solid transparent;
     outline         : none;
     cursor          : pointer;
     box-shadow      : 0 0 0 0 transparent;
@@ -8,8 +8,10 @@
     align-items     : center;
     justify-content : center;
     line-height     : 0;
+    text-wrap       : nowrap;
     overflow        : hidden;
     backdrop-filter : var(--item-backdrop-filter);
+    min-width       : fit-content;
 
     &:disabled {
         background     : var(--bg-ghost-color);
@@ -21,6 +23,7 @@
     &.primary:not(:disabled) {
         background : var(--primary-color);
         color      : var(--on-primary-text-color);
+        border     : 1px solid var(--primary-color);
 
         &:focus,
         &:hover {
@@ -31,6 +34,7 @@
     &.second:not(:disabled) {
         background : var(--second-color);
         color      : var(--on-second-text-color);
+        border     : 1px solid var(--second-color);
 
         &:focus,
         &:hover {
@@ -41,9 +45,14 @@
     &.ghost:not(:disabled) {
         background : var(--bg-ghost-color);
         color      : var(--bg-main-foreground-color);
+        border     : 1px solid var(--border-main-color);
 
-        &:focus,
-        &:hover {
+        &:focus {
+            box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color), 0 0 25px -10px var(--primary-color);
+            border     : 1px solid var(--bg-main-color);
+        }
+
+        &:not(:focus):hover {
             box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--bg-ghost-color);
         }
     }
@@ -51,6 +60,7 @@
     &.danger:not(:disabled) {
         background : var(--danger-color);
         color      : var(--on-danger-color);
+        border     : 1px solid var(--danger-color);
 
         &:focus,
         &:hover {

@@ -12,6 +12,7 @@
         // Временно. Нужно найти способ добавлять их инлайново из вне
         const currentLanguage = localStorage.getItem('product__selected-language') ?? 'ru';
         document.title = currentLanguage === 'ru' ? 'Либерти' : 'Liberty';
+        document.documentElement.setAttribute('lang', currentLanguage);
     </script>
 </head>
 <body>

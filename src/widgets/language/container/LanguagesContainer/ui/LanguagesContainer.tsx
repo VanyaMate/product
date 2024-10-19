@@ -55,7 +55,6 @@ export const LanguagesContainer: FC<LanguagesContainerProps> = memo(function Lan
 
     useLayoutEffect(() => {
         // Tempo
-        console.log('loading for ->', userId);
         getMyLanguagesEffect();
     }, [ userId ]);
 

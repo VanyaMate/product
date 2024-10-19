@@ -10,6 +10,15 @@
 
     .search {
         flex : 1;
+
+        form {
+            display : flex;
+            gap     : var(--offset-small);
+        }
+
+        .select {
+            width : 200px;
+        }
     }
 
     .control {

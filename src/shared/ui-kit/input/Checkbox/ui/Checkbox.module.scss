@@ -1,0 +1,88 @@
+.container {
+    display   : inline-flex;
+    text-wrap : nowrap;
+    max-width : 100%;
+
+    label {
+        display       : inline-block;
+        padding       : var(--offset-small);
+        border-radius : var(--offset-small);
+        background    : var(--bg-ghost-color);
+        width         : 100%;
+        max-width     : 300px;
+        overflow      : hidden;
+        text-overflow : ellipsis;
+        white-space   : nowrap;
+        color         : var(--text-second-color);
+        font-size     : var(--font-size-s);
+        cursor        : pointer;
+        transition    : var(--transition-fast);
+        border        : 1px solid var(--border-main-color);
+        user-select   : none;
+
+        &:hover {
+            background : var(--bg-main-color);
+        }
+
+        &:active {
+            background : var(--bg-second-color);
+        }
+
+        &::before {
+            content         : '\2718';
+            display         : inline-flex;
+            align-items     : center;
+            justify-content : center;
+            width           : 20px;
+            overflow        : hidden;
+            height          : 20px;
+            background      : var(--bg-second-color);
+            transition      : var(--transition-fast);
+            border-radius   : var(--offset-small);
+            margin-right    : var(--offset-small);
+            color           : var(--text-second-color);
+            font-size       : var(--font-size-s);
+        }
+    }
+
+    input {
+        background : none;
+        outline    : none;
+        border     : none;
+        opacity    : 0;
+        width      : 0;
+        height     : 0;
+        overflow   : hidden;
+
+        &:checked {
+            & ~ label {
+                color  : var(--text-main-color);
+                border : 1px solid var(--primary-color);
+
+                &::before {
+                    content    : '\2714';
+                    background : var(--primary-color);
+                    color      : var(--on-primary-text-color);
+                }
+            }
+        }
+
+        &:focus {
+            &:checked {
+                & ~ label {
+                    box-shadow : 0 0 0 1px var(--primary-color), 0 5px 25px -5px var(--primary-color);
+                    border     : 1px solid var(--primary-color);
+                    background : var(--bg-main-color);
+                }
+            }
+
+            &:not(:checked) {
+                & ~ label {
+                    box-shadow : 0 0 0 1px var(--ghost-color), 0 5px 25px -5px var(--ghost-color);
+                    border     : 1px solid var(--border-main-color);
+                    background : var(--bg-ghost-color);
+                }
+            }
+        }
+    }
+}

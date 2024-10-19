@@ -1,0 +1,91 @@
+.container {
+    position : relative;
+
+    select {
+        visibility : hidden;
+        opacity    : 0;
+        width      : 0;
+        height     : 0;
+        overflow   : hidden;
+        border     : none;
+        outline    : none;
+    }
+
+    button {
+        display         : inline-flex;
+        gap             : var(--offset-small);
+        align-items     : center;
+        width           : 100%;
+        justify-content : space-between;
+
+        svg {
+            transition : var(--transition-fast);
+        }
+    }
+
+    ul {
+        visibility      : hidden;
+        opacity         : 0;
+        transform       : translateY(var(--offset-medium));
+        transition      : var(--transition-fast);
+        list-style-type : none;
+        border-radius   : var(--offset-small);
+        border          : 1px solid var(--border-main-color);
+        background      : var(--bg-ghost-color);
+        padding         : var(--offset-small);
+        display         : flex;
+        flex-direction  : column;
+        gap             : var(--offset-small);
+        position        : absolute;
+        top             : 100%;
+        left            : 0;
+        width           : fit-content;
+        min-width       : 100%;
+
+        li {
+            padding       : var(--offset-small);
+            background    : var(--bg-second-color);
+            border-radius : var(--offset-small);
+            transition    : var(--transition-fast);
+            outline       : none;
+            border        : 1px solid var(--border-main-color);
+
+            &:hover {
+                background : var(--bg-main-color);
+                cursor     : pointer;
+            }
+
+            &:focus {
+                box-shadow : 0 0 0 1px var(--primary-color), 0 5px 25px -5px var(--primary-color);
+                border     : 1px solid var(--primary-color);
+                background : var(--bg-main-color);
+            }
+
+            &.active {
+                background : var(--primary-color);
+                border     : 1px solid var(--primary-color);
+                color      : var(--on-primary-text-color);
+
+                &:focus {
+                    box-shadow : 0 0 0 1px var(--primary-color), 0 5px 25px -5px var(--primary-color);
+                    border     : 1px solid var(--primary-color);
+                    background : var(--primary-color);
+                }
+            }
+        }
+    }
+
+    &.visible {
+        ul {
+            visibility : visible;
+            opacity    : 1;
+            transform  : translateY(var(--offset-small));
+        }
+
+        button {
+            svg {
+                transform : rotate(180deg);
+            }
+        }
+    }
+}

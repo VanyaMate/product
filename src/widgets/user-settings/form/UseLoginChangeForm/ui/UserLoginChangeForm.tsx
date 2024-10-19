@@ -2,31 +2,30 @@ import {
     ComponentPropsWithoutRef,
     FC,
     memo,
-    useCallback,
+    useCallback, useMemo,
     useState,
 } from 'react';
 import classNames from 'classnames';
 import css from './UserLoginChangeForm.module.scss';
-import { Form } from '@/shared/ui-kit/forms/Form/ui/Form.tsx';
-import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
 import {
-    useInputWithError,
-} from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
-import { userLoginUpdateEffect } from '@/app/model/auth/auth.model.ts';
+    userLoginUpdateEffect,
+} from '@/app/model/auth/auth.model.ts';
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
-import {
-    InputWithError,
-} from '@/shared/ui-kit/inputs/InputWithError/ui/InputWithError.tsx';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
-import {
-    userAuthLoginValidator,
-} from '@/app/validation/user/login.validators.ts';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { TextInput } from '@/shared/ui-kit/input/TextInput/ui/TextInput.tsx';
+import { useForm } from 'react-hook-form';
+import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import {
+    isLoginValidatorRhf,
+} from '@/app/react-hook-form/validator/isLoginValidatorRhf/isLoginValidatorRhf.ts';
 
+
+type LoginChangeData = { login: string };
 
 export type UserLoginChangeFormProps =
     {
@@ -38,53 +37,68 @@ export const UserLoginChangeForm: FC<UserLoginChangeFormProps> = memo(function U
     const { login, className, ...other }    = props;
     const { t }                             = useTranslation();
     const [ currentLogin, setCurrentLogin ] = useState<string>(login);
-    const loginInput                        = useInputWithError({
-        name            : 'login',
-        onChangeHandler : setCurrentLogin,
-        validationMethod: userAuthLoginValidator,
-    });
-    const form                              = useForm<{ login: string }>({
-        inputs  : [ loginInput ],
-        onSubmit: async (data) => userLoginUpdateEffect(data.login).then(),
-    });
 
-    const discardChanges = useCallback(() => {
-        setCurrentLogin(login);
-        loginInput.value.current          = login;
-        loginInput.inputRef.current.value = login;
-    }, [ login, loginInput.inputRef, loginInput.value ]);
+    const { handleSubmit, formState, reset, register } = useForm<{
+        login: string,
+    }>({
+        values: { login },
+        mode  : 'onChange',
+    });
+    const onSubmit                                     = useCallback((data: LoginChangeData) => {
+        return userLoginUpdateEffect(data.login);
+    }, []);
+
+    const disableButton = useMemo(() => {
+        return !formState.isValid || login === currentLogin;
+    }, [ currentLogin, formState.isValid, login ]);
+
+    const submitting = useMemo(() => {
+        return formState.isSubmitting;
+    }, [ formState.isSubmitting ]);
+
+    const discard = useCallback(() => {
+        reset();
+    }, [ reset ]);
 
     return (
-        <Form
+        <form
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
-            controller={ form }
+            onSubmit={ handleSubmit(onSubmit) }
         >
             <Col>
-                <InputWithError
+                <TextInput
                     autoComplete="off"
-                    controller={ loginInput }
-                    defaultValue={ login }
+                    errorMessage={ formState.errors.login?.message }
                     label={ t.page.userSettings.login_label }
                     placeholder={ t.page.userSettings.login_placeholder }
+                    required
+                    type="text"
+                    { ...register('login', {
+                        required: true,
+                        onChange: ({ target: { value } }) => setCurrentLogin(value),
+                        validate: isLoginValidatorRhf,
+                    }) }
                 />
                 <Row fullWidth spaceBetween>
                     <Button
-                        disabled={ currentLogin === login }
-                        onClick={ discardChanges }
-                        type="button"
+                        aria-label={ t.page.userSettings.discard_changes }
+                        disabled={ disableButton || submitting }
+                        onClick={ discard }
+                        styleType={ ButtonStyleType.GHOST }
                     >
                         { t.page.userSettings.discard_changes }
                     </Button>
                     <ButtonWithLoading
-                        disabled={ currentLogin === login || !form.canBeSubmitted }
-                        loading={ form.pending }
+                        aria-label={ t.page.userSettings.apply_changes }
+                        disabled={ disableButton }
+                        loading={ submitting }
                         type="submit"
                     >
                         { t.page.userSettings.apply_changes }
                     </ButtonWithLoading>
                 </Row>
             </Col>
-        </Form>
+        </form>
     );
 });

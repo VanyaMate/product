@@ -1,8 +1,8 @@
 .container {
     .title {
         font-size     : var(--font-size-xl);
-        padding       : var(--offset-medium) 0;
-        border-bottom : 1px solid var(--border-main-color);
+        padding       : var(--offset-small) 0;
+        border-bottom : 2px dotted var(--border-main-color);
         margin-bottom : var(--offset-medium);
     }
 }
