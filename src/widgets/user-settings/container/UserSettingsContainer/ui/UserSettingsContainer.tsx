@@ -125,13 +125,6 @@ export const UserSettingsContainer: FC<UserSettingsContainerProps> = memo(functi
             <div className={ css.content }>
                 { content }
             </div>
-
-            {/*            <Virtual
-             className={ css.content }
-             list={ [ content ] }
-             render={ (e: ReactNode) => e }
-             showAmount={ 1 }
-             />*/ }
         </div>
     );
 });

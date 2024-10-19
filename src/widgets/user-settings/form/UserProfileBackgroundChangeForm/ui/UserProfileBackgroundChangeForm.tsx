@@ -3,30 +3,19 @@ import {
     FC,
     memo,
     useCallback,
+    useMemo,
     useState,
 } from 'react';
 import classNames from 'classnames';
 import css from './UserProfileBackgroundChangeForm.module.scss';
 import {
-    useInputWithError,
-} from '@/shared/ui-kit/inputs/InputWithError/hooks/useInputWithError.ts';
-import { useForm } from '@/shared/ui-kit/forms/Form/hooks/useForm.ts';
-import {
     userBackgroundUpdateEffect,
 } from '@/app/model/auth/auth.model.ts';
-import { Form } from '@/shared/ui-kit/forms/Form/ui/Form.tsx';
-import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
-import {
-    InputWithError,
-} from '@/shared/ui-kit/inputs/InputWithError/ui/InputWithError.tsx';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
-import {
-    imageUrlValidator,
-} from '@/app/validation/image/image-url.validator.ts';
 import {
     UserSettingsNoSetBackground,
 } from '@/entities/user-settings/UserSettingsNoSetBackground/ui/UserSettingsNoSetBackground.tsx';
@@ -34,7 +23,16 @@ import {
     ImageBackground,
 } from '@/shared/ui-kit/image/ImageBackground/ui/ImageBackground.tsx';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { useForm } from 'react-hook-form';
+import { TextInput } from '@/shared/ui-kit/input/TextInput/ui/TextInput.tsx';
+import {
+    isUserBackgroundUrlValidatorRhf,
+} from '@/app/react-hook-form/validator/isUserBackgroundUrlValidatorRhf/isUserBackgroundUrlValidatorRhf.ts';
 
+
+type UserProfileBackgroundChangeType = {
+    background: string
+};
 
 export type UserProfileBackgroundChangeFormProps =
     {
@@ -46,69 +44,79 @@ export const UserProfileBackgroundChangeForm: FC<UserProfileBackgroundChangeForm
     const { background, className, ...other }         = props;
     const { t }                                       = useTranslation();
     const [ currentBackground, setCurrentBackground ] = useState<string>(background ?? '');
-    const backgroundInput                             = useInputWithError({
-        name            : 'background',
-        onChangeHandler : setCurrentBackground,
-        validationMethod: imageUrlValidator,
-    });
-    const form                                        = useForm<{
-        background: string
-    }>({
-        inputs  : [ backgroundInput ],
-        onSubmit: async (data) => userBackgroundUpdateEffect(data.background).then(),
+    const {
+              handleSubmit,
+              formState,
+              reset,
+              register,
+          }                                           = useForm<UserProfileBackgroundChangeType>({
+        mode  : 'onChange',
+        values: { background },
     });
 
-    const discardChanges = useCallback(() => {
-        setCurrentBackground(currentBackground);
-        backgroundInput.value.current          = currentBackground;
-        backgroundInput.inputRef.current.value = currentBackground;
-    }, [ currentBackground, backgroundInput.inputRef, backgroundInput.value ]);
+    const disableButton = useMemo(() => {
+        return !formState.isValid || background === currentBackground;
+    }, [ background, currentBackground, formState.isValid ]);
+
+    const submitting = useMemo(() => {
+        return formState.isSubmitting;
+    }, [ formState.isSubmitting ]);
+
+    const discard = useCallback(() => {
+        reset();
+        setCurrentBackground(background);
+    }, [ background, reset ]);
+
+    const onSubmit = useCallback((data: UserProfileBackgroundChangeType) => {
+        return userBackgroundUpdateEffect(data.background);
+    }, []);
 
     return (
-        <Form
+        <form
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
-            controller={ form }
+            onSubmit={ handleSubmit(onSubmit) }
         >
-            <Col>
-                <InputWithError
-                    autoComplete="off"
-                    controller={ backgroundInput }
-                    defaultValue={ currentBackground }
-                    key="input"
-                    label={ t.page.userSettings.background_label }
-                    placeholder={ t.page.userSettings.background_placeholder }
+            <TextInput
+                autoComplete="off"
+                errorMessage={ formState.errors.background?.message }
+                label={ t.page.userSettings.background_label }
+                placeholder={ t.page.userSettings.background_placeholder }
+                type="text"
+                { ...register('background', {
+                    validate: isUserBackgroundUrlValidatorRhf,
+                    onChange: ({ target: { value } }) => setCurrentBackground(value),
+                }) }
+            />
+            {
+                currentBackground === ''
+                ? <UserSettingsNoSetBackground/>
+                : <ImageBackground
+                    alt="background"
+                    className={ css.background }
+                    src={ currentBackground }
                 />
-                {
-                    currentBackground === ''
-                    ? <UserSettingsNoSetBackground/>
-                    : <ImageBackground
-                        alt="background"
-                        className={ css.background }
-                        src={ currentBackground }
-                    />
-                }
-                <Row
-                    fullWidth
-                    key="buttons"
-                    spaceBetween
+            }
+            <Row
+                fullWidth
+                key="buttons"
+                spaceBetween
+            >
+                <Button
+                    disabled={ disableButton }
+                    onClick={ discard }
+                    type="button"
                 >
-                    <Button
-                        disabled={ (currentBackground === background) || (currentBackground === '') }
-                        onClick={ discardChanges }
-                        type="button"
-                    >
-                        { t.page.userSettings.discard_changes }
-                    </Button>
-                    <ButtonWithLoading
-                        disabled={ (currentBackground === background) || !form.canBeSubmitted }
-                        loading={ form.pending }
-                        type="submit"
-                    >
-                        { t.page.userSettings.apply_changes }
-                    </ButtonWithLoading>
-                </Row>
-            </Col>
-        </Form>
+                    { t.page.userSettings.discard_changes }
+                </Button>
+                <ButtonWithLoading
+                    disabled={ disableButton }
+                    loading={ submitting }
+                    type="submit"
+                >
+                    { t.page.userSettings.apply_changes }
+                </ButtonWithLoading>
+            </Row>
+        </form>
     );
 });

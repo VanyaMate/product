@@ -3,6 +3,7 @@ import {
     FC,
     memo,
     useCallback,
+    useMemo,
     useState,
 } from 'react';
 import css from './UserAvatarChangeForm.module.scss';
@@ -22,8 +23,8 @@ import { useForm } from 'react-hook-form';
 import classNames from 'classnames';
 import { TextInput } from '@/shared/ui-kit/input/TextInput/ui/TextInput.tsx';
 import {
-    isImageUrlValidatorRhf,
-} from '@/app/react-hook-form/validator/isImageUrlValidatorRhf/isImageUrlValidatorRhf.ts';
+    isUserAvatarUrlValidatorRhf,
+} from '@/app/react-hook-form/validator/isUserAvatarUrlValidatorRhf/isUserAvatarUrlValidatorRhf.ts';
 
 
 type AvatarChangeData = { avatar: string };
@@ -40,15 +41,28 @@ export const UserAvatarChangeForm: FC<UserAvatarChangeFormProps> = memo(function
     const [ currentAvatar, setCurrentAvatar ]    = useState<string>(avatar);
     const { t }                                  = useTranslation();
 
-    const { handleSubmit, formState, reset, register } = useForm<{
-        avatar: string,
-    }>({
-        values: { avatar: avatar },
+    const {
+              handleSubmit, formState, reset, register,
+          }        = useForm<AvatarChangeData>({
+        values: { avatar },
         mode  : 'onChange',
     });
-    const onSubmit                                     = useCallback((data: AvatarChangeData) => {
+    const onSubmit = useCallback((data: AvatarChangeData) => {
         return userAvatarUpdateEffect(data.avatar);
     }, []);
+
+    const disableButton = useMemo(() => {
+        return !formState.isValid || currentAvatar === avatar;
+    }, [ avatar, currentAvatar, formState.isValid ]);
+
+    const submitting = useMemo(() => {
+        return formState.isSubmitting;
+    }, [ formState.isSubmitting ]);
+
+    const discard = useCallback(() => {
+        reset();
+        setCurrentAvatar(avatar);
+    }, [ avatar, reset ]);
 
     return (
         <form
@@ -64,7 +78,7 @@ export const UserAvatarChangeForm: FC<UserAvatarChangeFormProps> = memo(function
                 type="text"
                 { ...register('avatar', {
                     onChange: ({ target: { value } }) => setCurrentAvatar(value),
-                    validate: isImageUrlValidatorRhf,
+                    validate: isUserAvatarUrlValidatorRhf,
                 }) }
             />
             <Row className={ css.avatarImagesCol }>
@@ -79,7 +93,6 @@ export const UserAvatarChangeForm: FC<UserAvatarChangeFormProps> = memo(function
                         className={ css.avatarMedium }
                         login={ login }
                     />
-
                     <UserAvatar
                         avatar={ currentAvatar }
                         className={ css.avatarSmall }
@@ -95,19 +108,16 @@ export const UserAvatarChangeForm: FC<UserAvatarChangeFormProps> = memo(function
             <Row fullWidth spaceBetween>
                 <Button
                     aria-label={ t.page.userSettings.discard_changes }
-                    disabled={ currentAvatar === avatar }
-                    onClick={ () => {
-                        reset();
-                        setCurrentAvatar(avatar);
-                    } }
+                    disabled={ disableButton || submitting }
+                    onClick={ discard }
                     styleType={ ButtonStyleType.GHOST }
                 >
                     { t.page.userSettings.discard_changes }
                 </Button>
                 <ButtonWithLoading
                     aria-label={ t.page.userSettings.apply_changes }
-                    disabled={ !formState.isValid || currentAvatar === avatar }
-                    loading={ formState.isSubmitting }
+                    disabled={ disableButton }
+                    loading={ submitting }
                     type="submit"
                 >
                     { t.page.userSettings.apply_changes }
