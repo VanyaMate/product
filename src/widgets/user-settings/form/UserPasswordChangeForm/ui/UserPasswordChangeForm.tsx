@@ -12,7 +12,6 @@ import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
-import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import { userPasswordUpdateEffect } from '@/app/model/auth/auth.model.ts';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 import { useForm } from 'react-hook-form';
@@ -115,50 +114,5 @@ export const UserPasswordChangeForm: FC<UserPasswordChangeFormProps> = memo(func
                 </ButtonWithLoading>
             </Row>
         </form>
-    );
-
-    return (
-        <Form
-            { ...other }
-            aria-autocomplete="none"
-            autoComplete="off"
-            className={ classNames(css.container, {}, [ className ]) }
-            controller={ form }
-        >
-            <Col>
-                <InputWithError
-                    autoComplete="off"
-                    controller={ firstPasswordInput }
-                    label={ t.page.userSettings.password_label }
-                    name={ Math.random().toString() }
-                    placeholder={ t.page.userSettings.password_placeholder }
-                    type="password"
-                />
-                <InputWithError
-                    autoComplete="off"
-                    controller={ secondPasswordInput }
-                    label={ t.page.userSettings.second_password_label }
-                    name={ Math.random().toString() }
-                    placeholder={ t.page.userSettings.password_placeholder }
-                    type="password"
-                />
-                <Row fullWidth spaceBetween>
-                    <Button
-                        disabled={ isEmpty }
-                        onClick={ discard }
-                        type="button"
-                    >
-                        { t.page.userSettings.discard_changes }
-                    </Button>
-                    <ButtonWithLoading
-                        disabled={ !form.canBeSubmitted }
-                        loading={ form.pending }
-                        type="submit"
-                    >
-                        { t.page.userSettings.apply_changes }
-                    </ButtonWithLoading>
-                </Row>
-            </Col>
-        </Form>
     );
 });
