@@ -52,8 +52,10 @@ export const ButtonWithLoading: FC<ButtonWithLoadingProps> = memo(function Butto
             onClick={ onClickHandler }
             quad={ quad }
         >
-            <span className={ css.children }>{ children }</span>
-            <IoSync className={ css.rotating }/>
+            <span className={ css.box }>
+                <span className={ css.children }>{ children }</span>
+                <IoSync className={ css.rotating }/>
+            </span>
         </Button>
     );
 });

@@ -1,10 +1,20 @@
 @import "src/app/styles/animations/animations";
 
 .container {
+    display         : inline-flex;
+    align-items     : center;
+    justify-content : center;
+
+    .box {
+        display : flex;
+    }
+
     .children {
-        width      : fit-content;
-        opacity    : 1;
-        transition : var(--transition-fast);
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        width           : fit-content;
+        gap             : var(--offset-small);
     }
 
     .rotating {

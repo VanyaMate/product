@@ -13,7 +13,6 @@ import {
     getPostsByUserIdEffect,
 } from '@/app/model/posts/posts.model.ts';
 import { useStore } from '@vanyamate/sec-react';
-import { Post } from '@/entities/post/item/Post/ui/Post.tsx';
 import {
     CreatePostForm,
 } from '@/widgets/posts/CreatePostForm/ui/CreatePostForm.tsx';
@@ -29,6 +28,15 @@ import { DomainPost } from 'product-types/dist/post/DomainPost';
 import { Virtual } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 import { NoMorePosts } from '@/entities/post/NoMorePosts/ui/NoMorePosts.tsx';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { PostPreview } from '@/entities/post/PostPreview/ui/PostPreview.tsx';
+import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
+import { LikeButton } from '@/entities/common/LikeButton/ui/LikeButton.tsx';
+import {
+    ForwardButton,
+} from '@/entities/common/ForwardButton/ui/ForwardButton.tsx';
+import {
+    CommentButton,
+} from '@/entities/common/CommentButton/ui/CommentButton.tsx';
 
 
 export type UserPostsProps =
@@ -53,8 +61,18 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
 
     const render = useCallback<VirtualRenderMethod>((post: DomainPost) => {
         return (
-            <Post
-                extra={
+            <PostPreview
+                extraFooter={
+                    <Row spaceBetween>
+                        <Row>
+                            <LikeButton amount={ 100 } liked={ true }/>
+                            <ForwardButton amount={ 15 }/>
+                            <CommentButton amount={ 6 }/>
+                        </Row>
+                        <LikeButton amount={ 1000 } liked={ false }/>
+                    </Row>
+                }
+                extraOptions={
                     <PostDropdownButton postId={ post.id }/>
                 }
                 key={ post.id }

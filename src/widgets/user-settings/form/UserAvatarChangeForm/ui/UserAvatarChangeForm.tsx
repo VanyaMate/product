@@ -10,6 +10,7 @@ import css from './UserAvatarChangeForm.module.scss';
 import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
 import {
     UserAvatar,
+    UserAvatarSize,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
@@ -84,24 +85,19 @@ export const UserAvatarChangeForm: FC<UserAvatarChangeFormProps> = memo(function
             <Row className={ css.avatarImagesCol }>
                 <UserAvatar
                     avatar={ currentAvatar }
-                    className={ css.avatarLarge }
                     login={ login }
+                    size={ UserAvatarSize.LARGE }
                 />
                 <Col>
                     <UserAvatar
                         avatar={ currentAvatar }
-                        className={ css.avatarMedium }
                         login={ login }
+                        size={ UserAvatarSize.MEDIUM }
                     />
                     <UserAvatar
                         avatar={ currentAvatar }
-                        className={ css.avatarSmall }
                         login={ login }
-                    />
-                    <UserAvatar
-                        avatar={ currentAvatar }
-                        className={ css.avatarExtraSmall }
-                        login={ login }
+                        size={ UserAvatarSize.SMALL }
                     />
                 </Col>
             </Row>

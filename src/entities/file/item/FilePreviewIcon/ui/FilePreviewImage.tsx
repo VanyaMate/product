@@ -15,12 +15,13 @@ import {
 export type FilePreviewIconProps =
     {
         type: string;
+        ext: string;
         preview: string;
     };
 
 export const FilePreviewImage: FC<FilePreviewIconProps> = memo(function FilePreviewIcon (props) {
-    const { type, preview } = props;
-    const mainType          = type.split('/')[0];
+    const { type, ext, preview } = props;
+    const mainType               = type.split('/')[0];
 
     if (mainType === 'image') {
         return (
@@ -48,6 +49,9 @@ export const FilePreviewImage: FC<FilePreviewIconProps> = memo(function FilePrev
                     }
                 })()
             }
+            <span className={ css.ext }>
+                { ext }
+            </span>
         </div>
     );
 });

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import css from './UserHeader.module.scss';
 import { DomainUser } from 'product-types/dist/user/DomainUser';
 import {
-    UserAvatar,
+    UserAvatar, UserAvatarSize,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 
 
@@ -23,9 +23,9 @@ export const UserHeader: FC<UserHeaderProps> = memo(function UserHeader (props) 
         >
             <UserAvatar
                 avatar={ user.avatar }
-                className={ css.avatar }
                 login={ user.login }
                 online={ user.online }
+                size={ UserAvatarSize.LARGE }
             />
             <h3 className={ css.login }>{ user.login }</h3>
         </section>

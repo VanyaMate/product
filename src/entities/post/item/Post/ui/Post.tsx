@@ -4,6 +4,7 @@ import css from './Post.module.scss';
 import { DomainPost } from 'product-types/dist/post/DomainPost';
 import {
     UserAvatar,
+    UserAvatarSize,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import { getUserPageUrl } from '@/features/routes/lib/getUserPageUrl.ts';
@@ -39,8 +40,8 @@ export const Post: FC<PostProps> = memo(function Post (props) {
                 <div className={ css.info }>
                     <UserAvatar
                         avatar={ post.author.avatar }
-                        className={ css.avatar }
                         login={ post.author.login }
+                        size={ UserAvatarSize.MEDIUM }
                     />
                     <div className={ css.details }>
                         <Link

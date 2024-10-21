@@ -47,6 +47,7 @@ export const FilePreview: FC<FilePreviewProps> = memo(function FilePreview (prop
                 <div className={ css.header }>
                     <div className={ css.icon }>
                         <FilePreviewImage
+                            ext={ file.fileName.split('.').slice(-1)[0] }
                             preview={ file.filePath }
                             type={ file.fileType }
                         />
