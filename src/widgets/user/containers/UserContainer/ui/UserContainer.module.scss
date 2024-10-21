@@ -11,14 +11,6 @@
 
         --bg-main-color  : var(--bg-main-color-opacity-low);
         --bg-ghost-color : var(--bg-ghost-color-opacity-low);
-
-        @media only screen and (hover : none) and (pointer : coarse) {
-            --item-backdrop-filter : none;
-        }
-
-        @media only screen and (hover : hover) {
-            --item-backdrop-filter : blur(10px);
-        }
     }
 
     .background {
