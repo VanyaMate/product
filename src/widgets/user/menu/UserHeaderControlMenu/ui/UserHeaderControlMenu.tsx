@@ -9,6 +9,7 @@ import {
 import { Button } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import {
     UserAvatar,
+    UserAvatarSize,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 import {
@@ -38,8 +39,8 @@ export const UserHeaderControlMenu: FC<UserHeaderProfileButtonProps> = memo(func
                 <Row>
                     <UserAvatar
                         avatar={ userData.avatar }
-                        className={ css.avatar }
                         login={ userData.login }
+                        size={ UserAvatarSize.SMALL }
                     />
                     <span>
                     { userData.login }

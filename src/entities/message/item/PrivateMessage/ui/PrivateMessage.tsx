@@ -10,6 +10,7 @@ import css from './PrivateMessage.module.scss';
 import dayjs from 'dayjs';
 import {
     UserAvatar,
+    UserAvatarSize,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import { IoBuild } from 'react-icons/io5';
@@ -96,6 +97,7 @@ export const PrivateMessage: FC<PrivateMessageProps> = memo(function PrivateMess
                 avatar={ message.author.avatar }
                 className={ css.avatar }
                 login={ message.author.login }
+                size={ UserAvatarSize.MEDIUM }
             />
             <div className={ css.body }>
                 <header className={ css.header }>

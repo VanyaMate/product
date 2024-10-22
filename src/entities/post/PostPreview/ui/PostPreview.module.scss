@@ -1,33 +1,39 @@
 .container {
-    padding        : var(--offset-small);
-    background     : var(--bg-ghost-color);
-    border         : 1px solid var(--border-main-color);
-    border-radius  : var(--offset-medium);
     display        : flex;
     flex-direction : column;
-    gap            : var(--offset-medium);
+    gap            : var(--offset-small);
 
-    header {
-        display         : flex;
-        flex-direction  : row;
-        gap             : var(--offset-medium);
-        justify-content : space-between;
-        align-items     : center;
+    .main {
+        padding        : var(--offset-small);
+        background     : var(--bg-ghost-color);
+        border         : 1px solid var(--border-main-color);
+        border-radius  : var(--offset-medium);
+        display        : flex;
+        flex-direction : column;
+        gap            : var(--offset-medium);
 
-        .left {
-            display        : flex;
-            flex-direction : row;
-            gap            : var(--offset-small);
+        header {
+            display         : flex;
+            flex-direction  : row;
+            gap             : var(--offset-medium);
+            justify-content : space-between;
+            align-items     : center;
 
-            .info {
-                display         : flex;
-                flex-direction  : column;
-                justify-content : center;
-                gap             : var(--offset-small);
+            .left {
+                display        : flex;
+                flex-direction : row;
+                gap            : var(--offset-small);
 
-                time {
-                    color     : var(--text-second-color);
-                    font-size : var(--font-size-s);
+                .info {
+                    display         : flex;
+                    flex-direction  : column;
+                    justify-content : center;
+                    gap             : var(--offset-small);
+
+                    time {
+                        color     : var(--text-second-color);
+                        font-size : var(--font-size-s);
+                    }
                 }
             }
         }

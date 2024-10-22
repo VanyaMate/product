@@ -5,6 +5,7 @@ import {
 } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
 import { IoChatbox } from 'react-icons/io5';
 import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
 
 
 export type CommentButtonProps =
@@ -17,9 +18,12 @@ export const CommentButton: FC<CommentButtonProps> = memo(function CommentButton
     const { amount, styleType, ...other } = props;
 
     return (
-        <Button { ...other } styleType={ styleType ?? ButtonStyleType.GHOST }>
-            <IoChatbox/>
-            <span>{ amount }</span>
-        </Button>
+        <PopOver popover="Comments">
+            <Button { ...other }
+                    styleType={ styleType ?? ButtonStyleType.GHOST }>
+                <IoChatbox/>
+                <span>{ amount }</span>
+            </Button>
+        </PopOver>
     );
 });

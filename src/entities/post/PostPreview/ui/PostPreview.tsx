@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, memo, ReactNode } from 'react';
+import { ComponentPropsWithoutRef, FC, memo, ReactNode, useMemo } from 'react';
 import classNames from 'classnames';
 import css from './PostPreview.module.scss';
 import { DomainPost } from 'product-types/dist/post/DomainPost';
@@ -12,46 +12,54 @@ import { getUserPageUrl } from '@/features/routes/lib/getUserPageUrl.ts';
 export type PostPreviewProps =
     {
         post: DomainPost;
-        extraOptions?: ReactNode;
+        extraHeader?: ReactNode;
         extraFooter?: ReactNode;
+        module?: ReactNode;
     }
     & ComponentPropsWithoutRef<'article'>;
 
 export const PostPreview: FC<PostPreviewProps> = memo(function PostPreview (props) {
-    const { className, post, extraOptions, extraFooter, ...other } = props;
+    const {
+              className, post, extraHeader, extraFooter, module, ...other
+          } = props;
+
+    const date = useMemo(() => new Date(post.creationData).toLocaleString(), [ post.creationData ]);
 
     return (
         <article
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            <header>
-                <div className={ css.left }>
-                    <UserAvatar
-                        avatar={ post.author.avatar }
-                        login={ post.author.login }
-                    />
-                    <div className={ css.info }>
-                        <Link
-                            to={ getUserPageUrl(post.author.login) }
-                        >
-                            { post.author.login }
-                        </Link>
-                        <time>{ new Date(post.creationData).toUTCString() }</time>
+            <div className={ css.main }>
+                <header>
+                    <div className={ css.left }>
+                        <UserAvatar
+                            avatar={ post.author.avatar }
+                            login={ post.author.login }
+                        />
+                        <div className={ css.info }>
+                            <Link
+                                to={ getUserPageUrl(post.author.login) }
+                            >
+                                { post.author.login }
+                            </Link>
+                            <time dateTime={ date }>{ date }</time>
+                        </div>
                     </div>
+                    { extraHeader }
+                </header>
+                <div>
+                    { post.message }
                 </div>
-                { extraOptions }
-            </header>
-            <div>
-                { post.message }
+                {
+                    extraFooter
+                    ? <footer>
+                        { extraFooter }
+                    </footer>
+                    : null
+                }
             </div>
-            {
-                extraFooter
-                ? <footer>
-                    { extraFooter }
-                </footer>
-                : null
-            }
+            { module }
         </article>
     );
 });

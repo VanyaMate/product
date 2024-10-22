@@ -1,7 +1,8 @@
 import {
     ComponentPropsWithoutRef,
     FC,
-    memo, useCallback,
+    memo,
+    useCallback,
     useLayoutEffect,
 } from 'react';
 import classNames from 'classnames';
@@ -37,6 +38,9 @@ import {
 import {
     CommentButton,
 } from '@/entities/common/CommentButton/ui/CommentButton.tsx';
+import {
+    CommentsFormPreview,
+} from '@/entities/comment/CommentsFormPreview/ui/CommentsFormPreview.tsx';
 
 
 export type UserPostsProps =
@@ -72,10 +76,35 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
                         <LikeButton amount={ 1000 } liked={ false }/>
                     </Row>
                 }
-                extraOptions={
+                extraHeader={
                     <PostDropdownButton postId={ post.id }/>
                 }
                 key={ post.id }
+                module={
+                    <CommentsFormPreview
+                        comments={ [
+                            {
+                                comment     : 'Long long comment Long long' +
+                                    ' comment Long long commentLong long' +
+                                    ' commentLong long comment Long long comment',
+                                id          : '1',
+                                author      : post.author,
+                                creationDate: Date.now(),
+                                redacted    : false,
+                            },
+                            {
+                                comment     : 'Long long comment Long long' +
+                                    ' comment Long long',
+                                id          : '2',
+                                author      : post.author,
+                                creationDate: Date.now(),
+                                redacted    : false,
+                            },
+                        ] }
+                        onSubmitHandler={ async () => {
+                        } }
+                    />
+                }
                 post={ post }
             />
         );

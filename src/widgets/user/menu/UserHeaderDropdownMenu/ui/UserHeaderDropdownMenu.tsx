@@ -4,6 +4,7 @@ import css from './UserHeaderDropdownMenu.module.scss';
 import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import {
     UserAvatar,
+    UserAvatarSize,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import { $authUser, logoutEffect } from '@/app/model/auth/auth.model.ts';
@@ -44,8 +45,8 @@ export const UserHeaderDropdownMenu: FC<UserHeaderDropdownMenuProps> = memo(func
         >
             <UserAvatar
                 avatar={ userData.avatar }
-                className={ css.avatar }
                 login={ userData.login }
+                size={ UserAvatarSize.MEDIUM }
             />
             <Link
                 to={ SiteAppRoutePath[SiteAppRoute.HOME] }

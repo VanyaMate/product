@@ -5,6 +5,7 @@ import { DomainUser } from 'product-types/dist/user/DomainUser';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import {
     UserAvatar,
+    UserAvatarSize,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 import { getRouteUrl } from '@/app/routes/lib/getRouteUrl.ts';
@@ -46,9 +47,9 @@ export const UserPreviewItem: FC<UserPreviewItemProps> = memo(function ProfilePr
             >
                 <UserAvatar
                     avatar={ user.avatar }
-                    className={ css.avatar }
                     login={ user.login }
                     online={ showOnline ? user.online : undefined }
+                    size={ UserAvatarSize.MEDIUM }
                 />
                 <p>{ user.login }</p>
             </Link>

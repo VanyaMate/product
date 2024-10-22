@@ -54,7 +54,6 @@ export const PrivateDialogue: FC<PrivateDialogueProps> = memo(function PrivateDi
                       [SITE_ROUTE_PARAM_DIALOGUE_ID]: dialogue.id,
                   }) }>
                 <PrivateDialogueIcon
-                    className={ css.image }
                     dialogueAvatar={ dialogue.avatar }
                     dialogueTitle={ dialogue.title }
                     online={ dialogue.user.online }

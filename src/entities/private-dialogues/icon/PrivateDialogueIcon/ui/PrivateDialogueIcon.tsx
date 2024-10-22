@@ -1,6 +1,7 @@
 import { FC, memo } from 'react';
 import {
     UserAvatar,
+    UserAvatarSize,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 
 
@@ -30,6 +31,7 @@ export const PrivateDialogueIcon: FC<PrivateDialogueIconProps> = memo(function P
             className={ className }
             login={ dialogueTitle || userLogin }
             online={ online }
+            size={ UserAvatarSize.MEDIUM }
         />
     );
 });

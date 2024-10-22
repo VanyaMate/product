@@ -1,0 +1,15 @@
+.container {
+    padding        : var(--offset-small);
+    background     : var(--bg-main-color);
+    border-radius  : var(--offset-small) var(--offset-small) var(--offset-medium) var(--offset-medium);
+    border         : 1px solid var(--border-main-color);
+    box-shadow     : 0 -3px 0 -1px var(--bg-second-color);
+    display        : flex;
+    flex-direction : column;
+    gap            : var(--offset-medium);
+
+    form {
+        display : flex;
+        gap     : var(--offset-small);
+    }
+}
