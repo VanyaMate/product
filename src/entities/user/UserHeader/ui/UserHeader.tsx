@@ -4,14 +4,12 @@ import css from './UserHeader.module.scss';
 import {
     UserAvatar, UserAvatarSize,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
-import {
-    DomainUserWithOnline,
-} from 'product-types/dist/user/DomainUserWithOnline';
+import { DomainUser } from 'product-types/dist/user/DomainUser';
 
 
 export type UserHeaderProps =
     {
-        user: DomainUserWithOnline;
+        user: DomainUser;
     }
     & ComponentPropsWithoutRef<'div'>;
 
