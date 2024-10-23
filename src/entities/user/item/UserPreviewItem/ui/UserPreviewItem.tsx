@@ -1,19 +1,14 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './UserPreviewItem.module.scss';
-import { DomainUser } from 'product-types/dist/user/DomainUser';
 import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
 import {
     UserAvatar,
     UserAvatarSize,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
-import { getRouteUrl } from '@/app/routes/lib/getRouteUrl.ts';
-import {
-    SITE_ROUTE_PARAM_USER_LOGIN,
-    SiteAppRoute,
-    SiteAppRoutePath,
-} from '@/app/routes/main-site/config/routes.tsx';
+import { getUserPageUrl } from '@/features/routes/lib/getUserPageUrl.ts';
+import { DomainUser } from 'product-types/dist/user/DomainUser';
 
 
 export type UserPreviewItemProps =
@@ -43,7 +38,7 @@ export const UserPreviewItem: FC<UserPreviewItemProps> = memo(function ProfilePr
                     login: user.login,
                 }) }
                 className={ css.link }
-                to={ getRouteUrl(SiteAppRoutePath[SiteAppRoute.USER], { [SITE_ROUTE_PARAM_USER_LOGIN]: user.login }) }
+                to={ getUserPageUrl(user.login) }
             >
                 <UserAvatar
                     avatar={ user.avatar }

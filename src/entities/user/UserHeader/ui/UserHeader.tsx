@@ -1,15 +1,17 @@
 import { ComponentPropsWithoutRef, FC, memo } from 'react';
 import classNames from 'classnames';
 import css from './UserHeader.module.scss';
-import { DomainUser } from 'product-types/dist/user/DomainUser';
 import {
     UserAvatar, UserAvatarSize,
 } from '@/entities/user/avatar/UserAvatar/ui/UserAvatar.tsx';
+import {
+    DomainUserWithOnline,
+} from 'product-types/dist/user/DomainUserWithOnline';
 
 
 export type UserHeaderProps =
     {
-        user: DomainUser;
+        user: DomainUserWithOnline;
     }
     & ComponentPropsWithoutRef<'div'>;
 

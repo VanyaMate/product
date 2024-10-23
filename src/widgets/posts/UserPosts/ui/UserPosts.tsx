@@ -11,7 +11,7 @@ import {
     $currentPostUserId,
     $postsList,
     $postsPending,
-    getPostsByUserIdEffect,
+    getPostsByUserIdEffect, sendPostCommentEffect,
 } from '@/app/model/posts/posts.model.ts';
 import { useStore } from '@vanyamate/sec-react';
 import {
@@ -41,7 +41,15 @@ import {
 import {
     CommentsFormPreview,
 } from '@/entities/comment/CommentsFormPreview/ui/CommentsFormPreview.tsx';
+import {
+    likePostCommentAction,
+} from '@/app/action/post-comment/likePostComment/likePostComment.action.ts';
+import {
+    unlikePostCommentAction,
+} from '@/app/action/post-comment/unlikePostComment/unlikePostComment.action.ts';
 
+
+// TODO: Переделать LikeButton, CommentsFormPreview
 
 export type UserPostsProps =
     {
@@ -69,11 +77,25 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
                 extraFooter={
                     <Row spaceBetween>
                         <Row>
-                            <LikeButton amount={ 100 } liked={ true }/>
-                            <ForwardButton amount={ 15 }/>
-                            <CommentButton amount={ 6 }/>
+                            <LikeButton
+                                amount={ post.likesAmount }
+                                liked={ post.liked }
+                                onLike={ async () => {
+                                } }
+                                onUnlike={ async () => {
+                                } }
+                            />
+                            <ForwardButton amount={ post.forwardsAmount }/>
+                            <CommentButton amount={ post.commentsAmount }/>
                         </Row>
-                        <LikeButton amount={ 1000 } liked={ false }/>
+                        <LikeButton
+                            amount={ 1000 }
+                            liked={ false }
+                            onLike={ async () => {
+                            } }
+                            onUnlike={ async () => {
+                            } }
+                        />
                     </Row>
                 }
                 extraHeader={
@@ -82,27 +104,12 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
                 key={ post.id }
                 module={
                     <CommentsFormPreview
-                        comments={ [
-                            {
-                                comment     : 'Long long comment Long long' +
-                                    ' comment Long long commentLong long' +
-                                    ' commentLong long comment Long long comment',
-                                id          : '1',
-                                author      : post.author,
-                                creationDate: Date.now(),
-                                redacted    : false,
-                            },
-                            {
-                                comment     : 'Long long comment Long long' +
-                                    ' comment Long long',
-                                id          : '2',
-                                author      : post.author,
-                                creationDate: Date.now(),
-                                redacted    : false,
-                            },
-                        ] }
-                        onSubmitHandler={ async () => {
+                        comments={ post.comments }
+                        onLike={ likePostCommentAction }
+                        onSubmitHandler={ async (comment: string) => {
+                            return sendPostCommentEffect(post.id, comment).then();
                         } }
+                        onUnlike={ unlikePostCommentAction }
                     />
                 }
                 post={ post }

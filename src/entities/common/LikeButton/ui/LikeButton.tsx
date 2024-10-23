@@ -1,4 +1,11 @@
-import { FC, memo } from 'react';
+import {
+    FC,
+    memo,
+    useCallback,
+    useLayoutEffect,
+    useMemo,
+    useState,
+} from 'react';
 import {
     ButtonWithLoading,
     ButtonWithLoadingProps,
@@ -14,22 +21,57 @@ export type LikeButtonProps =
     {
         liked: boolean;
         amount: number;
+        onLike: () => Promise<any>;
+        onUnlike: () => Promise<any>;
     }
     & ButtonWithLoadingProps;
 
 export const LikeButton: FC<LikeButtonProps> = memo(function LikeButton (props) {
-    const { className, liked, styleType, amount, ...other } = props;
+    const {
+              className, liked, styleType, amount, onUnlike, onLike, ...other
+          }                                           = props;
+    const [ currentLikedState, setCurrentLikedState ] = useState<boolean>(liked);
+
+    useLayoutEffect(() => {
+        setCurrentLikedState(liked);
+    }, [ liked ]);
+
+    const onClickHandler = useCallback(async () => {
+        if (currentLikedState) {
+            return onUnlike().then(() => setCurrentLikedState(false));
+        } else {
+            return onLike().then(() => setCurrentLikedState(true));
+        }
+    }, [ currentLikedState, onLike, onUnlike ]);
+
+    const currentAmount = useMemo(() => {
+        if (currentLikedState) {
+            if (liked) {
+                return amount;
+            } else {
+                return amount + 1;
+            }
+        } else {
+            if (liked) {
+                return amount - 1;
+            } else {
+                return amount;
+            }
+        }
+    }, [ amount, currentLikedState, liked ]);
 
     return (
         <PopOver popover={ liked ? 'Dislike' : 'Like' }>
             <ButtonWithLoading
                 { ...other }
                 className={ classNames(css.container, {}, [ className ]) }
-                styleType={ liked ? styleType ?? ButtonStyleType.PRIMARY
-                                  : ButtonStyleType.GHOST }
+                onClick={ onClickHandler }
+                styleType={ currentLikedState
+                            ? styleType ?? ButtonStyleType.PRIMARY
+                            : ButtonStyleType.GHOST }
             >
-                { liked ? <IoHeart/> : <IoHeartSharp/> }
-                <span>{ liked ? amount + 1 : amount }</span>
+                { currentLikedState ? <IoHeart/> : <IoHeartSharp/> }
+                <span>{ currentAmount }</span>
             </ButtonWithLoading>
         </PopOver>
     );

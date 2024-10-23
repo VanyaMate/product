@@ -10,11 +10,15 @@ import {
 import {
     removePostAction,
 } from '@/app/action/posts/removePost/removePost.action.ts';
+import {
+    sendPostCommentAction,
+} from '@/app/action/post-comment/sendPostComment/sendPostComment.action.ts';
 
 
 export const getPostsByUserIdEffect = effect(getPostsByUserIdAction);
 export const createPostEffect       = effect(createPostAction);
 export const removePostEffect       = effect(removePostAction);
+export const sendPostCommentEffect  = effect(sendPostCommentAction);
 
 
 export const $currentPostUserId = store<string>('')
@@ -41,6 +45,18 @@ export const $postsList = store<Array<DomainPost>>([])
             return state.filter((post) => post.id !== result.post.id);
         } else {
             return state;
+        }
+    })
+    .on(sendPostCommentEffect, 'onSuccess', (state, {
+        result, args: [ postId ],
+    }) => {
+        console.log('OnSuccess', result);
+        const post = state.find((post) => post.id === postId);
+        console.log('Find from', state);
+        console.log('Finded', post);
+        if (post) {
+            post.comments.push(result);
+            return [ ...state ];
         }
     })
     .on(logoutEffect, 'onBefore', () => []);

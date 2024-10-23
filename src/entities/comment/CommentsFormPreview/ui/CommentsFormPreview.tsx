@@ -24,7 +24,9 @@ import { LikeButton } from '@/entities/common/LikeButton/ui/LikeButton.tsx';
 export type CommentsFormPreviewProps =
     {
         comments: Array<DomainComment>;
-        onSubmitHandler: (comment: string) => Promise<void>;
+        onLike: (commentId: string) => Promise<any>;
+        onUnlike: (commentId: string) => Promise<any>;
+        onSubmitHandler: (comment: string) => Promise<any>;
     }
     & ComponentPropsWithoutRef<'div'>;
 
@@ -33,6 +35,8 @@ export const CommentsFormPreview: FC<CommentsFormPreviewProps> = memo(function C
               className,
               comments,
               onSubmitHandler,
+              onLike,
+              onUnlike,
               ...other
           } = props;
     const {
@@ -60,25 +64,21 @@ export const CommentsFormPreview: FC<CommentsFormPreviewProps> = memo(function C
                         extraFooter={
                             <Row>
                                 <ForwardButton
-                                    amount={ 1 }
+                                    amount={ comment.forwardsAmount }
                                     size={ ButtonSizeType.SMALL }
                                 />
                                 <ReplyButton
-                                    amount={ 5 }
+                                    amount={ comment.repliesAmount }
                                     size={ ButtonSizeType.SMALL }
                                 />
                                 <LikeButton
-                                    amount={ 5 }
-                                    liked={ true }
+                                    amount={ comment.likesAmount }
+                                    liked={ comment.liked }
+                                    onLike={ () => onLike(comment.id) }
+                                    onUnlike={ () => onUnlike(comment.id) }
                                     size={ ButtonSizeType.SMALL }
                                 />
                             </Row>
-                        }
-                        extraHeader={
-                            <ReplyButton
-                                amount={ 5 }
-                                size={ ButtonSizeType.SMALL }
-                            />
                         }
                         key={ comment.id }
                     />

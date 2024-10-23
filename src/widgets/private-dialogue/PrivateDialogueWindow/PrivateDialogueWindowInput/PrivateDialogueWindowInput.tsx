@@ -30,20 +30,20 @@ export type PrivateDialogueWindowInputProps =
     & ComponentPropsWithoutRef<'div'>;
 
 export const PrivateDialogueWindowInput: FC<PrivateDialogueWindowInputProps> = memo(function PrivateDialogueWindowInput (props) {
-    const { className, dialogueId, ...other } = props;
-    const { t }                               = useTranslation();
-    const onSendMessage                       = useCallback((message: string) => {
+    const { className, dialogueId, ...other }                    = props;
+    const { t }                                                  = useTranslation();
+    const { register, handleSubmit, reset, formState, setFocus } = useForm<
+        { message: string }
+    >();
+
+    const onSendMessage = useCallback((message: string) => {
         return sendPrivateMessageEffect([
             dialogueId, {
                 message    : message,
                 messageType: getMessageTypeByBody(message),
             },
-        ]);
-    }, [ dialogueId ]);
-
-    const { register, handleSubmit, reset, formState, setFocus } = useForm<
-        { message: string }
-    >();
+        ]).then(() => reset());
+    }, [ dialogueId, reset ]);
 
     useEffect(() => {
         reset();
