@@ -14,13 +14,22 @@ import { getUserPageUrl } from '@/features/routes/lib/getUserPageUrl.ts';
 export type CommentProps =
     {
         comment: DomainComment;
+        isSubComment: boolean;
         extraFooter?: ReactNode;
         extraHeader?: ReactNode;
     }
     & ComponentPropsWithoutRef<'article'>;
 
 export const Comment: FC<CommentProps> = memo(function Comment (props) {
-    const { className, comment, extraFooter, extraHeader, ...other } = props;
+    const {
+              className,
+              comment,
+              isSubComment,
+              extraFooter,
+              extraHeader,
+              children,
+              ...other
+          } = props;
 
     const date = useMemo(() => new Date(comment.creationDate).toLocaleString(), [ comment.creationDate ]);
 
@@ -33,7 +42,10 @@ export const Comment: FC<CommentProps> = memo(function Comment (props) {
                 <UserAvatar
                     avatar={ comment.author.avatar }
                     login={ comment.author.login }
-                    size={ UserAvatarSize.MEDIUM }
+                    size={
+                        isSubComment ? UserAvatarSize.SMALL
+                                     : UserAvatarSize.MEDIUM
+                    }
                 />
                 <div className={ css.right }>
                     <Row fullWidth spaceBetween>
@@ -49,6 +61,13 @@ export const Comment: FC<CommentProps> = memo(function Comment (props) {
                         <time dateTime={ date }>{ date }</time>
                         { extraFooter }
                     </Row>
+                    {
+                        children
+                        ? <div className={ css.children }>
+                            { children }
+                        </div>
+                        : null
+                    }
                 </div>
             </Row>
         </article>

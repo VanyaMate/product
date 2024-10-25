@@ -1,0 +1,12 @@
+.container {
+    visibility : hidden;
+    opacity    : 0;
+    height     : 0;
+    transition : var(--transition-fast);
+
+    &.opened {
+        visibility : visible;
+        opacity    : 1;
+        height     : 30px;
+    }
+}

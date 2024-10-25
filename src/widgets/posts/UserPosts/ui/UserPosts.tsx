@@ -42,14 +42,20 @@ import {
     CommentsFormPreview,
 } from '@/entities/comment/CommentsFormPreview/ui/CommentsFormPreview.tsx';
 import {
-    likePostCommentAction,
-} from '@/app/action/post-comment/likePostComment/likePostComment.action.ts';
+    CommentWidget,
+} from '@/widgets/comment/CommentWidget/ui/CommentWidget.tsx';
 import {
-    unlikePostCommentAction,
-} from '@/app/action/post-comment/unlikePostComment/unlikePostComment.action.ts';
+    DomainCommentCreateData,
+} from 'product-types/dist/comment/DomainCommentCreateData';
 
 
 // TODO: Переделать LikeButton, CommentsFormPreview
+// TODO: Я устал.
+/**
+ * 1. Не работает Reply на Reply. Проверить.
+ * 2. При Reply на комменатрий под постов - сбрасывается state. Проверить.
+ */
+
 
 export type UserPostsProps =
     {
@@ -104,13 +110,22 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
                 key={ post.id }
                 module={
                     <CommentsFormPreview
-                        comments={ post.comments }
-                        onLike={ likePostCommentAction }
-                        onSubmitHandler={ async (comment: string) => {
+                        onSubmitHandler={ async (comment: DomainCommentCreateData) => {
                             return sendPostCommentEffect(post.id, comment).then();
                         } }
-                        onUnlike={ unlikePostCommentAction }
-                    />
+                    >
+                        {
+                            post.comments.map((comment) => (
+                                <CommentWidget
+                                    comment={ comment }
+                                    commentIdTree={ [ comment.id ] }
+                                    isSubComment={ false }
+                                    key={ comment.id }
+                                    postId={ post.id }
+                                />
+                            ))
+                        }
+                    </CommentsFormPreview>
                 }
                 post={ post }
             />

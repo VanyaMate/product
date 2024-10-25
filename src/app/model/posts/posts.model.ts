@@ -13,12 +13,16 @@ import {
 import {
     sendPostCommentAction,
 } from '@/app/action/post-comment/sendPostComment/sendPostComment.action.ts';
+import {
+    replyOnPostCommentAction,
+} from '@/app/action/post-comment/replyOnPostComment/replyOnPostComment.action.ts';
 
 
-export const getPostsByUserIdEffect = effect(getPostsByUserIdAction);
-export const createPostEffect       = effect(createPostAction);
-export const removePostEffect       = effect(removePostAction);
-export const sendPostCommentEffect  = effect(sendPostCommentAction);
+export const getPostsByUserIdEffect   = effect(getPostsByUserIdAction);
+export const createPostEffect         = effect(createPostAction);
+export const removePostEffect         = effect(removePostAction);
+export const sendPostCommentEffect    = effect(sendPostCommentAction);
+export const replyOnPostCommentEffect = effect(replyOnPostCommentAction);
 
 
 export const $currentPostUserId = store<string>('')
@@ -50,13 +54,30 @@ export const $postsList = store<Array<DomainPost>>([])
     .on(sendPostCommentEffect, 'onSuccess', (state, {
         result, args: [ postId ],
     }) => {
-        console.log('OnSuccess', result);
         const post = state.find((post) => post.id === postId);
-        console.log('Find from', state);
-        console.log('Finded', post);
         if (post) {
             post.comments.push(result);
             return [ ...state ];
+        }
+    })
+    .on(replyOnPostCommentEffect, 'onSuccess', (state, {
+        result, args: [ postId, commentsIds ],
+    }) => {
+        const post = state.find((post) => post.id === postId);
+        if (post) {
+            let commentsList = post.comments;
+            $begin: for (let i = 0, id: string = ''; i < commentsIds.length; i++) {
+                id = commentsIds[i];
+                for (let j = 0; j < commentsList.length; j++) {
+                    if (commentsList[j].id === id) {
+                        commentsList = commentsList[j].comments;
+                        continue $begin;
+                    }
+                }
+                return state;
+            }
+            commentsList.push(result);
+            return { ...state };
         }
     })
     .on(logoutEffect, 'onBefore', () => []);
