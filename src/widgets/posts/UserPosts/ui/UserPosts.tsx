@@ -42,11 +42,11 @@ import {
     CommentsFormPreview,
 } from '@/entities/comment/CommentsFormPreview/ui/CommentsFormPreview.tsx';
 import {
-    CommentWidget,
-} from '@/widgets/comment/CommentWidget/ui/CommentWidget.tsx';
-import {
     DomainCommentCreateData,
 } from 'product-types/dist/comment/DomainCommentCreateData';
+import {
+    CommentFromModelWidget,
+} from '@/widgets/comment/CommentFromModelWidget/ui/CommentFromModelWidget.tsx';
 
 
 // TODO: Переделать LikeButton, CommentsFormPreview
@@ -116,9 +116,8 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
                     >
                         {
                             post.comments.map((comment) => (
-                                <CommentWidget
-                                    comment={ comment }
-                                    commentIdTree={ [ comment.id ] }
+                                <CommentFromModelWidget
+                                    commentId={ comment.id }
                                     isSubComment={ false }
                                     key={ comment.id }
                                     postId={ post.id }

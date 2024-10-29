@@ -43,7 +43,6 @@ export const CommentsFormPreview: FC<CommentsFormPreviewProps> = memo(function C
             { ...other }
             className={ classNames(css.container, {}, [ className ]) }
         >
-            { children }
             <form onSubmit={ handleSubmit(onSubmit) }>
                 <TextInput
                     placeholder="Введите коментарий"
@@ -62,6 +61,7 @@ export const CommentsFormPreview: FC<CommentsFormPreviewProps> = memo(function C
                     <IoSend/>
                 </ButtonWithLoading>
             </form>
+            { children }
         </section>
     );
 });

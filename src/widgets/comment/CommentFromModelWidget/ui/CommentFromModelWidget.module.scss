@@ -1,0 +1,85 @@
+// В целом работает, работает более менее, мне этого достаточно. Без лишнего кода.
+// Ну по крайней мере пока что.
+
+.container {
+    position : relative;
+
+    & .openMore {
+        position  : relative;
+        font-size : var(--font-size-s);
+
+        &::before {
+            content       : '';
+            position      : absolute;
+            z-index       : 2;
+            width         : 24px;
+            height        : 0;
+            top           : 6px;
+            right         : calc(100% + var(--offset-small));
+            border-bottom : 2px dotted var(--ghost-color);
+        }
+    }
+
+    &.sub {
+        &::before {
+            content       : '';
+            position      : absolute;
+            z-index       : 2;
+            width         : 24px;
+            height        : 0;
+            top           : 10px;
+            right         : calc(100% + var(--offset-small));
+            border-bottom : 2px dotted var(--ghost-color);
+        }
+
+        & .openMore {
+            &::before {
+                content       : '';
+                position      : absolute;
+                z-index       : 2;
+                width         : 16px;
+                height        : 0;
+                top           : 6px;
+                right         : calc(100% + var(--offset-small));
+                border-bottom : 2px dotted var(--ghost-color);
+            }
+        }
+
+        & .sub::before {
+            width : 16px;
+        }
+    }
+
+    &.parent {
+        &::after {
+            content      : '';
+            position     : absolute;
+            border-right : 2px dotted var(--ghost-color);
+            height       : calc(100% - 50px - 58px);
+        }
+
+        &.sub {
+            &::after {
+                top    : calc(26px + var(--offset-small));
+                left   : 10px;
+                height : calc(100% - 26px - 58px);
+            }
+
+            &.hasMore::after {
+                height : calc(100% - 26px - 12px);
+            }
+        }
+
+        &:not(.sub) {
+            &::after {
+                top    : calc(50px + var(--offset-small));
+                left   : 25px;
+                height : calc(100% - 50px - 58px);
+            }
+
+            &.hasMore::after {
+                height : calc(100% - 50px - 12px);
+            }
+        }
+    }
+}

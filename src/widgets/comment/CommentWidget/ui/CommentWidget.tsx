@@ -53,16 +53,18 @@ export const CommentWidget: FC<CommentWidgetProps> = memo(function CommentWidget
             {
                 (reply || comment.comments.length)
                 ? <Col>
-                    <ReplyCommentForm
-                        commentIdTree={ commentIdTree }
-                        opened={ reply }
-                        postId={ postId }
-                    />
+                    {
+                        reply ? <ReplyCommentForm
+                            commentId={ comment.id }
+                            opened={ reply }
+                            postId={ postId }
+                        /> : null
+                    }
                     {
                         comment.comments.map((_comment) => (
                             <CommentWidget
                                 comment={ _comment }
-                                commentIdTree={ commentIdTree.concat(comment.id) }
+                                commentIdTree={ commentIdTree.concat(_comment.id) }
                                 isSubComment
                                 key={ _comment.id }
                                 postId={ postId }

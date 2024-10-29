@@ -34,6 +34,7 @@ export const $postsPending = store(false)
     .on(getPostsByUserIdEffect, 'onBefore', () => true)
     .on(getPostsByUserIdEffect, 'onFinally', () => false);
 
+
 export const $postsList = store<Array<DomainPost>>([])
     .on(getPostsByUserIdEffect, 'onBefore', () => [])
     .on(getPostsByUserIdEffect, 'onSuccess', (_, { result }) => result.list.filter(isDomainPost))

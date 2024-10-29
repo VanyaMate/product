@@ -22,12 +22,12 @@ export type ReplyCommentFormProps =
     {
         opened: boolean;
         postId: string;
-        commentIdTree: Array<string>;
+        commentId: string;
     }
     & ComponentPropsWithoutRef<'form'>;
 
 export const ReplyCommentForm: FC<ReplyCommentFormProps> = memo(function ReplyCommentForm (props) {
-    const { opened, onSubmit, postId, commentIdTree, ...other } = props;
+    const { opened, onSubmit, postId, commentId, ...other } = props;
 
     const {
               handleSubmit,
@@ -38,10 +38,10 @@ export const ReplyCommentForm: FC<ReplyCommentFormProps> = memo(function ReplyCo
           } = useForm<DomainCommentCreateData>();
 
     const onSubmitHandler = useCallback((data: DomainCommentCreateData) => {
-        return replyOnPostCommentEffect(postId, commentIdTree, data)
+        return replyOnPostCommentEffect(postId, commentId, data)
             .then(() => reset())
             .then(() => onSubmit?.(null));
-    }, [ commentIdTree, onSubmit, postId, reset ]);
+    }, [ commentId, onSubmit, postId, reset ]);
 
     useLayoutEffect(() => {
         setFocus('comment');
