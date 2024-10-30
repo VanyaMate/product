@@ -58,7 +58,8 @@ export const UserLoginChangeForm: FC<UserLoginChangeFormProps> = memo(function U
 
     const discard = useCallback(() => {
         reset();
-    }, [ reset ]);
+        setCurrentLogin(login);
+    }, [ login, reset ]);
 
     return (
         <form

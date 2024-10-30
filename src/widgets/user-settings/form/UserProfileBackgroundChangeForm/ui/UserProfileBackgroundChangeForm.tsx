@@ -103,7 +103,7 @@ export const UserProfileBackgroundChangeForm: FC<UserProfileBackgroundChangeForm
                 spaceBetween
             >
                 <Button
-                    disabled={ disableButton }
+                    disabled={ background === currentBackground }
                     onClick={ discard }
                     type="button"
                 >

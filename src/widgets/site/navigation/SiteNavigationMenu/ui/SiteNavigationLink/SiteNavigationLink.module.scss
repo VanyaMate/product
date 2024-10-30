@@ -19,6 +19,7 @@
         &.primary {
             background : var(--primary-color);
             color      : var(--on-primary-text-color);
+            border     : 1px solid var(--primary-color);
 
             &:focus,
             &:hover {
@@ -29,6 +30,7 @@
         &.second {
             background : var(--second-color);
             color      : var(--on-second-text-color);
+            border     : 1px solid var(--second-color);
 
             &:focus,
             &:hover {
@@ -39,6 +41,7 @@
         &.ghost {
             background : var(--bg-ghost-color);
             color      : var(--text-second-color);
+            border     : 1px solid var(--border-main-color);
 
             &:focus,
             &:hover {

@@ -86,6 +86,7 @@ export const $postComments = store<PostCommentsModel>({})
 
             if (commented) {
                 commented.comments.push(result);
+                commented.repliesAmount += 1;
                 comments[args[1]].set({ ...commented });
             }
             comments[result.id] = store(result);

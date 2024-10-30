@@ -47,6 +47,9 @@ import {
 import {
     CommentFromModelWidget,
 } from '@/widgets/comment/CommentFromModelWidget/ui/CommentFromModelWidget.tsx';
+import {
+    PageLoader,
+} from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
 
 
 // TODO: Переделать LikeButton, CommentsFormPreview
@@ -134,7 +137,7 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
     return (
         <section
             { ...other }
-            className={ classNames(css.container, { [css.loader]: postsPending }, [ className ]) }
+            className={ classNames(css.container, { [css.loading]: postsPending }, [ className ]) }
         >
             {
                 userId === authData.id
@@ -142,16 +145,18 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
                 : null
             }
             {
-                posts.length
-                ? <Virtual
-                    contentClassName={ css.posts }
-                    list={ posts }
-                    loaderPreviousElement={ <Loader/> }
-                    loadingPrevious={ postsPending }
-                    noMorePreviousElement={ <NoMorePosts/> }
-                    render={ render }
-                />
-                : t.page.posts.empty_posts_list
+                postsPending
+                ? <PageLoader/>
+                : posts.length
+                  ? <Virtual
+                      contentClassName={ css.posts }
+                      list={ posts }
+                      loaderPreviousElement={ <Loader/> }
+                      loadingPrevious={ postsPending }
+                      noMorePreviousElement={ <NoMorePosts/> }
+                      render={ render }
+                  />
+                  : t.page.posts.empty_posts_list
             }
         </section>
     );

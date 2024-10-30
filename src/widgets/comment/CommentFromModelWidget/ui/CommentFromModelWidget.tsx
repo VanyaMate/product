@@ -23,8 +23,9 @@ import {
 } from '@/widgets/comment/ReplyCommentForm/ui/ReplyCommentForm.tsx';
 import css from './CommentFromModelWidget.module.scss';
 import classNames from 'classnames';
-import { Link } from '@/shared/ui-kit/links/Link/ui/Link.tsx';
-import { LinkStyleType } from '@/shared/ui-kit/links/Link/types/types.ts';
+import {
+    ButtonWithLoading,
+} from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
 
 
 export type CommentFromModelWidgetProps =
@@ -40,7 +41,8 @@ export const CommentFromModelWidget: FC<CommentFromModelWidgetProps> = memo(func
     const comment                                                  = useStore($postComments.get()[commentId]);
     const [ reply, setReply ]                                      = useState<boolean>(false);
 
-    const showExtra = useMemo(() => Math.random() > .5, []);
+    const hasMoreAmount = useMemo<number>(() => comment.repliesAmount - commentHierarchy.length, [ comment.repliesAmount, commentHierarchy.length ]);
+    const hasMore       = useMemo(() => hasMoreAmount > 0, [ hasMoreAmount ]);
 
     return (
         <Comment
@@ -50,8 +52,8 @@ export const CommentFromModelWidget: FC<CommentFromModelWidgetProps> = memo(func
                     css.container,
                     {
                         [css.sub]    : isSubComment,
-                        [css.parent] : !!commentHierarchy.length,
-                        [css.hasMore]: showExtra,
+                        [css.parent] : !!commentHierarchy.length || hasMore,
+                        [css.hasMore]: hasMore,
                     },
                     [ className ],
                 )
@@ -76,7 +78,7 @@ export const CommentFromModelWidget: FC<CommentFromModelWidgetProps> = memo(func
             isSubComment={ isSubComment }
         >
             {
-                (reply || comment.comments.length)
+                (reply || comment.comments.length || hasMore)
                 ? <Col>
                     {
                         reply ? <ReplyCommentForm
@@ -97,13 +99,15 @@ export const CommentFromModelWidget: FC<CommentFromModelWidgetProps> = memo(func
                         ))
                     }
                     {
-                        // Temp
-                        showExtra ? <Link
-                                      className={ css.openMore }
-                                      styleType={ LinkStyleType.GHOST }
-                                      to="#"
-                                  >Раскрыть еще 5</Link>
-                                  : null
+                        hasMore
+                        ? <ButtonWithLoading
+                            className={ css.openMore }
+                            size={ ButtonSizeType.SMALL }
+                            styleType={ ButtonStyleType.GHOST }
+                        >
+                            Раскрыть еще { hasMoreAmount }
+                        </ButtonWithLoading>
+                        : null
                     }
                 </Col>
                 : null

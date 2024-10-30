@@ -7,6 +7,8 @@
     & .openMore {
         position  : relative;
         font-size : var(--font-size-s);
+        display   : inline-flex;
+        width     : fit-content;
 
         &::before {
             content       : '';
@@ -55,18 +57,18 @@
             content      : '';
             position     : absolute;
             border-right : 2px dotted var(--ghost-color);
-            height       : calc(100% - 50px - 58px);
+            height       : calc(100% - 50px - 15px);
         }
 
         &.sub {
             &::after {
                 top    : calc(26px + var(--offset-small));
                 left   : 10px;
-                height : calc(100% - 26px - 58px);
+                height : calc(100% - 26px - 15px);
             }
 
             &.hasMore::after {
-                height : calc(100% - 26px - 12px);
+                height : calc(100% - 26px - 15px);
             }
         }
 
@@ -74,11 +76,11 @@
             &::after {
                 top    : calc(50px + var(--offset-small));
                 left   : 25px;
-                height : calc(100% - 50px - 58px);
+                height : calc(100% - 50px - 15px);
             }
 
             &.hasMore::after {
-                height : calc(100% - 50px - 12px);
+                height : calc(100% - 50px - 15px);
             }
         }
     }
