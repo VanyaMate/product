@@ -58,8 +58,8 @@ export const PostPreview: FC<PostPreviewProps> = memo(function PostPreview (prop
                     </footer>
                     : null
                 }
+                { module }
             </div>
-            { module }
         </article>
     );
 });
