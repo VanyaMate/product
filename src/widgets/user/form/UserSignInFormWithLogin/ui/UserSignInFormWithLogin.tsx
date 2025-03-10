@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { DomainUser } from 'product-types/dist/user/DomainUser';
-import { loginEffect } from '@/app/model/auth/auth.model.ts';
+import { $authIsPending, loginEffect } from '@/app/model/auth/auth.model.ts';
 import {
     DomainLoginData,
 } from 'product-types/dist/authorization/DomainLoginData';
@@ -14,6 +14,7 @@ import {
 import {
     isLoginValidatorRhf,
 } from '@/app/react-hook-form/validator/isLoginValidatorRhf/isLoginValidatorRhf.ts';
+import { useStore } from '@vanyamate/sec-react';
 
 
 export type UserSignInFormWithLoginProps = {
@@ -35,6 +36,7 @@ export const UserSignInFormWithLogin: FC<UserSignInFormWithLoginProps> = memo(fu
             .then((data) => onSuccess?.(data.user))
             .catch(onError);
     };
+    const authIsPending          = useStore($authIsPending);
 
     return (
         <SignInFormByLoginRHF
@@ -49,7 +51,7 @@ export const UserSignInFormWithLogin: FC<UserSignInFormWithLoginProps> = memo(fu
                 required: true,
                 validate: isPasswordValidatorRhf,
             }) }
-            pending={ formState.isSubmitting }
+            pending={ formState.isSubmitting || authIsPending }
             rememberController={ register('remember') }
         />
     );
