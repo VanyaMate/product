@@ -122,6 +122,7 @@
         "typescript": "^5.4.5",
         "vite": "^5.2.0",
         "vite-plugin-bundle-monitoring": "^0.1.2",
-        "vite-plugin-compression2": "^1.1.0"
+        "vite-plugin-compression2": "^1.1.0",
+        "vite-plugin-pwa": "^0.21.1"
     }
 }

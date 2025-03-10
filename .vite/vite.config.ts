@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import * as path from 'path';
 import VitePluginBundleMonitoring from 'vite-plugin-bundle-monitoring';
+import { VitePWA } from 'vite-plugin-pwa';
 
 
 export default defineConfig(({ mode }) => {
@@ -10,6 +11,25 @@ export default defineConfig(({ mode }) => {
     return {
         plugins  : [
             react(),
+            VitePWA({
+                registerType  : 'autoUpdate',
+                injectRegister: 'inline',
+                workbox       : {
+                    runtimeCaching: [
+                        {
+                            urlPattern: ({ request }) => (request.destination === 'script') || (request.destination === 'style'),
+                            handler   : 'StaleWhileRevalidate',
+                            options   : {
+                                cacheName : 'liberty-script-style-cache',
+                                expiration: {
+                                    maxEntries   : 100,
+                                    maxAgeSeconds: 60 * 60 * 24 * 30, // 30d
+                                },
+                            },
+                        },
+                    ],
+                },
+            }),
             VitePluginBundleMonitoring({
                 compareFileDir: path.resolve(__dirname, 'compare'),
             }),
