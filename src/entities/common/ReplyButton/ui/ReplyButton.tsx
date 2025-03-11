@@ -10,7 +10,7 @@ import { IoArrowUndoSharp } from 'react-icons/io5';
 
 export type ReplyButtonProps =
     {
-        amount: number;
+        amount?: number;
     }
     & ButtonProps;
 
@@ -24,7 +24,10 @@ export const ReplyButton: FC<ReplyButtonProps> = memo(function ReplyButton (prop
                 styleType={ styleType ?? ButtonStyleType.GHOST }
             >
                 <IoArrowUndoSharp/>
-                <span>{ amount }</span>
+                {
+                    typeof (amount) === 'number' ? <span>{ amount }</span>
+                                                 : null
+                }
             </Button>
         </PopOver>
     );

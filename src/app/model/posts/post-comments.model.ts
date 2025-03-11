@@ -1,16 +1,61 @@
 import { DomainComment } from 'product-types/dist/comment/DomainComment';
-import { store, Store } from '@vanyamate/sec';
+import { effect, store, Store } from '@vanyamate/sec';
 import {
     getPostsByUserIdEffect, replyOnPostCommentEffect,
     sendPostCommentEffect,
 } from '@/app/model/posts/posts.model.ts';
 import { DomainPost } from 'product-types/dist/post/DomainPost';
+import {
+    getCommentRepliesAction,
+} from '@/app/action/post-comments/getCommentReplies/getCommentReplies.action.ts';
+import {
+    getCommentRepliesByCursorAction,
+} from '@/app/action/post-comments/getCommentRepliesByCursor/getCommentRepliesByCursor.action.ts';
 
 
 export type PostCommentsHierarchyModel = Record<string, Store<Array<string>>>;
 export type PostCommentsModel = Record<string, Store<DomainComment>>;
 
+export const getCommentRepliesEffect         = effect(getCommentRepliesAction);
+export const getCommentRepliesByCursorEffect = effect(getCommentRepliesByCursorAction);
+
 export const $postCommentsHierarchy = store<PostCommentsHierarchyModel>({})
+    .on(
+        getCommentRepliesEffect,
+        'onSuccess',
+        (hierarchy, { result, args }) => {
+            // update hierarchy
+            result.forEach((comment) => {
+                hierarchy[comment.id] = store([]);
+            });
+
+            if (hierarchy[args[0]]) {
+                hierarchy[args[0]].set(hierarchy[args[0]].get().concat(result.map(({ id }) => id)));
+            } else {
+                hierarchy[args[0]] = store(result.map(({ id }) => id));
+            }
+
+            return { ...hierarchy };
+        },
+    )
+    .on(
+        getCommentRepliesByCursorEffect,
+        'onSuccess',
+        (hierarchy, { result, args }) => {
+            // update hierarchy
+            result.forEach((comment) => {
+                hierarchy[comment.id] = store([]);
+            });
+
+            if (hierarchy[args[0]]) {
+                hierarchy[args[0]].set(hierarchy[args[0]].get().concat(result.map(({ id }) => id)));
+            } else {
+                hierarchy[args[0]] = store(result.map(({ id }) => id));
+            }
+
+            return { ...hierarchy };
+        },
+    )
     .on(
         getPostsByUserIdEffect,
         'onSuccess',
@@ -52,6 +97,28 @@ export const $postCommentsHierarchy = store<PostCommentsHierarchyModel>({})
 
 
 export const $postComments = store<PostCommentsModel>({})
+    .on(
+        getCommentRepliesEffect,
+        'onSuccess',
+        (state, { result }) => {
+            result.forEach((comment) => {
+                state[comment.id] = store(comment);
+            });
+
+            return { ...state };
+        },
+    )
+    .on(
+        getCommentRepliesByCursorEffect,
+        'onSuccess',
+        (state, { result }) => {
+            result.forEach((comment) => {
+                state[comment.id] = store(comment);
+            });
+
+            return { ...state };
+        },
+    )
     .on(
         getPostsByUserIdEffect,
         'onSuccess',
