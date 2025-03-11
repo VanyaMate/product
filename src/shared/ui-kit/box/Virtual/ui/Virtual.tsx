@@ -720,30 +720,30 @@ export const Virtual: FC<VirtualProps> = memo(function Virtual (props) {
                 >
                     { virtualList.map((item, index) => render(item, index, currentIndex.current)) }
                 </div>
+                <div
+                    className={
+                        classNames(css.loader, {
+                            [css.loading]: loadingNext,
+                            [css.bottom] : !isTop(type),
+                        })
+                    }
+                >
+                    { loaderNextElement }
+                </div>
+                <div
+                    className={
+                        classNames(css.loader, {
+                            [css.loading]: loadingPrevious,
+                            [css.bottom] : isTop(type),
+                        })
+                    }
+                >
+                    { loaderPreviousElement }
+                </div>
                 { !hasMorePrevious ? noMorePreviousElement : null }
             </div>
             <div className={ css.permanent }>
                 { previousPermanent }
-            </div>
-            <div
-                className={
-                    classNames(css.loader, {
-                        [css.loading]: loadingNext,
-                        [css.bottom] : !isTop(type),
-                    })
-                }
-            >
-                { loaderNextElement }
-            </div>
-            <div
-                className={
-                    classNames(css.loader, {
-                        [css.loading]: loadingPrevious,
-                        [css.bottom] : isTop(type),
-                    })
-                }
-            >
-                { loaderPreviousElement }
             </div>
             { additional }
             <div className={ css.scrollBar } ref={ scrollBarRef }>

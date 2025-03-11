@@ -145,7 +145,7 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
                 : null
             }
             {
-                postsPending
+                (posts.length && postsPending)
                 ? <PageLoader/>
                 : posts.length
                   ? <Virtual

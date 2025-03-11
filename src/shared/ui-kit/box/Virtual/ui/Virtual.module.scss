@@ -17,6 +17,7 @@ $scroll-width : 10px;
         flex-direction : column-reverse;
         transition     : var(--transition-fast);
         contain        : strict;
+        position       : relative;
 
         .content {
             height         : fit-content;
@@ -48,18 +49,15 @@ $scroll-width : 10px;
     }
 
     .loader {
-        position   : absolute;
-        visibility : hidden;
-        opacity    : 0;
-        transition : var(--transition-fast);
-        left       : 50%;
-        top        : 0;
-        transform  : translate(-50%, -100%);
+        position  : absolute;
+        display   : none;
+        left      : 50%;
+        top       : 0;
+        transform : translate(-50%, -100%);
 
         &.loading {
-            visibility : visible;
-            opacity    : 1;
-            transform  : translate(-50%, 0);
+            display   : block;
+            transform : translate(-50%, 0);
         }
 
         &.bottom {
@@ -87,8 +85,7 @@ $scroll-width : 10px;
 
     &.scrollable {
         .scrollContainer,
-        .permanent,
-        .loader {
+        .permanent {
             padding-right : calc($scroll-width + var(--offset-small));
         }
 
