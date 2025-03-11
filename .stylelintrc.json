@@ -2,9 +2,8 @@
     "plugins": [
         "stylelint-scss"
     ],
-    "extends": "stylelint-config-standard-scss",
+    "extends": "stylelint-config-recommended-scss",
     "rules": {
-        "selector-class-pattern": "^[A-Za-z]+$",
-        "scss/dollar-variable-colon-space-before": null
+        "selector-class-pattern": "^[A-Za-z]+$"
     }
 }
