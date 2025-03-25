@@ -2,7 +2,7 @@ import {
     FC,
     memo,
     useCallback,
-    useLayoutEffect,
+    useLayoutEffect, useRef,
     useState,
 } from 'react';
 import classNames from 'classnames';
@@ -30,8 +30,10 @@ export const ButtonWithLoading: FC<ButtonWithLoadingProps> = memo(function Butto
               disabled,
               loading,
               ...other
-          }                       = props;
-    const [ pending, setPending ] = useState<boolean>(loading ?? false);
+          }                             = props;
+    const [ pending, setPending ]       = useState<boolean>(loading ?? false);
+    const [ prePending, setPrePending ] = useState<boolean>(false);
+    const loader                        = useRef<HTMLSpanElement>();
 
     const onClickHandler = useCallback(() => {
         if (onClick) {
@@ -41,20 +43,48 @@ export const ButtonWithLoading: FC<ButtonWithLoadingProps> = memo(function Butto
     }, [ onClick ]);
 
     useLayoutEffect(() => {
-        setPending(loading);
+        if (loading) {
+            setPrePending(true);
+            const update         = function () {
+                setPending(true);
+            };
+            const animationFrame = requestAnimationFrame(update);
+            return () => {
+                cancelAnimationFrame(animationFrame);
+            };
+        } else {
+            setPending(false);
+            const loaderElement   = loader.current;
+            const onTransitionEnd = function () {
+                setPrePending(false);
+            };
+            loaderElement.addEventListener('transitionend', onTransitionEnd);
+            return () => {
+                loaderElement.removeEventListener('transitionend', onTransitionEnd);
+            };
+        }
     }, [ loading ]);
+
+    useLayoutEffect(() => {
+
+    }, [ prePending ]);
 
     return (
         <Button
             { ...other }
-            className={ classNames(css.container, { [css.pending]: pending }, [ className ]) }
+            className={ classNames(css.container, {
+                [css.pending]   : pending,
+                [css.prePending]: prePending,
+            }, [ className ]) }
             disabled={ disabled || pending }
             onClick={ onClickHandler }
             quad={ quad }
         >
-            <span className={ css.box }>
+            <span className={ classNames(css.box, { [css.quad]: quad }) }>
                 <span className={ css.children }>{ children }</span>
-                <IoSync className={ css.rotating }/>
+                <span className={ css.loader } ref={ loader }>
+                    <IoSync className={ css.rotating }/>
+                </span>
             </span>
         </Button>
     );

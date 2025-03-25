@@ -15,24 +15,57 @@
         justify-content : center;
         width           : fit-content;
         gap             : var(--offset-small);
+        opacity         : 1;
+        visibility      : visible;
+        transition      : var(--transition-fast);
     }
 
     .rotating {
-        margin-left : 0;
-        animation   : loading .4s infinite ease-in-out;
-        width       : 0;
-        height      : 20px;
+        animation : loading .4s infinite ease-in-out;
+        width     : 20px;
+        height    : 20px;
+    }
+
+    .loader {
+        transform   : translateX(100%);
         opacity     : 0;
         visibility  : hidden;
         transition  : var(--transition-fast);
+        display     : none;
+        width       : 0;
+        margin-left : 0;
+
+        .rotating {
+            animation : loading .4s infinite ease-in-out;
+            width     : 20px;
+            height    : 20px;
+        }
+    }
+
+    &.prePending {
+        .loader {
+            display : inline-block;
+        }
     }
 
     &.pending {
-        .rotating {
-            margin-left : var(--offset-small);
-            opacity     : 1;
-            visibility  : visible;
-            width       : 20px;
+        .box.quad .children {
+            opacity    : 0;
+            visibility : hidden;
+            width      : 0;
+        }
+
+        .loader {
+            width      : 20px;
+            transform  : translateX(0);
+            opacity    : 1;
+            visibility : visible;
+        }
+
+        .box:not(.quad) {
+            .loader {
+                margin-left : var(--offset-small);
+            }
         }
     }
 }

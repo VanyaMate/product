@@ -13,6 +13,10 @@
     backdrop-filter : var(--item-backdrop-filter);
     min-width       : fit-content;
 
+    &.quad {
+        overflow : hidden;
+    }
+
     &:disabled {
         background     : var(--bg-ghost-color);
         color          : var(--text-second-color);
