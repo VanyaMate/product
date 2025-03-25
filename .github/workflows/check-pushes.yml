@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm i
+      - run: npm ci
       - run: npm run lint
       - run: npm run slint
       - run: npm run test:jest
@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm i
+      - run: npm ci
       - run: npm run production
 
   pw_tests:
@@ -51,7 +51,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm i
+      - run: npm ci
       - run: npm run pw:install
       - run: npm run test:pw-linux
 
@@ -70,7 +70,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm i
+      - run: npm ci
       - run: npm run pw:install
       - run: npm run test:pw-update-linux
       - name: Commit and push changes
@@ -91,7 +91,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm i
+      - run: npm ci
       - run: npm run test:cy
 
   cy_update:
@@ -109,7 +109,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm i
+      - run: npm ci
       - run: npm run test:cy:update
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5

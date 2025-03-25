@@ -39,7 +39,7 @@
         "story:build": "storybook build",
         "server:json": "nodemon .dev/json-server/index.cjs",
         "prepare": "husky install",
-        "commit": "tsx commiter/index.ts"
+        "commit": "tsx .commiter/index.ts"
     },
     "dependencies": {
         "@radix-ui/react-icons": "^1.3.0",
