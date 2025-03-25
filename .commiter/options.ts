@@ -30,9 +30,9 @@ export default {
     postfixes              : {
         'Unit tests'       : 'unit',
         'Build test'       : 'build',
-        'Playwright test'  : 'pw_test',
+        'Playwright test'  : 'pw_tests',
         'Playwright update': 'pw_update',
-        'Cypress test'     : 'cy_test',
+        'Cypress test'     : 'cy_tests',
         'Cypress update'   : 'cy_update',
         'TG notify'        : 'tg_notify',
     },
