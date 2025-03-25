@@ -19,6 +19,7 @@
         "slint:fix": "stylelint --fix ./src/**/*.scss -c .stylelintrc.json",
         "test:jest": "jest --config jest.config.ts",
         "pw:install": "npx playwright install --with-deps",
+        "pw:install:without-deps": "npx playwright install",
         "test:cy": "start-server-and-test build:start http://localhost:4173 test:cy:run",
         "test:cy:open": "start-server-and-test build:start http://localhost:4173 test:cy:run:open",
         "test:cy:run": "cypress run --config-file .cypress/cypress.config.ts --browser chrome",
