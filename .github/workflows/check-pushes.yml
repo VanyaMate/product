@@ -52,6 +52,10 @@ jobs:
         with:
           node-version: 22.12.0
           cache: 'npm'
+      - name: Install missing dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2 libffi8 libx264-164
       - run: npm ci
       - run: npm run pw:install
       - run: npm run test:pw-linux
