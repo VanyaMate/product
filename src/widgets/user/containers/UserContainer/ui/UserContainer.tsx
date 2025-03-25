@@ -58,7 +58,7 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
         }
     }, [ login, user?.login ]);
 
-    if (!user || (userPagePending && user?.login !== login) || !user) {
+    if (!user || (userPagePending && user?.login !== login)) {
         return <PageLoader/>;
     }
 

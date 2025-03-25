@@ -11,6 +11,7 @@ export const request = async function <T> (url: string, init: RequestXhrParams, 
         if (is(data)) {
             return data;
         }
+
         throw data;
     });
 };

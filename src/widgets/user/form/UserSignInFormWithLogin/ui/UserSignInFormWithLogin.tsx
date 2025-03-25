@@ -34,7 +34,9 @@ export const UserSignInFormWithLogin: FC<UserSignInFormWithLoginProps> = memo(fu
     const signInHandler          = (loginData: DomainLoginData) => {
         return loginEffect(loginData)
             .then((data) => onSuccess?.(data.user))
-            .catch(onError);
+            .catch((error) => {
+                onError?.(error);
+            });
     };
     const authIsPending          = useStore($authIsPending);
 
