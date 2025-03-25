@@ -10,7 +10,7 @@ on:
 jobs:
   simple_tests:
     if: contains(github.event.head_commit.message, '%unit%')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +26,7 @@ jobs:
 
   build:
     if: contains(github.event.head_commit.message, '%build%')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
 
   pw_tests:
     if: contains(github.event.head_commit.message, '%pw_tests%')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
@@ -62,7 +62,7 @@ jobs:
 
   pw_update:
     if: contains(github.event.head_commit.message, '%pw_update%')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
 
@@ -85,7 +85,7 @@ jobs:
 
   cy_tests:
     if: contains(github.event.head_commit.message, '%cy_tests%')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
@@ -101,7 +101,7 @@ jobs:
 
   cy_update:
     if: contains(github.event.head_commit.message, '%cy_update%')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
 
@@ -123,7 +123,7 @@ jobs:
 
   notify:
     if: ${{ always() && contains(github.event.head_commit.message, '%tg_notify%')}}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs:
       - simple_tests
       - build
