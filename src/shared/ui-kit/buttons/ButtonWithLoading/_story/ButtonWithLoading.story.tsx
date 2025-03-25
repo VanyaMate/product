@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ButtonWithLoading } from '../ui/ButtonWithLoading';
 import { Col } from '../../../box/Col/ui/Col.tsx';
-import { ButtonStyleType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
+import {
+    ButtonSizeType,
+    ButtonStyleType,
+} from '@/shared/ui-kit/buttons/Button/types/types.ts';
 
 
 const meta = {
@@ -10,6 +13,16 @@ const meta = {
     tags     : [ 'autodocs' ],
     args     : {
         children: 'Button',
+    },
+    argTypes : {
+        size     : {
+            options: Object.values(ButtonSizeType),
+            control: { type: 'select' },
+        },
+        styleType: {
+            options: Object.values(ButtonStyleType),
+            control: { type: 'select' },
+        },
     },
 } satisfies Meta<typeof ButtonWithLoading>;
 
@@ -24,6 +37,8 @@ export const Loading: Story = {
         <Col>
             <ButtonWithLoading
                 loading={ args.loading }
+                size={ args.size }
+                styleType={ args.styleType }
             >
                 { args.children }
             </ButtonWithLoading>
@@ -35,7 +50,15 @@ export const Loading: Story = {
             </ButtonWithLoading>
             <ButtonWithLoading
                 loading={ args.loading }
+                size={ ButtonSizeType.LARGE }
                 styleType={ ButtonStyleType.GHOST }
+            >
+                { args.children }
+            </ButtonWithLoading>
+            <ButtonWithLoading
+                loading={ args.loading }
+                size={ ButtonSizeType.SMALL }
+                styleType={ ButtonStyleType.DANGER }
             >
                 { args.children }
             </ButtonWithLoading>

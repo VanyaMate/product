@@ -8,37 +8,57 @@ const meta = {
     title    : 'shared/ui-kit/buttons/Button',
     component: Button,
     tags     : [ 'autodocs' ],
-    args     : { onClick: fn() },
+    args     : {
+        onClick : fn(),
+        children: 'Button',
+    },
+    argTypes : {
+        size     : {
+            options: Object.values(ButtonSizeType),
+            control: { type: 'select' },
+        },
+        styleType: {
+            options: Object.values(ButtonStyleType),
+            control: { type: 'select' },
+        },
+    },
 } satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+export const Default: Story = {
+    render: (args) => (
+        <Button
+            size={ args.size }
+            styleType={ args.styleType }
+        >
+            { args.children }
+        </Button>
+    ),
+};
+
 export const Primary: Story = {
     args: {
         styleType: ButtonStyleType.PRIMARY,
-        children : 'Button',
     },
 };
 
 export const Secondary: Story = {
     args: {
         styleType: ButtonStyleType.SECOND,
-        children : 'Button',
     },
 };
 
 export const Ghost: Story = {
     args: {
         styleType: ButtonStyleType.GHOST,
-        children : 'Button',
     },
 };
 
 export const Small: Story = {
     args: {
         styleType: ButtonStyleType.GHOST,
-        children : 'Button',
         size     : ButtonSizeType.SMALL,
     },
 };
@@ -46,7 +66,6 @@ export const Small: Story = {
 export const Medium: Story = {
     args: {
         styleType: ButtonStyleType.GHOST,
-        children : 'Button',
         size     : ButtonSizeType.MEDIUM,
     },
 };
@@ -62,7 +81,6 @@ export const Large: Story = {
 export const Quad: Story = {
     args: {
         styleType: ButtonStyleType.GHOST,
-        children : 'B',
         quad     : true,
     },
 };
