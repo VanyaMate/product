@@ -128,5 +128,8 @@
         "vite-plugin-bundle-monitoring": "^0.1.2",
         "vite-plugin-compression2": "^1.1.0",
         "vite-plugin-pwa": "^0.21.1"
+    },
+    "optionalDependencies": {
+        "@rollup/rollup-linux-x64-gnu": "4.6.1"
     }
 }
