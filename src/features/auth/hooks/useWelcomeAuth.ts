@@ -4,6 +4,7 @@ import {
     refreshAuthEffect,
 } from '@/app/model/auth/auth.model.ts';
 import { useStore } from '@vanyamate/sec-react';
+import { logError } from '@/app/console/logError.ts';
 
 
 export const useWelcomeAuth = function () {
@@ -13,7 +14,7 @@ export const useWelcomeAuth = function () {
     useLayoutEffect(() => {
         if (!authPending && send.current) {
             send.current = false;
-            refreshAuthEffect();
+            refreshAuthEffect().catch(logError('refreshAuthEffect'));
         }
     }, [ authPending ]);
 };

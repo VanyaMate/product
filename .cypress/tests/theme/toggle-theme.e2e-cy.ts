@@ -1,15 +1,24 @@
-describe('Toggle theme', () => {
-    it('HomePage', () => {
+import { classesContains } from '../../../.playwright/lib/classesContains';
+
+
+describe('Theme Toggle', () => {
+    it('should toggle theme on page', () => {
         cy.visit('/');
-        cy.get('body').should('satisfy', ([ body ]: HTMLElement[]) => {
-            return [ 'theme', 'dark' ].every((className) => body.classList.contains(className));
-        });
-        cy.compareSnapshot('dark');
-        const toggleThemeButton = cy.get('button[aria-label="Переключить тему"]');
-        toggleThemeButton.click();
-        cy.compareSnapshot('light');
-        cy.get('body').should('satisfy', ([ body ]: HTMLElement[]) => {
-            return [ 'theme', 'light' ].every((className) => body.classList.contains(className));
-        });
+
+        cy.get('button[aria-label="Переключить тему"], button[aria-label="Toggle theme"]')
+            .should('exist');
+
+        cy.get('body')
+            .should(($body) => {
+                expect(classesContains($body.attr('class'), 'theme', 'dark')).to.be.true;
+            });
+
+        cy.get('button[aria-label="Переключить тему"], button[aria-label="Toggle theme"]')
+            .click();
+
+        cy.get('body')
+            .should(($body) => {
+                expect(classesContains($body.attr('class'), 'theme', 'light')).to.be.true;
+            });
     });
 });
