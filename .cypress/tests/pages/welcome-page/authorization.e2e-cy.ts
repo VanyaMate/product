@@ -50,11 +50,12 @@ describe('Authorization', () => {
 
         cy.visit('/');
 
-        cy.get('input[name="login"]').type(mockUserData.login);
-        cy.get('input[name="password"]').type(mockUserData.password);
+        cy.get('input[name="login"]').type(mockUserData.login).as('typeLogin');
+        cy.get('input[name="password"]').type(mockUserData.password).as('typePassword');
+
 
         if (mockUserData.remember) {
-            cy.get('input[name="remember"] ~ label').click();
+            cy.get('input[name="remember"] ~ label').click().as(`enableRemember`);
         }
 
         cy.get('button[type="submit"]').should('not.be.disabled').click();
@@ -62,6 +63,7 @@ describe('Authorization', () => {
         cy.wait(`@login`);
         cy.get('button[type="button"] > div > span')
             .contains(`${ mockUserData.login }`)
-            .should('be.visible');
+            .should('be.visible')
+            .as('userMenuVisible');
     });
 });

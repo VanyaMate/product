@@ -50,6 +50,7 @@ import {
 import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
+import { logError } from '@/app/console/logError.ts';
 
 
 // TODO: Переделать LikeButton, CommentsFormPreview
@@ -76,7 +77,7 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
 
     useLayoutEffect(() => {
         if (currentPostsUserId !== userId) {
-            getPostsByUserIdEffect(userId, { limit: 20 });
+            getPostsByUserIdEffect(userId, { limit: 20 }).catch(logError('getPostsByUserIdEffect'));
         }
     }, [ currentPostsUserId, userId ]);
 

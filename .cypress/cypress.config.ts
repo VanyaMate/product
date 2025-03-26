@@ -4,7 +4,7 @@ import getCompareSnapshotsPlugin from 'cypress-image-diff-js/plugin';
 
 
 export default defineConfig({
-    video                 : true,
+    video                 : false,
     videoCompression      : true,
     screenshotOnRunFailure: false,
     videosFolder          : './.cypress/videos',

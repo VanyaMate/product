@@ -17,6 +17,7 @@ import {
     sendPrivateMessageNotificationEffect,
 } from '@/app/model/private-messages/private-messages.model.ts';
 import { applyEffect } from '@/features/notification/lib/applyEffect.ts';
+import { logError } from '@/app/console/logError.ts';
 
 
 export const useDialoguesStoreUpdaterByNotifications = function () {
@@ -24,7 +25,9 @@ export const useDialoguesStoreUpdaterByNotifications = function () {
     const dialogues    = useStore($privateDialogues);
 
     useLayoutEffect(() => {
-        getListPrivateDialogueEffect({ limit: 1000, query: '', offset: 0 });
+        getListPrivateDialogueEffect({
+            limit: 1000, query: '', offset: 0,
+        }).catch(logError('getListPrivateDialogueEffect'));
     }, []);
 
     useLayoutEffect(() => {

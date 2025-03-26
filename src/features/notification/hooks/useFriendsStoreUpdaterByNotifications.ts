@@ -18,6 +18,7 @@ import {
     receivedFriendRequestNotificationEffect,
     removeFriendNotificationEffect,
 } from '@/app/model/friends/friends.model.ts';
+import { logError } from '@/app/console/logError.ts';
 
 
 export const useFriendsStoreUpdaterByNotifications = function () {
@@ -25,7 +26,7 @@ export const useFriendsStoreUpdaterByNotifications = function () {
     const friends      = useStore($friendsList);
 
     useLayoutEffect(() => {
-        getMyFriendsEffect();
+        getMyFriendsEffect().catch(logError('getMyFriendsEffect'));
     }, []);
 
     useLayoutEffect(() => {

@@ -38,6 +38,7 @@ import {
     CreateCallRequestButton,
 } from '@/features/call/button/CreateCallRequestButton/ui/CreateCallRequestButton.tsx';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
+import { logError } from '@/app/console/logError.ts';
 
 
 export type UserContainerProps =
@@ -54,7 +55,7 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
 
     useLayoutEffect(() => {
         if (user?.login !== login) {
-            getUserPageDataEffect(login);
+            getUserPageDataEffect(login).catch(logError('getUserPageDataEffect'));
         }
     }, [ login, user?.login ]);
 
