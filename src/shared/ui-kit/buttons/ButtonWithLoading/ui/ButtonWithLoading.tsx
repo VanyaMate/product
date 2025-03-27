@@ -34,23 +34,37 @@ export const ButtonWithLoading: FC<ButtonWithLoadingProps> = memo(function Butto
     const [ pending, setPending ]       = useState<boolean>(loading ?? false);
     const [ prePending, setPrePending ] = useState<boolean>(false);
     const loader                        = useRef<HTMLSpanElement>();
+    const animationFrame                = useRef(0);
 
     const onClickHandler = useCallback(() => {
         if (onClick) {
-            setPending(true);
-            onClick().finally(() => setPending(false));
+            cancelAnimationFrame(animationFrame.current);
+            setPrePending(true);
+            const update           = function () {
+                setPending(true);
+            };
+            animationFrame.current = requestAnimationFrame(update);
+            onClick().finally(() => {
+                const loaderElement   = loader.current;
+                const onTransitionEnd = function () {
+                    setPrePending(false);
+                    loaderElement.removeEventListener('transitionend', onTransitionEnd);
+                };
+                loaderElement.addEventListener('transitionend', onTransitionEnd);
+                setPending(false);
+            });
         }
     }, [ onClick ]);
 
     useLayoutEffect(() => {
         if (loading) {
             setPrePending(true);
-            const update         = function () {
+            const update           = function () {
                 setPending(true);
             };
-            const animationFrame = requestAnimationFrame(update);
+            animationFrame.current = requestAnimationFrame(update);
             return () => {
-                cancelAnimationFrame(animationFrame);
+                cancelAnimationFrame(animationFrame.current);
             };
         } else {
             setPending(false);
