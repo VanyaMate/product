@@ -43,6 +43,7 @@ import {
 } from '@/entities/dialogue/NoMoreDialogues/ui/NoMoreDialogues.tsx';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
 import { usePageTitle } from '@/entities/site/hooks/useTitle/usePageTitle.ts';
+import { logError } from '@/app/console/logError.ts';
 
 
 export type DialoguesPageProps =
@@ -83,7 +84,9 @@ export const DialoguesPage: FC<DialoguesPageProps> = memo(function DialoguesPage
 
     useLayoutEffect(() => {
         // TODO: Temp
-        getListPrivateDialogueEffect({ query: '', limit: 1000, offset: 0 });
+        getListPrivateDialogueEffect({
+            query: '', limit: 1000, offset: 0,
+        }).catch(logError('getListPrivateDialogueEffect'));
     }, []);
 
     const dialoguesRender = useCallback<VirtualRenderMethod>((dialogue: DomainPrivateDialogueFull) => (
