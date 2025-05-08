@@ -4,10 +4,7 @@
     display         : inline-flex;
     align-items     : center;
     justify-content : center;
-
-    .box {
-        display : flex;
-    }
+    position        : relative;
 
     .children {
         display         : flex;
@@ -16,56 +13,49 @@
         width           : fit-content;
         gap             : var(--offset-small);
         opacity         : 1;
-        visibility      : visible;
         transition      : var(--transition-fast);
+        position        : relative;
     }
 
-    .rotating {
-        animation : loading .4s infinite ease-in-out;
-        width     : 20px;
-        height    : 20px;
+    &:after {
+        content       : '';
+        position      : absolute;
+        border        : 2px solid var(--ghost-color);
+        border-bottom : 2px solid transparent;
+        border-radius : 50%;
+        opacity       : 0;
+        transition    : var(--transition-fast);
     }
 
-    .loader {
-        transform   : translateX(100%);
-        opacity     : 0;
-        visibility  : hidden;
-        transition  : var(--transition-fast);
-        display     : none;
-        width       : 0;
-        margin-left : 0;
-
-        .rotating {
-            animation : loading .4s infinite ease-in-out;
-            width     : 20px;
-            height    : 20px;
+    &.small {
+        &:after {
+            width  : 10px;
+            height : 10px;
         }
     }
 
-    &.prePending {
-        .loader {
-            display : inline-block;
+    &.medium {
+        &:after {
+            width  : 16px;
+            height : 16px;
+        }
+    }
+
+    &.large {
+        &:after {
+            width  : 20px;
+            height : 20px;
         }
     }
 
     &.pending {
-        .box.quad .children {
-            opacity    : 0;
-            visibility : hidden;
-            width      : 0;
+        .children {
+            opacity : 0;
         }
 
-        .loader {
-            width      : 20px;
-            transform  : translateX(0);
-            opacity    : 1;
-            visibility : visible;
-        }
-
-        .box:not(.quad) {
-            .loader {
-                margin-left : var(--offset-small);
-            }
+        &:after {
+            opacity   : 1;
+            animation : loading-rotate .5s ease-in-out infinite;
         }
     }
 }

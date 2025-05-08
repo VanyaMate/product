@@ -2,7 +2,7 @@ import {
     FC,
     memo,
     useCallback,
-    useLayoutEffect, useRef,
+    useLayoutEffect,
     useState,
 } from 'react';
 import classNames from 'classnames';
@@ -11,7 +11,7 @@ import {
     Button,
     ButtonProps,
 } from '@/shared/ui-kit/buttons/Button/ui/Button.tsx';
-import { IoSync } from 'react-icons/io5';
+import { ButtonSizeType } from '@/shared/ui-kit/buttons/Button/types/types.ts';
 
 
 export type ButtonWithLoadingProps =
@@ -28,78 +28,37 @@ export const ButtonWithLoading: FC<ButtonWithLoadingProps> = memo(function Butto
               quad,
               onClick,
               disabled,
+              size = ButtonSizeType.MEDIUM,
               loading,
               ...other
-          }                             = props;
-    const [ pending, setPending ]       = useState<boolean>(loading ?? false);
-    const [ prePending, setPrePending ] = useState<boolean>(false);
-    const loader                        = useRef<HTMLSpanElement>();
-    const animationFrame                = useRef(0);
+          }                       = props;
+    const [ pending, setPending ] = useState<boolean>(loading ?? false);
 
     const onClickHandler = useCallback(() => {
         if (onClick) {
-            cancelAnimationFrame(animationFrame.current);
-            setPrePending(true);
-            const update           = function () {
-                setPending(true);
-            };
-            animationFrame.current = requestAnimationFrame(update);
+            setPending(true);
             onClick().finally(() => {
-                const loaderElement   = loader.current;
-                const onTransitionEnd = function () {
-                    setPrePending(false);
-                    loaderElement.removeEventListener('transitionend', onTransitionEnd);
-                };
-                loaderElement.addEventListener('transitionend', onTransitionEnd);
                 setPending(false);
             });
         }
     }, [ onClick ]);
 
     useLayoutEffect(() => {
-        if (loading) {
-            setPrePending(true);
-            const update           = function () {
-                setPending(true);
-            };
-            animationFrame.current = requestAnimationFrame(update);
-            return () => {
-                cancelAnimationFrame(animationFrame.current);
-            };
-        } else {
-            setPending(false);
-            const loaderElement   = loader.current;
-            const onTransitionEnd = function () {
-                setPrePending(false);
-            };
-            loaderElement.addEventListener('transitionend', onTransitionEnd);
-            return () => {
-                loaderElement.removeEventListener('transitionend', onTransitionEnd);
-            };
-        }
+        setPending(loading);
     }, [ loading ]);
-
-    useLayoutEffect(() => {
-
-    }, [ prePending ]);
 
     return (
         <Button
             { ...other }
             className={ classNames(css.container, {
-                [css.pending]   : pending,
-                [css.prePending]: prePending,
-            }, [ className ]) }
+                [css.pending]: pending,
+            }, [ className, css[size] ]) }
             disabled={ disabled || pending }
             onClick={ onClickHandler }
             quad={ quad }
+            size={ size }
         >
-            <span className={ classNames(css.box, { [css.quad]: quad }) }>
-                <span className={ css.children }>{ children }</span>
-                <span className={ css.loader } ref={ loader }>
-                    <IoSync className={ css.rotating }/>
-                </span>
-            </span>
+            <span className={ css.children }>{ children }</span>
         </Button>
     );
 });

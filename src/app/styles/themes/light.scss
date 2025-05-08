@@ -9,7 +9,7 @@
     --bg-second-color-opacity-medium : var(--obscure-lighten-gray-opacity-medium);
     --bg-second-color-opacity-low    : var(--obscure-lighten-gray-opacity-low);
     --bg-second-foreground-color     : var(--dark-gray);
-    --bg-ghost-color                 : var(--light-gray);
+    --bg-ghost-color                 : var(--obscure-light-gray);
     --bg-ghost-color-opacity-hard    : var(--light-gray-opacity-hard);
     --bg-ghost-color-opacity-medium  : var(--light-gray-opacity-medium);
     --bg-ghost-color-opacity-low     : var(--light-gray-opacity-low);
@@ -30,5 +30,5 @@
     --on-invisible-text-color        : var(--gray);
     --danger-color                   : var(--red);
     --on-danger-color                : var(--white);
-    --border-main-color              : var(--obscure-light-gray);
+    --border-main-color              : var(--dark-light-gray);
 }

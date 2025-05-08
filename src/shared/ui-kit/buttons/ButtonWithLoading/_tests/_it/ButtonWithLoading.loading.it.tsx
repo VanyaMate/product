@@ -3,7 +3,6 @@ import {
     ButtonWithLoading,
 } from '@/shared/ui-kit/buttons/ButtonWithLoading/ui/ButtonWithLoading.tsx';
 import css from '../../ui/ButtonWithLoading.module.scss';
-import { act } from 'react-dom/test-utils';
 
 
 export default async () => {
@@ -19,19 +18,10 @@ export default async () => {
 
     fireEvent.click(button);
 
-    expect(button.classList.contains(css.prePending)).toBe(true);
-    expect(button.classList.contains(css.pending)).toBe(false);
+    expect(button.classList.contains(css.pending)).toBe(true);
 
-    await act(async () => {
-        await waitFor(() => {
-            expect(button.classList.contains(css.prePending)).toBe(true);
-        });
-    });
-
-    await act(async () => {
-        await waitFor(() => {
-            expect(button.classList.contains(css.pending)).toBe(true);
-        });
+    await waitFor(() => {
+        expect(button.classList.contains(css.pending)).toBe(false);
     });
 
     expect(handler).toHaveBeenCalledTimes(1);

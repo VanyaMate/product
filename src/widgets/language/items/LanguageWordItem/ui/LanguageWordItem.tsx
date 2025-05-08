@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useLayoutEffect } from 'react';
 import { DetailsProps } from '@/shared/ui-kit/details/Details/ui/Details.tsx';
 import {
     DomainLanguageWord,
@@ -38,6 +38,10 @@ export const LanguageWordItem: FC<LanguageWordItemProps> = memo(function Languag
     const { word, className, ...other } = props;
     const { t }                         = useTranslation();
 
+    useLayoutEffect(() => {
+        console.log('word checked is', word.checked);
+    }, [ word.checked ]);
+
     return (
         <ControlDetails
             { ...other }
@@ -53,7 +57,8 @@ export const LanguageWordItem: FC<LanguageWordItemProps> = memo(function Languag
                             }
                         >
                             <ButtonWithLoading
-                                onClick={ () => updateLanguageWordEffect(word.id, { checked: !word.checked }) }
+                                onClick={ () => updateLanguageWordEffect(word.id, { checked: !word.checked })
+                                    .finally(() => console.log('end')) }
                                 styleType={
                                     word.checked
                                     ? ButtonStyleType.SECOND

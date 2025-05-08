@@ -27,7 +27,7 @@ select {
 }
 
 .loading {
-    animation : loading ease-in-out .5s infinite;
+    animation : loading-rotate ease-in-out .5s infinite;
 }
 
 *[inert] {

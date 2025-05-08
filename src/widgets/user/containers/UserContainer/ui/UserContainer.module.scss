@@ -5,13 +5,9 @@
     position       : relative;
 
     &.withBackground {
-        padding           : var(--offset-small);
-        border-radius     : var(--offset-medium);
-        overflow          : hidden;
-
-        --bg-main-color   : var(--bg-main-color-opacity-low);
-        --bg-ghost-color  : var(--bg-ghost-color-opacity-low);
-        --bg-second-color : var(--bg-second-color-opacity-low);
+        padding       : var(--offset-small);
+        border-radius : var(--offset-medium);
+        overflow      : hidden;
     }
 
     .background {
