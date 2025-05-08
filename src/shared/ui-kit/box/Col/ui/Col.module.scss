@@ -1,5 +1,16 @@
 .container {
     display        : flex;
     flex-direction : column;
-    gap            : var(--offset-small);
+
+    &.small {
+        gap : var(--offset-small);
+    }
+
+    &.medium {
+        gap : var(--offset-medium);
+    }
+
+    &.large {
+        gap : var(--offset-large);
+    }
 }

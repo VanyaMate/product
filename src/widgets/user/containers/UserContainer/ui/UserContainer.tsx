@@ -22,11 +22,7 @@ import {
     getUserPageDataEffect,
 } from '@/app/model/user-page/user-page.model.ts';
 import { UserPosts } from '@/widgets/posts/UserPosts/ui/UserPosts.tsx';
-import { Col } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
-import {
-    Divider,
-    DividerType,
-} from '@/shared/ui-kit/divider/Divider/ui/Divider.tsx';
+import { Col, ColSize } from '@/shared/ui-kit/box/Col/ui/Col.tsx';
 import { PopOver } from '@/shared/ui-kit/modal/PopOver/ui/PopOver.tsx';
 import {
     WorkInProgress,
@@ -84,7 +80,7 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
                         </Button>
                     </Row>
                 </section>
-                <Col className={ css.right }>
+                <Col className={ css.right } size={ ColSize.MEDIUM }>
                     <Row>
                         <Button>{ t.app.posts_page }</Button>
                         <PopOver popover={ <WorkInProgress/> }>
@@ -115,7 +111,6 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
                             </Button>
                         </PopOver>
                     </Row>
-                    <Divider type={ DividerType.HORIZONTAL }/>
                     <UserPosts className={ css.content } userId={ user.id }/>
                 </Col>
             </div>
