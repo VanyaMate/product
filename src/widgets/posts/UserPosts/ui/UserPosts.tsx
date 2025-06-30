@@ -77,7 +77,7 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
 
     useLayoutEffect(() => {
         if (currentPostsUserId !== userId) {
-            getPostsByUserIdEffect(userId, { limit: 20 }).catch(logError('getPostsByUserIdEffect'));
+            getPostsByUserIdEffect(userId, { limit: 20 }).catch(logError(getPostsByUserIdEffect.name));
         }
     }, [ currentPostsUserId, userId ]);
 

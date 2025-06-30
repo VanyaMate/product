@@ -51,7 +51,7 @@ export const UserContainer: FC<UserContainerProps> = memo(function UserContainer
 
     useLayoutEffect(() => {
         if (user?.login !== login) {
-            getUserPageDataEffect(login).catch(logError('getUserPageDataEffect'));
+            getUserPageDataEffect(login).catch(logError(getUserPageDataEffect.name));
         }
     }, [ login, user?.login ]);
 

@@ -20,4 +20,11 @@
     justify-content : center;
     text-align      : center;
     display         : flex;
+    visibility      : hidden;
+    opacity         : 0;
+
+    &.visible {
+        visibility : visible;
+        opacity    : 1;
+    }
 }

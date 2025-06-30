@@ -25,14 +25,20 @@ export type PopOverProps =
 export const PopOver: FC<PopOverProps> = memo(function PopOver (props) {
     const { popover, children, className, ...other } = props;
     const [ opened, setOpened ]                      = useState<boolean>(false);
+    const [ visible, setVisible ]                    = useState<boolean>(true);
+    const raf                                        = useRef<ReturnType<typeof requestAnimationFrame>>(0);
     const containerRef                               = useRef<HTMLDivElement>(null);
     const popoverRef                                 = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
         const ref = containerRef.current;
         if (ref) {
-            const onMouseOver = () => setOpened(true);
-            const onMouseOut  = () => setOpened(false);
+            const onMouseOver = () => {
+                setOpened(true);
+            };
+            const onMouseOut  = () => {
+                setOpened(false);
+            };
 
             ref.addEventListener('mouseover', onMouseOver);
             ref.addEventListener('mouseout', onMouseOut);
@@ -52,14 +58,15 @@ export const PopOver: FC<PopOverProps> = memo(function PopOver (props) {
 
     useEffect(() => {
         keyboardClose(opened, setOpened);
+        setVisible(false);
 
         if (opened && containerRef.current && popoverRef.current) {
-            const {
-                      top,
-                      left,
-                  }                       = getModalPosition(containerRef, popoverRef);
+            const { top, left }           = getModalPosition(containerRef, popoverRef);
+            raf.current                   = requestAnimationFrame(() => setVisible(true));
             popoverRef.current.style.top  = `${ top }px`;
             popoverRef.current.style.left = `${ left }px`;
+        } else {
+            cancelAnimationFrame(raf.current);
         }
     }, [ opened ]);
 
@@ -73,7 +80,14 @@ export const PopOver: FC<PopOverProps> = memo(function PopOver (props) {
             {
                 opened ? createPortal(
                     <div
-                        className={ css.popover }
+                        className={
+                            classNames(
+                                css.popover,
+                                {
+                                    [css.visible]: visible,
+                                },
+                            )
+                        }
                         ref={ popoverRef }
                     >
                         { popover }

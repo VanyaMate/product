@@ -67,7 +67,8 @@ export const $postCommentsHierarchy = store<PostCommentsHierarchyModel>({})
             const hierarchy: PostCommentsHierarchyModel = {};
 
             result.list.forEach((post: DomainPost) => {
-                post.comments.forEach((comment) => {
+                console.log('Post is', post);
+                post.comments?.forEach((comment) => {
                     hierarchy[comment.id] = store(comment.comments.map(({ id }) => id));
                     comment.comments.forEach((reply) => {
                         hierarchy[reply.id] = store(reply.comments.map(({ id }) => id));
@@ -131,7 +132,7 @@ export const $postComments = store<PostCommentsModel>({})
             const comments: PostCommentsModel = {};
 
             result.list.forEach((post: DomainPost) => {
-                post.comments.forEach((comment) => {
+                post.comments?.forEach((comment) => {
                     comment.comments.forEach((reply) => {
                         comments[reply.id] = store(reply);
                     });
