@@ -1,12 +1,12 @@
-@import "palette/palette";
-@import "themes/light";
-@import "themes/dark";
-@import "fonts/geist/geist-mono";
-@import "sizes/offsets/offsets";
-@import "sizes/text-sizes/test-sizes";
-@import "transitions/transitions";
-@import "animations/animations";
-@import "utils/utils";
+@use "palette/palette";
+@use "themes/light";
+@use "themes/dark";
+@use "fonts/geist/geist-mono";
+@use "sizes/offsets/offsets";
+@use "sizes/text-sizes/test-sizes";
+@use "transitions/transitions";
+@use "animations/animations";
+@use "utils/utils";
 
 * {
     margin      : 0;

@@ -1,4 +1,4 @@
-import { effect, store } from '@vanyamate/sec';
+import { effect, store, pending } from '@vanyamate/sec';
 import {
     getMyFilesAction,
 } from '@/app/action/file/getMyFiles/getMyFiles.action.ts';
@@ -15,7 +15,10 @@ import {
 import {
     selectFileAction,
 } from '@/app/action/file/selectFile/selectFile.action.ts';
-import { logoutEffect } from '@/app/model/auth/auth.model.ts';
+import {
+    loginMarker,
+    logoutMarker,
+} from '@/app/model/auth/auth.model.ts';
 import {
     unselectFilesAction,
 } from '@/app/action/file/unselectFiles/unselectFiles.action.ts';
@@ -29,6 +32,8 @@ export const selectFileEffect         = effect(selectFileAction);
 export const unselectFilesEffect      = effect(unselectFilesAction);
 
 export const $filesUploadList = store<Array<[ File, number ]>>([])
+    .disableOn(logoutMarker, [])
+    .enableOn(loginMarker, [])
     .on(uploadFileProgressEffect, 'onSuccess', (state, { args: [ file, progress ] }) => {
         for (let i = 0; i < state.length; i++) {
             if (state[i][0] === file) {
@@ -39,10 +44,11 @@ export const $filesUploadList = store<Array<[ File, number ]>>([])
         return state;
     })
     .on(uploadFileEffect, 'onBefore', (state, { args: [ file ] }) => [ [ file, 0 ], ...state ])
-    .on(uploadFileEffect, 'onSuccess', (state, { args: [ file ] }) => state.filter(([ f ]) => file !== f))
-    .on(logoutEffect, 'onBefore', () => []);
+    .on(uploadFileEffect, 'onSuccess', (state, { args: [ file ] }) => state.filter(([ f ]) => file !== f));
 
 export const $filesSelected = store<DomainFile[]>([])
+    .disableOn(logoutMarker, [])
+    .enableOn(loginMarker, [])
     .on(selectFileEffect, 'onBefore', (state, { args: [ file ] }) => {
         for (let i = 0; i < state.length; i++) {
             if (state[i].id === file.id) {
@@ -53,15 +59,13 @@ export const $filesSelected = store<DomainFile[]>([])
         return [ ...state, file ];
     })
     .on(unselectFilesEffect, 'onBefore', () => [])
-    .on(removeFileEffect, 'onSuccess', (state, { args: [ fileId ] }) => state.filter(({ id }) => id !== fileId))
-    .on(logoutEffect, 'onBefore', () => []);
+    .on(removeFileEffect, 'onSuccess', (state, { args: [ fileId ] }) => state.filter(({ id }) => id !== fileId));
 
-export const $filesPending = store(false)
-    .on(getMyFilesEffect, 'onBefore', () => true)
-    .on(getMyFilesEffect, 'onFinally', () => false);
+export const $filesPending = pending([ getMyFilesEffect ]);
 
 export const $filesList = store<DomainFile[]>([])
+    .disableOn(logoutMarker, [])
+    .enableOn(loginMarker, [])
     .on(getMyFilesEffect, 'onSuccess', (_, { result }) => result.list.filter(isDomainFile))
     .on(uploadFileEffect, 'onSuccess', (state, { result }) => [ result.file, ...state ])
-    .on(removeFileEffect, 'onSuccess', (state, { args: [ fileId ] }) => state.filter((file) => file.id !== fileId))
-    .on(logoutEffect, 'onBefore', () => []);
+    .on(removeFileEffect, 'onSuccess', (state, { args: [ fileId ] }) => state.filter((file) => file.id !== fileId));

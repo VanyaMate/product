@@ -11,6 +11,7 @@ import {
 import {
     getCommentRepliesByCursorAction,
 } from '@/app/action/post-comments/getCommentRepliesByCursor/getCommentRepliesByCursor.action.ts';
+import { loginMarker, logoutMarker } from '@/app/model/auth/auth.model.ts';
 
 
 export type PostCommentsHierarchyModel = Record<string, Store<Array<string>>>;
@@ -20,6 +21,8 @@ export const getCommentRepliesEffect         = effect(getCommentRepliesAction);
 export const getCommentRepliesByCursorEffect = effect(getCommentRepliesByCursorAction);
 
 export const $postCommentsHierarchy = store<PostCommentsHierarchyModel>({})
+    .disableOn(logoutMarker, {})
+    .enableOn(loginMarker, {})
     .on(
         getCommentRepliesEffect,
         'onSuccess',
@@ -97,6 +100,8 @@ export const $postCommentsHierarchy = store<PostCommentsHierarchyModel>({})
 
 
 export const $postComments = store<PostCommentsModel>({})
+    .disableOn(logoutMarker, {})
+    .enableOn(loginMarker, {})
     .on(
         getCommentRepliesEffect,
         'onSuccess',

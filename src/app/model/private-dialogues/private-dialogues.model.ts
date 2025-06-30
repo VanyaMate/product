@@ -1,4 +1,4 @@
-import { effect, store } from '@vanyamate/sec';
+import { effect, store, pending, to } from '@vanyamate/sec';
 import {
     DomainServiceResponseError,
 } from 'product-types/dist/error/DomainServiceResponseError';
@@ -24,7 +24,10 @@ import {
     getOnePrivateDialogueAction,
 } from '@/app/action/private-dialogues/getOnePrivateDialogue/getOnePrivateDialogue.action.ts';
 import { returnValidErrors } from '@/app/lib/error/returnValidErrors.ts';
-import { logoutEffect } from '@/app/model/auth/auth.model.ts';
+import {
+    loginMarker,
+    logoutMarker,
+} from '@/app/model/auth/auth.model.ts';
 
 
 export type PrivateDialogueStatus = {
@@ -37,7 +40,7 @@ export type PrivateDialogueStatusWithUser =
     & {
         created: boolean;
         dialogueId: string;
-    }
+    };
 
 
 export const archivePrivateDialogueEffect   = effect(archivePrivateDialogueAction);
@@ -48,36 +51,30 @@ export const getListPrivateDialogueEffect   = effect(getListPrivateDialogueActio
 export const getOnePrivateDialogueEffect    = effect(getOnePrivateDialogueAction);
 
 
-export const $privateDialoguesIsPending = store<boolean>(false)
-    .on(archivePrivateDialogueEffect, 'onBefore', () => true)
-    .on(unArchivePrivateDialogueEffect, 'onBefore', () => true)
-    .on(createPrivateDialogueEffect, 'onBefore', () => true)
-    .on(removePrivateDialogueEffect, 'onBefore', () => true)
-    .on(getListPrivateDialogueEffect, 'onBefore', () => true)
-    .on(getOnePrivateDialogueEffect, 'onBefore', () => true)
-    .on(archivePrivateDialogueEffect, 'onFinally', () => false)
-    .on(unArchivePrivateDialogueEffect, 'onFinally', () => false)
-    .on(createPrivateDialogueEffect, 'onFinally', () => false)
-    .on(removePrivateDialogueEffect, 'onFinally', () => false)
-    .on(getListPrivateDialogueEffect, 'onFinally', () => false)
-    .on(getOnePrivateDialogueEffect, 'onFinally', () => false);
+export const $privateDialoguesIsPending = pending([ archivePrivateDialogueEffect, unArchivePrivateDialogueEffect, createPrivateDialogueEffect, removePrivateDialogueEffect, getListPrivateDialogueEffect ])
+    .disableOn(logoutMarker, false)
+    .enableOn(loginMarker, false);
 
 
 export const $privateDialoguesError = store<DomainServiceResponseError | null>(null)
+    .disableOn(logoutMarker, null)
+    .enableOn(loginMarker, null)
     .on(archivePrivateDialogueEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(unArchivePrivateDialogueEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(createPrivateDialogueEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(removePrivateDialogueEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(getListPrivateDialogueEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(getOnePrivateDialogueEffect, 'onError', (_, { error }) => returnValidErrors(error))
-    .on(archivePrivateDialogueEffect, 'onSuccess', () => null)
-    .on(unArchivePrivateDialogueEffect, 'onSuccess', () => null)
-    .on(createPrivateDialogueEffect, 'onSuccess', () => null)
-    .on(removePrivateDialogueEffect, 'onSuccess', () => null)
-    .on(getListPrivateDialogueEffect, 'onSuccess', () => null)
-    .on(getOnePrivateDialogueEffect, 'onSuccess', () => null);
+    .on(archivePrivateDialogueEffect, 'onSuccess', to(null))
+    .on(unArchivePrivateDialogueEffect, 'onSuccess', to(null))
+    .on(createPrivateDialogueEffect, 'onSuccess', to(null))
+    .on(removePrivateDialogueEffect, 'onSuccess', to(null))
+    .on(getListPrivateDialogueEffect, 'onSuccess', to(null))
+    .on(getOnePrivateDialogueEffect, 'onSuccess', to(null));
 
 export const $privateDialogues = store<Array<DomainPrivateDialogueFull>>([])
+    .disableOn(logoutMarker, [])
+    .enableOn(loginMarker, [])
     .on(
         archivePrivateDialogueEffect,
         'onSuccess',
@@ -118,11 +115,12 @@ export const $privateDialogues = store<Array<DomainPrivateDialogueFull>>([])
         (state, { result }) =>
             state.some((d) => d.id === result.id) ? state
                                                   : [ ...state, result ],
-    )
-    .on(logoutEffect, 'onBefore', () => []);
+    );
 
 
 export const $privateDialoguesStatus = store<Record<string, PrivateDialogueStatus>>({})
+    .disableOn(logoutMarker, {})
+    .enableOn(loginMarker, {})
     .on(
         archivePrivateDialogueEffect,
         'onBefore',
@@ -267,11 +265,12 @@ export const $privateDialoguesStatus = store<Record<string, PrivateDialogueStatu
             ...state,
             [result.dialogue.id]: { isPending: false, error: null },
         }),
-    )
-    .on(logoutEffect, 'onBefore', () => ({}));
+    );
 
 
 export const $privateDialogueWithUser = store<Record<string, PrivateDialogueStatusWithUser>>({})
+    .disableOn(logoutMarker, {})
+    .enableOn(loginMarker, {})
     .on(
         archivePrivateDialogueEffect,
         'onBefore',
@@ -412,5 +411,4 @@ export const $privateDialogueWithUser = store<Record<string, PrivateDialogueStat
                 dialogueId: result.id,
             },
         }),
-    )
-    .on(logoutEffect, 'onBefore', () => ({}));
+    );

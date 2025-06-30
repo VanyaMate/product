@@ -1,4 +1,4 @@
-import { effect, store } from '@vanyamate/sec';
+import { effect, store, pending, to, result } from '@vanyamate/sec';
 import {
     uploadExcelFileToSplitAction,
 } from '@/app/action/excel-splitter/uploadExcelFileToSplit.action.ts';
@@ -17,6 +17,10 @@ import {
 import {
     clearExcelFileAction,
 } from '@/app/action/excel-splitter/clearExcelFile.action.ts';
+import {
+    loginMarker,
+    logoutMarker,
+} from '@/app/model/auth/auth.model.ts';
 
 
 export const uploadExcelFileToSplitEffect  = effect(uploadExcelFileToSplitAction);
@@ -25,22 +29,27 @@ export const splitExcelFileEffect          = effect(splitExcelFileAction);
 export const uploadExcelFileProgressEffect = effect(uploadExcelFileProgressAction);
 export const clearExcelFileEffect          = effect(clearExcelFileAction);
 
-export const $excelFileUploading = store<boolean>(false)
-    .on(uploadExcelFileToSplitEffect, 'onBefore', () => true)
-    .on(uploadExcelFileToSplitEffect, 'onFinally', () => false);
+export const $excelFileUploading = pending([ uploadExcelFileToSplitEffect ])
+    .disableOn(logoutMarker, false)
+    .enableOn(loginMarker, false);
+
 
 export const $excelFileUploadProgress = store<number>(0)
-    .on(uploadExcelFileProgressEffect, 'onSuccess', (_, { result }) => result);
+    .disableOn(logoutMarker, 0)
+    .enableOn(loginMarker, 0)
+    .on(uploadExcelFileProgressEffect, 'onSuccess', result());
 
-export const $excelFilePending = store<boolean>(false)
-    .on(getExcelFileDataEffect, 'onBefore', () => true)
-    .on(getExcelFileDataEffect, 'onFinally', () => false);
+export const $excelFilePending = pending([ getExcelFileDataEffect ])
+    .disableOn(logoutMarker, false)
+    .enableOn(loginMarker, false);
 
 export const $excelFileData = store<DomainExcelFileData>(null)
-    .on(uploadExcelFileToSplitEffect, 'onBefore', () => null)
-    .on(uploadExcelFileToSplitEffect, 'onSuccess', (_, { result }) => result)
-    .on(getExcelFileDataEffect, 'onSuccess', (_, { result }) => result)
+    .disableOn(logoutMarker, null)
+    .enableOn(loginMarker, null)
+    .on(uploadExcelFileToSplitEffect, 'onBefore', to(null))
+    .on(uploadExcelFileToSplitEffect, 'onSuccess', result())
+    .on(getExcelFileDataEffect, 'onSuccess', result())
     .on(splitExcelFileEffect, 'onSuccess', (state, { result }) => ({
         ...state, responses: [ ...state.responses, result ],
     }))
-    .on(clearExcelFileEffect, 'onFinally', () => null);
+    .on(clearExcelFileEffect, 'onFinally', to(null));

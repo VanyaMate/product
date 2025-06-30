@@ -33,7 +33,10 @@ import {
     getOnePrivateDialogueEffect,
 } from '@/app/model/private-dialogues/private-dialogues.model.ts';
 import { returnValidErrors } from '@/app/lib/error/returnValidErrors.ts';
-import { logoutEffect } from '@/app/model/auth/auth.model.ts';
+import {
+    loginMarker,
+    logoutMarker,
+} from '@/app/model/auth/auth.model.ts';
 import {
     resetPrivateMessageSearchAction,
 } from '@/app/action/private-messages/resetMessageSearch/resetPrivateMessageSearch.action.ts';
@@ -66,6 +69,8 @@ export const resetPrivateMessagesSearchEffect            = effect(resetPrivateMe
 
 
 export const $privateMessagesIsPending = store<Record<string, boolean>>({})
+    .disableOn(logoutMarker, {})
+    .enableOn(loginMarker, {})
     .on(
         getPrivateMessagesByCursorEffect,
         'onBefore',
@@ -117,6 +122,8 @@ export const $privateMessagesIsPending = store<Record<string, boolean>>({})
 
 
 export const $privateMessagesError = store<Record<string, DomainServiceResponseError | null>>({})
+    .disableOn(logoutMarker, {})
+    .enableOn(loginMarker, {})
     .on(
         getPrivateMessagesByQueryEffect,
         'onError',
@@ -164,12 +171,13 @@ export const $privateMessagesError = store<Record<string, DomainServiceResponseE
             delete state[dialogueId];
             return { ...state };
         },
-    )
-    .on(logoutEffect, 'onBefore', () => ({}));
+    );
 
 
 export type PrivateMessagesStore = Record<string, Array<DomainMessage>>;
 export const $privateMessages = store<PrivateMessagesStore>({})
+    .disableOn(logoutMarker, {})
+    .enableOn(loginMarker, {})
     .on(
         getPrivateMessagesByCursorEffect,
         'onSuccess',
@@ -403,11 +411,12 @@ export const $privateMessages = store<PrivateMessagesStore>({})
             ...state,
             [result.dialogue.id]: [],
         }),
-    )
-    .on(logoutEffect, 'onBefore', () => ({}));
+    );
 
 
 export const $privateMessagesHasMore = store<Record<string, boolean>>({})
+    .disableOn(logoutMarker, {})
+    .enableOn(loginMarker, {})
     .on(
         getPrivateMessagesByCursorEffect,
         'onSuccess',
@@ -434,11 +443,12 @@ export const $privateMessagesHasMore = store<Record<string, boolean>>({})
                 [dialogue.id]: true,
             }), {}),
         }),
-    )
-    .on(logoutEffect, 'onBefore', () => ({}));
+    );
 
 
 export const $privateMessageScrollToId = store<string>('')
+    .disableOn(logoutMarker, '')
+    .enableOn(loginMarker, '')
     .on(
         getPrivateMessagesByCursorEffect,
         'onSuccess',
@@ -450,11 +460,12 @@ export const $privateMessageScrollToId = store<string>('')
                 return '';
             }
         },
-    )
-    .on(logoutEffect, 'onBefore', () => '');
+    );
 
 
 export const $privateMessagesSearchMessages = store<Record<string, Array<DomainMessage>>>({})
+    .disableOn(logoutMarker, {})
+    .enableOn(loginMarker, {})
     .on(getPrivateMessagesByQueryEffect, 'onSuccess', (state, {
         result,
         args: [ [ dialogueId ] ],

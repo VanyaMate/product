@@ -60,7 +60,8 @@ export const SignInFormByLoginRHF: FC<SignInFormByLoginRHFProps> = memo(function
                 type="password"
                 { ...passwordController }
             />
-            <Checkbox label="Запомнить меня" { ...rememberController }/>
+            <Checkbox
+                label={ t.app.user_auth_form_remember_label } { ...rememberController }/>
             <ButtonWithFixes
                 disabled={ !canBeSubmitted || pending }
                 post={

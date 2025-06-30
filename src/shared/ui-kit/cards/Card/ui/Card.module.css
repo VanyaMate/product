@@ -1,0 +1,39 @@
+.container {
+    --card-bg     : var(--bg-second-color);
+    --card-border : var(--border-main-color);
+
+    padding       : var(--offset-medium);
+    border-radius : var(--offset-medium);
+    border        : 1px solid var(--card-border);
+    background    : var(--card-bg);
+
+    &.default {
+        --card-bg     : var(--bg-second-color);
+        --card-border : var(--border-main-color);
+    }
+
+    &.main {
+        --card-bg     : var(--bg-main-color);
+        --card-border : var(--border-main-color);
+    }
+
+    &.primary {
+        --card-bg     : color-mix(in srgb, var(--bg-second-color), var(--primary-color) 10%);
+        --card-border : color-mix(in srgb, var(--bg-second-color), var(--primary-color) 50%);
+    }
+
+    &.danger {
+        --card-bg     : color-mix(in srgb, var(--bg-second-color), var(--danger-color) 10%);
+        --card-border : color-mix(in srgb, var(--bg-second-color), var(--danger-color) 50%);
+    }
+
+    &.gold {
+        --card-bg     : color-mix(in srgb, var(--bg-second-color), var(--gold-color) 10%);
+        --card-border : color-mix(in srgb, var(--bg-second-color), var(--gold-color) 50%);
+    }
+
+    &.success {
+        --card-bg     : color-mix(in srgb, var(--bg-second-color), var(--success-color) 10%);
+        --card-border : color-mix(in srgb, var(--bg-second-color), var(--success-color) 50%);
+    }
+}

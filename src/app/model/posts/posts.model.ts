@@ -1,9 +1,12 @@
 import {
     getPostsByUserIdAction,
 } from '@/app/action/posts/getPostsByUserId/getPostsByUserId.action.ts';
-import { effect, store } from '@vanyamate/sec';
+import { effect, store, pending, to } from '@vanyamate/sec';
 import { DomainPost, isDomainPost } from 'product-types/dist/post/DomainPost';
-import { logoutEffect } from '@/app/model/auth/auth.model.ts';
+import {
+    loginMarker,
+    logoutMarker,
+} from '@/app/model/auth/auth.model.ts';
 import {
     createPostAction,
 } from '@/app/action/posts/createPost/createPost.action.ts';
@@ -26,17 +29,20 @@ export const replyOnPostCommentEffect = effect(replyOnPostCommentAction);
 
 
 export const $currentPostUserId = store<string>('')
-    .on(getPostsByUserIdEffect, 'onBefore', (_, { args: [ userId ] }) => userId)
-    .on(logoutEffect, 'onBefore', () => '');
+    .disableOn(logoutMarker, '')
+    .enableOn(loginMarker, '')
+    .on(getPostsByUserIdEffect, 'onBefore', (_, { args: [ userId ] }) => userId);
 
 
-export const $postsPending = store(false)
-    .on(getPostsByUserIdEffect, 'onBefore', () => true)
-    .on(getPostsByUserIdEffect, 'onFinally', () => false);
+export const $postsPending = pending([ getPostsByUserIdEffect ])
+    .disableOn(logoutMarker, false)
+    .enableOn(loginMarker, false);
 
 
 export const $postsList = store<Array<DomainPost>>([])
-    .on(getPostsByUserIdEffect, 'onBefore', () => [])
+    .disableOn(logoutMarker, [])
+    .enableOn(loginMarker, [])
+    .on(getPostsByUserIdEffect, 'onBefore', to([]))
     .on(getPostsByUserIdEffect, 'onSuccess', (_, { result }) => result.list.filter(isDomainPost))
     .on(createPostEffect, 'onSuccess', (state, { result }) => {
         if ($currentPostUserId.get() === result.post.author.id) {
@@ -80,5 +86,4 @@ export const $postsList = store<Array<DomainPost>>([])
             commentsList.push(result);
             return { ...state };
         }
-    })
-    .on(logoutEffect, 'onBefore', () => []);
+    });

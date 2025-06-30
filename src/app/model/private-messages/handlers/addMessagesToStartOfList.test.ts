@@ -5,7 +5,6 @@ import {
 import {
     addMessagesToStartOfList,
 } from '@/app/model/private-messages/handlers/addMessagesToStartOfList.ts';
-import { expect } from 'playwright/test';
 
 
 const getMessageObject = function (id: string, date: number): DomainMessage {

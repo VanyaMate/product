@@ -1,4 +1,4 @@
-import { effect, store } from '@vanyamate/sec';
+import { effect, pending, result, store, to } from '@vanyamate/sec';
 import {
     createLanguageAction,
 } from '@/app/action/languages/createLanguage/createLanguage.action.ts';
@@ -38,6 +38,7 @@ import {
 import {
     removeLanguageFolderAction,
 } from '@/app/action/languages/removeLanguageFolder/removeLanguageFolder.action.ts';
+import { loginMarker, logoutMarker } from '@/app/model/auth/auth.model.ts';
 
 
 export const createLanguageEffect           = effect(createLanguageAction);
@@ -54,22 +55,28 @@ export const getMyLanguageFolderWordsEffect = effect(getMyLanguageFolderWordsAct
 
 
 export const $isUserLanguages = store<boolean>(true)
-    .on(getMyLanguagesEffect, 'onBefore', () => true);
+    .disableOn(logoutMarker, false)
+    .enableOn(loginMarker, false)
+    .on(getMyLanguagesEffect, 'onBefore', to(true));
 
-export const $languagesLoading = store<boolean>(false)
-    .on(getMyLanguagesEffect, 'onBefore', () => true)
-    .on(getMyLanguagesEffect, 'onSuccess', () => false);
+export const $languagesPending = pending([ getMyLanguagesEffect ])
+    .disableOn(logoutMarker, false)
+    .enableOn(loginMarker, false);
 
 export const $languagesList = store<Array<DomainLanguageWithFolders>>([])
-    .on(getMyLanguagesEffect, 'onSuccess', (_, { result }) => result)
+    .disableOn(logoutMarker, [])
+    .enableOn(loginMarker, [])
+    .on(getMyLanguagesEffect, 'onSuccess', result())
     .on(createLanguageEffect, 'onSuccess', (state, { result }) => {
         return $isUserLanguages.get()
-               ? [ ...state,
+               ? [
+                ...state,
                 {
                     folders: [],
                     id     : result.language.id,
                     title  : result.language.title,
-                } ]
+                },
+            ]
                : state;
     })
     .on(createLanguageFolderEffect, 'onSuccess', (state, { result }) => {
@@ -139,10 +146,14 @@ export const $languagesList = store<Array<DomainLanguageWithFolders>>([])
     });
 
 export const $currentFolderId = store<string>('')
+    .disableOn(logoutMarker, '')
+    .enableOn(loginMarker, '')
     .on(getMyLanguageFolderWordsEffect, 'onSuccess', (_, { args: [ folderId ] }) => folderId);
 
 export const $languageFolderWordsList = store<Array<DomainLanguageWord>>([])
-    .on(getMyLanguageFolderWordsEffect, 'onSuccess', (_, { result }) => result)
+    .disableOn(logoutMarker, [])
+    .enableOn(loginMarker, [])
+    .on(getMyLanguageFolderWordsEffect, 'onSuccess', result())
     .on(
         createLanguageWordEffect,
         'onSuccess',

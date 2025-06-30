@@ -1,4 +1,4 @@
-import { store, effect } from '@vanyamate/sec';
+import { store, effect, pending, to, marker, result } from '@vanyamate/sec';
 import {
     DomainServiceResponseError,
 } from 'product-types/dist/error/DomainServiceResponseError';
@@ -35,33 +35,32 @@ export const userLoginUpdateEffect      = effect(userLoginUpdateAction);
 export const userPasswordUpdateEffect   = effect(userPasswordUpdateAction);
 export const userBackgroundUpdateEffect = effect(userBackgroundUpdateAction);
 
-export const $authIsPending = store<boolean>(false)
-    .on(loginEffect, 'onBefore', () => true)
-    .on(registrationEffect, 'onBefore', () => true)
-    .on(refreshAuthEffect, 'onBefore', () => true)
-    .on(logoutEffect, 'onBefore', () => true)
-    .on(loginEffect, 'onFinally', () => false)
-    .on(registrationEffect, 'onFinally', () => false)
-    .on(refreshAuthEffect, 'onFinally', () => false)
-    .on(logoutEffect, 'onFinally', () => false);
+export const loginMarker  = marker('beforeAll')
+    .on('onSuccess', loginEffect)
+    .on('onSuccess', registrationEffect)
+    .on('onSuccess', refreshAuthEffect);
+export const logoutMarker = marker('afterAll')
+    .on('onSuccess', logoutEffect);
+
+export const $authIsPending = pending([ loginEffect, registrationEffect, refreshAuthEffect, logoutEffect ])
+    .disableOn(logoutMarker, false)
+    .enableOn(loginMarker, false);
 
 
 export const $authError = store<DomainServiceResponseError | null>(null)
+    .disableOn(logoutMarker, null)
+    .enableOn(loginMarker, null)
     .on(loginEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(registrationEffect, 'onError', (_, { error }) => returnValidErrors(error))
     .on(refreshAuthEffect, 'onError', (_, { error }) => returnValidErrors(error))
-    .on(logoutEffect, 'onError', (_, { error }) => returnValidErrors(error))
-    .on(loginEffect, 'onSuccess', () => null)
-    .on(registrationEffect, 'onSuccess', () => null)
-    .on(refreshAuthEffect, 'onSuccess', () => null)
-    .on(logoutEffect, 'onBefore', () => null);
+    .on(logoutEffect, 'onError', (_, { error }) => returnValidErrors(error));
 
 
 export const $authUser = store<DomainUserFull | null>(null)
     .on(loginEffect, 'onSuccess', (_, { result }) => result.user)
     .on(registrationEffect, 'onSuccess', (_, { result }) => result.user)
-    .on(refreshAuthEffect, 'onSuccess', (_, { result }) => result)
-    .on(logoutEffect, 'onBefore', () => null)
+    .on(refreshAuthEffect, 'onSuccess', result())
+    .on(logoutEffect, 'onBefore', to(null))
     .on(
         userAvatarUpdateEffect,
         'onSuccess',

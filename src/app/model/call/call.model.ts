@@ -1,4 +1,4 @@
-import { effect, store } from '@vanyamate/sec';
+import { effect, store, pending } from '@vanyamate/sec';
 import {
     createCallAnswerAction,
 } from '@/app/action/call/createCallAnswer/createCallAnswer.action.ts';
@@ -27,6 +27,10 @@ import {
 import {
     finishCallNotificationAction,
 } from '@/app/action/call/finishCall/finishCallNotification.action.ts';
+import {
+    loginMarker,
+    logoutMarker,
+} from '@/app/model/auth/auth.model.ts';
 
 
 // TODO: Всё временное
@@ -49,15 +53,13 @@ export type PeerConnectionModel = Record<string, {
     active: boolean;
 }>
 
-export const $callPending = store<boolean>(false)
-    .on(createCallOfferEffect, 'onBefore', () => true)
-    .on(createCallAnswerEffect, 'onBefore', () => true)
-    .on(createCallRequestEffect, 'onBefore', () => true)
-    .on(createCallOfferEffect, 'onFinally', () => false)
-    .on(createCallRequestEffect, 'onFinally', () => false)
-    .on(createCallAnswerEffect, 'onFinally', () => false);
+export const $callPending = pending([ createCallOfferEffect, createCallAnswerEffect, createCallRequestEffect ])
+    .disableOn(logoutMarker, false)
+    .enableOn(loginMarker, false);
 
 export const $callPeerConnection = store<PeerConnectionModel>({})
+    .disableOn(logoutMarker, {})
+    .enableOn(loginMarker, {})
     .on(
         createCallRequestNotificationEffect,
         'onSuccess',
