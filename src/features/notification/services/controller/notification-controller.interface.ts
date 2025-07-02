@@ -1,4 +1,5 @@
 import {
+    DomainNotification,
     DomainNotificationType,
 } from 'product-types/dist/notification/DomainNotification';
 import {
@@ -10,6 +11,8 @@ import {
 
 
 export interface INotificationController {
+    isConnected (): boolean;
+
     connect (url: string, getOptions: () => NotificationConnectorConnectOptions): void;
 
     disconnect (): void;
@@ -17,4 +20,10 @@ export interface INotificationController {
     subscribe (on: DomainNotificationType, callback: NotificationNotificatorCallback): void;
 
     unsubscribe (on: DomainNotificationType, callback: NotificationNotificatorCallback): void;
+
+    emitEvent (type: DomainNotificationType, events: Array<DomainNotification>): void;
+
+    subscribeOnAll (callback: NotificationNotificatorCallback): void;
+
+    unsubscribeFromAll (callback: NotificationNotificatorCallback): void;
 }

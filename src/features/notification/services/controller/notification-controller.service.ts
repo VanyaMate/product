@@ -128,9 +128,10 @@ export class NotificationController implements INotificationController {
         [DomainNotificationType.CALL_START_OUT]                 : [],
     };
 
-    private _currentNotificationIndex: number = 0;
+    private _onAllHandlers: Array<NotificationNotificatorCallback> = [];
+    private _currentNotificationIndex: number                      = 0;
     private _reconnectTimer: ReturnType<typeof setTimeout>;
-    private _reconnectAttempt: number         = 0;
+    private _reconnectAttempt: number                              = 0;
     private _url: string;
     private _getOptions: () => NotificationConnectorConnectOptions;
 
@@ -142,6 +143,10 @@ export class NotificationController implements INotificationController {
         this._notificationConnector.subscribe(NotificationConnectorEvents.CONNECTED, this._connectorConnectedHandler.bind(this));
         this._notificationConnector.subscribe(NotificationConnectorEvents.DISCONNECTED, this._connectorDisconnectHandler.bind(this));
         this._notificationConnector.subscribe(NotificationConnectorEvents.MESSAGE, this._connectorMessageHandler.bind(this));
+    }
+
+    isConnected (): boolean {
+        return this._notificationConnector.status === 'connecting' || this._notificationConnector.status === 'connected';
     }
 
     connect (url: string, getOptions: () => NotificationConnectorConnectOptions): void {
@@ -163,7 +168,16 @@ export class NotificationController implements INotificationController {
         this._handlers[on] = this._handlers[on]?.filter((_callback) => _callback !== callback) ?? [];
     }
 
-    private _emitEvent (event: DomainNotificationType, events: DomainNotification[]): void {
+    subscribeOnAll (callback: NotificationNotificatorCallback): void {
+        this._onAllHandlers.push(callback);
+    }
+
+    unsubscribeFromAll (callback: NotificationNotificatorCallback): void {
+        this._onAllHandlers.splice(this._onAllHandlers.indexOf(callback), 1);
+    }
+
+    emitEvent (event: DomainNotificationType, events: DomainNotification[]): void {
+        this._onAllHandlers.forEach((handler) => handler(events));
         this._handlers[event]?.forEach((callback) => callback(events));
     }
 
@@ -234,7 +248,7 @@ export class NotificationController implements INotificationController {
     }
 
     private _notificationHandler (notification: DomainNotification) {
-        this._emitEvent(notification.type, [ notification ]);
+        this.emitEvent(notification.type, [ notification ]);
     }
 
     private _setBeforeConnectingProps () {
