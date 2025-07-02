@@ -9,18 +9,22 @@ import {
 // parent-remove -> applicant-check
 
 type CheckParentMessage = {
+    id: string;
     type: 'check-parent';
 }
 
 type IsParentMessage = {
+    id: string;
     type: 'is-parent';
 }
 
 type ParentRemoveMessage = {
+    id: string;
     type: 'parent-remove';
 }
 
 type ApplicantCheckMessage = {
+    id: string;
     type: 'applicant-check';
     timestamp: number;
 }
@@ -32,6 +36,7 @@ export type HierarchyMessage =
     | ApplicantCheckMessage
 
 export class BroadcastTabHierarchyService implements ITabHierarchy {
+    private readonly _id                                            = crypto.randomUUID();
     private readonly _hierarchyBroadcast                            = new BroadcastChannel('tab-hierarchy');
     private readonly _broadcast                                     = new BroadcastChannel('tab-hierarchy-messages');
     private readonly _initTimestamp                                 = Date.now();
@@ -65,26 +70,34 @@ export class BroadcastTabHierarchyService implements ITabHierarchy {
         this._onUnParentHandler = callback;
     }
 
+    private _hierarchyMessage (message: any): void {
+        this._hierarchyBroadcast.postMessage(message);
+    }
+
     private _getCheckParentMessage (): CheckParentMessage {
         return {
+            id  : this._id,
             type: 'check-parent',
         };
     }
 
     private _getIsParentMessage (): IsParentMessage {
         return {
+            id  : this._id,
             type: 'is-parent',
         };
     }
 
     private _getParentRemoveMessage (): ParentRemoveMessage {
         return {
+            id  : this._id,
             type: 'parent-remove',
         };
     }
 
     private _getApplicantCheckMessage (): ApplicantCheckMessage {
         return {
+            id       : this._id,
             type     : 'applicant-check',
             timestamp: this._initTimestamp,
         };
@@ -100,8 +113,7 @@ export class BroadcastTabHierarchyService implements ITabHierarchy {
 
         const handler = (event: MessageEvent) => {
             const message = event.data;
-
-            if (message && message.type) {
+            if (message && message.type && message.id !== this._id) {
                 switch (message.type) {
                     case 'check-parent':
                         this._checkParentMessageHandler();
@@ -121,33 +133,38 @@ export class BroadcastTabHierarchyService implements ITabHierarchy {
             }
         };
 
-        const visibilityChange = () => {
-            if (document.visibilityState === 'hidden') {
-                this._disconnectHandler();
-            }
+        /*const visibilityChange = () => {
+         if (document.visibilityState === 'hidden') {
+         this._disconnectHandler();
+         }
+         };*/
+
+        const onPageHide = () => {
+            this._disconnectHandler();
         };
 
         const disconnect = () => {
             this._disconnectHandler();
-            document.removeEventListener('visibilitychange', visibilityChange);
+            /*document.removeEventListener('visibilitychange', visibilityChange);*/
             this._hierarchyBroadcast.removeEventListener('message', handler);
             this._isConnected = false;
         };
 
-        document.addEventListener('visibilitychange', visibilityChange);
+        window.addEventListener('pagehide', onPageHide);
+        /*document.addEventListener('visibilitychange', visibilityChange);*/
         this._hierarchyBroadcast.addEventListener('message', handler);
         this._connectHandler();
         return disconnect;
     }
 
     private _connectHandler () {
-        this._hierarchyBroadcast.postMessage(this._getCheckParentMessage());
+        this._hierarchyMessage(this._getCheckParentMessage());
         this._applicantHandler();
     }
 
     private _disconnectHandler () {
         if (this._isParent) {
-            this._hierarchyBroadcast.postMessage(this._getParentRemoveMessage());
+            this._hierarchyMessage(this._getParentRemoveMessage());
             this._toUnParent = true;
         }
     }
@@ -163,11 +180,11 @@ export class BroadcastTabHierarchyService implements ITabHierarchy {
             this._applicantTimer = setTimeout(() => {
                 this._isParent    = true;
                 this._isApplicant = false;
-                this._hierarchyBroadcast.postMessage(this._getIsParentMessage());
+                this._hierarchyMessage(this._getIsParentMessage());
                 setTimeout(() => {
                     this._onParentHandler?.();
-                }, 50);
-            }, 1000);
+                }, 100);
+            }, 100);
         }
     }
 
@@ -176,13 +193,13 @@ export class BroadcastTabHierarchyService implements ITabHierarchy {
     private _checkParentMessageHandler () {
         if (this._isParent) {
             this._toUnParent = false;
-            this._hierarchyBroadcast.postMessage(this._getIsParentMessage());
+            this._hierarchyMessage(this._getIsParentMessage());
         }
     }
 
     private _parentRemoveMessageHandler () {
         this._applicantHandler();
-        this._hierarchyBroadcast.postMessage(this._getApplicantCheckMessage());
+        this._hierarchyMessage(this._getApplicantCheckMessage());
     }
 
     private _onIsParentMessageHandler () {

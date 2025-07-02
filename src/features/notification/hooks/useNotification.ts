@@ -33,8 +33,8 @@ const notificationController: INotificationController = new NotificationControll
     new SseNotificationParser(),
 );
 
-const multitab                         = new BroadcastTabHierarchyService();
-let multitabOnMessageUnSub: () => void = () => {
+const multitab                               = new BroadcastTabHierarchyService();
+let multitabOnMessageUnsubscribe: () => void = () => {
 };
 
 
@@ -50,13 +50,13 @@ export const useNotification = function (id: string): INotificationController {
 
         const multitabDisconnect = multitab.connect();
 
-        multitabOnMessageUnSub();
-        multitabOnMessageUnSub = multitab.onMessage((notifications: Array<DomainNotification>) => {
+        multitabOnMessageUnsubscribe();
+        multitabOnMessageUnsubscribe = multitab.onMessage((notifications: Array<DomainNotification>) => {
             notifications.forEach((notification) => notificationController.emitEvent(notification.type, [ notification ]));
         });
 
         multitab.onParent(() => {
-            multitabOnMessageUnSub();
+            multitabOnMessageUnsubscribe();
             if (!notificationController.isConnected()) {
                 notificationController.connect(`${ __API__ }/v1/notification`, () => ({
                     accessToken : localStorage.getItem(LOCAL_STORAGE_USER_ACCESS_TOKEN),
@@ -69,8 +69,8 @@ export const useNotification = function (id: string): INotificationController {
         });
 
         multitab.onUnParent(() => {
-            multitabOnMessageUnSub();
-            multitabOnMessageUnSub = multitab.onMessage((notifications: Array<DomainNotification>) => {
+            multitabOnMessageUnsubscribe();
+            multitabOnMessageUnsubscribe = multitab.onMessage((notifications: Array<DomainNotification>) => {
                 notifications.forEach((notification) => notificationController.emitEvent(notification.type, [ notification ]));
             });
             notificationController.unsubscribeFromAll(allEventsHandler);
@@ -84,7 +84,7 @@ export const useNotification = function (id: string): INotificationController {
             if (connections.size === 0) {
                 notificationController.unsubscribeFromAll(allEventsHandler);
                 multitabDisconnect();
-                multitabOnMessageUnSub();
+                multitabOnMessageUnsubscribe();
                 notificationController.disconnect();
             }
         };
