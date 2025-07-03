@@ -8,7 +8,7 @@ import {
 
 export const getCommentRepliesByCursorAction = function (commentId: string, cursor: string, take: number = 3): Promise<Array<DomainComment>> {
     return request<Array<DomainComment>>(
-        `v1/post-comments/comment/replies/${ commentId }/${ cursor }?take=${ take }}`,
+        `v1/post-comments/comment/replies/${ commentId }/${ cursor }?take=${ take }`,
         {
             method: 'GET',
         },

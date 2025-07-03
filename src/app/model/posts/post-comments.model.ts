@@ -16,9 +16,47 @@ import { loginMarker, logoutMarker } from '@/app/model/auth/auth.model.ts';
 
 export type PostCommentsHierarchyModel = Record<string, Store<Array<string>>>;
 export type PostCommentsModel = Record<string, Store<DomainComment>>;
+export type PostCommentsCursors = Record<string, string>;
 
 export const getCommentRepliesEffect         = effect(getCommentRepliesAction);
 export const getCommentRepliesByCursorEffect = effect(getCommentRepliesByCursorAction);
+
+export const $postCommentsCursors = store<PostCommentsCursors>({})
+    .disableOn(logoutMarker, {})
+    .enableOn(loginMarker, {})
+    .on(
+        getCommentRepliesEffect,
+        'onSuccess',
+        (hierarchy, { result, args }) => {
+            hierarchy[args[0]] = result.at(-1)?.id ?? '';
+            return { ...hierarchy };
+        },
+    )
+    .on(
+        getCommentRepliesByCursorEffect,
+        'onSuccess',
+        (hierarchy, { result, args }) => {
+            hierarchy[args[0]] = result.at(-1)?.id ?? '';
+            return { ...hierarchy };
+        },
+    )
+    .on(
+        getPostsByUserIdEffect,
+        'onSuccess',
+        (_, { result }) => {
+            // make hierarchy
+            const hierarchy: PostCommentsCursors = {};
+
+            result.list.forEach((post: DomainPost) => {
+                post.comments.forEach((comment) => {
+                    hierarchy[comment.id] = comment.comments.at(-1)?.id ?? '';
+                });
+            });
+
+            return hierarchy;
+        },
+    );
+
 
 export const $postCommentsHierarchy = store<PostCommentsHierarchyModel>({})
     .disableOn(logoutMarker, {})
@@ -92,7 +130,11 @@ export const $postCommentsHierarchy = store<PostCommentsHierarchyModel>({})
         'onSuccess',
         (hierarchy, { result, args }) => {
             // update hierarchy
-            hierarchy[args[1]].set(hierarchy[args[1]].get().concat(result.id));
+            if (hierarchy[args[1]]) {
+                hierarchy[args[1]].set(hierarchy[args[1]].get().concat(result.id));
+            } else {
+                hierarchy[args[1]].set([ result.id ]);
+            }
             hierarchy[result.id] = store([]);
             return { ...hierarchy };
         },

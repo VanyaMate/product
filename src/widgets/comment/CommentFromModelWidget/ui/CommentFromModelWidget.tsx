@@ -6,6 +6,7 @@ import {
 import { useStore } from '@vanyamate/sec-react';
 import {
     $postComments,
+    $postCommentsCursors,
     $postCommentsHierarchy,
     getCommentRepliesByCursorEffect,
     getCommentRepliesEffect,
@@ -45,6 +46,7 @@ export const CommentFromModelWidget: FC<CommentFromModelWidgetProps> = memo(func
 
     const commentHierarchy                  = useStore($postCommentsHierarchy.get()[commentId]);
     const comment                           = useStore($postComments.get()[commentId]);
+    const commentCursors                    = useStore($postCommentsCursors);
     const [ reply, setReply ]               = useState<boolean>(false);
     const [ openComments, setOpenComments ] = useState<boolean>(!!commentHierarchy.length);
 
@@ -121,8 +123,8 @@ export const CommentFromModelWidget: FC<CommentFromModelWidgetProps> = memo(func
                         ? <ButtonWithLoading
                             className={ css.openMore }
                             onClick={ async () => {
-                                if (commentHierarchy.length) {
-                                    return getCommentRepliesByCursorEffect(commentId, commentHierarchy[commentHierarchy.length - 1], 3).then(() => setOpenComments(true));
+                                if (commentCursors[commentId]) {
+                                    return getCommentRepliesByCursorEffect(commentId, commentCursors[commentId], 3).then(() => setOpenComments(true));
                                 } else {
                                     return getCommentRepliesEffect(commentId, 3).then(() => setOpenComments(true));
                                 }
