@@ -1,6 +1,6 @@
-# Social network "Liberty"
+# Social network "Veil"
 
-Full private
+Full private social network
 
 ## Technologies
 
@@ -46,15 +46,16 @@ Full private
 - **Test**
     - **Jest**
     - **React testing library**
-    - **Storybook**
+    - **~~Storybook~~** - `пока не поддерижвается с vite 7`
     - **~~Loki~~** - `пока не поддерживает Storybook 8 ( wip )`
     - **Playwright**
-    - **Cypress** - `пока что гораздо менее удобный чем pw`
+    - **Cypress** - `пока что гораздо менее удобный чем pw (новая версия уже норм)`
         - **cypress-image-diff-js**
             - `плохо работает с cypress open`
             - `делает другой viewport`
             - `js config без настройки пути`
-            - `если в тесте несколько подряд скриншотов, обновлять будет нужно их по очереди. как варинат - использовать 1 скриншот в 1 тесте`
+            -
+          `если в тесте несколько подряд скриншотов, обновлять будет нужно их по очереди. как варинат - использовать 1 скриншот в 1 тесте`
     - **reg-cli**
     - **Husky**
 - ~~**MockServer**~~ - `уже не нужен`

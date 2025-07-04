@@ -1,4 +1,4 @@
-import { FC, memo, useMemo, useState } from 'react';
+import { FC, memo,useMemo, useState } from 'react';
 import {
     Comment,
     CommentProps,
@@ -100,6 +100,7 @@ export const CommentFromModelWidget: FC<CommentFromModelWidgetProps> = memo(func
                     {
                         reply ? <ReplyCommentForm
                             commentId={ commentId }
+                            key="reply-form"
                             onSubmit={ () => {
                                 setReply(false);
                                 setOpenComments(true);
@@ -122,6 +123,7 @@ export const CommentFromModelWidget: FC<CommentFromModelWidgetProps> = memo(func
                         hasMore
                         ? <ButtonWithLoading
                             className={ css.openMore }
+                            key="has-more"
                             onClick={ async () => {
                                 if (commentCursors[commentId]) {
                                     return getCommentRepliesByCursorEffect(commentId, commentCursors[commentId], 3).then(() => setOpenComments(true));

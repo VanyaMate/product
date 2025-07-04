@@ -8,7 +8,7 @@ import {
 
 export const getCommentRepliesAction = function (commentId: string, take: number = 3, skip: number = 0): Promise<Array<DomainComment>> {
     return request<Array<DomainComment>>(
-        `v1/post-comments/comment/replies/${ commentId }?take=${ take }&skip=${ skip }`,
+        `v1/post-comments/replies/${ commentId }?take=${ take }&skip=${ skip }`,
         {
             method: 'GET',
         },

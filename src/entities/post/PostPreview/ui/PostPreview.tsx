@@ -48,7 +48,7 @@ export const PostPreview: FC<PostPreviewProps> = memo(function PostPreview (prop
                     </div>
                     { extraHeader }
                 </header>
-                <div>
+                <div className={ css.message }>
                     { post.message }
                 </div>
                 {

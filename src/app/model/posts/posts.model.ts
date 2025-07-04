@@ -63,6 +63,7 @@ export const $postsList = store<Array<DomainPost>>([])
     }) => {
         const post = state.find((post) => post.id === postId);
         if (post) {
+            post.commentsAmount += 1;
             post.comments.push(result);
             return [ ...state ];
         }
