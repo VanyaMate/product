@@ -1,12 +1,11 @@
-import { FC, memo,useMemo, useState } from 'react';
+import { FC, memo, useMemo, useState } from 'react';
 import {
     Comment,
     CommentProps,
 } from '@/entities/comment/Comment/ui/Comment.tsx';
 import { useStore } from '@vanyamate/sec-react';
 import {
-    $postComments,
-    $postCommentsCursors,
+    $postComments, $postCommentsCursors,
     $postCommentsHierarchy,
     getCommentRepliesByCursorEffect,
     getCommentRepliesEffect,
@@ -32,6 +31,7 @@ import {
 import {
     CommentButton,
 } from '@/entities/common/CommentButton/ui/CommentButton.tsx';
+import { logError } from '@/app/console/logError.ts';
 
 
 export type CommentFromModelWidgetProps =
@@ -46,12 +46,14 @@ export const CommentFromModelWidget: FC<CommentFromModelWidgetProps> = memo(func
 
     const commentHierarchy                  = useStore($postCommentsHierarchy.get()[commentId]);
     const comment                           = useStore($postComments.get()[commentId]);
-    const commentCursors                    = useStore($postCommentsCursors);
+    const commentCursors                    = useStore($postCommentsCursors.get()[commentId]);
     const [ reply, setReply ]               = useState<boolean>(false);
     const [ openComments, setOpenComments ] = useState<boolean>(!!commentHierarchy.length);
 
-    const hasMoreAmount = useMemo<number>(() => comment.repliesAmount - commentHierarchy.length, [ comment.repliesAmount, commentHierarchy.length ]);
+    const hasMoreAmount = useMemo<number>(() => comment.repliesAmount - commentHierarchy.length, [ comment, commentHierarchy ]);
     const hasMore       = useMemo(() => hasMoreAmount > 0, [ hasMoreAmount ]);
+
+    console.log('Comment widget', hasMoreAmount, hasMore, isSubComment, commentHierarchy.length);
 
     return (
         <Comment
@@ -125,10 +127,16 @@ export const CommentFromModelWidget: FC<CommentFromModelWidgetProps> = memo(func
                             className={ css.openMore }
                             key="has-more"
                             onClick={ async () => {
-                                if (commentCursors[commentId]) {
-                                    return getCommentRepliesByCursorEffect(commentId, commentCursors[commentId], 3).then(() => setOpenComments(true));
+                                if (commentCursors) {
+                                    setOpenComments(true);
+                                    return getCommentRepliesByCursorEffect(commentId, commentCursors, 3)
+                                        .catch(logError(getCommentRepliesByCursorEffect.name))
+                                        .catch(() => setOpenComments(false));
                                 } else {
-                                    return getCommentRepliesEffect(commentId, 3).then(() => setOpenComments(true));
+                                    setOpenComments(true);
+                                    return getCommentRepliesEffect(commentId, 3)
+                                        .catch(logError(getCommentRepliesByCursorEffect.name))
+                                        .catch(() => setOpenComments(false));
                                 }
                             } }
                             size={ ButtonSizeType.SMALL }

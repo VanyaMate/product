@@ -15,20 +15,30 @@ import { loginMarker, logoutMarker } from '@/app/model/auth/auth.model.ts';
 
 
 export type PostCommentsHierarchyModel = Record<string, Store<Array<string>>>;
+export type PostCommentsCursorModel = Record<string, Store<string>>;
 export type PostCommentsModel = Record<string, Store<DomainComment>>;
-export type PostCommentsCursors = Record<string, string>;
 
 export const getCommentRepliesEffect         = effect(getCommentRepliesAction);
 export const getCommentRepliesByCursorEffect = effect(getCommentRepliesByCursorAction);
 
-export const $postCommentsCursors = store<PostCommentsCursors>({})
+export const $postCommentsCursors = store<PostCommentsCursorModel>({})
     .disableOn(logoutMarker, {})
     .enableOn(loginMarker, {})
     .on(
         getCommentRepliesEffect,
         'onSuccess',
         (hierarchy, { result, args }) => {
-            hierarchy[args[0]] = result.at(-1)?.id ?? '';
+            // update hierarchy
+            result.forEach((comment) => {
+                hierarchy[comment.id] = store(comment.comments.at(-1)?.id ?? '');
+            });
+
+            if (hierarchy[args[0]]) {
+                hierarchy[args[0]].set(result.at(-1)?.id ?? '');
+            } else {
+                hierarchy[args[0]] = store(result.at(-1)?.id ?? '');
+            }
+
             return { ...hierarchy };
         },
     )
@@ -36,7 +46,17 @@ export const $postCommentsCursors = store<PostCommentsCursors>({})
         getCommentRepliesByCursorEffect,
         'onSuccess',
         (hierarchy, { result, args }) => {
-            hierarchy[args[0]] = result.at(-1)?.id ?? '';
+            // update hierarchy
+            result.forEach((comment) => {
+                hierarchy[comment.id] = store(comment.comments.at(-1)?.id ?? '');
+            });
+
+            if (hierarchy[args[0]]) {
+                hierarchy[args[0]].set(result.at(-1)?.id ?? '');
+            } else {
+                hierarchy[args[0]] = store(result.at(-1)?.id ?? '');
+            }
+
             return { ...hierarchy };
         },
     )
@@ -45,11 +65,14 @@ export const $postCommentsCursors = store<PostCommentsCursors>({})
         'onSuccess',
         (_, { result }) => {
             // make hierarchy
-            const hierarchy: PostCommentsCursors = {};
+            const hierarchy: PostCommentsCursorModel = {};
 
             result.list.forEach((post: DomainPost) => {
-                post.comments.forEach((comment) => {
-                    hierarchy[comment.id] = comment.comments.at(-1)?.id ?? '';
+                post.comments?.forEach((comment) => {
+                    hierarchy[comment.id] = store(comment.comments.at(-1)?.id ?? '');
+                    comment.comments.forEach((reply) => {
+                        hierarchy[reply.id] = store(comment.comments.at(-1)?.id ?? '');
+                    });
                 });
             });
 
