@@ -31,7 +31,6 @@ import {
 import {
     CommentButton,
 } from '@/entities/common/CommentButton/ui/CommentButton.tsx';
-import { logError } from '@/app/console/logError.ts';
 
 
 export type CommentFromModelWidgetProps =
@@ -52,8 +51,6 @@ export const CommentFromModelWidget: FC<CommentFromModelWidgetProps> = memo(func
 
     const hasMoreAmount = useMemo<number>(() => comment.repliesAmount - commentHierarchy.length, [ comment, commentHierarchy ]);
     const hasMore       = useMemo(() => hasMoreAmount > 0, [ hasMoreAmount ]);
-
-    console.log('Comment widget', hasMoreAmount, hasMore, isSubComment, commentHierarchy.length);
 
     return (
         <Comment
@@ -96,59 +93,57 @@ export const CommentFromModelWidget: FC<CommentFromModelWidgetProps> = memo(func
             }
             isSubComment={ isSubComment }
         >
-            {
-                (reply || (openComments && commentHierarchy.length) || hasMore)
-                ? <Col>
-                    {
-                        reply ? <ReplyCommentForm
+            <Col>
+                <ReplyCommentForm
+                    commentId={ commentId }
+                    key="reply-form"
+                    onSubmit={ () => {
+                        setReply(false);
+                        setOpenComments(true);
+                    } }
+                    opened={ reply }
+                    postId={ postId }
+                />
+                {
+                    openComments ? commentHierarchy.map((commentId) => (
+                        <CommentFromModelWidget
                             commentId={ commentId }
-                            key="reply-form"
-                            onSubmit={ () => {
-                                setReply(false);
-                                setOpenComments(true);
-                            } }
-                            opened={ reply }
+                            isSubComment
+                            key={ commentId }
                             postId={ postId }
-                        /> : null
-                    }
-                    {
-                        openComments ? commentHierarchy.map((commentId) => (
-                            <CommentFromModelWidget
-                                commentId={ commentId }
-                                isSubComment
-                                key={ commentId }
-                                postId={ postId }
-                            />
-                        )) : null
-                    }
-                    {
-                        hasMore
-                        ? <ButtonWithLoading
-                            className={ css.openMore }
-                            key="has-more"
-                            onClick={ async () => {
-                                if (commentCursors) {
-                                    setOpenComments(true);
-                                    return getCommentRepliesByCursorEffect(commentId, commentCursors, 3)
-                                        .catch(logError(getCommentRepliesByCursorEffect.name))
-                                        .catch(() => setOpenComments(false));
-                                } else {
-                                    setOpenComments(true);
-                                    return getCommentRepliesEffect(commentId, 3)
-                                        .catch(logError(getCommentRepliesByCursorEffect.name))
-                                        .catch(() => setOpenComments(false));
-                                }
-                            } }
-                            size={ ButtonSizeType.SMALL }
-                            styleType={ ButtonStyleType.GHOST }
-                        >
-                            Раскрыть еще { Math.min(3, hasMoreAmount) }
-                        </ButtonWithLoading>
-                        : null
-                    }
-                </Col>
-                : null
-            }
+                        />
+                    )) : null
+                }
+                {
+                    hasMore
+                    ? <ButtonWithLoading
+                        className={ css.openMore }
+                        key="has-more"
+                        onClick={ async () => {
+                            if (commentCursors) {
+                                setOpenComments(true);
+                                return getCommentRepliesByCursorEffect(commentId, commentCursors, 3)
+                                    .catch((e) => {
+                                        setOpenComments(false);
+                                        throw e;
+                                    });
+                            } else {
+                                setOpenComments(true);
+                                return getCommentRepliesEffect(commentId, 3)
+                                    .catch((e) => {
+                                        setOpenComments(false);
+                                        throw e;
+                                    });
+                            }
+                        } }
+                        size={ ButtonSizeType.SMALL }
+                        styleType={ ButtonStyleType.GHOST }
+                    >
+                        Раскрыть еще { Math.min(3, hasMoreAmount) }
+                    </ButtonWithLoading>
+                    : null
+                }
+            </Col>
         </Comment>
     );
 });

@@ -16,6 +16,8 @@ import {
     DomainCommentCreateData,
 } from 'product-types/dist/comment/DomainCommentCreateData';
 import { replyOnPostCommentEffect } from '@/app/model/posts/posts.model.ts';
+import css from './ReplyCommentForm.module.scss';
+import classNames from 'classnames';
 
 
 export type ReplyCommentFormProps =
@@ -27,7 +29,7 @@ export type ReplyCommentFormProps =
     & ComponentPropsWithoutRef<'form'>;
 
 export const ReplyCommentForm: FC<ReplyCommentFormProps> = memo(function ReplyCommentForm (props) {
-    const { opened, onSubmit, postId, commentId, ...other } = props;
+    const { opened, onSubmit, postId, commentId, className, ...other } = props;
 
     const {
               handleSubmit,
@@ -37,7 +39,7 @@ export const ReplyCommentForm: FC<ReplyCommentFormProps> = memo(function ReplyCo
               reset,
           } = useForm<DomainCommentCreateData>();
 
-    const onSubmitHandler = useCallback((data: DomainCommentCreateData) => {
+    const onSubmitHandler = useCallback(async (data: DomainCommentCreateData) => {
         return replyOnPostCommentEffect(postId, commentId, data)
             .then(() => reset())
             .then(() => onSubmit?.(null));
@@ -50,6 +52,7 @@ export const ReplyCommentForm: FC<ReplyCommentFormProps> = memo(function ReplyCo
     return (
         <form
             { ...other }
+            className={ classNames(css.container, { [css.opened]: opened }, [ className ]) }
             onSubmit={ handleSubmit(onSubmitHandler) }
         >
             <TextInput

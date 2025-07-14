@@ -19,6 +19,10 @@ import {
 import {
     replyOnPostCommentAction,
 } from '@/app/action/post-comment/replyOnPostComment/replyOnPostComment.action.ts';
+import {
+    unlikePostAction,
+} from '@/app/action/posts/unlikePost/unlikePost.action.ts';
+import { likePostAction } from '@/app/action/posts/likePost/likePost.action.ts';
 
 
 export const getPostsByUserIdEffect   = effect(getPostsByUserIdAction);
@@ -26,6 +30,8 @@ export const createPostEffect         = effect(createPostAction);
 export const removePostEffect         = effect(removePostAction);
 export const sendPostCommentEffect    = effect(sendPostCommentAction);
 export const replyOnPostCommentEffect = effect(replyOnPostCommentAction);
+export const likePostEffect           = effect(likePostAction);
+export const unlikePostEffect         = effect(unlikePostAction);
 
 
 export const $currentPostUserId = store<string>('')
@@ -85,6 +91,22 @@ export const $postsList = store<Array<DomainPost>>([])
                 return state;
             }
             commentsList.push(result);
-            return { ...state };
+            return [ ...state ];
+        }
+    })
+    .on(likePostEffect, 'onSuccess', (state, { result }) => {
+        const post = state.find((post) => post.id === result.post.id);
+        if (post && post.liked === false) {
+            post.liked = true;
+            post.likesAmount += 1;
+            return [ ...state ];
+        }
+    })
+    .on(unlikePostEffect, 'onSuccess', (state, { result }) => {
+        const post = state.find((post) => post.id === result.post.id);
+        if (post && post.liked === true) {
+            post.liked       = false;
+            post.likesAmount = Math.max(0, post.likesAmount - 1);
+            return [ ...state ];
         }
     });

@@ -1,13 +1,15 @@
 import { request } from '@/app/lib/fetch/request.ts';
-import { isDomainPost } from 'product-types/dist/post/DomainPost';
+import {
+    isDomainNotificationPostLikedData,
+} from 'product-types/dist/notification/notification-data-types/post/DomainNotificationPostLikedData';
 
 
-export const likePostAction = function (postId: string) {
+export const likePostAction = async function (postId: string) {
     return request(
         `v1/post-like/${ postId }`,
         {
             method: 'POST',
         },
-        isDomainPost,
+        isDomainNotificationPostLikedData,
     );
 };

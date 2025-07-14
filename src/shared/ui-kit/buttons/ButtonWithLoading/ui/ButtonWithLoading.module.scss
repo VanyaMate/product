@@ -34,7 +34,20 @@
         transition    : var(--transition-fast);
     }
 
+    &:before {
+        content    : '';
+        background : linear-gradient(45deg, transparent calc(50% - 2px), var(--on-danger-color) calc(50% - 2px), var(--on-danger-color) calc(50% + 2px), transparent calc(50% + 2px)),
+        linear-gradient(-45deg, transparent calc(50% - 2px), var(--on-danger-color) calc(50% - 2px), var(--on-danger-color) calc(50% + 2px), transparent calc(50% + 2px));
+        position   : absolute;
+        opacity    : 0;
+    }
+
     &.small {
+        &:before {
+            width  : 8px;
+            height : 8px;
+        }
+
         &:after {
             width  : 10px;
             height : 10px;
@@ -42,6 +55,11 @@
     }
 
     &.medium {
+        &:before {
+            width  : 12px;
+            height : 12px;
+        }
+
         &:after {
             width  : 16px;
             height : 16px;
@@ -49,6 +67,11 @@
     }
 
     &.large {
+        &:before {
+            width  : 16px;
+            height : 16px;
+        }
+
         &:after {
             width  : 20px;
             height : 20px;
@@ -63,6 +86,16 @@
         &:after {
             opacity   : 1;
             animation : loading-rotate .5s ease-in-out infinite;
+        }
+    }
+
+    &.error {
+        .children {
+            opacity : 0;
+        }
+
+        &:before {
+            opacity : 1;
         }
     }
 }

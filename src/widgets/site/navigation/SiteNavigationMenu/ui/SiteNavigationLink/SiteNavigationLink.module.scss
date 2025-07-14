@@ -5,6 +5,42 @@
     align-items : center;
     gap         : var(--offset-medium);
     height      : 30px;
+    border      : 1px solid transparent;
+    box-sizing  : border-box;
+
+    &.primary {
+        background : var(--primary-color);
+        color      : var(--on-primary-text-color);
+        border     : 1px solid var(--primary-color);
+
+        &:focus,
+        &:hover {
+            box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color), 0 0 25px -10px var(--primary-color);
+        }
+    }
+
+    &.second {
+        background : var(--second-color);
+        color      : var(--on-second-text-color);
+        border     : 1px solid var(--second-color);
+
+        &:focus,
+        &:hover {
+            box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--second-color);
+        }
+    }
+
+    &.ghost {
+        background : var(--bg-ghost-color);
+        color      : var(--bg-ghost-foreground-color);
+        border     : 1px solid var(--border-main-color);
+
+        &:focus,
+        &:hover {
+            color      : var(--bg-main-foreground-color);
+            box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--ghost-color);
+        }
+    }
 
     .icon {
         display         : flex;
@@ -15,45 +51,10 @@
         min-width       : 30px;
         border-radius   : var(--offset-small);
         transition      : var(--transition-medium);
-
-        &.primary {
-            background : var(--primary-color);
-            color      : var(--on-primary-text-color);
-            border     : 1px solid var(--primary-color);
-
-            &:focus,
-            &:hover {
-                box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--primary-color), 0 0 25px -10px var(--primary-color);
-            }
-        }
-
-        &.second {
-            background : var(--second-color);
-            color      : var(--on-second-text-color);
-            border     : 1px solid var(--second-color);
-
-            &:focus,
-            &:hover {
-                box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--second-color);
-            }
-        }
-
-        &.ghost {
-            background : var(--bg-ghost-color);
-            color      : var(--text-second-color);
-            border     : 1px solid var(--border-main-color);
-
-            &:focus,
-            &:hover {
-                color      : var(--text-main-color);
-                box-shadow : 0 0 0 2px var(--bg-main-color), 0 0 0 4px var(--ghost-color);
-            }
-        }
     }
 
     &:hover {
         width         : 100%;
-        height        : fit-content;
         background    : var(--bg-ghost-color);
         border-radius : var(--offset-small);
         transition    : var(--transition-fast);

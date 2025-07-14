@@ -16,14 +16,14 @@ export const SiteNavigationLink: FC<SiteNavigationLinkProps> = memo(function Sit
     return (
         <Link
             { ...other }
-            className={ classNames(css.container, {}, [ className ]) }
+            className={ classNames(css.container, {}, [ className, css[styleType] ]) }
             styleType={ styleType }
         >
                 <span
-                    className={ classNames(css.icon, {}, [ css[styleType] ]) }>
+                    className={ css.icon }>
                     { icon }
                 </span>
-            <span>{ children }</span>
+            <span className={ css.children }>{ children }</span>
         </Link>
     );
 });

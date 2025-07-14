@@ -11,7 +11,7 @@ import {
     $currentPostUserId,
     $postsList,
     $postsPending,
-    getPostsByUserIdEffect, sendPostCommentEffect,
+    getPostsByUserIdEffect,
 } from '@/app/model/posts/posts.model.ts';
 import { useStore } from '@vanyamate/sec-react';
 import {
@@ -20,37 +20,17 @@ import {
 import { $authUser } from '@/app/model/auth/auth.model.ts';
 import { Loader } from '@/shared/ui-kit/loaders/Loader/ui/Loader.tsx';
 import {
-    PostDropdownButton,
-} from '@/features/post/button/PostDropdownButton/ui/PostDropdownButton.tsx';
-import {
     VirtualRenderMethod,
 } from '@/shared/ui-kit/box/Virtual/types/types.ts';
 import { DomainPost } from 'product-types/dist/post/DomainPost';
 import { Virtual } from '@/shared/ui-kit/box/Virtual/ui/Virtual.tsx';
 import { NoMorePosts } from '@/entities/post/NoMorePosts/ui/NoMorePosts.tsx';
 import { useTranslation } from '@/features/i18n/hook/useTranslation.ts';
-import { PostPreview } from '@/entities/post/PostPreview/ui/PostPreview.tsx';
-import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
-import { LikeButton } from '@/entities/common/LikeButton/ui/LikeButton.tsx';
-import {
-    ForwardButton,
-} from '@/entities/common/ForwardButton/ui/ForwardButton.tsx';
-import {
-    CommentButton,
-} from '@/entities/common/CommentButton/ui/CommentButton.tsx';
-import {
-    CommentsFormPreview,
-} from '@/entities/comment/CommentsFormPreview/ui/CommentsFormPreview.tsx';
-import {
-    DomainCommentCreateData,
-} from 'product-types/dist/comment/DomainCommentCreateData';
-import {
-    CommentFromModelWidget,
-} from '@/widgets/comment/CommentFromModelWidget/ui/CommentFromModelWidget.tsx';
 import {
     PageLoader,
 } from '@/shared/ui-kit/loaders/PageLoader/ui/PageLoader.tsx';
 import { logError } from '@/app/console/logError.ts';
+import { Post } from '@/widgets/posts/Post/ui/Post.tsx';
 
 
 // TODO: Переделать LikeButton, CommentsFormPreview
@@ -81,59 +61,12 @@ export const UserPosts: FC<UserPostsProps> = memo(function UserPosts (props) {
         }
     }, [ currentPostsUserId, userId ]);
 
-    const render = useCallback<VirtualRenderMethod>((post: DomainPost) => {
-        return (
-            <PostPreview
-                extraFooter={
-                    <Row spaceBetween>
-                        <Row>
-                            <LikeButton
-                                amount={ post.likesAmount }
-                                liked={ post.liked }
-                                onLike={ async () => {
-                                } }
-                                onUnlike={ async () => {
-                                } }
-                            />
-                            <ForwardButton amount={ post.forwardsAmount }/>
-                            <CommentButton amount={ post.commentsAmount }/>
-                        </Row>
-                        <LikeButton
-                            amount={ 1000 }
-                            liked={ false }
-                            onLike={ async () => {
-                            } }
-                            onUnlike={ async () => {
-                            } }
-                        />
-                    </Row>
-                }
-                extraHeader={
-                    <PostDropdownButton postId={ post.id }/>
-                }
-                key={ post.id }
-                module={
-                    <CommentsFormPreview
-                        onSubmitHandler={ async (comment: DomainCommentCreateData) => {
-                            return sendPostCommentEffect(post.id, comment).then();
-                        } }
-                    >
-                        {
-                            post.comments.map((comment) => (
-                                <CommentFromModelWidget
-                                    commentId={ comment.id }
-                                    isSubComment={ false }
-                                    key={ comment.id }
-                                    postId={ post.id }
-                                />
-                            ))
-                        }
-                    </CommentsFormPreview>
-                }
-                post={ post }
-            />
-        );
-    }, []);
+    const render = useCallback<VirtualRenderMethod>((post: DomainPost) => (
+        <Post
+            key={ post.id }
+            post={ post }
+        />
+    ), []);
 
     return (
         <section

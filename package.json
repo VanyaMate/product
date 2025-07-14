@@ -54,7 +54,7 @@
         "classnames": "^2.5.1",
         "clsx": "^2.1.0",
         "dayjs": "^1.11.11",
-        "product-types": "^0.3.104",
+        "product-types": "^0.3.108",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "react-hook-form": "^7.53.0",

@@ -15,14 +15,14 @@ export type CommentButtonProps =
     & ButtonProps;
 
 export const CommentButton: FC<CommentButtonProps> = memo(function CommentButton (props) {
-    const { amount, styleType, ...other } = props;
+    const { amount, styleType, children, ...other } = props;
 
     return (
         <PopOver popover="Comments">
             <Button { ...other }
                     styleType={ styleType ?? ButtonStyleType.GHOST }>
                 <IoChatbox/>
-                <span>{ amount }</span>
+                <span>{ amount ?? children }</span>
             </Button>
         </PopOver>
     );
