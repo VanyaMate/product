@@ -14,6 +14,10 @@ import {
 import {
     isPostTextValidatorRhf,
 } from '@/app/react-hook-form/validator/isPostTextValidatorRhf/isPostTextValidatorRhf.ts';
+import { Row } from '@/shared/ui-kit/box/Row/ui/Row.tsx';
+import {
+    CreateArticleForm,
+} from '@/entities/article/CreateArticleForm/ui/CreateArticleForm.tsx';
 
 
 export const CreatePostForm: FC = memo(function CreatePostForm () {
@@ -32,25 +36,28 @@ export const CreatePostForm: FC = memo(function CreatePostForm () {
             className={ css.container }
             onSubmit={ handleSubmit(createPostHandler) }
         >
-            <TextInput
-                className={ css.input }
-                errorMessage={ formState.errors.message?.message }
-                placeholder={ t.page.posts.write_new_post }
-                required
-                type="text"
-                { ...register('message', {
-                    required: true,
-                    validate: isPostTextValidatorRhf,
-                }) }
-            />
-            <ButtonWithLoading
-                disabled={ !formState.isValid }
-                loading={ formState.isSubmitting }
-                quad
-                type="submit"
-            >
-                <IoSend/>
-            </ButtonWithLoading>
+            <CreateArticleForm/>
+            <Row fullWidth>
+                <TextInput
+                    className={ css.input }
+                    errorMessage={ formState.errors.message?.message }
+                    placeholder={ t.page.posts.write_new_post }
+                    required
+                    type="text"
+                    { ...register('message', {
+                        required: true,
+                        validate: isPostTextValidatorRhf,
+                    }) }
+                />
+                <ButtonWithLoading
+                    disabled={ !formState.isValid }
+                    loading={ formState.isSubmitting }
+                    quad
+                    type="submit"
+                >
+                    <IoSend/>
+                </ButtonWithLoading>
+            </Row>
         </form>
     );
 });

@@ -22,111 +22,7 @@ import {
 
 
 export class NotificationController implements INotificationController {
-    private readonly _handlers: Record<DomainNotificationType, NotificationNotificatorCallback[]> = {
-        [DomainNotificationType.ERROR]                          : [],
-        [DomainNotificationType.UNKNOWN]                        : [],
-        [DomainNotificationType.CONNECTED]                      : [],
-        [DomainNotificationType.CONNECTING]                     : [],
-        [DomainNotificationType.DISCONNECTED]                   : [],
-        [DomainNotificationType.TOKENS_UPDATE]                  : [],
-        [DomainNotificationType.USER_MESSAGE_IN]                : [],
-        [DomainNotificationType.USER_MESSAGE_OUT]               : [],
-        [DomainNotificationType.USER_MESSAGE_DELETED_IN]        : [],
-        [DomainNotificationType.USER_MESSAGE_DELETED_OUT]       : [],
-        [DomainNotificationType.USER_MESSAGE_REDACTED_IN]       : [],
-        [DomainNotificationType.USER_MESSAGE_REDACTED_OUT]      : [],
-        [DomainNotificationType.USER_MESSAGE_READ_IN]           : [],
-        [DomainNotificationType.USER_MESSAGE_READ_OUT]          : [],
-        [DomainNotificationType.FRIEND_REQUEST_IN]              : [],
-        [DomainNotificationType.FRIEND_REQUEST_OUT]             : [],
-        [DomainNotificationType.FRIEND_DELETED_IN]              : [],
-        [DomainNotificationType.FRIEND_DELETED_OUT]             : [],
-        [DomainNotificationType.FRIEND_REQUEST_ACCEPTED_IN]     : [],
-        [DomainNotificationType.FRIEND_REQUEST_ACCEPTED_OUT]    : [],
-        [DomainNotificationType.FRIEND_REQUEST_CANCELED_IN]     : [],
-        [DomainNotificationType.FRIEND_REQUEST_CANCELED_OUT]    : [],
-        [DomainNotificationType.PRIVATE_MESSAGE_IN]             : [],
-        [DomainNotificationType.PRIVATE_MESSAGE_OUT]            : [],
-        [DomainNotificationType.PRIVATE_MESSAGE_DELETED_IN]     : [],
-        [DomainNotificationType.PRIVATE_MESSAGE_DELETED_OUT]    : [],
-        [DomainNotificationType.PRIVATE_MESSAGE_REDACTED_IN]    : [],
-        [DomainNotificationType.PRIVATE_MESSAGE_REDACTED_OUT]   : [],
-        [DomainNotificationType.PRIVATE_MESSAGE_READ_IN]        : [],
-        [DomainNotificationType.PRIVATE_MESSAGE_READ_OUT]       : [],
-        [DomainNotificationType.PRIVATE_MESSAGE_READ_ALL_IN]    : [],
-        [DomainNotificationType.PRIVATE_MESSAGE_READ_ALL_OUT]   : [],
-        [DomainNotificationType.DIALOGUE_CREATED_IN]            : [],
-        [DomainNotificationType.DIALOGUE_CREATED_OUT]           : [],
-        [DomainNotificationType.DIALOGUE_UPDATED_IN]            : [],
-        [DomainNotificationType.DIALOGUE_UPDATED_OUT]           : [],
-        [DomainNotificationType.DIALOGUE_DELETED_IN]            : [],
-        [DomainNotificationType.DIALOGUE_DELETED_OUT]           : [],
-        [DomainNotificationType.DIALOGUE_ARCHIVED_IN]           : [],
-        [DomainNotificationType.DIALOGUE_ARCHIVED_OUT]          : [],
-        [DomainNotificationType.PRIVATE_DIALOGUE_CREATED_IN]    : [],
-        [DomainNotificationType.PRIVATE_DIALOGUE_CREATED_OUT]   : [],
-        [DomainNotificationType.PRIVATE_DIALOGUE_UPDATED_IN]    : [],
-        [DomainNotificationType.PRIVATE_DIALOGUE_UPDATED_OUT]   : [],
-        [DomainNotificationType.PRIVATE_DIALOGUE_DELETED_IN]    : [],
-        [DomainNotificationType.PRIVATE_DIALOGUE_DELETED_OUT]   : [],
-        [DomainNotificationType.PRIVATE_DIALOGUE_UNDELETED_IN]  : [],
-        [DomainNotificationType.PRIVATE_DIALOGUE_UNDELETED_OUT] : [],
-        [DomainNotificationType.PRIVATE_DIALOGUE_ARCHIVED_IN]   : [],
-        [DomainNotificationType.PRIVATE_DIALOGUE_ARCHIVED_OUT]  : [],
-        [DomainNotificationType.PRIVATE_DIALOGUE_UNARCHIVED_IN] : [],
-        [DomainNotificationType.PRIVATE_DIALOGUE_UNARCHIVED_OUT]: [],
-        [DomainNotificationType.POST_CREATED_IN]                : [],
-        [DomainNotificationType.POST_CREATED_OUT]               : [],
-        [DomainNotificationType.POST_UPDATED_IN]                : [],
-        [DomainNotificationType.POST_UPDATED_OUT]               : [],
-        [DomainNotificationType.POST_DELETED_IN]                : [],
-        [DomainNotificationType.POST_DELETED_OUT]               : [],
-        [DomainNotificationType.FILE_UPLOADED_IN]               : [],
-        [DomainNotificationType.FILE_UPLOADED_OUT]              : [],
-        [DomainNotificationType.FILE_UPDATED_IN]                : [],
-        [DomainNotificationType.FILE_UPDATED_OUT]               : [],
-        [DomainNotificationType.FILE_DELETED_IN]                : [],
-        [DomainNotificationType.FILE_DELETED_OUT]               : [],
-        [DomainNotificationType.LANGUAGE_CREATED_IN]            : [],
-        [DomainNotificationType.LANGUAGE_CREATED_OUT]           : [],
-        [DomainNotificationType.LANGUAGE_UPDATED_IN]            : [],
-        [DomainNotificationType.LANGUAGE_UPDATED_OUT]           : [],
-        [DomainNotificationType.LANGUAGE_DELETED_IN]            : [],
-        [DomainNotificationType.LANGUAGE_DELETED_OUT]           : [],
-        [DomainNotificationType.LANGUAGE_FOLDER_CREATED_IN]     : [],
-        [DomainNotificationType.LANGUAGE_FOLDER_CREATED_OUT]    : [],
-        [DomainNotificationType.LANGUAGE_FOLDER_UPDATED_IN]     : [],
-        [DomainNotificationType.LANGUAGE_FOLDER_UPDATED_OUT]    : [],
-        [DomainNotificationType.LANGUAGE_FOLDER_DELETED_IN]     : [],
-        [DomainNotificationType.LANGUAGE_FOLDER_DELETED_OUT]    : [],
-        [DomainNotificationType.LANGUAGE_WORD_CREATED_IN]       : [],
-        [DomainNotificationType.LANGUAGE_WORD_CREATED_OUT]      : [],
-        [DomainNotificationType.LANGUAGE_WORD_UPDATED_IN]       : [],
-        [DomainNotificationType.LANGUAGE_WORD_UPDATED_OUT]      : [],
-        [DomainNotificationType.LANGUAGE_WORD_DELETED_IN]       : [],
-        [DomainNotificationType.LANGUAGE_WORD_DELETED_OUT]      : [],
-        [DomainNotificationType.USER_AVATAR_UPDATE_IN]          : [],
-        [DomainNotificationType.USER_AVATAR_UPDATE_OUT]         : [],
-        [DomainNotificationType.USER_LOGIN_UPDATE_IN]           : [],
-        [DomainNotificationType.USER_LOGIN_UPDATE_OUT]          : [],
-        [DomainNotificationType.PASSWORD_UPDATE]                : [],
-        [DomainNotificationType.NOTIFICATIONS_UPDATE]           : [],
-        [DomainNotificationType.NOTIFICATIONS_STATE_UPDATE]     : [],
-        [DomainNotificationType.USER_CONTACTS_UPDATE_IN]        : [],
-        [DomainNotificationType.USER_CONTACTS_UPDATE_OUT]       : [],
-        [DomainNotificationType.USER_BACKGROUND_UPDATE_IN]      : [],
-        [DomainNotificationType.USER_BACKGROUND_UPDATE_OUT]     : [],
-        [DomainNotificationType.USER_PERMISSIONS_UPDATE_IN]     : [],
-        [DomainNotificationType.USER_PERMISSIONS_UPDATE_OUT]    : [],
-        [DomainNotificationType.CALL_OFFER_IN]                  : [],
-        [DomainNotificationType.CALL_OFFER_OUT]                 : [],
-        [DomainNotificationType.CALL_ANSWER_IN]                 : [],
-        [DomainNotificationType.CALL_ANSWER_OUT]                : [],
-        [DomainNotificationType.CALL_START_IN]                  : [],
-        [DomainNotificationType.CALL_FINISH_IN]                 : [],
-        [DomainNotificationType.CALL_FINISH_OUT]                : [],
-        [DomainNotificationType.CALL_START_OUT]                 : [],
-    };
+    private readonly _handlers: Partial<Record<DomainNotificationType, NotificationNotificatorCallback[]>> = {};
 
     private _onAllHandlers: Array<NotificationNotificatorCallback> = [];
     private _currentNotificationIndex: number                      = 0;
@@ -161,11 +57,17 @@ export class NotificationController implements INotificationController {
     }
 
     subscribe (on: DomainNotificationType, callback: NotificationNotificatorCallback): void {
-        this._handlers[on]?.push(callback);
+        if (this._handlers[on]) {
+            this._handlers[on].push(callback);
+        } else {
+            this._handlers[on] = [ callback ];
+        }
     }
 
     unsubscribe (on: DomainNotificationType, callback: NotificationNotificatorCallback): void {
-        this._handlers[on] = this._handlers[on]?.filter((_callback) => _callback !== callback) ?? [];
+        if (this._handlers[on]) {
+            this._handlers[on] = this._handlers[on].filter((_callback) => _callback !== callback) ?? [];
+        }
     }
 
     subscribeOnAll (callback: NotificationNotificatorCallback): void {

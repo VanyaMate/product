@@ -26,6 +26,7 @@ export default {
         'Post',
         'Dialogues',
         'User',
+        'Article',
     ],
     postfixes              : {
         'Unit tests'       : 'unit',

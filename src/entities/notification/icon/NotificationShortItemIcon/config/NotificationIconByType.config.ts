@@ -31,7 +31,7 @@ export type NotificationShortItemIconOptions = {
     className: string,
 }
 
-export const NotificationIconByType: Record<DomainNotificationType, NotificationShortItemIconOptions> = {
+export const NotificationIconByType: Partial<Record<DomainNotificationType, NotificationShortItemIconOptions>> = {
     [DomainNotificationType.ERROR]                          : {
         component: IoSad,
         className: css.negative,
